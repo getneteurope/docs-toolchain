@@ -46,6 +46,8 @@ Configuration files are public.
 
 ### Public
 #### Variables
+* **AWS**
+    * `AWS_S3_BUCKET`
 
 #### Files
 Configuration files:
