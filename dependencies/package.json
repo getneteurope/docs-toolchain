@@ -1,0 +1,25 @@
+{
+    "name": "docs-toolchain",
+    "version": "1.0.0",
+    "description": "",
+    "main": "",
+    "dependencies": {
+        "asciidoctor.js": "^1.5.9",
+        "babel-minify": "^0.5.1",
+        "cheerio": "^1.0.0-rc.3",
+        "inline-source-cli": "^2.0.0",
+        "js-levenshtein": "^1.1.6",
+        "lunr": "^2.3.6",
+        "mermaid.cli": "^0.5.1",
+        "minimist": "^1.2.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wirecard/docs-toolchain.git"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/wirecard/docs-toolchain/issues"
+    },
+    "homepage": "https://github.com/wirecard/docs-toolchain#readme"
+}

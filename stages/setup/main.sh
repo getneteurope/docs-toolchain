@@ -1,9 +1,26 @@
 #!/bin/bash
 
-echo "Setup script"
+echo "Setup"
+_main() {
+    for SCRIPT in stages/setup/setup.d/*setup_*.sh; do
+        local LOGFILE=$(mktemp -d)/"$(basename ${SCRIPT})"
+        source ${SCRIPT}
 
-echo "Setup ruby"
-source setup/setup-ruby.sh
-_setup_ruby
+        echo -n "Installing ${NAME}... "
+        _setup &> "${LOGFILE}"
 
-return $?
+        RETVAL=$?
+        if ((${RETVAL} != 0)); then
+            echo "Failed!"
+            echo "###"
+            cat "${LOGFILE}"
+            echo "###"
+            return ${RETVAL}
+        else
+            echo "OK"
+        fi
+    done
+}
+
+_main
+exit $?
