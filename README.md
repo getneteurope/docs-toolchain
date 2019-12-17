@@ -2,8 +2,8 @@
 Toolchain for TecDoc managed documentation repositories
 
 
-## Phases
-The toolchain is designed to run through different phases, that have specific responsibilities:
+## Stages
+The toolchain is designed to run through different stages, that have specific responsibilities:
 1. **setup**: install required dependencies and setup the template/build folder
 2. **test**:
     * create info files (like git information, e.g. branch, commit author, last edited by, etc.)
@@ -58,7 +58,7 @@ Configuration files:
 
 
 ## Utilities
-The **test** and **build** phases produce `/tmp/errors.json`, a central file containing all warnings and errors that occured during the **test** or **build** phase.
+The **test** and **build** stages produce `/tmp/errors.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
 Warnings and errors are defined in `error-types.json` and further ignored or interpreted as errors according to `settings.json`.
 `slack-notifiy.py` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
 Otherwise 
