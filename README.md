@@ -41,13 +41,12 @@ Configuration files are public.
     * `AWS_ACCESS_KEY_ID`
     * `AWS_SECRET_ACCESS_KEY`
     * `AWS_REGION`
+    * `AWS_S3_BUCKET`
 * **Slack**
     * `SLACK_TOKEN` (Optional)
 
 ### Public
 #### Variables
-* **AWS**
-    * `AWS_S3_BUCKET`
 
 #### Files
 Configuration files:
