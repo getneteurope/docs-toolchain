@@ -1,8 +1,10 @@
 #!/bin/bash
 
+[[ -d toolchain/stages ]] && export TOOLCHAIN_PATH="$(pwd)/toolchain/"
+
 echo "Setup"
 _main() {
-    for SCRIPT in stages/setup/setup.d/*setup_*.sh; do
+    for SCRIPT in ${TOOLCHAIN_PATH}stages/setup/setup.d/*setup_*.sh; do
         local LOGFILE=$(mktemp -d)/"$(basename ${SCRIPT})"
         source ${SCRIPT}
 
