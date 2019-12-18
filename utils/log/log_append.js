@@ -61,7 +61,7 @@ function main() {
         return 1;
     }
     var Log = stfuGetJsonFromFile(logfileErrors);
-    Log.errors = Log.errors || [];
+    Log.messages = Log.messages || [];
     var ErrorObject = {};
     ErrorObject.timestamp = argv['timestamp'];
     ErrorObject.errorlevel = argv['errorlevel'];
