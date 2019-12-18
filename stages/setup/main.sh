@@ -4,7 +4,7 @@ set -e
 source "${GITHUB_WORKSPACE}/toolchain/utils/bash_utils.sh"
 
 _main() {
-    for SCRIPT in ${TOOLCHAIN_PATH}stages/setup/setup.d/*setup_*.sh; do
+    for SCRIPT in "${TOOLCHAIN_PATH}stages/setup/setup.d/"*.sh; do
         local LOGFILE=$(mktemp -d)/"$(basename ${SCRIPT})"
         source ${SCRIPT}
 
