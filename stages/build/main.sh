@@ -10,9 +10,10 @@ _setup() {
 
 _build() {
     asciidoctor --failure-level=WARN \
-        -a linkcss -a stylesheet=main.css -a stylesdir=css \
+        -a linkcss \
         -a icons=font -a toc=left -a systemtimestamp="$(date +%s)" \
         index.adoc
+        # -a linkcss -a stylesheet=main.css -a stylesdir=css \
 }
 
 _setup
