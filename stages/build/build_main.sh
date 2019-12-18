@@ -20,7 +20,7 @@ _build() {
         # -a linkcss -a stylesheet=main.css -a stylesdir=css \
     
     mkdir -p html
-    mv ./*.html html/
+    mv ./*.html css/ html/
     # TODO: add CSS and JS folders
     popd >/dev/null
 }
