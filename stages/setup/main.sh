@@ -1,8 +1,8 @@
 #!/bin/bash
 
-[[ -d toolchain/stages ]] && export TOOLCHAIN_PATH="$(pwd)/toolchain/"
+set -e
+source "${GITHUB_WORKSPACE}/utils/bash_utils.sh"
 
-echo "Setup"
 _main() {
     for SCRIPT in ${TOOLCHAIN_PATH}stages/setup/setup.d/*setup_*.sh; do
         local LOGFILE=$(mktemp -d)/"$(basename ${SCRIPT})"

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+source "${GITHUB_WORKSPACE}/utils/bash_utils.sh"
 
 BUILD_PATH="/tmp/build"
 
