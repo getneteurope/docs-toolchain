@@ -26,7 +26,7 @@ log() {
     >&2 echo "[${TIMESTAMP_STRING}] ${CALLER}:${LINENR} ${ERROR_LEVEL} ${MSG_TEXT}"
   fi
   echo "${MSG_TEXT}" | node toolchain/utils/append_to_log.js \
-    --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${CALLER_LINENR}"
+    --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${LINENR}"
   return $?
 }
 
