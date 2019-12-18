@@ -3,16 +3,17 @@
 set -e
 source "${GITHUB_WORKSPACE}/toolchain/utils/bash_utils.sh"
 
+LOGDIR="/tmp/logs"
 _main() {
     for SCRIPT in "${GITHUB_WORKSPACE}/toolchain/stages/setup/setup.d/"*.sh; do
-        local LOGFILE=$(mktemp -d)/"$(basename ${SCRIPT})"
-        source ${SCRIPT}
+        local LOGFILE="${LOGDIR}/$(basename ${SCRIPT})"
+        source "${SCRIPT}"
 
         echo -n "Installing ${NAME}... "
-        _setup &> "${LOGFILE}"
+        _setup | tee "${LOGFILE}"
 
         RETVAL=$?
-        if ((${RETVAL} != 0)); then
+        if ((RETVAL != 0)); then
             echo "Failed!"
             echo "###"
             cat "${LOGFILE}"
