@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 BUILD_PATH="/tmp/build"
 
 _setup() {
@@ -9,11 +11,17 @@ _setup() {
 }
 
 _build() {
+    pushd "$BUILD_PATH" >/dev/null
     asciidoctor --failure-level=WARN \
         -a linkcss \
         -a icons=font -a toc=left -a systemtimestamp="$(date +%s)" \
         index.adoc
         # -a linkcss -a stylesheet=main.css -a stylesdir=css \
+    
+    mkdir -p html
+    mv ./*.html html/
+    # TODO: add CSS and JS folders
+    popd >/dev/null
 }
 
 _setup
