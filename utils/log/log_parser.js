@@ -49,7 +49,7 @@ function main() {
     const logfile = 'messages.log.json';
     var Log = stfuGetJsonFromFile(logfile);
     for (i in Log.messages) {
-        var MsgObject = log.messages[i];
+        var MsgObject = Log.messages[i];
         var dateArray = timestampToDate(MsgObject.timestamp);
         var timestampString = dateArray['HH'] + ':' + dateArray['mm'] + ':' + dateArray['ss'];
         console.err('[' + timestampString + '] ' + MsgObject.errorlevel + ' ' + MsgObject.caller + ':' + MsgObject.line + ' ' + MsgObject.message_text);
