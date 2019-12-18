@@ -52,7 +52,7 @@ function main() {
         var MsgObject = Log.messages[i];
         var dateArray = timestampToDate(MsgObject.timestamp);
         var timestampString = dateArray['HH'] + ':' + dateArray['mm'] + ':' + dateArray['ss'];
-        console.err('[' + timestampString + '] ' + MsgObject.errorlevel + ' ' + MsgObject.caller + ':' + MsgObject.line + ' ' + MsgObject.message_text);
+        console.log('[' + timestampString + '] ' + MsgObject.errorlevel + ' ' + MsgObject.caller + ':' + MsgObject.line + ' ' + MsgObject.message_text);
     }
     return 0;
 }
