@@ -55,24 +55,23 @@ function sanityChecks() {
 }
 
 function main() {
-    const logfileErrors = 'errors.log.json';
+    const logfile = 'messages.log.json';
     if (sanityChecks() === false) {
         console.error(path.basename(__filename) + ": sanity checks failed!");
         return 1;
     }
-    var Log = stfuGetJsonFromFile(logfileErrors);
+    var Log = stfuGetJsonFromFile(logfile);
     Log.messages = Log.messages || [];
-    var ErrorObject = {};
-    ErrorObject.timestamp = argv['timestamp'];
-    ErrorObject.errorlevel = argv['errorlevel'];
-    ErrorObject.caller = argv['caller'];
-    ErrorObject.line = argv['line'];
-    ErrorObject.message = fs.readFileSync(0).toString().trim(); // == stdin
-    Log.errors.push(ErrorObject);
+    var MessageObject = {};
+    MessageObject.timestamp = argv['timestamp'];
+    MessageObject.errorlevel = argv['errorlevel'];
+    MessageObject.caller = argv['caller'];
+    MessageObject.line = argv['line'];
+    MessageObject.message_text = fs.readFileSync(0).toString().trim(); // == stdin
+    Log.messages.push(MessageObject);
     try {
         var jsonFileContent = JSON.stringify(Log, null, 2);
-        fs.writeFileSync(logfileErrors, jsonFileContent);
-        console.log(Log);
+        fs.writeFileSync(logfile, jsonFileContent);
     }
     catch (err) {
         throw err;

@@ -23,7 +23,7 @@ log() {
   local LINENR=${CALLER_INFO[0]}
 
   if [[ ${ERROR_LEVEL} != 'DEBUG' || ${DEBUG} == 'true' ]]; then
-    >&2 echo "[${TIMESTAMP_STRING}] ${CALLER}:${LINENR} ${ERROR_LEVEL} ${MSG_TEXT}"
+    >&2 echo "[${TIMESTAMP_STRING}] ${ERROR_LEVEL} ${CALLER}:${LINENR} ${MSG_TEXT}"
   fi
   echo "${MSG_TEXT}" | node toolchain/utils/log/log_append.js \
     --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${LINENR}"
