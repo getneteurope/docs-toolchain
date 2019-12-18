@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-source "${GITHUB_WORKSPACE}/utils/bash_utils.sh"
+source "${GITHUB_WORKSPACE}/toolchain/utils/bash_utils.sh"
 
 _main() {
     for SCRIPT in ${TOOLCHAIN_PATH}stages/setup/setup.d/*setup_*.sh; do
