@@ -8,7 +8,7 @@ BUILD_PATH="/tmp/build"
 _setup() {
     log INFO "Build path is: $BUILD_PATH"
     mkdir -p "$BUILD_PATH"
-    cp -r content/ "$BUILD_PATH"
+    cp -r content/* "$BUILD_PATH"
 }
 
 _build() {
