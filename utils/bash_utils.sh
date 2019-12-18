@@ -38,5 +38,7 @@ _test() {
 
 _setup() {
     export log
+    TOOLCHAIN_PATH="${GITHUB_WORKSPACE}/toolchain"
+    export TOOLCHAIN_PATH
     return 0
 }
