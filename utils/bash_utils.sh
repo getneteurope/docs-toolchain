@@ -25,7 +25,8 @@ log() {
   if [[ ${ERROR_LEVEL} != 'DEBUG' || ${DEBUG} == 'true' ]]; then
     >&2 echo "[${TIMESTAMP_STRING}] ${CALLER}:${LINENR} ${ERROR_LEVEL} ${MSG_TEXT}"
   fi
-  echo ${MSG_TEXT} | node append_to_log.js --timestamp=${UNIX_TIMESTAMP} --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${CALLER_LINENR}"
+  echo "${MSG_TEXT}" | node "${TOOLCHAIN_PATH}/utils/append_to_log.js" \
+    --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${CALLER_LINENR}"
   return $?
 }
 
