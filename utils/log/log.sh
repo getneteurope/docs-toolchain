@@ -40,8 +40,13 @@ log() {
   if [[ ${ERROR_LEVEL} != 'DEBUG' || ${DEBUG} == 'true' ]]; then
     >&2 echo "[${TIMESTAMP_STRING}] ${ERROR_LEVEL} ${CALLER}:${LINENR} ${MSG_TEXT}"
   fi
+
+  #if LOG_NOJSON is set (e.g. during setup), do not use log_append.js and return early
+  [[ ${LOG_NOJSON} == 'true' ]] && return 0
+  
   echo "${MSG_TEXT}" | node ${TOOLCHAIN_PATH}utils/log/log_append.js \
     --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${LINENR}"
+    
   return $?
 }
 
