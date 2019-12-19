@@ -10,18 +10,16 @@ _main() {
         local LOGFILE="${LOGDIR}/$(basename "${SCRIPT}" .sh).txt"
         source "${SCRIPT}"
 
-        echo -n "Installing ${NAME}... "
+        log "Installing ${NAME}... "
         _setup | tee "${LOGFILE}"
 
         RETVAL=$?
         if ((RETVAL != 0)); then
-            echo "Failed!"
-            echo "###"
-            cat "${LOGFILE}"
-            echo "###"
+            log ERROR "Failed!"
+            log "$(cat ${LOGFILE})"
             return ${RETVAL}
         else
-            echo "OK"
+            log "OK"
         fi
     done
 }
