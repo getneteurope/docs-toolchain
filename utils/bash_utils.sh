@@ -6,6 +6,8 @@
 #
 # Messages with errorlevel DEBUG will only be logged for env DEBUG=true
 # If no errorlevel is provided as first argument errorlevel INFO will be used
+[[ -d 'toolchain' ]] && export TOOLCHAIN_PATH="$(pwd)/toolchain/"
+
 log() {
   local LEVELS=('DEBUG' 'INFO' 'WARN' 'ERROR')
 
@@ -25,7 +27,7 @@ log() {
   if [[ ${ERROR_LEVEL} != 'DEBUG' || ${DEBUG} == 'true' ]]; then
     >&2 echo "[${TIMESTAMP_STRING}] ${ERROR_LEVEL} ${CALLER}:${LINENR} ${MSG_TEXT}"
   fi
-  echo "${MSG_TEXT}" | node toolchain/utils/log/log_append.js \
+  echo "${MSG_TEXT}" | node ${TOOLCHAIN_PATH}utils/log/log_append.js \
     --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${LINENR}"
   return $?
 }
