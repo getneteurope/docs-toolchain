@@ -76,4 +76,4 @@ if [[ -z ${SOURCED} ]]; then
     exit $?
 fi
 
-exit 0
+return 0

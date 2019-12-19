@@ -1,12 +1,13 @@
 #!/bin/bash
 
 set -e
-source "${GITHUB_WORKSPACE}/toolchain/utils/bash_utils.sh"
+
+source "${TOOLCHAIN_PATH}utils/bash_utils.sh"
 
 LOGDIR="/tmp/logs"
-mkdir -p "$LOGDIR"
+mkdir -p "${LOGDIR}"
 _main() {
-    for SCRIPT in "${GITHUB_WORKSPACE}/toolchain/stages/setup/setup.d/"*.sh; do
+    for SCRIPT in "${TOOLCHAIN_PATH}stages/setup/setup.d/"*.sh; do
         local LOGFILE="${LOGDIR}/$(basename "${SCRIPT}" .sh).txt"
         source "${SCRIPT}"
 
