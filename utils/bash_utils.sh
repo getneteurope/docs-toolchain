@@ -8,29 +8,7 @@
 # If no errorlevel is provided as first argument errorlevel INFO will be used
 [[ -d 'toolchain' ]] && export TOOLCHAIN_PATH="$(pwd)/toolchain/"
 
-log() {
-  local LEVELS=('DEBUG' 'INFO' 'WARN' 'ERROR')
-
-  local ERROR_LEVEL=INFO # if no LEVEL provided treat it as INFO
-  if [[ " ${LEVELS[@]} " =~ " ${1} " ]]; then
-    ERROR_LEVEL=${1}
-    shift
-  fi
-  local MSG_TEXT="${@}"
-  local UNIX_TIMESTAMP="$(date +%s)"
-  local TIMESTAMP_FORMAT="%H:%M:%S,%3N"
-  local TIMESTAMP_STRING=$(date -d @${UNIX_TIMESTAMP} +"${TIMESTAMP_FORMAT}")
-  local CALLER_INFO=($(caller))
-  local CALLER=$(basename ${CALLER_INFO[1]})
-  local LINENR=${CALLER_INFO[0]}
-
-  if [[ ${ERROR_LEVEL} != 'DEBUG' || ${DEBUG} == 'true' ]]; then
-    >&2 echo "[${TIMESTAMP_STRING}] ${ERROR_LEVEL} ${CALLER}:${LINENR} ${MSG_TEXT}"
-  fi
-  echo "${MSG_TEXT}" | node ${TOOLCHAIN_PATH}utils/log/log_append.js \
-    --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${LINENR}"
-  return $?
-}
+source ${TOOLCHAIN_PATH}utils/log/log.sh
 
 _test() {
   log DEBUG "nur wenn DEBUG=true gesetzt ist"
