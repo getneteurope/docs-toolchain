@@ -6,7 +6,6 @@
 #
 # Messages with errorlevel DEBUG will only be logged for env DEBUG=true
 # If no errorlevel is provided as first argument errorlevel INFO will be used
-[[ -z ${TOOLCHAIN_PATH} ]] && [[ -d 'toolchain' ]] && export TOOLCHAIN_PATH="$(pwd)/toolchain/"
 
 source ${TOOLCHAIN_PATH}utils/log/log.sh
 

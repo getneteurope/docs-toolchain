@@ -1,7 +1,10 @@
 #!/bin/bash
 
 set -e
-source "${GITHUB_WORKSPACE}/toolchain/utils/bash_utils.sh"
+
+source "${TOOLCHAIN_PATH}utils/bash_utils.sh"
 
 echo "Post script"
-node "${GITHUB_WORKSPACE}/toolchain/utils/log/log_parser.js"
+node "${TOOLCHAIN_PATH}utils/log/log_parser.js"
+
+exit 0
