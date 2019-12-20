@@ -1,4 +1,3 @@
-const TOOLCHAIN_PATH = process.env.TOOLCHAIN_PATH || '';
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 
@@ -9,25 +8,33 @@ const fs = require('fs');
  */
 function getCallerInfo() {
     const stackLine = (new Error()).stack.split("at ")[3];
-    const stackRegex = /.* \((\/.+\/)([^:]+):([0-9]+):([0-9]+)/;
+    const stackRegex = /(.*) \((\/.+\/)([^:]+):([0-9]+):([0-9]+)/;
     const stackMatches = stackLine.match(stackRegex);
-    const caller = stackMatches[2];
-    const lineNumber = stackMatches[3];
+    const callerFunction = stackMatches[1];
+    const caller = stackMatches[3];
+    const lineNumber = stackMatches[4];
 
     return {
         'line': lineNumber,
+        'caller_function': callerFunction, 
         'caller': caller
     }
 }
 
 Utils = {}
+// if TOOLCHAIN_PATH is already set, use it. if not, check if toolchain folder exists. if not assume you're in toolchain repo dir
+Utils.TOOLCHAIN_PATH = process.env.TOOLCHAIN_PATH ? process.env.TOOLCHAIN_PATH
+                     : fs.existsSync('toolchain') ? 'toolchain/'
+                     : '';
+process.env.TOOLCHAIN_PATH=Utils.TOOLCHAIN_PATH;
+Utils.CONTENT_PATH = process.env.GITHUB_WORKSPACE || 'content/';
 Utils.log = function (message, errorLevel = 'INFO') {
     const CallerInfo = getCallerInfo();
-    execSync('bash ' + TOOLCHAIN_PATH + 'utils/log/log.sh'
+    execSync('bash ' + Utils.TOOLCHAIN_PATH + 'utils/log/log.sh'
         + ' --caller ' + CallerInfo.caller
         + ' --line ' + CallerInfo.line
         + ' ' + errorLevel
-        + ' ' + message);
+        + ' ' + CallerInfo.caller_function + ': ' + message);
 };
 
 Utils.timestampToDate = function (timestamp) {
