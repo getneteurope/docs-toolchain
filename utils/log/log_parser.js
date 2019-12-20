@@ -1,4 +1,4 @@
-const {getObjectFromFile, timestampToDate} = require('../js/modules/common');
+const { getObjectFromFile, timestampToDate } = require('../js/modules/common');
 
 function main() {
     const logfile = 'messages.log.json';

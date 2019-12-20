@@ -16,26 +16,26 @@ function getCallerInfo() {
 
     return {
         'line': lineNumber,
-        'caller_function': callerFunction, 
+        'caller_function': callerFunction,
         'caller': caller
     }
 }
 
 function escapeShell(cmd) {
     // escape for use in shell, except spaces
-    return '"'+cmd.replace(/(["\s'$`\\[^\ ]])/g,'\\$1')+'"';
+    return '"' + cmd.replace(/(["\s'$`\\[^\ ]])/g, '\\$1') + '"';
 };
 
 Utils = {}
 // if TOOLCHAIN_PATH is already set, use it. if not, check if toolchain folder exists. if not assume you're in toolchain repo dir
 Utils.TOOLCHAIN_PATH = process.env.TOOLCHAIN_PATH ? process.env.TOOLCHAIN_PATH
-                     : fs.existsSync('toolchain') ? 'toolchain/'
-                     : '';
-process.env.TOOLCHAIN_PATH=Utils.TOOLCHAIN_PATH;
+    : fs.existsSync('toolchain') ? 'toolchain/'
+        : '';
+process.env.TOOLCHAIN_PATH = Utils.TOOLCHAIN_PATH;
 Utils.CONTENT_PATH = process.env.GITHUB_WORKSPACE || 'content/';
 Utils.log = function (message, errorLevel = 'INFO') {
     const CallerInfo = getCallerInfo();
-    if(errorLevel != 'INFO') { // add caller function to message if not plain INFO
+    if (errorLevel != 'INFO') { // add caller function to message if not plain INFO
         message = CallerInfo.caller_function + '(): ' + message; // must escape for shell
     }
     // TODO rewrite for piping message!

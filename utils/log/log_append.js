@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
-const {getObjectFromFile} = require('../js/modules/common');
+const { getObjectFromFile } = require('../js/modules/common');
 
 /**
  * Check if all required arguments have been provided
@@ -19,7 +19,7 @@ function sanityChecks() {
     }
 
     // see if a message is being piped to script
-    if(process.stdin.isTTY) {
+    if (process.stdin.isTTY) {
         success = false;
         console.error("Missing message text: you must pipe text into this script.");
     }
