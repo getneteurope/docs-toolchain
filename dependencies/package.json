@@ -11,7 +11,8 @@
         "js-levenshtein": "^1.1.6",
         "lunr": "^2.3.6",
         "mermaid.cli": "^0.5.1",
-        "minimist": "^1.2.0"
+        "minimist": "^1.2.0",
+        "bats": "^1.1.0"
     },
     "repository": {
         "type": "git",
