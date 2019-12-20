@@ -8,7 +8,7 @@
 # If no errorlevel is provided as first argument errorlevel INFO will be used
 
 while [[ -z ${TOOLCHAIN_PATH} ]]; do
-  [[ -d 'toolchain' ]] && TOOLCHAIN_PATH='toolchain/' || TOOLCHAIN_PATH=''
+  [[ -d 'toolchain' ]] && TOOLCHAIN_PATH='toolchain/' || TOOLCHAIN_PATH='' && break
 done
 export TOOLCHAIN_PATH;
 
