@@ -28,8 +28,11 @@ log() {
   fi
   local MSG_TEXT="${@}"
   local UNIX_TIMESTAMP="$(date +%s)"
-  local TIMESTAMP_FORMAT="%H:%M:%S,%3N"
-  local TIMESTAMP_STRING=$(date -d @${UNIX_TIMESTAMP} +"${TIMESTAMP_FORMAT}")
+  local TIMESTAMP_FORMAT="%H:%M:%S"
+  local TIMESTAMP_STRING=$(date -d @${UNIX_TIMESTAMP} +"${TIMESTAMP_FORMAT}" 2>/dev/null)
+  #MacOS workaround for local builds
+  [[ -n ${TIMESTAMP_STRING} ]] || TIMESTAMP_STRING=$(date -r ${UNIX_TIMESTAMP} +"${TIMESTAMP_FORMAT}")
+
   local CALLER_INFO=($(caller))
 
   # if not sourced but called directly, caller and line number must be passed as args
