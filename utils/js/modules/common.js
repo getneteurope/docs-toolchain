@@ -21,6 +21,11 @@ function getCallerInfo() {
     }
 }
 
+function escapeShell(cmd) {
+    // escape for use in shell, except spaces
+    return '"'+cmd.replace(/(["\s'$`\\[^\ ]])/g,'\\$1')+'"';
+};
+
 Utils = {}
 // if TOOLCHAIN_PATH is already set, use it. if not, check if toolchain folder exists. if not assume you're in toolchain repo dir
 Utils.TOOLCHAIN_PATH = process.env.TOOLCHAIN_PATH ? process.env.TOOLCHAIN_PATH
@@ -30,11 +35,15 @@ process.env.TOOLCHAIN_PATH=Utils.TOOLCHAIN_PATH;
 Utils.CONTENT_PATH = process.env.GITHUB_WORKSPACE || 'content/';
 Utils.log = function (message, errorLevel = 'INFO') {
     const CallerInfo = getCallerInfo();
+    if(errorLevel != 'INFO') { // add caller function to message if not plain INFO
+        message = CallerInfo.caller_function + '(): ' + message; // must escape for shell
+    }
+    // TODO rewrite for piping message!
     execSync('bash ' + Utils.TOOLCHAIN_PATH + 'utils/log/log.sh'
         + ' --caller ' + CallerInfo.caller
         + ' --line ' + CallerInfo.line
         + ' ' + errorLevel
-        + ' ' + CallerInfo.caller_function + ': ' + message);
+        + ' ' + escapeShell(message));
 };
 
 Utils.timestampToDate = function (timestamp) {
