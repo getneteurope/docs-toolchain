@@ -9,7 +9,6 @@ function setup() {
     MSG="test Test TEST"
     run log INFO "$MSG"
     [ "$status" -eq 0 ]
-    echo "$output" > /tmp/log.txt
     [[ "$output" == *"INFO"* ]]
     [[ "$output" == *"$MSG" ]]
 }
@@ -34,7 +33,6 @@ function setup() {
     MSG="test Test TEST"
     run log "$MSG"
     [ "$status" -eq 0 ]
-    echo "$output" > /tmp/log.txt
     [[ "$output" == *"INFO"* ]]
     [[ "$output" == *"$MSG" ]]
 }
