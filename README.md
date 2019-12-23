@@ -50,7 +50,8 @@ Configuration files are public.
 
 #### Files
 Configuration files:
-* `config/settings.json`
+* `config/settings.json`: general settings
+* `config/log.json`: logging specific settings
 * `config/invalid-patterns.json`
 * `config/error-types.json`: lists all warning/error types with a unique string ID, a unique error code (grouped like HTTP codes), and a format string like error message.
 * `static/privacy-policy.(txt|adoc)`
@@ -61,3 +62,15 @@ The **test** and **build** stages produce `/tmp/errors.json`, a central file con
 Warnings and errors are defined in `error-types.json` and further ignored or interpreted as errors according to `settings.json`.
 `slack-notifiy.py` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
 Otherwise 
+
+## Run
+
+To run the toolchain locally, or run the unit tests, the following requirements must be met:
+* bats
+* installed dependencies
+
+In order to install dependencies, run the following at the root of the project:
+```bash
+export TOOLCHAIN_PATH="$(pwd)"
+bash stages/setup/setup_main.sh
+```
