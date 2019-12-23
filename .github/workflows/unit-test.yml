@@ -10,6 +10,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Setup
+      run: bash stages/setup/setup_main.sh
     - name: Run tests
       run: |
         bats tests/bash/

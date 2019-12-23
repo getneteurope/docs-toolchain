@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
 const { getObjectFromFile } = require('../js/modules/common');
+const config = require('../../config/log.json');
 
 /**
  * Check if all required arguments have been provided
@@ -27,7 +28,7 @@ function sanityChecks() {
 }
 
 function main() {
-    const logfile = 'messages.log.json';
+    const logfile = config.LOG_FILE;
     if (sanityChecks() === false) {
         console.error(path.basename(__filename) + ": sanity checks failed!");
         return 1;

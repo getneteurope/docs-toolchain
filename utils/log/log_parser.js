@@ -1,7 +1,8 @@
 const { getObjectFromFile, timestampToDate } = require('../js/modules/common');
+const config = require('../../config/log.json');
 
 function main() {
-    const logfile = 'messages.log.json';
+    const logfile = config.LOG_FILE;
     var Log = getObjectFromFile(logfile);
     for (i in Log.messages) {
         var MsgObject = Log.messages[i];
