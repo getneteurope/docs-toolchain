@@ -33,19 +33,22 @@ log() {
   #MacOS workaround for local builds
   [[ -n ${TIMESTAMP_STRING} ]] || TIMESTAMP_STRING=$(date -r ${UNIX_TIMESTAMP} +"${TIMESTAMP_FORMAT}")
 
-  local CALLER_INFO=($(caller))
+  # Get call information (filename and line number) or set to stdin
+  if command -v foo >/dev/null 2>&1; then
+    local CALLER_INFO=($(caller))
+  else
+    local CALLER="<stdin>"
+  fi
 
   # if not sourced but called directly, caller and line number must be passed as args
   if [[ -z ${CALLER} ]]; then
     local CALLER=$(basename ${CALLER_INFO[1]})
     local LINENR=${CALLER_INFO[0]}
   fi
-  if [[ ${ERROR_LEVEL} != 'DEBUG' || ${DEBUG} == 'true' ]]; then
-    >&2 echo "[${TIMESTAMP_STRING}] ${ERROR_LEVEL} ${CALLER}:${LINENR} ${MSG_TEXT}"
-  fi
+  >&2 echo "[${TIMESTAMP_STRING}] ${ERROR_LEVEL} ${CALLER}:${LINENR} ${MSG_TEXT}"
 
   #if LOG_NOJSON is set (e.g. during setup), do not use log_append.js and return early
-  [[ ${LOG_NOJSON} == 'true' ]] && return 0
+  [[ -n ${LOG_NOJSON} ]] && return 0
   
   echo "${MSG_TEXT}" | node ${TOOLCHAIN_PATH}/utils/log/log_append.js \
     --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${LINENR}"
