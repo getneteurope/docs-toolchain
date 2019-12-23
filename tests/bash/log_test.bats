@@ -5,7 +5,7 @@ function setup() {
     export LOG_NOJSON="1" 
 }
 
-@test "INFO" {
+@test "Log: INFO" {
     MSG="test Test TEST"
     run log INFO "$MSG"
     [ "$status" -eq 0 ]
@@ -13,7 +13,7 @@ function setup() {
     [[ "$output" == *"$MSG" ]]
 }
 
-@test "DEBUG" {
+@test "Log: DEBUG" {
     MSG="test Test TEST"
     run log DEBUG "$MSG"
     [ "$status" -eq 0 ]
@@ -21,7 +21,7 @@ function setup() {
     [[ "$output" == *"$MSG" ]]
 }
 
-@test "ERROR" {
+@test "Log: ERROR" {
     MSG="test Test TEST"
     run log ERROR "$MSG"
     [ "$status" -eq 0 ]
@@ -29,7 +29,7 @@ function setup() {
     [[ "$output" == *"$MSG" ]]
 }
 
-@test "implicit INFO" {
+@test "Log: implicit INFO" {
     MSG="test Test TEST"
     run log "$MSG"
     [ "$status" -eq 0 ]

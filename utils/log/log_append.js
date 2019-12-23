@@ -9,27 +9,27 @@ const config = require('../../config/log.json');
  * @return {boolean} true if all checks successful, false otherwise
  */
 function sanityChecks() {
-    const requiredArguments = ['timestamp', 'errorlevel', 'caller', 'line'];
+    if(!process.stdin.isTTY) {
+        argv['message'] = fs.readFileSync(0).toString().trim(); // fd0 == stdin
+    }
+    const requiredArguments = ['timestamp', 'errorlevel', 'caller', 'line', 'message'];
     var success = true;
     for (var i in requiredArguments) {
         var arg = requiredArguments[i];
-        if (argv[arg] === undefined) {
-            success = false;
+        if (argv[arg] === undefined || argv[arg] === null) {
             console.error("Missing argument: --" + arg);
+            if (arg === 'message')
+                console.error("--message can be omitted and piped");
+            return false;
         }
     }
 
-    // see if a message is being piped to script
-    if (process.stdin.isTTY) {
-        success = false;
-        console.error("Missing message text: you must pipe text into this script.");
-    }
     return success;
 }
 
 function main() {
     const logfile = config.LOG_FILE;
-    if (sanityChecks() === false) {
+    if (!sanityChecks()) {
         console.error(path.basename(__filename) + ": sanity checks failed!");
         return 1;
     }
@@ -40,14 +40,15 @@ function main() {
     MessageObject.errorlevel = argv['errorlevel'];
     MessageObject.caller = argv['caller'];
     MessageObject.line = argv['line'];
-    MessageObject.message_text = fs.readFileSync(0).toString().trim(); // fd0 == stdin
+    MessageObject.message_text = argv['message'];
     Log.messages.push(MessageObject);
     try {
         var jsonFileContent = JSON.stringify(Log, null, 2);
         fs.writeFileSync(logfile, jsonFileContent);
     }
     catch (err) {
-        throw err;
+        console.error("Could not save log file");
+        return 2;
     }
     return 0;
 }
