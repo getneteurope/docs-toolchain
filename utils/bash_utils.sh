@@ -8,11 +8,11 @@
 # If no errorlevel is provided as first argument errorlevel INFO will be used
 
 while [[ -z ${TOOLCHAIN_PATH} ]]; do
-  [[ -d 'toolchain' ]] && TOOLCHAIN_PATH='toolchain/' || TOOLCHAIN_PATH='' && break
+  [[ -d 'toolchain' ]] && TOOLCHAIN_PATH='toolchain' || TOOLCHAIN_PATH='' && break
 done
-export TOOLCHAIN_PATH;
+export TOOLCHAIN_PATH
 
-source ${TOOLCHAIN_PATH}utils/log/log.sh
+source ${TOOLCHAIN_PATH}/utils/log/log.sh
 
 _test() {
   log DEBUG "nur wenn DEBUG=true gesetzt ist"

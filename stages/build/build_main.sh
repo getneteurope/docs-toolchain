@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-source "${TOOLCHAIN_PATH}utils/bash_utils.sh"
+source "${TOOLCHAIN_PATH}/utils/bash_utils.sh"
 
 BUILD_PATH="/tmp/build"
 

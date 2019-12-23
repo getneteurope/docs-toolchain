@@ -4,7 +4,7 @@
 #  Can be sourced in bash script or used standalone
 #  by Wirecard CEE TecDoc
 
-[[ "${BASH_SOURCE[0]}" != "${0}" ]] && SOURCED=true;
+[[ "${BASH_SOURCE[0]}" != "${0}" ]] && SOURCED=true
 
 LEVELS=('DEBUG' 'INFO' 'WARN' 'ERROR')
 usage() {
@@ -47,7 +47,7 @@ log() {
   #if LOG_NOJSON is set (e.g. during setup), do not use log_append.js and return early
   [[ ${LOG_NOJSON} == 'true' ]] && return 0
   
-  echo "${MSG_TEXT}" | node ${TOOLCHAIN_PATH}utils/log/log_append.js \
+  echo "${MSG_TEXT}" | node ${TOOLCHAIN_PATH}/utils/log/log_append.js \
     --timestamp="${UNIX_TIMESTAMP}" --errorlevel="${ERROR_LEVEL}" --caller="${CALLER}" --line="${LINENR}"
     
   return $?

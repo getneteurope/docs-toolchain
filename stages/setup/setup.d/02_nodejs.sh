@@ -6,7 +6,7 @@ _setup() {
     export PATH="node_modules/.bin:${PATH}"
     npm install package-json-merge
     
-    local PJ="${TOOLCHAIN_PATH}dependencies/package.json dependencies/package.json"
+    local PJ="${TOOLCHAIN_PATH}/dependencies/package.json dependencies/package.json"
     local PJ_FILES
     for F in ${PJ}; do
       if [[ -r ${F} ]]; then

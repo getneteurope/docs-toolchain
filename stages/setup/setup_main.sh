@@ -1,14 +1,14 @@
 #!/bin/bash
 
 set -e
-source "${TOOLCHAIN_PATH}utils/bash_utils.sh"
+source "${TOOLCHAIN_PATH}/utils/bash_utils.sh"
 
 LOGDIR="/tmp/logs"
 mkdir -p "${LOGDIR}"
 export LOG_NOJSON=true #log_append cannot use log_append during setup phase
 
 _main() {
-    for SCRIPT in "${TOOLCHAIN_PATH}stages/setup/setup.d/"*.sh; do
+    for SCRIPT in "${TOOLCHAIN_PATH}/stages/setup/setup.d/"*.sh; do
         local LOGFILE="${LOGDIR}/$(basename "${SCRIPT}" .sh).txt"
         source "${SCRIPT}"
 

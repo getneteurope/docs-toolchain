@@ -29,7 +29,7 @@ function escapeShell(cmd) {
 Utils = {}
 // if TOOLCHAIN_PATH is already set, use it. if not, check if toolchain folder exists. if not assume you're in toolchain repo dir
 Utils.TOOLCHAIN_PATH = process.env.TOOLCHAIN_PATH ? process.env.TOOLCHAIN_PATH
-    : fs.existsSync('toolchain') ? 'toolchain/'
+    : fs.existsSync('toolchain') ? 'toolchain'
         : '';
 process.env.TOOLCHAIN_PATH = Utils.TOOLCHAIN_PATH;
 Utils.CONTENT_PATH = process.env.GITHUB_WORKSPACE || 'content/';
@@ -39,7 +39,7 @@ Utils.log = function (message, errorLevel = 'INFO') {
         message = CallerInfo.caller_function + '(): ' + message; // must escape for shell
     }
     // TODO rewrite for piping message!
-    execSync('bash ' + Utils.TOOLCHAIN_PATH + 'utils/log/log.sh'
+    execSync('bash ' + Utils.TOOLCHAIN_PATH + '/utils/log/log.sh'
         + ' --caller ' + CallerInfo.caller
         + ' --line ' + CallerInfo.line
         + ' ' + errorLevel
