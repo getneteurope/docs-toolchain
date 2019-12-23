@@ -5,7 +5,7 @@ env:
   TOOLCHAIN_PATH: .
 
 jobs:
-  bash:
+  bats:
     runs-on: ubuntu-latest
     container:
       image: bats/bats:latest
@@ -17,3 +17,14 @@ jobs:
     - name: Run tests
       run: |
         bats -r tests/
+
+  nodejs:
+    runs-on: ubuntu-latest
+    container:
+      image: node:13
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run tests
+      run: echo "Running tests"
+
