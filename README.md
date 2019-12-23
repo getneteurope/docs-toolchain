@@ -71,6 +71,6 @@ To run the toolchain locally, or run the unit tests, the following requirements 
 
 In order to install dependencies, run the following at the root of the project:
 ```bash
-export TOOLCHAIN_PATH="."
+export TOOLCHAIN_PATH="$(pwd)"
 bash stages/setup/setup_main.sh
 ```
