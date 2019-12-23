@@ -16,4 +16,4 @@ jobs:
       run: bash stages/setup/setup_main.sh
     - name: Run tests
       run: |
-        bats tests/bash/
+        bats -r tests/

@@ -28,7 +28,7 @@ function sanityChecks() {
 }
 
 function main() {
-    const logfile = config.LOG_FILE;
+    const logfile = argv['file'] || config.LOG_FILE;
     if (!sanityChecks()) {
         console.error(path.basename(__filename) + ": sanity checks failed!");
         return 1;
