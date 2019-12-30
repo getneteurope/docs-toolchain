@@ -1,4 +1,4 @@
-name: Unit tests
+name: Testing
 
 on: [push, pull_request]
 env:
@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: bats/bats:latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Setup
@@ -22,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:13
-    
     steps:
     - uses: actions/checkout@v1
     - name: Run tests
