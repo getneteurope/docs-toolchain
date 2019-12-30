@@ -78,6 +78,7 @@ enable=F,
        anomalous-backslash-in-string,
        bad-open-mode
 
+disable=import-error
 
 [REPORTS]
 
