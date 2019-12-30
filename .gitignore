@@ -1,4 +1,5 @@
-
+venv/
+.vscode/
 # Created by https://www.gitignore.io/api/python,node,ruby
 # Edit at https://www.gitignore.io/?templates=python,node,ruby
 
