@@ -23,8 +23,9 @@ function combineJS(location) {
         contentScriptsDir = 'js/footer.d/';
     }
     log('Combining js files in ' + htmlFile);
+    var html = null;
     try {
-        var html = fs.readFileSync(htmlFile);
+        html = fs.readFileSync(htmlFile);
     } catch (err) {
         log('Could not read ' + htmlFile, 'WARN');
         return true;
@@ -46,7 +47,7 @@ function combineJS(location) {
         $(this).remove();
     });
 
-    // read included 
+    // read included
     const dirCont = fs.readdirSync(path).filter((elm) => /.*\.js$/gi.test(elm));
 
     try {
@@ -68,7 +69,7 @@ function combineJS(location) {
 }
 
 function minifyJSFiles(path) {
-    log('Minifying js files')
+    log('Minifying js files');
     path = (path !== undefined) ? path : CONTENT_PATH + 'js/';
     if(fs.existsSync(path) !== true) {
         log('Folder ' + path + ' does not exist. Did not combine frontend js files.', 'WARN');
