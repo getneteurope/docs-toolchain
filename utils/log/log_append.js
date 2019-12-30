@@ -10,7 +10,7 @@ const config = require('../../config/log.json');
  */
 function sanityChecks() {
     if(!process.stdin.isTTY) {
-        argv['message'] = fs.readFileSync(0).toString().trim(); // fd0 == stdin
+        argv.message = fs.readFileSync(0).toString().trim(); // fd0 == stdin
     }
     const requiredArguments = ['timestamp', 'errorlevel', 'caller', 'line', 'message'];
     var success = true;
@@ -28,7 +28,7 @@ function sanityChecks() {
 }
 
 function main() {
-    const logfile = argv['file'] || config.LOG_FILE;
+    const logfile = argv.file || config.LOG_FILE;
     if (!sanityChecks()) {
         console.error(path.basename(__filename) + ": sanity checks failed!");
         return 1;
@@ -36,11 +36,11 @@ function main() {
     var Log = getObjectFromFile(logfile);
     Log.messages = Log.messages || [];
     var MessageObject = {};
-    MessageObject.timestamp = argv['timestamp'];
-    MessageObject.errorlevel = argv['errorlevel'];
-    MessageObject.caller = argv['caller'];
-    MessageObject.line = argv['line'];
-    MessageObject.message_text = argv['message'];
+    MessageObject.timestamp = argv.timestamp;
+    MessageObject.errorlevel = argv.errorlevel;
+    MessageObject.caller = argv.caller;
+    MessageObject.line = argv.line;
+    MessageObject.message_text = argv.message;
     Log.messages.push(MessageObject);
     try {
         var jsonFileContent = JSON.stringify(Log, null, 2);
