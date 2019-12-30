@@ -15,7 +15,7 @@ jobs:
     - name: Install pylint
       run: pip install pylint
     - name: Linting
-      run: pylint
+      run: pylint $(find . -name "*.py")
 
   javascript:
     runs-on: ubuntu-latest
