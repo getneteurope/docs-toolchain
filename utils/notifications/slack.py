@@ -10,6 +10,16 @@ if os.getenv('DEBUG'):
     from pprint import pprint
 
 
+def parse_ref(default):
+    REF = os.getenv('GITHUB_REF')
+    if REF:
+        if REF.count('/'):
+            return REF.split('/')[-1]
+        else:
+            return REF
+    return default
+
+
 def parse_git_info(directory=os.getcwd()):
     REPO = Repository(directory)
     HEAD = REPO.head
@@ -17,7 +27,7 @@ def parse_git_info(directory=os.getcwd()):
     git_info = {}
     git_info['author_name'] = COMMIT.author.name
     git_info['author_email'] = COMMIT.author.email
-    git_info['branch'] = HEAD.shorthand
+    git_info['branch'] = parse_ref(HEAD.shorthand)
     git_info['commit_hash'] = COMMIT.hex
     git_info['url'] = 'https://github.com/%s' % (os.getenv('GITHUB_REPOSITORY')
                                                  if os.getenv('GITHUB_REPOSITORY') else
