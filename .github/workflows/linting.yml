@@ -12,8 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install pylint
-      run: pip install pylint
+    - name: Install requirements
+      run: pip install -r dependencies/requirements.txt
     - name: Linting
       run: pylint $(find . -name "*.py")
 

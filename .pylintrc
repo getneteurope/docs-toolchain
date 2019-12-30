@@ -78,8 +78,6 @@ enable=F,
        anomalous-backslash-in-string,
        bad-open-mode
 
-disable=import-error
-
 [REPORTS]
 
 # Python expression which should return a score less than or equal to 10. You
