@@ -28,9 +28,10 @@ def parse_git_info(directory=os.getcwd()):
 
 
 def git_info_to_str(git_info, json=True):
-    message = """*Branch:* {branch} (<{url}/tree/{branch}|On Github>)
-*Commit:* `{commit_hash}` (<{url}/commit/{commit_hash}|On Github>)
-*Author:* {author_name} <{author_email}>""".format(**git_info)
+    message = "\n".join(["*Branch:* {branch} (<{url}/tree/{branch}|On Github>)",
+                         "*Commit:* `{commit_hash}` (<{url}/commit/{commit_hash}|On Github>)",
+                         "*Author:* {author_name} <{author_email}>"])
+    message = message.format(**git_info)
     if json:
         return {"type": "section", "text": {"type": "mrkdwn", "text": message}}
     else:
