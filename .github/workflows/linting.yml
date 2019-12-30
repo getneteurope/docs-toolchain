@@ -27,5 +27,5 @@ jobs:
     - name: Install jshint
       run: npm install -g jshint
     - name: Linting
-      run: jshint
+      run: jshint $(find . -name "*.js")
 
