@@ -6,16 +6,16 @@ module Toolchain
       return Toolchain::ExtensionManager.instance.nextId
     end
 
-    def createError(id: nextId, type: self.class.name, msg:,  filename:, lineno: nil, extras: nil)
+    def createError(id: nextId, type: self.class.name, msg:, filename:, lineno: nil, extras: nil)
       where = filename
       lineno&.each { |line| where << ":#{line}" }
       return {
-        id: id,
-        type: type,
-        msg: msg,
-        where: where,
-        extras: extras
-      }
+               id: id,
+               type: type,
+               msg: msg,
+               where: where,
+               extras: extras,
+             }
     end
 
     def run(document)

@@ -1,5 +1,5 @@
-require_relative '../extension_manager.rb'
-require_relative '../base_module.rb'
+require_relative "../extension_manager.rb"
+require_relative "../base_module.rb"
 
 module Toolchain
   class IdChecker < BaseModule
