@@ -26,3 +26,15 @@ jobs:
     - name: Run tests
       run: echo "Running tests"
 
+  ruby:
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:2.6
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup
+      run: bash stages/setup/setup_main.sh
+    - name: "Running tests"
+      run: |
+        ruby tests/ruby/main.rb
+
