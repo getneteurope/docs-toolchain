@@ -50,7 +50,7 @@ class TestParse < Test::Unit::TestCase
     assert_false(args.help)
     assert_false(args.debug)
     assert_true(args.file)
-    assert_equal(args.files, ['test.adoc', 'content.adoc'])
+    assert_equal(['test.adoc', 'content.adoc'], args.files)
     assert_false(args.index)
     assert_nil(args.index_file)
   end
@@ -62,7 +62,7 @@ class TestParse < Test::Unit::TestCase
     assert_false(args.file)
     assert_empty(args.files)
     assert_true(args.index)
-    assert_equal(args.index_file, 'index.adoc')
+    assert_equal('index.adoc', args.index_file)
   end
 end
 

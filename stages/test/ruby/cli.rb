@@ -10,9 +10,12 @@ def parse_args(argv = ARGV)
   args['index_file'] = nil
 
   argv.each do |arg|
-    args['files'] << arg if last == 'file'
-    args['index_file'] = arg if last == 'index'
-    next if %w[file index].include?(last)
+    if %w[file index].include?(last)
+      args['files'] << arg if last == 'file'
+      args['index_file'] = arg if last == 'index'
+      last = nil
+      next
+    end
 
     arg2 = arg.gsub('--', '')
     case arg2
