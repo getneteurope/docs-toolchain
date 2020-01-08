@@ -5,7 +5,7 @@ require 'ostruct'
 def parse_args(argv = ARGV)
   last = nil
   args = Hash.new(false)
-  'help:debug:file:index'.split(':').each { |arg| args[arg] = false }
+  %w[help debug file index].each { |arg| args[arg] = false }
   args['files'] = []
   args['index_file'] = nil
 
