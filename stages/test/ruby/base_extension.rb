@@ -1,24 +1,26 @@
-require_relative "./extension_manager.rb"
+# frozen_string_literal: true
+
+require_relative './extension_manager.rb'
 
 module Toolchain
   class BaseExtension
-    def nextId
-      return Toolchain::ExtensionManager.instance.nextId
+    def next_id
+      return Toolchain::ExtensionManager.instance.next_id
     end
 
-    def createError(id: nextId, type: self.class.name, msg:, filename:, lineno: nil, extras: nil)
+    def create_error(id: nextId, type: self.class.name, msg:, filename:, lineno: nil, extras: nil)
       where = filename
       lineno&.each { |line| where << ":#{line}" }
       return {
-               id: id,
-               type: type,
-               msg: msg,
-               where: where,
-               extras: extras,
-             }
+        id: id,
+        type: type,
+        msg: msg,
+        where: where,
+        extras: extras
+      }
     end
 
-    def run(document)
+    def run(_document)
       # run takes a document (a converted asciidoctor document) as input and
       # must return an array of Hashes of errors.
       # if there are no errors, an empty Hash must be returned.

@@ -1,6 +1,8 @@
-require "net/http"
-require_relative "../extension_manager.rb"
-require_relative "../base_extension.rb"
+# frozen_string_literal: true
+
+require 'net/http'
+require_relative '../extension_manager.rb'
+require_relative '../base_extension.rb'
 
 module Toolchain
   class LinkChecker < BaseExtension
@@ -9,7 +11,7 @@ module Toolchain
       links = document.references[:links]
       links.each do |link|
         begin
-          # puts "Test #{link}".cyan.bold
+          # puts 'Test #{link}'.cyan.bold
           resp = nil
           uri = URI(link)
           # Net::HTTP.new(uri.host, uri.port) do |http|
@@ -23,19 +25,17 @@ module Toolchain
           # end
           # resp = Net::HTTP.get_response(uri)
           msg = nil
-        rescue SocketError => se
-          idx = se.message.index("(") - 1
-          msg = "#{se.class.name}: #{se.message[0..idx]}"
-        rescue Net::OpenTimeout => ot
-          msg = "#{ot.class.name}: #{ot.message} for #{link}"
+        rescue SocketError => e
+          idx = e.message.index('(') - 1
+          msg = "#{e.class.name}: #{e.message[0..idx]}"
+        rescue Net::OpenTimeout => e
+          msg = "#{e.class.name}: #{e.message} for #{link}"
         end
 
-        if msg.nil? and not resp.nil? and resp.code != "200"
-          msg = "[#{resp.code}] #{resp.message}: #{link}"
-        end
+        msg = "[#{resp.code}] #{resp.message}: #{link}" if msg.nil? && !resp.nil? && resp.code != '200'
 
-        msg = "Unknown error: Response is nil" if msg.nil? and resp.nil?
-        errors << createError(msg: msg, filename: document.attr("docfile")) unless msg.nil?
+        msg = 'Unknown error: Response is nil' if msg.nil? && resp.nil?
+        errors << createError(msg: msg, filename: document.attr('docfile')) unless msg.nil?
       end
       return errors
     end

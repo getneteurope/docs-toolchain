@@ -1,4 +1,6 @@
-require "singleton"
+# frozen_string_literal: true
+
+require 'singleton'
 
 module Toolchain
   class ExtensionManager
@@ -18,7 +20,7 @@ module Toolchain
       return @extensions
     end
 
-    def nextId
+    def next_id
       @id += 1
       return @id
     end
