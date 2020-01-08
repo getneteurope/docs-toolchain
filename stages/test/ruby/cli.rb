@@ -1,32 +1,22 @@
-class CLI
-  attr_reader :help, :debug, :file, :files, :index, :index_file
-
-  def initialize(help:, debug:, file:, files:, index:, index_file:)
-    @help = help
-    @debug = debug
-    @file = file
-    @files = files
-    @index = index
-    @index_file = index_file
-  end
-end
+require "ostruct"
 
 def parse_args(argv=ARGV)
   file_arg = false
   index_arg = false
   args = Hash.new(false)
-  args[:files] = []
-  args[:index] = nil
+  "help:debug:file:index".split(':').each { |arg| args[arg] = false }
+  args["files"] = []
+  args["index_file"] = nil
 
   argv.each do |arg|
     if file_arg
       file_arg = false
-      args[:files] << arg
+      args["files"] << arg
       next
     end
     if index_arg
       index_arg = false
-      args[:index] << arg
+      args["index_file"] = arg
       next
     end
 
@@ -46,8 +36,5 @@ def parse_args(argv=ARGV)
   end
 
   raise "Cannot provide 'file' and 'index' arguments simultaneously. Pick one!" if args["file"] and args["index"]
-
-  return CLI.new(help: args["help"], debug: args["debug"],
-                 file: args["file"], files: args[:files],
-                 index: args["index"], index_file: args[:index])
+  return OpenStruct.new(args)
 end
