@@ -35,7 +35,7 @@ module Toolchain
         msg = "[#{resp.code}] #{resp.message}: #{link}" if msg.nil? && !resp.nil? && resp.code != '200'
 
         msg = 'Unknown error: Response is nil' if msg.nil? && resp.nil?
-        errors << createError(msg: msg, filename: document.attr('docfile')) unless msg.nil?
+        errors << create_error(msg: msg, filename: document.attr('docfile')) unless msg.nil?
       end
       return errors
     end
