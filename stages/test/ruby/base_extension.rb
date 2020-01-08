@@ -1,7 +1,7 @@
 require_relative "./extension_manager.rb"
 
 module Toolchain
-  class BaseModule
+  class BaseExtension
     def nextId
       return Toolchain::ExtensionManager.instance.nextId
     end

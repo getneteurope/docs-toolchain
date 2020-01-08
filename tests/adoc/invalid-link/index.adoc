@@ -11,35 +11,10 @@ Doc Writer <doc@example.com>
 
 An example of a basic http://asciidoc.org[AsciiDoc] document prepared by {author}.
 
-== Introduction
-
-A paragraph followed by an unordered list{empty}footnote:[AsciiDoc supports unordered, ordered, and description lists.] with square bullets.footnote:[You may choose from square, disc, and circle for the bullet style.]
-
-[square]
-* item 1
-* item 2
-* item 3
-
-== Main
-
-Here's how you say "`Hello, World!`" in Prawn:
-
-.Create a basic PDF document using Prawn
-[source,ruby]
-----
-require 'prawn'
-
-Prawn::Document.generate 'example.pdf' do
-  text 'Hello, World!'
-end
-----
-
-== Conclusion
-
-That's all, folks!
-
 
 == References
 
 1. https://github.com/wirecard/docs-toolchain[Docs Toolchain]
 2. https://github.com/asciidoctor/asciidoctor-exteansions-lab[Asciidoctor Extensions Lab]
+3. https://adfasdgea.asd/adfadfasdf/[Unknown Domain]
+4. http://111.222.123.48[Random IP]

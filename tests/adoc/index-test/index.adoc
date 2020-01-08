@@ -1,0 +1,16 @@
+= Document Title
+Doc Writer <doc@example.com>
+:reproducible:
+:listing-caption: Listing
+:source-highlighter: rouge
+:toc:
+// Uncomment next line to add a title page (or set doctype to book)
+//:title-page:
+// Uncomment next line to set page size (default is A4)
+//:pdf-page-size: Letter
+
+An example of a basic http://asciidoc.org[AsciiDoc] document prepared by {author}.
+
+include::chapters/c1.adoc
+include::chapters/c2.adoc
+include::chapters/c3.adoc
