@@ -54,6 +54,7 @@ class TestParse < Test::Unit::TestCase
     assert_false(args.index)
     assert_nil(args.index_file)
   end
+
   def test_index
     args = parse_args(['--index', 'index.adoc'])
     assert_false(args.help)
