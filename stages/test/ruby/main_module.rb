@@ -5,8 +5,10 @@ require_relative './extension_manager.rb'
 require_relative '../../../utils/ruby_utils.rb'
 Dir[File.join(__dir__, 'modules.d', '*.rb')].each { |file| require file }
 
+# hash to cache all filename: converted_adoc pairs
 ADOC_MAP = Hash.new(nil)
 
+# print help
 def print_help
   puts 'Usage: ./script [--help] [--debug] [--index INDEX] [--file FILE] ...'
   puts
@@ -17,12 +19,37 @@ def print_help
   puts '        NOTHING  same as INDEX with INDEX=index.adoc'
 end
 
+# print all loaded extensions
+def print_loaded_extensions
+  puts '*** Loaded extensions:'
+  Toolchain::ExtensionManager.instance.get.each do |ext|
+    puts ext.class.name
+  end
+end
+
+# load adoc file, convert and return
 def load_doc(filename)
   adoc = Asciidoctor.load_file(filename, catalog_assets: true)
   adoc.convert
   return adoc
 end
 
+# test all files given as parameter
+# only used for testing individual files, i.e. '--file' parameter
+def test_files(files)
+  files.each do |f|
+    errors = run_tests(f)
+    next if errors.empty?
+
+    puts f.blue.bold
+    errors.each do |err|
+      puts "#{err[:id]}\t#{err[:msg]}".bold.red
+    end
+  end
+  exit 0
+end
+
+# run all extensions on the filename
 def run_tests(filename)
   if ADOC_MAP[filename].nil?
     adoc = load_doc(filename)
@@ -38,19 +65,22 @@ def run_tests(filename)
   return errors
 end
 
-def check_docs(included_files = nil)
+# check all included files for a given index
+def check_docs(included_files = Dir.glob('**/*.adoc').reject { |name| name.end_with?('index.adoc') })
   errors_map = {}
-  adoc_files = included_files unless included_files.nil?
-  adoc_files = Dir.glob('**/*.adoc') if included_files.nil?
-  adoc_files.each do |f|
+  included_files.each do |f|
     errors = run_tests(f)
     errors_map[f] = errors
   end
   return errors_map
 end
 
+# resolves all errors from index to point to the correct location in include files
+def post_process_errors(index_errors, errors_map)
+end
+
 def main(argv = ARGV)
-  args = parse_args(argv)
+  args = Toolchain::CLI.parse_args(argv)
   ### Print help
   if args.help
     print_help
@@ -58,26 +88,10 @@ def main(argv = ARGV)
   end
 
   ### Print loaded modules
-  if args.debug
-    puts '*** Loaded extensions:'
-    Toolchain::ExtensionManager.instance.get.each do |ext|
-      puts ext.class.name
-    end
-  end
+  print_loaded_extensions if args.debug
 
   ### Run on file arguments
-  if args.file
-    args.files.each do |f|
-      errors = run_tests(f)
-      next if errors.empty?
-
-      puts f.blue.bold
-      errors.each do |err|
-        puts "#{err[:id]}\t#{err[:msg]}".bold.red
-      end
-    end
-    return 0
-  end
+  test_files(args.files) if args.file # will exit if run
 
   ### Run checks on default files
   index_adoc = (args.index || 'index.adoc')
@@ -89,8 +103,10 @@ def main(argv = ARGV)
     return 0
   end
 
+  ### CHECK INCLUDED FILES
   errors_map = check_docs(included_files)
   puts errors_map
 
   # TODO: process errors_map to show which error in index is in which source file
+  # post_process_errors(index_errors, errors_map)
 end

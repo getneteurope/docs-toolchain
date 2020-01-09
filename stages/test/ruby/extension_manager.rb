@@ -3,6 +3,9 @@
 require 'singleton'
 
 module Toolchain
+  # ExtensionManager
+  # used to register extensions based on base_extension,
+  # which are run on every file.
   class ExtensionManager
     include Singleton
     @instance = nil

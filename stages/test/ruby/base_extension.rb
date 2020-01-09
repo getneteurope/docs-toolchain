@@ -3,6 +3,12 @@
 require_relative './extension_manager.rb'
 
 module Toolchain
+  # Base class for extensions,
+  # all derived extensions must implement the run(document) function
+  # and register with the ExtensionManager, e.g.:
+  #
+  # Toolchain::ExtensionManager.instance.register(Toolchain::ExampleChecker.new)
+  #
   class BaseExtension
     def next_id
       return Toolchain::ExtensionManager.instance.next_id
