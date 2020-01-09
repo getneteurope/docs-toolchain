@@ -16,7 +16,7 @@ end
 
 class TestParse < Test::Unit::TestCase
   def test_default
-    args = parse_args([])
+    args = Toolchain::CLI.parse_args([])
     assert_false(args.help)
     assert_false(args.debug)
     assert_false(args.file)
@@ -26,7 +26,7 @@ class TestParse < Test::Unit::TestCase
   end
 
   def test_help
-    args = parse_args(['--help'])
+    args = Toolchain::CLI.parse_args(['--help'])
     assert_true(args.help)
     assert_false(args.debug)
     assert_false(args.file)
@@ -36,7 +36,7 @@ class TestParse < Test::Unit::TestCase
   end
 
   def test_debug
-    args = parse_args(['--debug'])
+    args = Toolchain::CLI.parse_args(['--debug'])
     assert_false(args.help)
     assert_true(args.debug)
     assert_false(args.file)
@@ -46,7 +46,7 @@ class TestParse < Test::Unit::TestCase
   end
 
   def test_files
-    args = parse_args(['--file', 'test.adoc', '--file', 'content.adoc'])
+    args = Toolchain::CLI.parse_args(['--file', 'test.adoc', '--file', 'content.adoc'])
     assert_false(args.help)
     assert_false(args.debug)
     assert_true(args.file)
@@ -56,7 +56,7 @@ class TestParse < Test::Unit::TestCase
   end
 
   def test_index
-    args = parse_args(['--index', 'index.adoc'])
+    args = Toolchain::CLI.parse_args(['--index', 'index.adoc'])
     assert_false(args.help)
     assert_false(args.debug)
     assert_false(args.file)
