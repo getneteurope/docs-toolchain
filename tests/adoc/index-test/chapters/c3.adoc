@@ -1,9 +1,0 @@
-== Conclusion
-
-That's all, folks!
-
-
-== References
-
-1. https://github.com/wirecard/docs-toolchain[Docs Toolchain]
-2. https://github.com/asciidoctor/asciidoctor-exteansions-lab[Asciidoctor Extensions Lab]
