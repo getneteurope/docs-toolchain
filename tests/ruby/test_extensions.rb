@@ -9,10 +9,16 @@ def err_assert(errors, text)
   assert_true(errors.any? { |err| err[:msg].start_with?(text) })
 end
 
-def init(content)
+def init(content, original: false)
   document = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
-  original = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
   document.convert
+  return document
+end
+
+def init2(content)
+  document = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
+  document.convert
+  original = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
   return document, original
 end
 
@@ -50,7 +56,7 @@ class TestIDChecker < Test::Unit::TestCase
 [#my_se¢tion]
 == CC
 '
-    document, original = init(adoc)
+    document, original = init2(adoc)
     errors = Toolchain::IdChecker.new.run(document, original)
     assert_equal(2, errors.length)
   end

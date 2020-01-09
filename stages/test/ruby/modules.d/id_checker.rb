@@ -1,3 +1,4 @@
+# coding: utf-8
 # frozen_string_literal: true
 
 require_relative '../extension_manager.rb'
@@ -7,10 +8,27 @@ module Toolchain
   # ID Checker
   # check IDs according to a stricter standard than the default Asciidoctor standard
   class IdChecker < BaseExtension
-    def run(document)
-      # TODO: get all links and check
-      puts 'Running ID Checks'
-      return []
+    REGEX = /^[A-Za-z0-9_ ]+$/.freeze
+    def run(document, original)
+      errors = []
+      # puts original.reader.read_lines
+      lines = original.reader.read_lines
+      # get ids that asciidoctor recognizes as such
+      adoc_ids = document.catalog[:refs].keys.to_set
+      # parse everything that COULD be an anchor or id manually
+      parsed_ids = lines.map do |line|
+        # match both long and short ids
+        m = /\[(\[(?<long>.+)\]|#(?<short>.+))\]/.match(line)
+        m[:long] || m[:short] unless m.nil?
+      end.reject(&:nil?).to_set # reject all nil entries
+
+      ids = (adoc_ids | parsed_ids).to_a
+      ids.each do |id|
+        log('ID', "checking #{id}", :magenta)
+        msg = "Illegal character: '#{id}' does not match ID criteria"
+        errors << create_error(msg: msg, filename: document.attr('docfile')) unless id =~ REGEX
+      end
+      return errors
     end
   end
 end
