@@ -59,5 +59,6 @@ class TestIDChecker < Test::Unit::TestCase
     document, original = init2(adoc)
     errors = Toolchain::IdChecker.new.run(document, original)
     assert_equal(2, errors.length)
+    # TODO: assert_equal() the two ids with errors
   end
 end
