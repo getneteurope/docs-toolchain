@@ -3,4 +3,4 @@
 set -e
 source "${TOOLCHAIN_PATH}/utils/bash_utils.sh"
 
-rake -f "${TOOLCHAIN_PATH}/Rakefile" build
+rake -f "${TOOLCHAIN_PATH}/Rakefile" docs:test
