@@ -25,3 +25,13 @@ jobs:
     - name: Linting
       run: jshint $(find . -name "*.js")
 
+  ruby:
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:2.6
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install rake and rubocop
+      run: gem install rake rubocop
+    - name:
+      run: rake toolchain:lint
