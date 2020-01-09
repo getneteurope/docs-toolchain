@@ -9,8 +9,15 @@ def err_assert(errors, text)
   assert_true(errors.any? { |err| err[:msg].start_with?(text) })
 end
 
+def init(content)
+  document = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
+  original = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
+  document.convert
+  return document, original
+end
+
 class TestLinkChecker < Test::Unit::TestCase
-  def test_help_cli
+  def test_links
     adoc = '= Test links
 
 1. https://github.com/wirecard/docs-toolchain[Docs Toolchain]
@@ -18,13 +25,33 @@ class TestLinkChecker < Test::Unit::TestCase
 3. https://adfasdgea.asd/adfadfasdf/[Unknown Domain]
 4. http://111.222.123.48[Random IP]
 '
-    document = Asciidoctor.load(adoc, catalog_assets: true)
-    document.convert
+    document = init(adoc)
     assert_equal(4, document.references[:links].length)
     errors = Toolchain::LinkChecker.new.run(document)
     assert_equal(3, errors.length)
     err_assert(errors, '[404] Not Found') # 2.
     err_assert(errors, 'SocketError') # 3.
     err_assert(errors, 'Net::OpenTimeout') # 4.
+  end
+end
+
+class TestIDChecker < Test::Unit::TestCase
+  def test_ids
+    adoc = '= Test IDs
+[[first]]
+== First
+
+[#second]
+== Second
+
+[[illegal_$ign]]
+== Sign
+
+[#my_se¢tion]
+== CC
+'
+    document, original = init(adoc)
+    errors = Toolchain::IdChecker.new.run(document, original)
+    assert_equal(2, errors.length)
   end
 end

@@ -2,4 +2,4 @@
 
 ENV['UNITTEST'] = 'true'
 require_relative './test_cli.rb'
-require_relative './test_adocs.rb'
+require_relative './test_extensions.rb'
