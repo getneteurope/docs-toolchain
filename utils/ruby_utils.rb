@@ -23,3 +23,29 @@ class String
   def blink;          "\e[5m#{self}\e[25m" end
   def reverse_color;  "\e[7m#{self}\e[27m" end
 end
+
+
+def log(tag, msg, color=:blue)
+  return if ENV.has_key?('UNITTEST')
+
+  tag = "[#{tag}]".bold
+  case color
+  when :black
+    tag = tag.black
+  when :red
+    tag = tag.red
+  when :green
+    tag = tag.green
+  when :brown
+    tag = tag.brown
+  when :blue
+    tag = tag.blue
+  when :magenta
+    tag = tag.magenta
+  when :cyan
+    tag = tag.cyan
+  when :gray
+    tag = tag.gray
+  end
+  puts "#{tag} #{msg.bold}"
+end

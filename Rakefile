@@ -1,6 +1,6 @@
 require 'rubocop/rake_task'
 
-task default: %w[lint test]
+task default: %w[toolchain:lint toolchain:test]
 
 namespace :docs do
   task :test do
