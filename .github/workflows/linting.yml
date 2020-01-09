@@ -30,7 +30,7 @@ jobs:
     container:
       image: ruby:2.6
     steps:
-    - uses: actions/checkout@1
+    - uses: actions/checkout@v1
     - name: Install rake and rubocop
       run: gem install rake rubocop
     - name:
