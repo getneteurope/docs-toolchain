@@ -7,6 +7,7 @@ require_relative '../base_extension.rb'
 module Toolchain
   class LinkChecker < BaseExtension
     def run(document)
+      puts 'Running Link Checks'
       errors = []
       links = document.references[:links]
       links.each do |link|

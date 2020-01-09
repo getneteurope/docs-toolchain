@@ -5,7 +5,8 @@ task default: %w[lint test]
 namespace :docs do
   task :test do
     toolchain_path = ENV.has_key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : ENV['PWD']
-    ruby "#{toolchain_path}/stages/test/ruby/main.rb"
+    debug = '--debug' if ENV.has_key?('DEBUG')
+    ruby "#{toolchain_path}/stages/test/ruby/main.rb #{debug}"
   end
 end
 
