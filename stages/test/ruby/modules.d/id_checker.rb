@@ -25,7 +25,7 @@ module Toolchain
       ids = (adoc_ids | parsed_ids).to_a
       ids.each do |id|
         log('ID', "checking #{id}", :magenta)
-        msg = "Illegal character: '#{id}' does not match ID criteria"
+        msg = "Illegal character: '#{id}' does not match ID criteria (#{REGEX.inspect})"
         errors << create_error(msg: msg, filename: document.attr('docfile')) unless id =~ REGEX
       end
       return errors
