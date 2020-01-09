@@ -2,6 +2,10 @@ require 'rubocop/rake_task'
 
 task default: %w[lint test]
 
+task :build do
+  ruby 'stages/test/ruby/main.rb'
+end
+
 task :test do
   ruby 'tests/ruby/main.rb'
 end
