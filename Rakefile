@@ -3,7 +3,8 @@ require 'rubocop/rake_task'
 task default: %w[lint test]
 
 task :build do
-  ruby 'stages/test/ruby/main.rb'
+  toolchain_path = ENV.has_key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : ENV['PWD']
+  ruby "#{toolchain_path}/stages/test/ruby/main.rb"
 end
 
 task :test do
