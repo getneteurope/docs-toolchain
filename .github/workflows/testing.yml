@@ -36,5 +36,5 @@ jobs:
       run: bash stages/setup/setup_main.sh
     - name: "Running tests"
       run: |
-        rake test
+        rake toolchain:test
 

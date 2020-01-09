@@ -34,4 +34,4 @@ jobs:
     - name: Install rake and rubocop
       run: gem install rake rubocop
     - name:
-      run: rake lint
+      run: rake toolchain:lint
