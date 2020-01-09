@@ -18,4 +18,3 @@ namespace :toolchain do
     t.options = ['--fail-level', 'E']
   end
 end
-

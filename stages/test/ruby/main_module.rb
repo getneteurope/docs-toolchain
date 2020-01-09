@@ -94,7 +94,7 @@ def main(argv = ARGV)
   test_files(args.files) if args.file # will exit if run
 
   ### Run checks on default files
-  index_adoc = (args.index || 'index.adoc')
+  index_adoc = (args.index || 'content/index.adoc')
   included_files = load_doc(index_adoc).catalog[:includes]
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)
