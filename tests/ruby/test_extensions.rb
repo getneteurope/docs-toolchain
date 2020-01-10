@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'asciidoctor'
+require 'tmpdir'
 require_relative '../../stages/test/ruby/main_module.rb'
 require_relative '../../stages/test/ruby/cli.rb'
 Dir['../../stages/test/modules.d/*.rb'].each { |file| require file }
@@ -9,16 +10,23 @@ def err_assert(errors, text)
   assert_true(errors.any? { |err| err[:msg].start_with?(text) })
 end
 
-def init(content, original: false)
-  document = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
-  document.convert
+def init(content, name, raw = false)
+  document, original = init2(content)
+  return document, original if raw
+
   return document
 end
 
-def init2(content)
-  document = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
+def init2(content, name)
+  tmp = File.new(File.join(Dir.tmpdir, "test_toolchain_#{name}.adoc"), 'w+')
+  begin
+    tmp.write(content)
+  ensure
+    tmp.close
+  end
+  document = Asciidoctor.load(tmp.path, safe: :safe, catalog_assets: true)
   document.convert
-  original = Asciidoctor.load(content, safe: :safe, catalog_assets: true)
+  original = Asciidoctor.load(tmp.path, safe: :safe, catalog_assets: true)
   return document, original
 end
 
@@ -32,7 +40,7 @@ class TestLinkChecker < Test::Unit::TestCase
 3. https://adfasdgea.asd/adfadfasdf/[Unknown Domain]
 4. http://111.222.123.48[Random IP]
     '
-    document = init(adoc)
+    document = init(adoc, self.class.name)
     assert_equal(4, document.references[:links].length)
     errors = Toolchain::LinkChecker.new.run(document)
     assert_equal(3, errors.length)
@@ -58,7 +66,7 @@ class TestIDChecker < Test::Unit::TestCase
 [#my_se¢tion]
 == CC
     '
-    document, original = init2(adoc)
+    document, original = init2(adoc, self.class.name)
     errors = Toolchain::IdChecker.new.run(document, original)
     # assert_equal(2, errors.length)
     wrong_ids = errors.map do |err|
