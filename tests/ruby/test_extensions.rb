@@ -16,9 +16,9 @@ def init(content, name)
 end
 
 def init2(content, name)
-  tmp = File.new(File.join(Dir.tmpdir, "test_toolchain_#{name}.adoc"), 'w+')
+  tmp = File.open("/tmp/test_toolchain_#{name}.adoc", "w+")
   begin
-    tmp.write(content)
+    tmp.write content
   ensure
     tmp.close
   end
