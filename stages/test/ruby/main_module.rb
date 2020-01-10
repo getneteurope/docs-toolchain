@@ -119,11 +119,12 @@ def main(argv = ARGV)
   test_files(args.files) if args.file # will exit if run
 
   ### Run checks on default files
-  index_adoc = (args.index || DEFAULT_INDEX)
+  index_adoc = args.index_file || DEFAULT_INDEX
   log('INDEX', index_adoc)
   included_files = load_doc(index_adoc)[0].catalog[:includes]
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)
+  print_errors(index_adoc => index_errors)
   # if index_errors.empty?
   #   puts 'No errors found in index.adoc!'.bold.green
   #   return 0
