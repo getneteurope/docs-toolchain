@@ -14,20 +14,21 @@ module Toolchain
 
       log = Logger.new(STDERR)
 
-
+      # TODO research why read_lines can be empty
       lines = original.reader.read_lines
+      lines = original.reader.source_lines if lines.empty?
 
-      log.info("document:")
-      log.info(document.options[:attributes])
+      #log.info("document:")
+      #log.info(document.options[:attributes])
 
-      log.info("lines:")
-      log.info(lines)
+      #log.info("lines:")
+      #log.info(lines)
 
       # get ids that asciidoctor recognizes as such
       adoc_ids = document.catalog[:refs].keys.to_set
 
-      log.info("adoc_ids:")
-      log.info(adoc_ids)
+      #log.info("adoc_ids:")
+      #log.info(adoc_ids)
 
       # parse everything that COULD be an anchor or id manually
       parsed_ids = lines.map do |line|
@@ -39,9 +40,8 @@ module Toolchain
 
       ids = (adoc_ids | parsed_ids).to_a
 
-      log.info("parsed_ids:")
-      log.info(parsed_ids)
-
+      #log.info("parsed_ids:")
+      #log.info(parsed_ids)
 
       ids.each do |id|
         log('ID', "checking #{id}", :magenta)
