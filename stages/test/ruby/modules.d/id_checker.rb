@@ -17,8 +17,8 @@ module Toolchain
       # parse everything that COULD be an anchor or id manually
       parsed_ids = lines.map do |line|
         # match both long and short ids
-        /\[(\[(?<long>.+)\]|#(?<short>.+))\]/.match(line) do |m|
-          m[:long] || m[:short]
+        /\[(\[|#)(?<id>[^\]]+)/.match(line) do |m|
+        m[:id]
         end
       end.reject(&:nil?).to_set # reject all nil entries
 
