@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'asciidoctor'
-require 'tmpdir'
 require_relative '../../stages/test/ruby/main_module.rb'
 require_relative '../../stages/test/ruby/cli.rb'
 Dir['../../stages/test/modules.d/*.rb'].each { |file| require file }
@@ -16,9 +15,9 @@ def init(content, name)
 end
 
 def init2(content, name)
-  tmp = File.open("/tmp/test_toolchain_#{name}.adoc", "w+")
+  tmp = File.open(File.join('/tmp', "test_toolchain_#{name}.adoc"), 'w+')
   begin
-    tmp.write content
+    tmp.write(content)
   ensure
     tmp.close
   end
