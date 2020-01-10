@@ -11,15 +11,15 @@ module Toolchain
     REGEX = /^[A-Za-z0-9_ ]+$/.freeze
     def run(document, original)
       errors = []
-      # puts original.reader.read_lines
       lines = original.reader.read_lines
       # get ids that asciidoctor recognizes as such
       adoc_ids = document.catalog[:refs].keys.to_set
       # parse everything that COULD be an anchor or id manually
       parsed_ids = lines.map do |line|
         # match both long and short ids
-        m = /\[(\[(?<long>.+)\]|#(?<short>.+))\]/.match(line)
-        m[:long] || m[:short] unless m.nil?
+        /\[(\[(?<long>.+)\]|#(?<short>.+))\]/.match(line) do |m|
+          m[:long] || m[:short]
+        end
       end.reject(&:nil?).to_set # reject all nil entries
 
       ids = (adoc_ids | parsed_ids).to_a

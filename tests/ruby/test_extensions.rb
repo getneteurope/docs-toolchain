@@ -24,13 +24,14 @@ end
 
 class TestLinkChecker < Test::Unit::TestCase
   def test_links
+    omit_if(ENV.key?('SKIP_NETWORK'))
     adoc = '= Test links
 
 1. https://github.com/wirecard/docs-toolchain[Docs Toolchain]
 2. https://github.com/asciidoctor/asciidoctor-exteansions-lab[Asciidoctor Extensions Lab]
 3. https://adfasdgea.asd/adfadfasdf/[Unknown Domain]
 4. http://111.222.123.48[Random IP]
-'
+    '
     document = init(adoc)
     assert_equal(4, document.references[:links].length)
     errors = Toolchain::LinkChecker.new.run(document)
@@ -43,6 +44,7 @@ end
 
 class TestIDChecker < Test::Unit::TestCase
   def test_ids
+    wrong_ref = %w[illegal_$ign my_se¢tion]
     adoc = '= Test IDs
 [[first]]
 == First
@@ -55,10 +57,16 @@ class TestIDChecker < Test::Unit::TestCase
 
 [#my_se¢tion]
 == CC
-'
+    '
     document, original = init2(adoc)
     errors = Toolchain::IdChecker.new.run(document, original)
-    assert_equal(2, errors.length)
-    # TODO: assert_equal() the two ids with errors
+    # assert_equal(2, errors.length)
+    wrong_ids = errors.map do |err|
+      msg = err[:msg]
+      startc = msg.index("'") + 1
+      endc = msg.index("'", startc) - 1
+      msg[startc..endc]
+    end
+    assert_equal(wrong_ref, wrong_ids)
   end
 end
