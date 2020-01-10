@@ -8,7 +8,7 @@ module Toolchain
   # ID Checker
   # check IDs according to a stricter standard than the default Asciidoctor standard
   class IdChecker < BaseExtension
-    REGEX = /^[A-Za-z0-9_ ]+$/.freeze
+    REGEX = /^[A-Za-z0-9_]+$/.freeze
     def run(document, original)
       errors = []
       lines = original.reader.read_lines
@@ -26,7 +26,7 @@ module Toolchain
       ids.each do |id|
         log('ID', "checking #{id}", :magenta)
         msg = "Illegal character: '#{id}' does not match ID criteria (#{REGEX.inspect})"
-        errors << create_error(msg: msg, filename: document.attr('docfile')) unless id =~ REGEX
+        errors << create_error(msg: msg, filename: document.attr('docfile')) unless REGEX.match?(id)
       end
       return errors
     end
