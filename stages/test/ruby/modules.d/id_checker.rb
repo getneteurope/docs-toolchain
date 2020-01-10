@@ -18,7 +18,7 @@ module Toolchain
       parsed_ids = lines.map do |line|
         # match both long and short ids
         /\[(\[|#)(?<id>[^\]]+)/.match(line) do |m|
-        m[:id]
+          m[:id]
         end
       end.reject(&:nil?).to_set # reject all nil entries
 

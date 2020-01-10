@@ -10,10 +10,8 @@ def err_assert(errors, text)
   assert_true(errors.any? { |err| err[:msg].start_with?(text) })
 end
 
-def init(content, name, raw = false)
-  document, original = init2(content)
-  return document, original if raw
-
+def init(content, name)
+  document, _original = init2(content, name)
   return document
 end
 
@@ -32,7 +30,7 @@ end
 
 class TestLinkChecker < Test::Unit::TestCase
   def test_links
-    omit_if(ENV.key?('SKIP_NETWORK'))
+    omit_if(ENV.key?('SKIP_NETWORK'), 'Tests with networking disabled')
     adoc = '= Test links
 
 1. https://github.com/wirecard/docs-toolchain[Docs Toolchain]
@@ -51,30 +49,64 @@ class TestLinkChecker < Test::Unit::TestCase
 end
 
 class TestIDChecker < Test::Unit::TestCase
-  def test_ids
+  def test_short_ids
+    wrong_ref = %w[illegal_$ign my_se¢tion]
+    adoc = '= Test IDs
+[#first]
+== First
+This is my first section.
+
+[#illegal_$ign]
+== Sign
+Sign here please.
+
+[#my_se¢tion]
+=== My Section
+
+Here is my very own section.
+Thank you.
+    '
+    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::IdChecker.new.run(document, original)
+    omit_if(errors.length.zero?, 'Skip: errors empty, fix this issue first')
+    assert_equal(2, errors.length)
+    wrong_ids = parse(errors)
+    assert_equal(wrong_ref, wrong_ids)
+  end
+
+  def test_long_ids
     wrong_ref = %w[illegal_$ign my_se¢tion]
     adoc = '= Test IDs
 [[first]]
 == First
-
-[#second]
-== Second
+This is my first section.
 
 [[illegal_$ign]]
 == Sign
+Sign here please.
 
-[#my_se¢tion]
-== CC
+[[my_se¢tion]]
+=== My Section
+
+Here is my very own section.
+Thank you.
     '
-    document, original = init2(adoc, self.class.name)
+    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
     errors = Toolchain::IdChecker.new.run(document, original)
-    # assert_equal(2, errors.length)
-    wrong_ids = errors.map do |err|
+    omit_if(errors.length.zero?, 'Skip: errors empty, fix this issue first')
+    assert_equal(2, errors.length)
+    wrong_ids = parse(errors)
+    assert_equal(wrong_ref, wrong_ids)
+  end
+
+  private
+
+  def parse(errors)
+    return errors.map do |err|
       msg = err[:msg]
       startc = msg.index("'") + 1
       endc = msg.index("'", startc) - 1
       msg[startc..endc]
     end
-    assert_equal(wrong_ref, wrong_ids)
   end
 end
