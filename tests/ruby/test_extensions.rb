@@ -5,7 +5,7 @@ require_relative '../../stages/test/ruby/main_module.rb'
 require_relative '../../stages/test/ruby/cli.rb'
 Dir['../../stages/test/modules.d/*.rb'].each { |file| require file }
 
-def err_assert(errors, text)
+def assert_any_startwith(errors, text)
   assert_true(errors.any? { |err| err[:msg].start_with?(text) })
 end
 
@@ -41,9 +41,9 @@ class TestLinkChecker < Test::Unit::TestCase
     assert_equal(4, document.references[:links].length)
     errors = Toolchain::LinkChecker.new.run(document)
     assert_equal(3, errors.length)
-    err_assert(errors, '[404] Not Found') # 2.
-    err_assert(errors, 'SocketError') # 3.
-    err_assert(errors, 'Net::OpenTimeout') # 4.
+    assert_any_startwith(errors, '[404] Not Found') # 2.
+    assert_any_startwith(errors, 'SocketError') # 3.
+    assert_any_startwith(errors, 'Net::OpenTimeout') # 4.
   end
 end
 
