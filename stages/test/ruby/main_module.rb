@@ -10,6 +10,8 @@ ADOC_MAP = Hash.new(nil)
 # default index file
 DEFAULT_INDEX = 'content/index.adoc'
 
+Entry = Struct.new(:adoc, :output)
+
 # print help
 def print_help
   puts 'Usage: ./script [--help] [--debug] [--index INDEX] [--file FILE] ...'
@@ -29,14 +31,27 @@ def print_loaded_extensions
   end
 end
 
+def print_errors(errors_map)
+  errors_map.each do |file, errors|
+    errors.each do |err|
+      puts "#{err[:id]}\t#{err[:msg]}".bold.red
+    end
+  end
+end
+
 # load adoc file, convert and return
+# https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
 def load_doc(filename, safe: :safe, parse: false)
   adoc = Asciidoctor.load_file(filename,
-                               catalog_assets: true,
-                               safe: safe,
-                               parse: parse)
+    catalog_assets: true,
+    safe: safe,
+    parse: parse)
+  original = Asciidoctor.load_file(filename,
+    catalog_assets: true,
+    safe: safe,
+    parse: parse)
   adoc.convert
-  return adoc
+  return adoc, original
 end
 
 # test all files given as parameter
@@ -57,16 +72,19 @@ end
 # run all extensions on the filename
 def run_tests(filename)
   if ADOC_MAP[filename].nil?
-    adoc = load_doc(filename)
-    ADOC_MAP[filename] = adoc
+    adoc, output = load_doc(filename)
+    entry = Entry.new(adoc: adoc, output: output)
+    ADOC_MAP[filename] = entry
   else
-    adoc = ADOC_MAP[filename]
+    entry = ADOC_MAP[filename]
+    adoc = entry.adoc
+    output = entry.output
   end
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
     log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(adoc)
+    errors += ext.run(adoc, output)
   end
   return errors
 end
@@ -101,11 +119,12 @@ def main(argv = ARGV)
   test_files(args.files) if args.file # will exit if run
 
   ### Run checks on default files
-  index_adoc = (args.index || DEFAULT_INDEX)
+  index_adoc = args.index_file || DEFAULT_INDEX
   log('INDEX', index_adoc)
-  included_files = load_doc(index_adoc).catalog[:includes]
+  included_files = load_doc(index_adoc)[0].catalog[:includes]
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)
+  print_errors(index_adoc => index_errors)
   # if index_errors.empty?
   #   puts 'No errors found in index.adoc!'.bold.green
   #   return 0
@@ -115,7 +134,7 @@ def main(argv = ARGV)
   # errors_map = check_docs(included_files, File.join(ENV['PWD'],
   #                                                   File.dirname(index_adoc)))
   errors_map = check_docs(included_files, File.dirname(index_adoc))
-  puts errors_map
+  print_errors(errors_map)
 
   # TODO: process errors_map to show which error in index is in which source file
   # post_process_errors(index_errors, errors_map)
