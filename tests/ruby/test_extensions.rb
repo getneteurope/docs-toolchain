@@ -22,9 +22,9 @@ def init2(content, name)
   ensure
     tmp.close
   end
-  document = Asciidoctor.load(tmp.path, safe: :safe, catalog_assets: true)
+  document = Asciidoctor.load_file(tmp.path, safe: :safe, catalog_assets: true)
   document.convert
-  original = Asciidoctor.load(tmp.path, safe: :safe, catalog_assets: true)
+  original = Asciidoctor.load_file(tmp.path, safe: :safe, catalog_assets: true)
   return document, original
 end
 
