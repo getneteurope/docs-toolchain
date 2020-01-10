@@ -67,6 +67,9 @@ Otherwise
 
 To run the toolchain locally, or run the unit tests, the following requirements must be met:
 * bats
+* Ruby 2.x
+* Python 3
+* Node.js 13
 * installed dependencies
 
 In order to install dependencies, run the following at the root of the project:
