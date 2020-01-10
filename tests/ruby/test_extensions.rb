@@ -67,7 +67,6 @@ Thank you.
     '
     document, original = init2(adoc, "#{self.class.name}_#{__method__}")
     errors = Toolchain::IdChecker.new.run(document, original)
-    omit_if(errors.length.zero?, 'Skip: errors empty, fix this issue first')
     assert_equal(2, errors.length)
     wrong_ids = parse(errors)
     assert_equal(wrong_ref, wrong_ids)
@@ -92,7 +91,6 @@ Thank you.
     '
     document, original = init2(adoc, "#{self.class.name}_#{__method__}")
     errors = Toolchain::IdChecker.new.run(document, original)
-    omit_if(errors.length.zero?, 'Skip: errors empty, fix this issue first')
     assert_equal(2, errors.length)
     wrong_ids = parse(errors)
     assert_equal(wrong_ref, wrong_ids)

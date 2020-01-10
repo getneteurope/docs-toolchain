@@ -11,24 +11,12 @@ module Toolchain
     REGEX = /^[A-Za-z0-9_]+$/.freeze
     def run(document, original)
       errors = []
-
-      log = Logger.new(STDERR)
-
       # TODO research why read_lines can be empty
       lines = original.reader.read_lines
       lines = original.reader.source_lines if lines.empty?
 
-      #log.info("document:")
-      #log.info(document.options[:attributes])
-
-      #log.info("lines:")
-      #log.info(lines)
-
       # get ids that asciidoctor recognizes as such
       adoc_ids = document.catalog[:refs].keys.to_set
-
-      #log.info("adoc_ids:")
-      #log.info(adoc_ids)
 
       # parse everything that COULD be an anchor or id manually
       parsed_ids = lines.map do |line|
@@ -38,12 +26,7 @@ module Toolchain
         end
       end.reject(&:nil?).to_set # reject all nil entries
 
-      ids = (adoc_ids | parsed_ids).to_a
-
-      #log.info("parsed_ids:")
-      #log.info(parsed_ids)
-
-      ids.each do |id|
+      (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
         msg = "Illegal character: '#{id}' does not match ID criteria (#{REGEX.inspect})"
         errors << create_error(msg: msg, filename: document.attr('docfile')) unless REGEX.match?(id)
