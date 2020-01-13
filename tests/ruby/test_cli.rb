@@ -7,60 +7,54 @@ require_relative './util.rb'
 
 class TestParse < Test::Unit::TestCase
   def test_default
-    args = Toolchain::CLI.parse_args([])
+    args, = Toolchain::CLI.parse_args([])
     assert_false(args.help)
     assert_false(args.debug)
-    assert_false(args.file)
     assert_empty(args.files)
-    assert_false(args.index)
-    assert_nil(args.index_file)
+    assert_nil(args.index)
   end
 
   def test_help
-    args = Toolchain::CLI.parse_args(['--help'])
+    args, = Toolchain::CLI.parse_args(%w[--help])
     assert_true(args.help)
     assert_false(args.debug)
-    assert_false(args.file)
     assert_empty(args.files)
-    assert_false(args.index)
-    assert_nil(args.index_file)
+    assert_nil(args.index)
   end
 
   def test_debug
-    args = Toolchain::CLI.parse_args(['--debug'])
+    args, = Toolchain::CLI.parse_args(%w[--debug])
     assert_false(args.help)
     assert_true(args.debug)
-    assert_false(args.file)
     assert_empty(args.files)
-    assert_false(args.index)
-    assert_nil(args.index_file)
+    assert_nil(args.index)
   end
 
   def test_files
-    args = Toolchain::CLI.parse_args(['--file', 'test.adoc', '--file', 'content.adoc'])
+    args, = Toolchain::CLI.parse_args(%w[--file test.adoc --file content.adoc])
     assert_false(args.help)
     assert_false(args.debug)
-    assert_true(args.file)
     assert_equal(['test.adoc', 'content.adoc'], args.files)
-    assert_false(args.index)
-    assert_nil(args.index_file)
+    assert_nil(args.index)
   end
 
   def test_index
-    args = Toolchain::CLI.parse_args(['--index', 'index.adoc'])
+    args, = Toolchain::CLI.parse_args(%w[--index index.adoc])
     assert_false(args.help)
     assert_false(args.debug)
-    assert_false(args.file)
     assert_empty(args.files)
-    assert_true(args.index)
-    assert_equal('index.adoc', args.index_file)
+    assert_equal('index.adoc', args.index)
+  end
+
+  def test_index_and_file
+    assert_raise(ArgumentError) { Toolchain::CLI.parse_args(%w[--index index.adoc --file file.adoc]) }
   end
 end
 
 class TestCLI < Test::Unit::TestCase
   def test_help_cli
     output = with_captured_stdout do
-      main(['--help'])
+      main(%w[--help])
     end
     assert_true(output.start_with?('Usage:'))
   end
