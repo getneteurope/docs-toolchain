@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'asciidoctor'
-require_relative '../../stages/test/ruby/main_module.rb'
-require_relative '../../stages/test/ruby/cli.rb'
+require_relative '../../stages/test/main_module.rb'
+require_relative '../../stages/test/cli.rb'
 Dir['../../stages/test/modules.d/*.rb'].each { |file| require file }
 
 def assert_any_startwith(errors, text)
