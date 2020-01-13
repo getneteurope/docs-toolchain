@@ -1,41 +1,39 @@
 # frozen_string_literal: true
 
 require 'ostruct'
-
-def default_hash
-  args = Hash.new(false)
-  %w[help debug file index].each { |arg| args[arg] = false }
-  args['files'] = []
-  args['index_file'] = nil
-  return args
-end
+require 'optparse'
 
 module Toolchain
   # CLI argument parsing
   module CLI
     def self.parse_args(argv = ARGV)
-      last = nil
-      args = default_hash
+      args = Hash.new(nil)
+      args[:debug] = false
+      args[:index] = nil
+      args[:files] = []
 
-      argv.each do |arg|
-        if %w[file index].include?(last)
-          args['files'] << arg if last == 'file'
-          args['index_file'] = arg if last == 'index'
-          last = nil
-          next
+      OptionParser.new do |parser|
+        parser.banner = 'Usage: main.rb [options] [--index INDEX | --file FILE [--file FILE ...]]'
+
+        parser.on('-d', '--debug', 'enable debug mode') do
+          args[:debug] = true
         end
 
-        arg2 = arg.gsub('--', '')
-        case arg2
-        when 'debug', 'help', 'file', 'index'
-          args[arg2] = true
-        else
-          raise "Unknown argument '#{arg}'"
+        parser.on('-iINDEX', '--index INDEX', 'specify an index file') do |index|
+          args[:index] = index
         end
-        last = arg2
+        parser.on('-fFILE', '--file FILE', 'specify multiple files instead of one index file') do |file|
+          args[:files] << file
+        end
+
+        parser.on('-h', '--help', 'print this help') do
+          puts parser
+          exit
+        end.parse!(argv)
       end
 
-      raise 'Cannot provide "file" and "index" arguments simultaneously. Pick one!' if args['file'] && args['index']
+      err_msg = 'Cannot provide "file" and "index" arguments simultaneously. Pick one!'
+      raise ArgumentError, err_msg if args[:index] && args[:files]
 
       return OpenStruct.new(args)
     end
