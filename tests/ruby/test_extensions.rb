@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'asciidoctor'
+require 'test/unit'
 require_relative '../../stages/test/ruby/main_module.rb'
 require_relative '../../stages/test/ruby/cli.rb'
 Dir['../../stages/test/modules.d/*.rb'].each { |file| require file }
