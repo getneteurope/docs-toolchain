@@ -95,7 +95,7 @@ def post_process_errors(index_errors, errors_map)
 end
 
 def main(argv = ARGV)
-  args, opt_parser = Toolchain::CLI.parse_args(argv)
+  args, opt_parser = Toolchain::Test::CLI.parse_args(argv)
   ### Print help
   if args.help
     puts opt_parser
