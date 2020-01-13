@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'test/unit'
-require_relative '../../stages/test/ruby/main_module.rb'
-require_relative '../../stages/test/ruby/cli.rb'
+require_relative '../../stages/test/main_module.rb'
+require_relative '../../stages/test/cli.rb'
 require_relative './util.rb'
 
 class TestParse < Test::Unit::TestCase
