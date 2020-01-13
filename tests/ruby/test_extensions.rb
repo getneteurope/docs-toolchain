@@ -28,23 +28,18 @@ def init2(content, name)
   return document, original
 end
 
-class TestLinkChecker < Test::Unit::TestCase
-  def test_links
-    omit_if(ENV.key?('SKIP_NETWORK'), 'Tests with networking disabled')
-    adoc = '= Test links
+class TestPatternBlacklist < Test::Unit::TestCase
+  def test_pattern_blacklist
+    adoc = '= Bad lines
 
-1. https://github.com/wirecard/docs-toolchain[Docs Toolchain]
-2. https://github.com/asciidoctor/asciidoctor-exteansions-lab[Asciidoctor Extensions Lab]
-3. https://adfasdgea.asd/adfadfasdf/[Unknown Domain]
-4. http://111.222.123.48[Random IP]
+======= too long heading
+
+document-center
+
     '
-    document = init(adoc, self.class.name)
-    assert_equal(4, document.references[:links].length)
-    errors = Toolchain::LinkChecker.new.run(document)
-    assert_equal(3, errors.length)
-    assert_any_startwith(errors, '[404] Not Found') # 2.
-    assert_any_startwith(errors, 'SocketError') # 3.
-    assert_any_startwith(errors, 'Net::OpenTimeout') # 4.
+    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::PatternBlacklist.new.run(document, original)
+    assert_equal(2, errors.length)
   end
 end
 
