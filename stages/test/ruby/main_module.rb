@@ -13,16 +13,6 @@ DEFAULT_INDEX = 'content/index.adoc'
 Entry = Struct.new(:adoc, :output)
 
 # print help
-def print_help
-  puts 'Usage: ./script [--help] [--debug] [--index INDEX] [--file FILE] ...'
-  puts
-  puts 'Provide either:'
-  puts '        INDEX    a single index file, automatically following the'
-  puts '                 include statements to find errors'
-  puts '        FILE     one or multiple files, includes will not be followed'
-  puts '        NOTHING  same as INDEX with INDEX=index.adoc'
-end
-
 # print all loaded extensions
 def print_loaded_extensions
   puts '*** Loaded extensions:'
@@ -105,10 +95,10 @@ def post_process_errors(index_errors, errors_map)
 end
 
 def main(argv = ARGV)
-  args = Toolchain::CLI.parse_args(argv)
+  args, opt_parser = Toolchain::CLI.parse_args(argv)
   ### Print help
   if args.help
-    print_help
+    puts opt_parser
     return 0
   end
 
