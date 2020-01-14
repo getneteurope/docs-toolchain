@@ -11,7 +11,9 @@ while [[ -z ${TOOLCHAIN_PATH} ]]; do
 done
 export TOOLCHAIN_PATH
 
-source ${TOOLCHAIN_PATH}/utils/log/log.sh
+log() {
+    echo "$@"
+}
 
 _setup() {
     export log
