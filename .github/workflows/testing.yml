@@ -5,36 +5,25 @@ env:
   TOOLCHAIN_PATH: .
 
 jobs:
-  bats:
-    runs-on: ubuntu-latest
-    container:
-      image: bats/bats:latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Setup
-      run: bash stages/setup/setup_main.sh
-    - name: Run tests
-      run: |
-        bats -r tests/
-
-  nodejs:
-    runs-on: ubuntu-latest
-    container:
-      image: node:13
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run tests
-      run: echo "Running tests"
-
-  ruby:
+  test:
     runs-on: ubuntu-latest
     container:
       image: ruby:2.6
     steps:
     - uses: actions/checkout@v1
     - name: Setup
-      run: bash stages/setup/setup_main.sh
+      run: bash setup/setup_main.sh
     - name: "Running tests"
       run: |
         rake toolchain:test
 
+  lint:
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:2.6
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install rake and rubocop
+      run: gem install rake rubocop
+    - name:
+      run: rake toolchain:lint
