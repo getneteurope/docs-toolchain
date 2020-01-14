@@ -6,16 +6,11 @@ require_relative '../base_extension.rb'
 module Toolchain
   # looks up a list of prohibited patterns
   class PatternBlacklist < BaseExtension
-    def run(document, original, pattern_file_content = nil)
+    def run(document, original, blacklist_file = '../blacklist.txt')
       errors = []
-      if pattern_file_content.nil?
-        blacklist_file = '../blacklist.txt'
-        blacklist_file = File.open(blacklist_file, 'r')
-        blacklist_patterns = blacklist_file.readlines
-        blacklist_file.close
-      else
-        blacklist_patterns = pattern_file_content.lines.to_a
-      end
+      blacklist_file = File.open(blacklist_file, 'r')
+      blacklist_patterns = blacklist_file.readlines
+      blacklist_file.close
 
       blacklist_patterns.delete_if { |line| !line.match? %r{^/(.+)/$} }
 

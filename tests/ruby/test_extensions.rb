@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Test directly:
+# SKIP_NETWORK=true ruby tests/ruby/test_extensions.rb
+
 require 'asciidoctor'
 require 'test/unit'
 require_relative '../../stages/test/ruby/main_module.rb'
@@ -15,16 +18,12 @@ def init(content, name)
   return document
 end
 
-def init2(content, name)
-  tmp = File.open(File.join('/tmp', "test_toolchain_#{name}.adoc"), 'w+')
-  begin
-    tmp.write(content)
-  ensure
-    tmp.close
-  end
-  document = Asciidoctor.load_file(tmp.path, safe: :safe, catalog_assets: true)
+def init2(content, name, filename = nil)
+  filename = name + '.adoc' if filename.nil?
+  tempfile_path = write_tempfile(filename, content)
+  document = Asciidoctor.load_file(tempfile_path, safe: :safe, catalog_assets: true)
   document.convert
-  original = Asciidoctor.load_file(tmp.path, safe: :safe, catalog_assets: true)
+  original = Asciidoctor.load_file(tempfile_path, safe: :safe, catalog_assets: true)
   return document, original
 end
 
@@ -46,8 +45,9 @@ document
 /={6,}/
 /bad_word/
     '
-    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
-    errors = Toolchain::PatternBlacklist.new.run(document, original, blacklist_patterns)
+    blacklist_file_path = write_tempfile('blacklist_patterns.txt', blacklist_patterns)
+    document, original = init2(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
+    errors = Toolchain::PatternBlacklist.new.run(document, original, blacklist_file_path)
     assert_equal(3, errors.length)
   end
 end
