@@ -25,12 +25,14 @@ The toolchain is designed to run through different stages, that have specific re
         * `header.js.d/`: scripts that need to be loaded at the beginning, will be combined to `header.js` and minified
         * `footer.js.d/`: scripts that need to be loaded at the end, will be combined to `footer.js` and minified
     * run custom build scripts `build.d/*.sh`
-4. **deploy**:
+    
+4. **post**:
+    * post processing for additional features, like lunr.js
+5. **deploy**:
     * [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
     * required variables, see [Configuration/Secret/AWS](#Secret)
-
-5. **post-processing**:
-    * send Slack message if everything passed, see [Configuration/Secret/Slack](#Secret)
+6. **notify**:
+    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
 
 ## Configuration
 There are some variables that need to be secret, while others can be public.
