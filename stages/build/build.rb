@@ -28,16 +28,19 @@ module Toolchain
       options = {
         requires: %w[],
         attributes: {
-          linkcss: true,
-          stylesdir: 'css',
-          stylesheet: 'main.css',
-          icons: 'font',
-          toc: 'left',
-          systemtimestamp: %x(date +%s)
+          'linkcss' => true,
+          'stylesdir' => 'css',
+          'stylesheet' => 'main.css',
+          'icons' => 'font',
+          'toc' => 'left',
+          'systemtimestamp' => %x(date +%s)
         },
+        safe: :safe,
         failure_level: 'WARN'
       }
-      Asciidoctor.convert_file(index_path, to_file: true, options: options)
+      Asciidoctor.convert_file(index_path, options)
+      # doc = Asciidoctor.load_file(index_path, options)
+      # doc.convert
 
       # move web resources to html/
       html_dir = File.join(build_dir, 'html')
