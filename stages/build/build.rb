@@ -2,6 +2,7 @@
 
 require 'asciidoctor'
 require 'fileutils'
+require_relative '../../utils/ruby_utils.rb'
 
 def mkdir(path)
   Dir.mkdir(path) unless Dir.exist?(path)
@@ -25,6 +26,8 @@ module Toolchain
         File.exist?(index_path)
 
       # call asciidoctor
+      # FIXME hardcoded, extract attributes and read config file from content repo
+      # or overwrite default attributes with a config file
       options = {
         requires: %w[],
         attributes: {
@@ -53,6 +56,7 @@ module Toolchain
         f = File.join(build_dir, f)
         FileUtils.mv(f, html_dir, force: true) if File.exist?(f)
       end
+      stage_log(:build, "Files are in #{html_dir}")
     end
   end
 end
