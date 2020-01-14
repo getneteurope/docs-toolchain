@@ -33,13 +33,22 @@ class TestPatternBlacklist < Test::Unit::TestCase
     adoc = '= Bad lines
 
 ======= too long heading
-
+WPP
 document-center
 
     '
+    blacklist_patterns = '
+# do not match this comment
+// do not match this comment
+/document-center/
+/WPP/
+document
+/={6,}/
+/bad_word/
+    '
     document, original = init2(adoc, "#{self.class.name}_#{__method__}")
-    errors = Toolchain::PatternBlacklist.new.run(document, original)
-    assert_equal(2, errors.length)
+    errors = Toolchain::PatternBlacklist.new.run(document, original, blacklist_patterns)
+    assert_equal(3, errors.length)
   end
 end
 
