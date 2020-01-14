@@ -14,11 +14,11 @@ _setup() {
 _build() {
     pushd "$BUILD_PATH" >/dev/null
     asciidoctor --failure-level=WARN \
-        -a linkcss -a stylesdir=css \
-        -a icons=font -a toc=left -a systemtimestamp="$(date +%s)" \
-        index.adoc
-        # -a linkcss -a stylesheet=main.css -a stylesdir=css \
-    
+                -a linkcss -a stylesdir=css \
+                -a icons=font -a toc=left -a systemtimestamp="$(date +%s)" \
+                index.adoc
+    # -a linkcss -a stylesheet=main.css -a stylesdir=css \
+
     mkdir -p html
     mv ./*.html css/ html/
     # TODO: add CSS and JS folders

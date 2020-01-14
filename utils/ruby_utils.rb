@@ -25,7 +25,7 @@ class String
 end
 
 
-def log(tag, msg, color=:blue)
+def log(tag, msg, color=:blue, bold=false)
   return if ENV.has_key?('UNITTEST')
 
   tag = "[#{tag}]".bold
@@ -47,5 +47,14 @@ def log(tag, msg, color=:blue)
   when :gray
     tag = tag.gray
   end
-  puts "#{tag} #{msg.bold}"
+  msg = msg.bold if bold
+  puts "#{tag} #{msg}"
+end
+
+def stage_log(stage, msg, color: :green)
+  stages = %w[setup test build deploy post notify]
+  stage = stage.to_s.upcase
+  longest = stages.max { |a,b| a.length <=> b.length }.length
+  stage = ' ' * (longest - stage.length) + stage
+  log(stage, msg, color, true)
 end
