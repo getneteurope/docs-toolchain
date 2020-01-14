@@ -13,6 +13,13 @@ namespace :docs do
     debug = '--debug' if ENV.key?('DEBUG')
     ruby "#{toolchain_path}/stages/test/main.rb #{debug}"
   end
+
+  desc 'Run build stage'
+  task :build do
+    toolchain_path = get_toolchain_path
+    debug = '--debug' if ENV.key?('DEBUG')
+    ruby "#{toolchain_path}/stages/build/main.rb #{debug}"
+  end
 end
 
 namespace :toolchain do
