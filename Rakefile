@@ -7,7 +7,7 @@ namespace :docs do
   task :test do
     toolchain_path = ENV.key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : ENV['PWD']
     debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/stages/test/ruby/main.rb #{debug}"
+    ruby "#{toolchain_path}/stages/test/main.rb #{debug}"
   end
 end
 

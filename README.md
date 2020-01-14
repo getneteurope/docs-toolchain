@@ -9,8 +9,8 @@ The toolchain is designed to run through different stages, that have specific re
     * create info files (like git information, e.g. branch, commit author, last edited by, etc.)
     * validate all configuration files
     * test the current commit with:
-        * predefined tests
-        * custom test scripts (in `tests.d/*.sh`)
+        * predefined tests by the toolchain (`stages/test/ruby/modules.d/`)
+        * custom tests (`${CONTENT_REPO}/stages/test/modules.d/`)
         * abort the build if necessary
     * `/tmp/errors.json` is the central point of warnings and errors, each testing stage will add warnings/errors to this file via the script `add-error.py`.
     * *optional*: send slack message
