@@ -14,16 +14,16 @@ jobs:
     - name: Linting
       run: pylint $(find . -name "*.py")
 
-  javascript:
-    runs-on: ubuntu-latest
-    container:
-      image: node:13
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install jshint
-      run: npm install -g jshint
-    - name: Linting
-      run: jshint $(find . -name "*.js")
+  # javascript:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: node:13
+  #   steps:
+  #   - uses: actions/checkout@v1
+  #   - name: Install jshint
+  #     run: npm install -g jshint
+  #   - name: Linting
+  #     run: jshint $(find . -name "*.js")
 
   ruby:
     runs-on: ubuntu-latest
