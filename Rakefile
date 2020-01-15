@@ -1,19 +1,12 @@
 require 'rubocop/rake_task'
 
-task default: %w[toolchain:lint toolchain:test]
+task default: %w[toolchain:test toolchain:lint]
 
 def toolchain_path
   ENV.key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : File.dirname(__FILE__)
 end
 
 namespace :docs do
-  desc 'Run setup'
-  task :setup do
-    sh "#{toolchain_path}/setup/setup.sh" do |output|
-      puts output
-    end
-  end
-
   desc 'Run test stage'
   task :test do
     debug = '--debug' if ENV.key?('DEBUG')
@@ -28,11 +21,6 @@ namespace :docs do
 end
 
 namespace :toolchain do
-  desc 'Run toolchain setup'
-  task :setup do
-    sh "bundle install"
-  end
-
   desc 'Run toolchain unit tests'
   task :test do
     ruby 'test/main.rb'

@@ -11,17 +11,14 @@ jobs:
     #   image: ruby:2.6
 
     steps:
-    - name: Setup ruby 2.6
+    - name: "Setup ruby 2.6"
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
     - uses: actions/checkout@v1
-    - name: Install rake
+    - name: "Install Gems"
       run: |
-        gem install rake
-    - name: Setup
-      run: |
-        rake toolchain:setup
+        bash setup/setup.sh
     - name: "Running unit tests"
       run: |
         rake toolchain:test
