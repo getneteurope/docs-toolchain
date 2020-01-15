@@ -1,33 +1,39 @@
 # docs-toolchain
 Toolchain for TecDoc managed documentation repositories
 
+## Disclaimer
+
+Under heavy development, everything is subject to change and most likely will not be up-to-date!
+
 
 ## Stages
 The toolchain is designed to run through different stages, that have specific responsibilities:
-1. **setup**: install required dependencies and setup the template/build folder
+1. **setup**: install required dependencies
 2. **test**:
     * create info files (like git information, e.g. branch, commit author, last edited by, etc.)
     * validate all configuration files
     * test the current commit with:
-        * predefined tests by the toolchain (`stages/test/ruby/modules.d/`)
-        * custom tests (`${CONTENT_REPO}/stages/test/modules.d/`)
+        * predefined tests by the toolchain (`lib/extensions.d/`)
+        * custom tests (`${CONTENT_REPO}/extensions.d/`)
         * abort the build if necessary
-    * `/tmp/errors.json` is the central point of warnings and errors, each testing stage will add warnings/errors to this file via the script `add-error.py`.
-    * *optional*: send slack message
+    * keep a log of all events which will be used in the notify stage
 3. **build**:
     * invoke asciidoctor (with multipage converter)
     * create Table of Content
     * create search index (Lunr)
-    * `DEBUG` build: pass through to asciidoctor as `:debug:` to enable the debug build which will (local testing only):
-        * NOT minify and combine Javascript files
-        * NOT minify CSS
+    * `DEBUG` build for local testing:
+        * **DO NOT** minify and combine Javascript files
+        * **DO NOT** minify CSS
+        * passthrough as `:debug:` to asciidoctor
     * frontend functionality:
         * `header.js.d/`: scripts that need to be loaded at the beginning, will be combined to `header.js` and minified
         * `footer.js.d/`: scripts that need to be loaded at the end, will be combined to `footer.js` and minified
     * run custom build scripts `build.d/*.sh`
-    
 4. **post**:
-    * post processing for additional features, like lunr.js
+    * post processing for additional features like
+        * lunr.js
+        * table of content changes
+        * trigger translation
 5. **deploy**:
     * [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
     * required variables, see [Configuration/Secret/AWS](#Secret)
