@@ -7,10 +7,14 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: ruby:2.6
+    # container:
+    #   image: ruby:2.6
 
     steps:
+    - name: Setup ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
     - uses: actions/checkout@v1
     - name: Install rake
       run: |
