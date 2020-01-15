@@ -2,6 +2,23 @@
 
 require 'asciidoctor'
 
+def write_tempfile(name, content, prefix: 'test_toolchain_', suffix: nil)
+  tempfile_path = File.join('/tmp', "#{prefix}#{name}#{suffix}")
+  tmp = File.open(tempfile_path, 'w+')
+  begin
+    tmp.write(content)
+  ensure
+    tmp.close
+  end
+  log('TMP_FILE', tempfile_path, :gray)
+  return tempfile_path
+end
+
+def with_tempfile(content)
+  file = write_tempfile('tmpfile', content, prefix: 'unittest_') # write tempfile with content
+  yield(file) # call block with file as argument
+end
+
 # https://stackoverflow.com/a/22777806
 def with_captured_stdout
   original_stdout = $stdout  # capture previous value of $stdout

@@ -8,15 +8,9 @@ module Toolchain
   # which are run on every file.
   class ExtensionManager
     include Singleton
-    @instance = nil
 
-    def instance
-      @instance = ExtensionManager.new if @instance.nil?
-      return @instance
-    end
-
-    def register(ext)
-      @extensions << ext
+    def register(ext, testing = ENV['UNITTEST'])
+      @extensions << ext unless testing
     end
 
     def get
