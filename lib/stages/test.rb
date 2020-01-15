@@ -29,18 +29,6 @@ def print_errors(errors_map)
   end
 end
 
-def write_tempfile(name, content)
-  tempfile_path = File.join('/tmp', "test_toolchain_#{name}")
-  tmp = File.open(tempfile_path, 'w+')
-  begin
-    tmp.write(content)
-  ensure
-    tmp.close
-  end
-  log('TMP_FILE', tempfile_path, :gray)
-  tempfile_path
-end
-
 # load adoc file, convert and return
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
 def load_doc(filename, safe: :safe, parse: false)
