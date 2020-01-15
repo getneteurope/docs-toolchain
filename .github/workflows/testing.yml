@@ -4,11 +4,11 @@ on: [push, pull_request]
 env:
   TOOLCHAIN_PATH: .
 
-runs-on: ubuntu-latest
-container:
-  image: ruby:2.6
-
 jobs:
+  runs-on: ubuntu-latest
+  container:
+    image: ruby:2.6
+
   test:
     steps:
     - uses: actions/checkout@v1
