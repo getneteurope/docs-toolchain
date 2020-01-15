@@ -12,9 +12,9 @@ _setup() {
     local PJ="${TOOLCHAIN_PATH}/dependencies/package.json dependencies/package.json"
     local PJ_FILES
     for F in ${PJ}; do
-      if [[ -r ${F} ]]; then
-          PJ_FILES="${PJ_FILES} ${F}"
-      fi
+        if [[ -r ${F} ]]; then
+            PJ_FILES="${PJ_FILES} ${F}"
+        fi
     done
     package-json-merge ${PJ_FILES} > package.json
     npm install

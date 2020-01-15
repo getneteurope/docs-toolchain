@@ -12,7 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Setup
-      run: bash setup/setup.sh
+      run: |
+        rake toolchain:setup
     - name: "Running tests"
       run: |
         rake toolchain:test
@@ -23,8 +24,9 @@ jobs:
       image: ruby:2.6
     steps:
     - uses: actions/checkout@v1
-    - name: Install rake and rubocop
-      run: gem install rake rubocop
+    - name: Setup
+      run: |
+        rake toolchain:setup
     - name: "Lint"
       run: |
         rake toolchain:lint

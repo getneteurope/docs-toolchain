@@ -28,6 +28,11 @@ namespace :docs do
 end
 
 namespace :toolchain do
+  desc 'Run toolchain setup'
+  task :setup do
+    sh "bundle install"
+  end
+
   desc 'Run toolchain unit tests'
   task :test do
     ruby 'test/main.rb'
