@@ -12,6 +12,7 @@ _main() {
         local LOGFILE="${LOGDIR}/$(basename "${SCRIPT}" .sh).txt"
         source "${SCRIPT}"
 
+        echo
         if [[ -z $DISABLE ]]; then
             log "Installing ${NAME}... "
             _setup | tee "${LOGFILE}"
