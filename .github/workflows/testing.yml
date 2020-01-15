@@ -4,13 +4,17 @@ on: [push, pull_request]
 env:
   TOOLCHAIN_PATH: .
 
+runs-on: ubuntu-latest
+container:
+  image: ruby:2.6
+
 jobs:
   test:
-    runs-on: ubuntu-latest
-    container:
-      image: ruby:2.6
     steps:
     - uses: actions/checkout@v1
+    - name: Install rake
+      run: |
+        gem install rake
     - name: Setup
       run: |
         rake toolchain:setup
@@ -19,11 +23,11 @@ jobs:
         rake toolchain:test
 
   lint:
-    runs-on: ubuntu-latest
-    container:
-      image: ruby:2.6
     steps:
     - uses: actions/checkout@v1
+    - name: Install rake
+      run: |
+        gem install rake
     - name: Setup
       run: |
         rake toolchain:setup
