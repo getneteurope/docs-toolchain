@@ -20,9 +20,9 @@ namespace :docs do
   end
 
   desc 'Run post processing'
-  task :post-process do
+  task :postprocess do
     debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/bin/post.rb #{debug}"
+    ruby "#{toolchain_path}/bin/post-process.rb #{debug}"
   end
 
   desc 'Send notifications'
