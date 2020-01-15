@@ -36,7 +36,7 @@ module Toolchain
     def get_response(link)
       uri = URI(link)
       http = Net::HTTP.new(uri.host, uri.port)
-      timeout = 0.5
+      timeout = 0.8
       http.open_timeout = timeout
       http.read_timeout = timeout
       http.write_timeout = timeout
