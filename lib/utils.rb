@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require_relative './log/log.rb'
+
 class String
   def black;          "\e[30m#{self}\e[0m" end
   def red;            "\e[31m#{self}\e[0m" end
@@ -22,39 +26,4 @@ class String
   def underline;      "\e[4m#{self}\e[24m" end
   def blink;          "\e[5m#{self}\e[25m" end
   def reverse_color;  "\e[7m#{self}\e[27m" end
-end
-
-
-def log(tag, msg, color=:blue, bold=false)
-  return if ENV.has_key?('UNITTEST')
-
-  tag = "[#{tag}]".bold
-  case color
-  when :black
-    tag = tag.black
-  when :red
-    tag = tag.red
-  when :green
-    tag = tag.green
-  when :brown
-    tag = tag.brown
-  when :blue
-    tag = tag.blue
-  when :magenta
-    tag = tag.magenta
-  when :cyan
-    tag = tag.cyan
-  when :gray
-    tag = tag.gray
-  end
-  msg = msg.bold if bold
-  puts "#{tag} #{msg}"
-end
-
-def stage_log(stage, msg, color: :green)
-  stages = %w[setup test build deploy post notify]
-  stage = stage.to_s.upcase
-  longest = stages.max { |a, b| a.length <=> b.length }.length
-  stage = ' ' * (longest - stage.length) + stage
-  log(stage, msg, color, true)
 end
