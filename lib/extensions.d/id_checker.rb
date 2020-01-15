@@ -1,4 +1,3 @@
-# coding: utf-8
 # frozen_string_literal: true
 
 require_relative '../extension_manager.rb'
@@ -11,7 +10,7 @@ module Toolchain
     REGEX = /^[A-Za-z0-9_]+$/.freeze
     def run(document, original)
       errors = []
-      # TODO research why read_lines can be empty
+      # TODO: research why read_lines can be empty
       lines = original.reader.read_lines
       lines = original.reader.source_lines if lines.empty?
 

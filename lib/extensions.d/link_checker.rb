@@ -36,9 +36,10 @@ module Toolchain
     def get_response(link)
       uri = URI(link)
       http = Net::HTTP.new(uri.host, uri.port)
-      http.open_timeout = 5
-      http.read_timeout = 5
-      http.write_timeout = 5
+      timeout = 0.5
+      http.open_timeout = timeout
+      http.read_timeout = timeout
+      http.write_timeout = timeout
       http.use_ssl = true if link =~ /^https/
       http.start
       return http.request(Net::HTTP::Get.new(uri))

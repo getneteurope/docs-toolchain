@@ -5,36 +5,23 @@ env:
   TOOLCHAIN_PATH: .
 
 jobs:
-  bats:
+  test:
     runs-on: ubuntu-latest
-    container:
-      image: bats/bats:latest
+    # container:
+    #   image: ruby:2.6
+
     steps:
+    - name: "Setup ruby 2.6"
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
     - uses: actions/checkout@v1
-    - name: Setup
-      run: bash stages/setup/setup_main.sh
-    - name: Run tests
+    - name: "Install Gems"
       run: |
-        bats -r tests/
-
-  nodejs:
-    runs-on: ubuntu-latest
-    container:
-      image: node:13
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run tests
-      run: echo "Running tests"
-
-  ruby:
-    runs-on: ubuntu-latest
-    container:
-      image: ruby:2.6
-    steps:
-    - uses: actions/checkout@v1
-    - name: Setup
-      run: bash stages/setup/setup_main.sh
-    - name: "Running tests"
+        bash setup/setup.sh
+    - name: "Running unit tests"
       run: |
         rake toolchain:test
-
+    - name: "Lint"
+      run: |
+        rake toolchain:lint

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative './cli.rb'
-require_relative './extension_manager.rb'
-require_relative '../../utils/ruby_utils.rb'
+require_relative '../cli.rb'
+require_relative '../extension_manager.rb'
+require_relative '../utils.rb'
 Dir[File.join(__dir__, 'modules.d', '*.rb')].each { |file| require file }
 
 # hash to cache all filename: converted_adoc pairs

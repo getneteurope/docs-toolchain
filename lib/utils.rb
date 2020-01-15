@@ -54,7 +54,7 @@ end
 def stage_log(stage, msg, color: :green)
   stages = %w[setup test build deploy post notify]
   stage = stage.to_s.upcase
-  longest = stages.max { |a,b| a.length <=> b.length }.length
+  longest = stages.max { |a, b| a.length <=> b.length }.length
   stage = ' ' * (longest - stage.length) + stage
   log(stage, msg, color, true)
 end

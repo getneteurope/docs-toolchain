@@ -2,7 +2,7 @@
 
 require 'asciidoctor'
 require 'fileutils'
-require_relative '../../utils/ruby_utils.rb'
+require_relative '../utils.rb'
 
 def mkdir(path)
   Dir.mkdir(path) unless Dir.exist?(path)

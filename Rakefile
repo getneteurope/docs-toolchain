@@ -1,6 +1,6 @@
 require 'rubocop/rake_task'
 
-task default: %w[toolchain:lint toolchain:test]
+task default: %w[toolchain:test toolchain:lint]
 
 def toolchain_path
   ENV.key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : File.dirname(__FILE__)
@@ -10,20 +10,20 @@ namespace :docs do
   desc 'Run test stage'
   task :test do
     debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/stages/test/main.rb #{debug}"
+    ruby "#{toolchain_path}/bin/test.rb #{debug}"
   end
 
   desc 'Run build stage'
   task :build do
     debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/stages/build/main.rb #{debug}"
+    ruby "#{toolchain_path}/bin/build.rb #{debug}"
   end
 end
 
 namespace :toolchain do
   desc 'Run toolchain unit tests'
   task :test do
-    ruby 'tests/ruby/main.rb'
+    ruby 'test/main.rb'
   end
 
   RuboCop::RakeTask.new(:lint) do |t|
