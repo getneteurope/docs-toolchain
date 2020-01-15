@@ -18,6 +18,17 @@ namespace :docs do
     debug = '--debug' if ENV.key?('DEBUG')
     ruby "#{toolchain_path}/bin/build.rb #{debug}"
   end
+
+  desc 'Run post processing'
+  task :post-process do
+    debug = '--debug' if ENV.key?('DEBUG')
+    ruby "#{toolchain_path}/bin/post.rb #{debug}"
+  end
+
+  desc 'Send notifications'
+  task :notify do
+    ruby "#{toolchain_path}/bin/notify.rb"
+  end
 end
 
 namespace :toolchain do
