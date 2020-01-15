@@ -8,6 +8,14 @@ module Toolchain
   class PatternBlacklist < BaseExtension
     def run(document, original, blacklist_file = '../blacklist.txt')
       errors = []
+      unless File.exist?(blacklist_file)
+        log(
+          'PATTERN',
+          "Blacklist file '#{blacklist_file}' not found. Skipping this test.",
+          color: :magenta
+        )
+        return errors
+      end
       blacklist_file = File.open(blacklist_file, 'r')
       blacklist_patterns = blacklist_file.readlines
       blacklist_file.close
@@ -15,7 +23,7 @@ module Toolchain
       blacklist_patterns.delete_if { |line| !line.match? %r{^/(.+)/$} }
 
       blacklist_patterns = blacklist_patterns.map do |pattern|
-        Regexp.new pattern.chomp.gsub %r{^/(.+)/$}, '\1'
+        Regexp.new(pattern.chomp.gsub(%r{^/(.+)/$}, '\1'))
       end
 
       lines = original.reader.read_lines
@@ -26,7 +34,7 @@ module Toolchain
           next unless line.match? pattern
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
-          log('PATTERN', msg)
+          log('PATTERN', msg, color: :magenta)
           errors << create_error(msg: msg, filename: document.attr('docfile'))
         end
       end
