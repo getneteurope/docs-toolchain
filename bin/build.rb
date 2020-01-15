@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 require_relative './cli.rb'
-require_relative './build.rb'
-require_relative '../../utils/ruby_utils.rb'
+require_relative '../lib/stages/build.rb'
+require_relative '../lib/utils.rb'
 
 def main(argv = ARGV)
   args, opt_parser = Toolchain::Build::CLI.parse_args(argv)

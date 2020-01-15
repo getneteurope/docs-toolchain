@@ -2,6 +2,6 @@
 # frozen_string_literal: true
 
 require 'asciidoctor'
-require_relative './main_module.rb'
+require_relative '../lib/stages/test.rb'
 
 main
