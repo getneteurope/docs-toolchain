@@ -7,6 +7,11 @@ const HEADER = true;
 const FOOTER = false;
 
 /**
+ * DEPRECATED
+ * NEEDS TO BE REWRITTEN
+ */
+
+/**
  * Combine all .js files found in CONTENTDIR/js/header.d/ and CONTENTDIR/js/footer.d/
  * then combine them and include them in docinfo{,-footer}.html
  */
