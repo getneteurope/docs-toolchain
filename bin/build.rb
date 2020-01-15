@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative './cli.rb'
+require_relative '../lib/cli.rb'
 require_relative '../lib/stages/build.rb'
 require_relative '../lib/utils.rb'
 
