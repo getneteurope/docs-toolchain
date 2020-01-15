@@ -1,6 +1,10 @@
 #!/bin/bash
 
 NAME="NodeJS modules"
+export NAME
+
+DISABLE="true"
+export DISABLE
 
 _setup() {
     export PATH="node_modules/.bin:${PATH}"

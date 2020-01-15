@@ -1,6 +1,10 @@
 #!/bin/bash
 
 NAME="Python packages"
+export NAME
+
+DISABLE="true"
+export DISABLE
 
 _setup() {
     local REQ_TXT="${TOOLCHAIN_PATH}/dependencies/requirements.txt dependencies/requirements.txt"

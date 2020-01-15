@@ -12,8 +12,13 @@ _main() {
         local LOGFILE="${LOGDIR}/$(basename "${SCRIPT}" .sh).txt"
         source "${SCRIPT}"
 
-        log "Installing ${NAME}... "
-        _setup | tee "${LOGFILE}"
+        if [[ -z $DISABLE ]]; then
+            log "Installing ${NAME}... "
+            _setup | tee "${LOGFILE}"
+        else
+            log "Skipping ${NAME}..."
+            log "Reason: disabled"
+        fi
 
         RETVAL=$?
         if ((RETVAL != 0)); then

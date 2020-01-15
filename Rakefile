@@ -9,7 +9,7 @@ end
 namespace :docs do
   desc 'Run setup'
   task :setup do
-    sh "#{toolchain_path}/setup/setup.sh" do |output| 
+    sh "#{toolchain_path}/setup/setup.sh" do |output|
       puts output
     end
   end

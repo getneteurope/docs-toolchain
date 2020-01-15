@@ -1,6 +1,7 @@
 #!/bin/bash
 
 NAME="Ruby gems"
+export NAME
 
 _setup() {
     gem install bundler
