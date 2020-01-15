@@ -7,6 +7,13 @@ def toolchain_path
 end
 
 namespace :docs do
+  desc 'Run setup'
+  task :setup do
+    sh "#{toolchain_path}/setup/setup.sh" do |output| 
+      puts output
+    end
+  end
+
   desc 'Run test stage'
   task :test do
     debug = '--debug' if ENV.key?('DEBUG')
