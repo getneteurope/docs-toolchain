@@ -5,11 +5,11 @@ env:
   TOOLCHAIN_PATH: .
 
 jobs:
-  runs-on: ubuntu-latest
-  container:
-    image: ruby:2.6
-
   test:
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:2.6
+
     steps:
     - uses: actions/checkout@v1
     - name: Install rake
@@ -18,19 +18,9 @@ jobs:
     - name: Setup
       run: |
         rake toolchain:setup
-    - name: "Running tests"
+    - name: "Running unit tests"
       run: |
         rake toolchain:test
-
-  lint:
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install rake
-      run: |
-        gem install rake
-    - name: Setup
-      run: |
-        rake toolchain:setup
     - name: "Lint"
       run: |
         rake toolchain:lint
