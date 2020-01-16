@@ -36,6 +36,7 @@ The toolchain is designed to run through different stages, that have specific re
         * trigger translation
 5. **deploy**:
     * [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
+    * [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
     * required variables, see [Configuration/Secret/AWS](#Secret)
 6. **notify**:
     * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
