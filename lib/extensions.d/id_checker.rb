@@ -7,7 +7,10 @@ module Toolchain
   # ID Checker
   # check IDs according to a stricter standard than the default Asciidoctor standard
   class IdChecker < BaseExtension
-    REGEX = /^[A-Za-z0-9_]+$/.freeze
+
+    ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
+    ATTR_REGEX = /^\{(.+)\}$/.freeze
+
     def run(original, converted)
       errors = []
       # TODO: research why read_lines can be empty
@@ -26,24 +29,23 @@ module Toolchain
         end
       end.reject(&:nil?).to_set # reject all nil entries
 
-      p '-####### ATTR #####-'
-      p Attributes
-      p '-####### PARSED #####-'
-      p parsed_ids
-      p '-####### ADOC_ID #####-'
-      p adoc_ids
-      p '-############-'
-
-      # parsed_ids.delete_if do |id|
-      #   Attributes.keys.any? do |i|
-      #     id.include? i
-      #   end
-      # end
-
+      # if parsed id is unresolved attribute, look up attribute and replace
+      # TODO: let asciidoctor convert and read converted document by line
+      #       currently not possible? to get converted lines from #reader
+      parsed_ids = parsed_ids.map do |pid|
+        if ATTR_REGEX.match? pid
+          pid = pid.gsub ATTR_REGEX, '\1'
+          if Attributes.keys.any? pid
+            Attributes[pid]
+          end
+        else
+          pid
+        end
+      end
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
-        msg = "Illegal character: '#{id}' does not match ID criteria (#{REGEX.inspect})"
-        errors << create_error(msg: msg, filename: original.attr('docfile')) unless REGEX.match?(id)
+        msg = "Illegal character: '#{id}' does not match ID criteria (#{ID_PATTERN_REGEX.inspect})"
+        errors << create_error(msg: msg, filename: original.attr('docfile')) unless ID_PATTERN_REGEX.match?(id)
       end
       return errors
     end
