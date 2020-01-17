@@ -17,10 +17,12 @@ require_relative '../log/log.rb'
 # Toolchain::Notify::Slack::Messenger.send
 ##############################################################
 
-def _parse_ref(ref = ENV['GITHUB_REF'])
+def _parse_ref(ref = ENV['GITHUB_REF'], fallback = nil)
   return ref.split('/').last if ref&.count('/')
 
-  return ref
+  return ref if ref
+
+  return fallback
 end
 
 module Toolchain
