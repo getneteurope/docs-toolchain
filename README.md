@@ -1,5 +1,15 @@
+<div align="center>
+            
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wirecard/docs-toolchain/Testing?style=for-the-badge)
 ![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=for-the-badge)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
+
+[![Built with Ruby](https://forthebadge.com/images/badges/made-with-ruby.svg)](https://forthebadge.com)
+[![Built with Science](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![Uses Badges](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com)
+
+</div>
 
 # docs-toolchain
 Toolchain for TecDoc managed documentation repositories
