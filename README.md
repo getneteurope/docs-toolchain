@@ -1,13 +1,17 @@
-<div align="center>
-            
+<h1 align="center">
+  <a href="https://undraw.co/"><img src="logo/landing_page.svg" alt="Docs Toolchain Logo"></a>
+</h1>
+
+# docs-toolchain
+Toolchain for TecDoc managed documentation repositories
+
+<div align="center">
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wirecard/docs-toolchain/Testing?style=for-the-badge)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=for-the-badge)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 
 [![Built with Ruby](https://forthebadge.com/images/badges/made-with-ruby.svg)](https://forthebadge.com) [![Built with Science](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![Uses Badges](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com)
 
 </div>
 
-# docs-toolchain
-Toolchain for TecDoc managed documentation repositories
 
 ## Disclaimer
 
@@ -78,7 +82,7 @@ Configuration files:
 The **test** and **build** stages produce `/tmp/errors.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
 Warnings and errors are defined in `error-types.json` and further ignored or interpreted as errors according to `settings.json`.
 `slack-notifiy.py` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
-Otherwise 
+Otherwise
 
 ## Run
 
@@ -94,3 +98,4 @@ In order to install dependencies, run the following at the root of the project:
 export TOOLCHAIN_PATH="$(pwd)"
 bash stages/setup/setup_main.sh
 ```
+
