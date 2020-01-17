@@ -1,3 +1,6 @@
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fwirecard%2Fdocs-toolchain%2Fbadge%3Fref%3Dmaster&style=for-the-badge)](https://actions-badge.atrox.dev/wirecard/docs-toolchain/goto?ref=master)
+![GitHub issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=for-the-badge)
+
 # docs-toolchain
 Toolchain for TecDoc managed documentation repositories
 
