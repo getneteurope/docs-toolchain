@@ -10,7 +10,8 @@ ADOC_MAP = Hash.new(nil)
 # default index file
 DEFAULT_INDEX = 'content/index.adoc'
 
-Entry = Struct.new(:adoc, :output)
+Attributes = Hash.new(nil)
+Entry = Struct.new(:original, :converted)
 
 # print help
 # print all loaded extensions
@@ -31,21 +32,31 @@ end
 
 # load adoc file, convert and return
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
-def load_doc(filename, safe: :safe, parse: false)
-  adoc = Asciidoctor.load_file(
-    filename,
-    catalog_assets: true,
-    safe: safe,
-    parse: parse
-  )
+def load_doc(filename, safe: :unsafe, parse: false)
   original = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
+    sourcemap: true,
     safe: safe,
-    parse: parse
+    parse: parse,
+    attributes: Attributes
   )
-  adoc.convert
-  return adoc, original
+  converted = Asciidoctor.load_file(
+    filename,
+    catalog_assets: true,
+    sourcemap: true,
+    safe: safe,
+    parse: parse,
+    attributes: Attributes
+  )
+  # converted = Marshal.load(Marshal.dump(original)) # deep copy. I don't trust it
+  converted.convert
+  attrib_names = (converted.instance_variable_get :@attributes_modified).to_a
+  attrib_names.each do |a|
+    Attributes[a] = converted.attributes[a]
+  end
+  log('ATTRIBUTES', Attributes)
+  return original, converted
 end
 
 # test all files given as parameter
@@ -66,19 +77,19 @@ end
 # run all extensions on the filename
 def run_tests(filename)
   if ADOC_MAP[filename].nil?
-    adoc, output = load_doc(filename)
-    entry = Entry.new(adoc: adoc, output: output)
+    original, converted = load_doc filename
+    entry = Entry.new(original: original, converted: converted)
     ADOC_MAP[filename] = entry
   else
     entry = ADOC_MAP[filename]
-    adoc = entry.adoc
-    output = entry.output
+    converted = entry.converted
+    original = entry.original
   end
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
     log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(adoc, output)
+    errors += ext.run(original, converted)
   end
   return errors
 end
@@ -95,8 +106,7 @@ def check_docs(included_files, content_dir)
 end
 
 # resolves all errors from index to point to the correct location in include files
-def post_process_errors(index_errors, errors_map)
-end
+def post_process_errors(index_errors, errors_map); end
 
 def main(argv = ARGV)
   args, opt_parser = Toolchain::Test::CLI.parse_args(argv)
@@ -117,10 +127,17 @@ def main(argv = ARGV)
   end
 
   ### Run checks on default files
-  index_adoc = args.index_file || DEFAULT_INDEX
-  included_files = load_doc(index_adoc)[0].catalog[:includes]
-  stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
+  index_adoc = args.index || DEFAULT_INDEX
+  log('ARGS', args)
   log('INDEX', index_adoc)
+
+  ############# adoc, original = load_doc(index_adoc)
+  # included_files = adoc.catalog[:includes]
+  included_files = load_doc(index_adoc)[1].catalog[:includes]
+  #included_files = load_doc(index_adoc)
+  stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
+  log('INCLUDES', included_files)
+
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)
   print_errors(index_adoc => index_errors)
