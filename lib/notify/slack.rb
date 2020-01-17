@@ -18,7 +18,7 @@ require_relative '../log/log.rb'
 ##############################################################
 
 def _parse_ref(ref = ENV['GITHUB_REF'])
-  return ref.split('/').last if ref.count('/')
+  return ref.split('/').last if ref&.count('/')
 
   return ref
 end
@@ -58,13 +58,18 @@ module Toolchain
         end
 
         def self.init
-          # parse git info
-          tc_path = ENV['TOOLCHAIN_PATH'] || '.'
-          repo = Git.open(File.join(tc_path, '..')) if tc_path
+          content_path = '.'
+          content_path = File.join(ENV['TOOLCHAIN_PATH'], '..') if ENV['TOOLCHAIN_PATH']
+          # parse git info of latest commit
+          repo = Git.open(File.join(content_path, '..')) if content_path
           head = repo.object('HEAD').sha
           commit = repo.gcommit(head)
           author = commit.author
-          branch = _parse_ref || repo.revparse(commit.sha)
+          branch = _parse_ref(
+            ENV['GITHUB_REPOSITORY'],
+            repo.remote('origin')
+          ) || repo.revparse(commit.sha)
+
           git_info = OpenStruct.new(
             author: "#{author.name} <#{author.email}>",
             commit: commit.sha,
