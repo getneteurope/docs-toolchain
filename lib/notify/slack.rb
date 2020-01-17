@@ -149,7 +149,7 @@ module Toolchain
           # url = 'http://requestbin.net/r/1alhka81'
           uri = URI(url)
           req = Net::HTTP::Post.new(uri, 'Content-type' => 'application/json')
-          req.body = JSON.dump(msg)
+          req.body = JSON.pretty_generate(msg) # JSON.dump(msg) # .encode('ASCII', 'UTF-8')
           puts req.body
           res = Net::HTTP.start(uri.hostname, uri.port) do |http|
             http.request(req)
