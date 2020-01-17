@@ -53,6 +53,12 @@ The toolchain is designed to run through different stages, that have specific re
     * required variables, see [Configuration/Secret/AWS](#Secret)
 6. **notify**:
     * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
+    
+## Development
+Quality assurance:
+* `rake toolchain:lint` calls rubocop
+* `rake tooclhain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
+* `rake toolchain:quality` runs `rubycritic` and generates an overview in `/tmp/rubycritic/overview.html`
 
 ## Configuration
 There are some variables that need to be secret, while others can be public.
