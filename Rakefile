@@ -1,5 +1,4 @@
-# Disable rubocop because of dependency issue with rubycritic
-# require 'rubocop/rake_task'
+require 'rubocop/rake_task'
 require 'rubycritic/rake_task'
 
 task default: %w[toolchain:test toolchain:lint]
@@ -39,9 +38,9 @@ namespace :toolchain do
     ruby 'test/main.rb'
   end
 
-  # RuboCop::RakeTask.new(:lint) do |task|
-  #   task.options = ['--fail-level', 'E']
-  # end
+  RuboCop::RakeTask.new(:lint) do |task|
+    task.options = ['--fail-level', 'E']
+  end
 
   RubyCritic::RakeTask.new(:quality) do |task|
     task.options = '-p /tmp/rubycritic'

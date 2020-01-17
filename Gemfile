@@ -10,6 +10,6 @@ gem "rouge", "~> 3.15"
 gem "json", "~> 2.3"
 gem "concurrent-ruby", "~> 1.1"
 
-# gem "rubocop", "~> 0.79.0"
+gem "rubocop", "~> 0.69.0"
 gem 'rubycritic', '~> 4.3', '>= 4.3.1'
 gem 'simplecov', '~> 0.17.1'
