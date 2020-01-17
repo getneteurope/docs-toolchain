@@ -12,4 +12,3 @@ gem "concurrent-ruby", "~> 1.1"
 gem "rubycritic", "~> 0.0.16", :group => :test
 gem "simplecov", "~> 0.17.1", :group => :test
 gem "rubocop", "~> 0.79.0", :group => :test
-

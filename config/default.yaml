@@ -1,3 +1,7 @@
 
 log:
   - path: /tmp/log.json
+
+notify:
+  - slack:
+      - file: /tmp/slack.json

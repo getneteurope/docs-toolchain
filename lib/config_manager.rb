@@ -12,6 +12,8 @@ def merge_recursively(a, b)
 end
 
 def get_recursively(map, keys)
+  return nil if map.nil?
+
   key = keys.shift
   return map[key] if keys.empty?
 
