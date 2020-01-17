@@ -22,6 +22,7 @@ jobs:
     - name: "Running unit tests"
       run: |
         rake toolchain:test
-    - name: "Lint"
+    - name: "Quality check"
       run: |
-        rake toolchain:lint
+        rake toolchain:quality
+        # rake toolchain:lint
