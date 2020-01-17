@@ -7,6 +7,7 @@ module Toolchain
   # ID Checker
   # check IDs according to a stricter standard than the default Asciidoctor standard
   class IdChecker < BaseExtension
+
     ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
     ATTR_REGEX = /^\{(.+)\}$/.freeze
 
@@ -33,16 +34,18 @@ module Toolchain
       #       currently not possible? to get converted lines from #reader
       parsed_ids = parsed_ids.map do |pid|
         if ATTR_REGEX.match? pid
+          p "found"
+          p pid
           r_pid = pid.gsub ATTR_REGEX, '\1'
           if Attributes.keys.any? r_pid
+            p Attributes[r_pid]
             Attributes[r_pid]
-          else # disgusting. TODO: rework this.
+          else
             pid
           end
         else
           pid
         end
-        pid
       end
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
