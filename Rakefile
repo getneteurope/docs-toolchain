@@ -1,4 +1,5 @@
 require 'rubocop/rake_task'
+require 'rubycritic/rake_task'
 
 task default: %w[toolchain:test toolchain:lint]
 
@@ -37,8 +38,14 @@ namespace :toolchain do
     ruby 'test/main.rb'
   end
 
-  RuboCop::RakeTask.new(:lint) do |t|
-    t.options = ['--fail-level', 'E']
+  RuboCop::RakeTask.new(:lint) do |task|
+    task.options = ['--fail-level', 'E']
+  end
+
+  RubyCritic::RakeTask.new(:quality) do |task|
+    task.options = '-p /tmp/rubycritic'
+    task.options = '-p /tmp/rubycritic --mode-ci --format html --format console --no-browser' \
+      if ENV.key?('GITHUB_ACTIONS')
   end
 end
 
