@@ -55,8 +55,8 @@ def load_doc(filename, safe: :unsafe, parse: false)
   attrib_names.each do |a|
     Attributes[a] = converted.attributes[a]
   end
-  log('ATTRIBUTES', Attributes)
-  return original, converted
+  log('ATTRIBUTES_HERE', " #{filename} " + Attributes.inspect)
+  return original, converted, Attributes
 end
 
 # test all files given as parameter
@@ -77,19 +77,20 @@ end
 # run all extensions on the filename
 def run_tests(filename)
   if ADOC_MAP[filename].nil?
-    original, converted = load_doc filename
-    entry = Entry.new(original: original, converted: converted)
+    original, converted, attributes = load_doc filename
+    entry = Entry.new(original: original, converted: converted, attributes: attributes)
     ADOC_MAP[filename] = entry
   else
     entry = ADOC_MAP[filename]
     converted = entry.converted
     original = entry.original
+    attributes = entry.attributes
   end
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
     log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(original, converted)
+    errors += ext.run(original, converted, attributes)
   end
   return errors
 end
@@ -133,10 +134,12 @@ def main(argv = ARGV)
 
   ############# adoc, original = load_doc(index_adoc)
   # included_files = adoc.catalog[:includes]
-  included_files = load_doc(index_adoc)[1].catalog[:includes]
+  original, converted, attributes = load_doc(index_adoc)
+  included_files = converted.catalog[:includes]
   #included_files = load_doc(index_adoc)
   stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
   log('INCLUDES', included_files)
+  log('ATTRIBUTES2', attributes)
 
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)

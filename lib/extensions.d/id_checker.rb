@@ -11,15 +11,15 @@ module Toolchain
     ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
     ATTR_REGEX = /^\{(.+)\}$/.freeze
 
-    def run(original, converted)
-      errors = []
+    def run(original, converted, attributes={})
+    log('ATTRS', attributes, :magenta)
+    errors = []
       # TODO: research why read_lines can be empty
       lines = converted.reader.read_lines
       lines = converted.reader.source_lines if lines.empty?
 
       # get ids that asciidoctor recognizes as such
       adoc_ids = converted.catalog[:refs].keys.to_set
-      p adoc_ids
       # p (original.instance_variable_get :@attributes).to_a
 
       # parse everything that COULD be an anchor or id manually
@@ -37,9 +37,9 @@ module Toolchain
         id = pid
         if ATTR_REGEX.match? pid
           r_pid = pid.gsub ATTR_REGEX, '\1'
-          if Attributes.keys.any? r_pid
-            p Attributes[r_pid]
-            id = Attributes[r_pid]
+          if attributes.keys.any? r_pid
+            attributes[r_pid]
+            id = attributes[r_pid]
           end
         end
         id # TODO: fix ugly return

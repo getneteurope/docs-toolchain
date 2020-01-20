@@ -28,8 +28,8 @@ Sign here please.
 Here is my very own section.
 Thank you.
     '
-    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
-    errors = Toolchain::IdChecker.new.run(document, original)
+    document, original, attributes = init(adoc, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::IdChecker.new.run(document, original, attributes)
     assert_equal(2, errors.length)
     wrong_ids = parse(errors)
     assert_equal(wrong_ref, wrong_ids)
@@ -52,8 +52,8 @@ Sign here please.
 Here is my very own section.
 Thank you.
     '
-    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
-    errors = Toolchain::IdChecker.new.run(document, original)
+    document, original, attributes = init(adoc, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::IdChecker.new.run(document, original, attributes)
     assert_equal(2, errors.length)
     wrong_ids = parse(errors)
     assert_equal(wrong_ref, wrong_ids)
@@ -61,14 +61,16 @@ Thank you.
 
   def test_attributes_in_anchors
     inc1_adoc = ':chapter: bad_chapter _anchor
-== Boo
+:chapter_anchor: good
+=== Boo
 soome text
     '
 
-    inc2_adoc = '== chapter 2
+    inc2_adoc = '=== chapter 2
 one more chapter with invalid ANCHOR
 [#{chapter}]
-=== heading in chapter 2
+[#{chapter_anchor}]
+== heading in chapter 2
     '
 
     attr_in_anchors_inc1_file_name = File.basename write_tempfile('attributes_in_anchors_inc1.adoc', inc1_adoc)
@@ -84,8 +86,17 @@ include::#{attr_in_anchors_inc2_file_name}[]
     "
     attr_in_anchors_file_path = write_tempfile('attributes_in_anchors.adoc', adoc)
 
-    document, original = init2(inc1_adoc, "#{self.class.name}_#{__method__}")
-    errors = Toolchain::IdChecker.new.run(document, original)
+    document, original, attributes = init(adoc, "#{self.class.name}_#{__method__}")
+
+
+
+exit
+
+
+    errors = Toolchain::IdChecker.new.run(document, original, attributes)
+
+    log('ATTRIBUTES_HERE_2', attributes)
+
     assert_equal(0, errors.length)
   end
 
@@ -140,7 +151,7 @@ document
 /bad_word/
     '
     blacklist_file_path = write_tempfile('blacklist_patterns.txt', blacklist_patterns)
-    document, original = init2(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
+    document, original = init(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
     errors = Toolchain::PatternBlacklist.new.run(document, original, blacklist_file_path)
     assert_equal(3, errors.length)
   end
