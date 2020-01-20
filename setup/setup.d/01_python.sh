@@ -3,8 +3,8 @@
 NAME="Python packages"
 export NAME
 
-# DISABLE="true"
-# export DISABLE
+DISABLE="true"
+export DISABLE
 
 _setup() {
     local REQ_TXT="${TOOLCHAIN_PATH}/requirements.txt requirements.txt"

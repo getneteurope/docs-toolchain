@@ -59,6 +59,36 @@ Thank you.
     assert_equal(wrong_ref, wrong_ids)
   end
 
+  def test_attributes_in_anchors
+    inc1_adoc = ':chapter: bad_chapter _anchor
+== Boo
+soome text
+    '
+
+    inc2_adoc = '== chapter 2
+one more chapter with invalid ANCHOR
+[#{chapter}]
+=== heading in chapter 2
+    '
+
+    attr_in_anchors_inc1_file_name = File.basename write_tempfile('attributes_in_anchors_inc1.adoc', inc1_adoc)
+    attr_in_anchors_inc2_file_name = File.basename write_tempfile('attributes_in_anchors_inc2.adoc', inc2_adoc)
+
+    adoc = ":env-payment-processor:
+index text
+include::#{attr_in_anchors_inc1_file_name}[]
+filler
+include::#{attr_in_anchors_inc2_file_name}[]
+
+//- comment
+    "
+    attr_in_anchors_file_path = write_tempfile('attributes_in_anchors.adoc', adoc)
+
+    document, original = init2(inc1_adoc, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::IdChecker.new.run(document, original)
+    assert_equal(0, errors.length)
+  end
+
   private
 
   def parse(errors)

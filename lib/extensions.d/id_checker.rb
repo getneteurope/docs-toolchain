@@ -19,6 +19,7 @@ module Toolchain
 
       # get ids that asciidoctor recognizes as such
       adoc_ids = converted.catalog[:refs].keys.to_set
+      p adoc_ids
       # p (original.instance_variable_get :@attributes).to_a
 
       # parse everything that COULD be an anchor or id manually

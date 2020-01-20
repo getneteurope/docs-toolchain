@@ -26,10 +26,7 @@ module Toolchain
         Regexp.new(pattern.chomp.gsub(%r{^/(.+)/$}, '\1'))
       end
 
-      lines = original.reader.read_lines
-      lines = original.reader.source_lines if lines.empty?
-
-      lines.each_with_index do |line, index|
+      original.reader.source_lines.each_with_index do |line, index|
         blacklist_patterns.each_with_index do |pattern, _p_idx|
           next unless line.match? pattern
 

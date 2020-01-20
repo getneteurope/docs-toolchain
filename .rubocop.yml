@@ -2,15 +2,15 @@
 AllCops:
   TargetRubyVersion: 2.6
   Exclude:
-    - utils/**/*.rb
-    - ./**/Gemfile
+    - lib/utils.rb
+    - Gemfile
     - Rakefile
 
-Layout/LineLength:
+Metrics/LineLength:
   Enabled: false
 
-Lint/NonDeterministicRequireOrder:
-  Enabled: false
+# Lint/NonDeterministicRequireOrder:
+#   Enabled: false
 
 Metrics/MethodLength:
   Enabled: false

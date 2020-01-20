@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../utils.rb'
+
 def log(tag, msg, color=:blue, bold=false)
   return if ENV.key?('UNITTEST')
 

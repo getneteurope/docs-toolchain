@@ -1,7 +1,7 @@
 # Gemfiles Combinator
 #
 # installs several Gemfiles defined in gemfiles array
-# Use with bundler: bundle install --gemfile=bundle_combined_gemfiles.rb
+# Use with bundler: bundle install --gemfile=Gemfiles.rb
 
 source 'https://rubygems.org'
 gemfiles = ['toolchain/Gemfile', 'Gemfile']
