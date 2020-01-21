@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Test directly:
-# SKIP_NETWORK=true ruby tests/ruby/test_extensions.rb
-
 require 'asciidoctor'
 require 'test/unit'
 require_relative '../lib/stages/test.rb'
