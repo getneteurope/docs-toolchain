@@ -15,3 +15,5 @@ gem 'rubycritic', '~> 4.3', '>= 4.3.1'
 gem 'simplecov', '~> 0.17.1'
 gem "inch", "~> 0.8.0"
 gem "rdoc", "~> 6.2"
+
+gem "pry", "~> 0.12.2"
