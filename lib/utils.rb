@@ -2,6 +2,10 @@
 
 require_relative './log/log.rb'
 
+##
+# Default class: String
+#
+# Text color and weight modifications
 class String
   def black;          "\e[30m#{self}\e[0m" end
   def red;            "\e[31m#{self}\e[0m" end
