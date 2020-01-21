@@ -11,8 +11,8 @@ module Toolchain
     ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
     ATTR_REGEX = /^\{(.+)\}$/.freeze
 
-    def run(original, converted, attributes={})
-    log('ATTRS', attributes, :magenta)
+    def run(original, converted)
+    log('ATTRS', Attributes, :magenta)
     errors = []
       # TODO: research why read_lines can be empty
       lines = converted.reader.read_lines
@@ -33,13 +33,16 @@ module Toolchain
       # if parsed id is unresolved attribute, look up attribute and replace
       # TODO: let asciidoctor convert and read converted document by line
       #       currently not possible? to get converted lines from #reader
+      log('PARSED_IDS', parsed_ids)
       parsed_ids = parsed_ids.map do |pid|
         id = pid
+        log('ID_FOUND', id)
         if ATTR_REGEX.match? pid
           r_pid = pid.gsub ATTR_REGEX, '\1'
-          if attributes.keys.any? r_pid
-            attributes[r_pid]
-            id = attributes[r_pid]
+          if Attributes.keys.any? r_pid
+            log('ATTR_FOUND', r_pid, :magenta)
+            Attributes[r_pid]
+            id = Attributes[r_pid]
           end
         end
         id # TODO: fix ugly return
