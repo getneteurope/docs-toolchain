@@ -14,7 +14,17 @@ DEFAULT_INDEX = 'content/index.adoc'
 
 ##
 # represents a pair of parsed, resolved adoc and original adoc
-Entry = Struct.new(:adoc, :output)
+# Params:
+# * +adoc+:     converted adoc document
+# * +original+: original adoc source code before conversion
+#
+Entry = Struct.new(:adoc, :original) do
+  private
+
+  def adoc=; end
+
+  def original=; end
+end
 
 ##
 # print help
@@ -91,19 +101,19 @@ end
 # Returns +errors+ for the given file.
 def run_tests(filename)
   if ADOC_MAP.key?(filename)
-    adoc, output = load_doc(filename)
-    entry = Entry.new(adoc: adoc, output: output)
+    adoc, original = load_doc(filename)
+    entry = Entry.new(adoc: adoc, original: original)
     ADOC_MAP[filename] = entry
   else
     entry = ADOC_MAP[filename]
     adoc = entry.adoc
-    output = entry.output
+    original = entry.original
   end
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
     log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(adoc, output)
+    errors += ext.run(adoc, original)
   end
   return errors
 end

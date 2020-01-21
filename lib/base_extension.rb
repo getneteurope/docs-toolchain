@@ -4,10 +4,21 @@ require_relative './extension_manager.rb'
 
 module Toolchain
   # Location describes a source location, made up of +filename+ and +lineno+.
+  # Params:
+  # * +filename+: adoc filename
+  # * +lineno+: line number
   Location = Struct.new(:filename, :lineno) do
+    ##
+    # Returns a String representation of the location
     def to_s
       return "#{filename}:#{lineno}"
     end
+
+    private
+
+    def filename=; end
+
+    def lineno=; end
   end
 
   # Base class for extensions,
