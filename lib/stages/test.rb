@@ -5,13 +5,18 @@ require_relative '../extension_manager.rb'
 require_relative '../utils.rb'
 Dir[File.join(__dir__, '../', 'extensions.d', '*.rb')].each { |file| require file }
 
+##
 # hash to cache all filename: converted_adoc pairs
 ADOC_MAP = Hash.new(nil)
+##
 # default index file
 DEFAULT_INDEX = 'content/index.adoc'
 
+##
+# represents a pair of parsed, resolved adoc and original adoc
 Entry = Struct.new(:adoc, :output)
 
+##
 # print help
 # print all loaded extensions
 def print_loaded_extensions
@@ -21,6 +26,13 @@ def print_loaded_extensions
   end
 end
 
+##
+# print all errors in +errors_map+.
+# +errors_map+ is a hash containing a mapping of filename -> [errors].
+# format: "id message"
+#
+# Returns +nil+.
+#
 def print_errors(errors_map)
   errors_map.each do |_file, errors|
     errors.each do |err|
@@ -29,8 +41,12 @@ def print_errors(errors_map)
   end
 end
 
-# load adoc file, convert and return
+##
+# Load adoc file +filename+, convert given the parameters +safe+ and +parse+
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
+#
+# Returns a pair of converted adoc +adoc+, original adoc +original+
+#
 def load_doc(filename, safe: :safe, parse: false)
   adoc = Asciidoctor.load_file(
     filename,
@@ -48,8 +64,11 @@ def load_doc(filename, safe: :safe, parse: false)
   return adoc, original
 end
 
-# test all files given as parameter
-# only used for testing individual files, i.e. '--file' parameter
+##
+# Test all files given as +files+, +files+ must be a list of filenames.
+# Only used for testing individual files, i.e. '--file' parameter.
+#
+# Returns nothing, this function will exit.
 def test_files(files)
   files.each do |f|
     errors = run_tests(f)
@@ -63,9 +82,15 @@ def test_files(files)
   exit 0
 end
 
-# run all extensions on the filename
+##
+# Run all extensions registered with +ExtensionManager+ on the file +filename+.
+#
+# During this process, the file +filename+ will be loaded, converted and cached
+# in +ADOC_MAP+.
+#
+# Returns +errors+ for the given file.
 def run_tests(filename)
-  if ADOC_MAP[filename].nil?
+  if ADOC_MAP.key?(filename)
     adoc, output = load_doc(filename)
     entry = Entry.new(adoc: adoc, output: output)
     ADOC_MAP[filename] = entry
@@ -83,7 +108,13 @@ def run_tests(filename)
   return errors
 end
 
-# check all included files for a given index
+##
+# Check all included files in for a given index.
+#
+# All include files +included_files+ in +content_dir+ will be checked.
+# This means each file will be tested with +run_tests+.
+#
+# Returns a map of +errors_map+ with schema filename => [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
   included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }.each do |f|
@@ -94,10 +125,25 @@ def check_docs(included_files, content_dir)
   return errors_map
 end
 
-# resolves all errors from index to point to the correct location in include files
+##
+# Resolves all errors from index to point to the correct location in include files.
+#
+# Given +index_errors+ and +errors_map+, determine which errors are false positives and
+# which errors are duplicates.
+# Remove false positives and merge duplicates (keeping the more specific filename).
+#
+# Returns +nil+.
 def post_process_errors(index_errors, errors_map)
 end
 
+##
+# Execute the test stage with +argv+ as argument vector.
+#
+# This stage will pass if there are no errors found.
+# Otherwise, the errors are logged and execution of the toolchain ends here,
+# as the stage aborts.
+#
+# Returns +nil+.
 def main(argv = ARGV)
   args, opt_parser = Toolchain::Test::CLI.parse_args(argv)
   ### Print help
@@ -110,10 +156,11 @@ def main(argv = ARGV)
   print_loaded_extensions if args.debug
 
   ### Run on file arguments
-  if args.file
-    stage_log(:test, "Running file checks on file set: #{args.files}")
+  files = args.files
+  if files
+    stage_log(:test, "Running file checks on file set: #{files}")
     stage_log(:test, 'Will exit after this.')
-    test_files(args.files) if args.file # will exit if run
+    test_files(files) # will exit if run
   end
 
   ### Run checks on default files
