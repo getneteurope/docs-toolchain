@@ -7,9 +7,7 @@ Toolchain for TecDoc managed documentation repositories
 
 <div align="center">
   
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wirecard/docs-toolchain/Testing?style=for-the-badge)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=for-the-badge)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
-
-[![Inline docs](http://inch-ci.org/github/wirecard/docs-toolchain.svg?branch=master&style=for-the-badge)](http://inch-ci.org/github/wirecard/docs-toolchain)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wirecard/docs-toolchain/Testing?style=flat-square)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=flat-square)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)   [![Inline docs](http://inch-ci.org/github/wirecard/docs-toolchain.svg?branch=master&style=flat-square)](http://inch-ci.org/github/wirecard/docs-toolchain)
 
 [![Built with Ruby](https://forthebadge.com/images/badges/made-with-ruby.svg)](https://forthebadge.com) [![Built with Science](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![Uses Badges](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com) [![Approved](https://forthebadge.com/images/badges/approved-by-george-costanza.svg)](https://forthebadge.com)
 
