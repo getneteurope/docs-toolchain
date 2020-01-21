@@ -36,7 +36,7 @@ end
 def init(content, name, filename = nil)
   filename = name + '.adoc' if filename.nil?
   tempfile_path = write_tempfile(filename, content)
-  document, original, attributes = load_doc tempfile_path
-  return document, original, attributes
+  adoc = load_doc tempfile_path
+  return adoc
 end
 

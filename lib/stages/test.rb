@@ -10,7 +10,7 @@ ADOC_MAP = Hash.new(nil)
 # default index file
 DEFAULT_INDEX = 'content/index.adoc'
 
-Attributes = Hash.new(nil)
+#Attributes = Hash.new(nil)
 Entry = Struct.new(:original, :converted)
 
 # print help
@@ -30,33 +30,43 @@ def print_errors(errors_map)
   end
 end
 
+def get_modified_attributes(original, attribs={})
+  original.reader.read_lines.grep(/^:.+:/).each { |line|
+  # TODO use asciidoctor to do this for attributes in attributes
+    k, v = line.match(/^:(.+): ?(.*)/).captures
+    attribs[k] = v
+  }
+  attribs
+end
+
 # load adoc file, convert and return
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
-def load_doc(filename, safe: :unsafe, parse: false)
+def load_doc(filename, attribs={})
   original = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
     sourcemap: true,
-    safe: safe,
-    parse: parse,
-    attributes: Attributes
+    safe: :unsafe,
+    parse: false,
+    attributes: attribs
   )
   converted = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
     sourcemap: true,
-    safe: safe,
-    parse: parse,
-    attributes: Attributes
+    safe: :unsafe,
+    parse: false,
+    attributes: attribs
   )
   # converted = Marshal.load(Marshal.dump(original)) # deep copy. I don't trust it
   converted.convert
-  attrib_names = (converted.instance_variable_get :@attributes_modified).to_a
-  attrib_names.each do |a|
-    Attributes[a] = converted.attributes[a]
-  end
-  log('ATTRIBUTES_HERE', " #{filename} " + Attributes.inspect)
-  return original, converted, Attributes
+  attributes = get_modified_attributes original, attribs
+  adoc = OpenStruct.new(
+    original: original,
+    converted: converted,
+    attributes: attributes
+  )
+  return adoc
 end
 
 # test all files given as parameter
@@ -77,7 +87,12 @@ end
 # run all extensions on the filename
 def run_tests(filename)
   if ADOC_MAP[filename].nil?
-    original, converted, attributes = load_doc filename
+
+    adoc = load_doc filename
+    original = adoc.original
+    converted = adoc.converted
+    attributes = adoc.attributes
+
     entry = Entry.new(original: original, converted: converted, attributes: attributes)
     ADOC_MAP[filename] = entry
   else
@@ -90,7 +105,7 @@ def run_tests(filename)
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
     log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(original, converted)
+    errors += ext.run(adoc)
   end
   return errors
 end
@@ -134,7 +149,11 @@ def main(argv = ARGV)
 
   ############# adoc, original = load_doc(index_adoc)
   # included_files = adoc.catalog[:includes]
-  original, converted, attributes = load_doc(index_adoc)
+  adoc = load_doc index_adoc
+  original = adoc.original
+  converted = adoc.converted
+  attributes = adoc.attributes
+
   included_files = converted.catalog[:includes]
   #included_files = load_doc(index_adoc)
   stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")

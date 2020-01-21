@@ -7,13 +7,15 @@ module Toolchain
   # ID Checker
   # check IDs according to a stricter standard than the default Asciidoctor standard
   class IdChecker < BaseExtension
-
     ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
     ATTR_REGEX = /^\{(.+)\}$/.freeze
 
-    def run(original, converted)
-    log('ATTRS', Attributes, :magenta)
-    errors = []
+    def run(adoc)
+      original = adoc.original
+      converted = adoc.converted
+      attributes = adoc.attributes
+
+      errors = []
       # TODO: research why read_lines can be empty
       lines = converted.reader.read_lines
       lines = converted.reader.source_lines if lines.empty?
@@ -34,19 +36,24 @@ module Toolchain
       # TODO: let asciidoctor convert and read converted document by line
       #       currently not possible? to get converted lines from #reader
       log('PARSED_IDS', parsed_ids)
-      parsed_ids = parsed_ids.map do |pid|
+      log('ADOC_IDS', adoc_ids)
+      adoc_ids = adoc_ids.map do |pid|
         id = pid
-        log('ID_FOUND', id)
+        log('ID', id)
         if ATTR_REGEX.match? pid
+          log('ID', id + ' looks like it contains an anchor')
           r_pid = pid.gsub ATTR_REGEX, '\1'
-          if Attributes.keys.any? r_pid
-            log('ATTR_FOUND', r_pid, :magenta)
-            Attributes[r_pid]
-            id = Attributes[r_pid]
+          if attributes.keys.any? r_pid
+            log('ATTR_FOUND', r_pid, :yellow)
+            attributes[r_pid]
+            id = attributes[r_pid]
+          else
+            log('ID', id + " not found in attributes:\n" + attributes.inspect)
           end
         end
         id # TODO: fix ugly return
-      end
+      end.reject(&:nil?).to_set
+
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
         msg = "Illegal character: '#{id}' does not match ID criteria (#{ID_PATTERN_REGEX.inspect})"

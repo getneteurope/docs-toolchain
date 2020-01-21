@@ -6,7 +6,10 @@ require_relative '../base_extension.rb'
 module Toolchain
   # looks up a list of prohibited patterns
   class PatternBlacklist < BaseExtension
-    def run(document, original, blacklist_file = '../blacklist.txt')
+    def run(adoc, blacklist_file = '../blacklist.txt')
+      original = adoc.original
+      converted = adoc.converted
+      attributes = adoc.attributes
       errors = []
       unless File.exist?(blacklist_file)
         log(
@@ -32,7 +35,7 @@ module Toolchain
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
           log('PATTERN', msg, color: :magenta)
-          errors << create_error(msg: msg, filename: document.attr('docfile'))
+          errors << create_error(msg: msg, filename: converted.attr('docfile'))
         end
       end
       return errors
