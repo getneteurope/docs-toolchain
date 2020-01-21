@@ -44,22 +44,28 @@ module Toolchain
       content_path = File.join(ENV['TOOLCHAIN_PATH'], '..') if ENV['TOOLCHAIN_PATH']
       # fix Github CI error when testing toolchain only (no content repo)
       content_path = ENV['GITHUB_WORKSPACE'] if ENV['GITHUB_WORKSPACE']
-      # parse git info of latest commit
-      repo = ::Git.open(File.join(content_path, '..')) if content_path
-      head = repo.object('HEAD').sha
-      commit = repo.gcommit(head)
-      author = commit.author
-      branch = parse_ref(
-        ENV['GITHUB_REPOSITORY'],
-        repo.remote('origin')
-      ) || repo.revparse(commit.sha)
 
-      git_info = OpenStruct.new(
-        author: "#{author.name} <#{author.email}>",
-        commit: commit.sha,
-        branch: branch.to_s,
-        time: commit.date.strftime('%H:%M %d.%m.%Y')
-      )
+      git_info = nil
+      begin
+        # parse git info of latest commit
+        repo = ::Git.open(content_path)
+        head = repo.object('HEAD').sha
+        commit = repo.gcommit(head)
+        author = commit.author
+        branch = parse_ref(
+          ENV['GITHUB_REPOSITORY'],
+          repo.remote('origin')
+        ) || repo.revparse(commit.sha)
+
+        git_info = OpenStruct.new(
+          author: "#{author.name} <#{author.email}>",
+          commit: commit.sha,
+          branch: branch.to_s,
+          time: commit.date.strftime('%H:%M %d.%m.%Y')
+        )
+      rescue ArgumentError => _e
+        log('GIT', "No Git repository at #{content_path}")
+      end
       return git_info
     end
   end
