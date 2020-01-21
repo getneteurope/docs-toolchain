@@ -90,7 +90,7 @@ def run_tests(filename)
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
     log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(original, converted, attributes)
+    errors += ext.run(original, converted)
   end
   return errors
 end

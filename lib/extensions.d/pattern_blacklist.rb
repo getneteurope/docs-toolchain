@@ -6,7 +6,7 @@ require_relative '../base_extension.rb'
 module Toolchain
   # looks up a list of prohibited patterns
   class PatternBlacklist < BaseExtension
-    def run(document, original, attributes, blacklist_file = '../blacklist.txt')
+    def run(document, original, blacklist_file = '../blacklist.txt')
       errors = []
       unless File.exist?(blacklist_file)
         log(
