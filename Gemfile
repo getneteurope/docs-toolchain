@@ -13,3 +13,5 @@ gem "concurrent-ruby", "~> 1.1"
 gem "rubocop", "~> 0.69.0"
 gem 'rubycritic', '~> 4.3', '>= 4.3.1'
 gem 'simplecov', '~> 0.17.1'
+gem "inch", "~> 0.8.0"
+gem "rdoc", "~> 6.2"
