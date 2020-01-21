@@ -3,10 +3,20 @@
 
 detectors:
 
+  ClassVariable:
+    exclude:
+      - lib/notify/*.rb
+
+  ControlParameter:
+    enabled: false
+
   DuplicateMethodCall:
     max_calls: 3
 
   FeatureEnvy:
+    enabled: false
+
+  NilCheck:
     enabled: false
 
   TooManyStatements:
