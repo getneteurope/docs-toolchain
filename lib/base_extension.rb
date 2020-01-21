@@ -3,6 +3,12 @@
 require_relative './extension_manager.rb'
 
 module Toolchain
+  Location = Struct.new(:filename, :lineno) do
+    def to_s
+      return "#{filename}:#{lineno}"
+    end
+  end
+
   # Base class for extensions,
   # all derived extensions must implement the run(document) function
   # and register with the ExtensionManager, e.g.:
@@ -11,17 +17,15 @@ module Toolchain
   #
   class BaseExtension
     def next_id
-      return Toolchain::ExtensionManager.instance.next_id
+      return
     end
 
-    def create_error(id: next_id, type: self.class.name, msg:, filename:, lineno: nil, extras: nil)
-      where = filename
-      lineno&.each { |line| where << ":#{line}" }
+    def create_error(msg:, location: nil, extras: nil)
       return {
-        id: id,
-        type: type,
+        id: Toolchain::ExtensionManager.instance.next_id,
+        type: self.class.name,
         msg: msg,
-        where: where,
+        location: location,
         extras: extras
       }
     end

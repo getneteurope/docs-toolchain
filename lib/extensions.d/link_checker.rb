@@ -11,7 +11,11 @@ module Toolchain
       links = document.references[:links]
       links.each do |link|
         msg = test_link(link)
-        errors << create_error(msg: msg, filename: document.attr('docfile')) unless msg.nil?
+        next if msg.nil?
+
+        errors << create_error(
+          msg: msg, location: Location.new(document.attr('docfile'), nil)
+        )
       end
       return errors
     end

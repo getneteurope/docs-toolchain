@@ -28,7 +28,12 @@ module Toolchain
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
         msg = "Illegal character: '#{id}' does not match ID criteria (#{REGEX.inspect})"
-        errors << create_error(msg: msg, filename: document.attr('docfile')) unless REGEX.match?(id)
+        next if REGEX.match?(id)
+
+        errors << create_error(
+          msg: msg,
+          location: Location.new(document.attr('docfile'), nil)
+        )
       end
       return errors
     end

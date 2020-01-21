@@ -35,7 +35,9 @@ module Toolchain
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
           log('PATTERN', msg, color: :magenta)
-          errors << create_error(msg: msg, filename: document.attr('docfile'))
+          errors << create_error(
+            msg: msg, location: Location.new(document.attr('docfile'), nil)
+          )
         end
       end
       return errors
