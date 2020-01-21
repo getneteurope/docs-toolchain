@@ -40,7 +40,10 @@ module Toolchain
     # Returns a OpenStruct containing the information described above.
     def self.generate_info
       content_path = '.'
+      # only works with content repository
       content_path = File.join(ENV['TOOLCHAIN_PATH'], '..') if ENV['TOOLCHAIN_PATH']
+      # fix Github CI error when testing toolchain only (no content repo)
+      content_path = ENV['GITHUB_WORKSPACE'] if ENV['GITHUB_WORKSPACE']
       # parse git info of latest commit
       repo = ::Git.open(File.join(content_path, '..')) if content_path
       head = repo.object('HEAD').sha
