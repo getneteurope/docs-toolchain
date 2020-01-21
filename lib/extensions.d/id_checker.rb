@@ -24,8 +24,11 @@ module Toolchain
       adoc_ids = converted.catalog[:refs].keys.to_set
       # p (original.instance_variable_get :@attributes).to_a
 
+      require 'pp'
+
       # parse everything that COULD be an anchor or id manually
       parsed_ids = lines.map do |line|
+        pp line
         # match both long and short ids
         /\[(\[|#)(?<id>[^\]]+)/.match(line) do |m|
           m[:id]
@@ -33,26 +36,24 @@ module Toolchain
       end.reject(&:nil?).to_set # reject all nil entries
 
       # if parsed id is unresolved attribute, look up attribute and replace
-      # TODO: let asciidoctor convert and read converted document by line
-      #       currently not possible? to get converted lines from #reader
       log('PARSED_IDS', parsed_ids)
       log('ADOC_IDS', adoc_ids)
-      adoc_ids = adoc_ids.map do |pid|
-        id = pid
-        log('ID', id)
-        if ATTR_REGEX.match? pid
-          log('ID', id + ' looks like it contains an anchor')
-          r_pid = pid.gsub ATTR_REGEX, '\1'
-          if attributes.keys.any? r_pid
-            log('ATTR_FOUND', r_pid, :yellow)
-            attributes[r_pid]
-            id = attributes[r_pid]
-          else
-            log('ID', id + " not found in attributes:\n" + attributes.inspect)
-          end
-        end
-        id # TODO: fix ugly return
-      end.reject(&:nil?).to_set
+      # adoc_ids = adoc_ids.map do |pid|
+      #   id = pid
+      #   log('ID', id)
+      #   if ATTR_REGEX.match? pid
+      #     log('ID', id + ' looks like it contains an anchor')
+      #     r_pid = pid.gsub ATTR_REGEX, '\1'
+      #     if attributes.keys.any? r_pid
+      #       log('ATTR_FOUND', r_pid, :yellow)
+      #       attributes[r_pid]
+      #       id = attributes[r_pid]
+      #     else
+      #       log('ID', id + " not found in attributes:\n" + attributes.inspect)
+      #     end
+      #   end
+      #   id # TODO: fix ugly return
+      # end.reject(&:nil?).to_set
 
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)

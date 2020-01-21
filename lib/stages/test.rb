@@ -50,17 +50,17 @@ def load_doc(filename, attribs={})
     parse: false,
     attributes: attribs
   )
+  attributes = get_modified_attributes original, attribs
   converted = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
     sourcemap: true,
     safe: :unsafe,
     parse: false,
-    attributes: attribs
+    attributes: attributes
   )
   # converted = Marshal.load(Marshal.dump(original)) # deep copy. I don't trust it
   converted.convert
-  attributes = get_modified_attributes original, attribs
   adoc = OpenStruct.new(
     original: original,
     converted: converted,

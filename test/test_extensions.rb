@@ -53,10 +53,6 @@ Here is my very own section.
 Thank you.
     '
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
-    original = adoc.original
-    converted = adoc.converted
-    attributes = adoc.attributes
-
     errors = Toolchain::IdChecker.new.run(adoc)
     assert_equal(2, errors.length)
     wrong_ids = parse(errors)
