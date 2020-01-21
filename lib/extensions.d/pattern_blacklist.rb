@@ -4,8 +4,17 @@ require_relative '../extension_manager.rb'
 require_relative '../base_extension.rb'
 
 module Toolchain
-  # looks up a list of prohibited patterns
+  ##
+  # Pattern Checker
+  #
+  # Checks the text against a predefined list of patterns which are not allowed.
   class PatternBlacklist < BaseExtension
+    ##
+    # Run the Pattern tests on the given document (+document+, +original+).
+    # Illegal patterns are loaded from +blacklist_file+.
+    #
+    # Returns a list of errors (can be empty).
+    #
     def run(document, original, blacklist_file = '../blacklist.txt')
       errors = []
       unless File.exist?(blacklist_file)
