@@ -5,7 +5,33 @@ require_relative '../extension_manager.rb'
 require_relative '../base_extension.rb'
 
 module Toolchain
+  ##
+  # Given an exception +exc+ and a link +link+, format the message which shall be displayed.
+  #
+  # Returns the formatted message.
+  def self.format_net_exception(exc, link)
+    msg = exc.message
+    case exc
+    when SocketError
+      idx = msg.index('(') - 1
+      return "#{exc.class.name}: #{msg[0..idx]}"
+    when Net::OpenTimeout
+      return "#{exc.class.name}: #{msg} for #{link}"
+    else
+      return "Unknown Exception: #{msg}"
+    end
+  end
+
+  ##
+  # Link Checker
+  #
+  # Check links and detect whether a link is dead, has moved, cannot be reached, etc.
   class LinkChecker < BaseExtension
+    ##
+    # Run the Link tests on the given document (+document+, +_original+).
+    #
+    # Returns a list of errors (can be empty).
+    #
     def run(document, _original = nil)
       errors = []
       links = document.references[:links]
@@ -22,6 +48,10 @@ module Toolchain
 
     private
 
+    ##
+    # Test a +link+, i.e. try to perform a +GET+ request.
+    #
+    # Return nil if success, or +msg+ if an error occured.
     def test_link(link)
       log('LINK', link, :magenta)
       msg = nil
@@ -31,12 +61,14 @@ module Toolchain
         msg = "[#{resp.code}] #{resp.message}: #{link}" if !resp.nil? && resp.code != '200'
         msg = 'Unknown error: response is nil' if resp.nil?
       rescue StandardError => e
-        msg = format_exception(e, link)
+        msg = Toolchain.format_net_exception(e, link)
       end
 
       return msg
     end
 
+    ##
+    # Send a +GET+ request to +link+ and return the result.
     def get_response(link)
       uri = URI(link)
       http = Net::HTTP.new(uri.host, uri.port)
@@ -47,18 +79,6 @@ module Toolchain
       http.use_ssl = true if link =~ /^https/
       http.start
       return http.request(Net::HTTP::Get.new(uri))
-    end
-
-    def format_exception(exc, link)
-      case exc
-      when SocketError
-        idx = exc.message.index('(') - 1
-        return "#{exc.class.name}: #{exc.message[0..idx]}"
-      when Net::OpenTimeout
-        return "#{exc.class.name}: #{exc.message} for #{link}"
-      else
-        return "Unknown Exception: #{exc.message}"
-      end
     end
   end
 end

@@ -4,10 +4,19 @@ require_relative '../extension_manager.rb'
 require_relative '../base_extension.rb'
 
 module Toolchain
+  ##
   # ID Checker
-  # check IDs according to a stricter standard than the default Asciidoctor standard
+  #
+  # Check IDs according to a stricter standard than the default Asciidoctor standard.
   class IdChecker < BaseExtension
+    # ID regex
     REGEX = /^[A-Za-z0-9_]+$/.freeze
+
+    ##
+    # Run the ID tests on the given document (+document+, +original+).
+    #
+    # Returns a list of errors (can be empty).
+    #
     def run(document, original)
       errors = []
       # TODO: research why read_lines can be empty
