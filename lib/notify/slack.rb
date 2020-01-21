@@ -1,32 +1,12 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require 'ostruct'
 require 'json'
-require 'git'
 require 'net/http'
 require 'singleton'
 require_relative '../config_manager.rb'
 require_relative '../log/log.rb'
-
-##
-# Pass a reference +ref+ and a fallback +fallback+ and return
-# the parsed reference.
-#
-# Reference, in this case, describes a git reference like a branch name
-# or a tag.
-# Depending on the environment this reference can occur in
-# many different places.
-#
-# Returns a parsed reference or fallback if no reference was found.
-#
-def _parse_ref(ref = ENV['GITHUB_REF'], fallback = nil)
-  return fallback unless ref
-
-  return ref.split('/').last if ref.count('/')
-
-  return ref
-end
+require_relative '../utils/git.rb'
 
 ##
 # Toolchain module
@@ -138,24 +118,7 @@ module Toolchain
       # information to the message.
       #
       def init
-        content_path = '.'
-        content_path = File.join(ENV['TOOLCHAIN_PATH'], '..') if ENV['TOOLCHAIN_PATH']
-        # parse git info of latest commit
-        repo = Git.open(File.join(content_path, '..')) if content_path
-        head = repo.object('HEAD').sha
-        commit = repo.gcommit(head)
-        author = commit.author
-        branch = _parse_ref(
-          ENV['GITHUB_REPOSITORY'],
-          repo.remote('origin')
-        ) || repo.revparse(commit.sha)
-
-        git_info = OpenStruct.new(
-          author: "#{author.name} <#{author.email}>",
-          commit: commit.sha,
-          branch: branch.to_s,
-          time: commit.date.strftime('%H:%M %d.%m.%Y')
-        )
+        git_info = Toolchain::Git.generate_info
 
         # format the header using the git info hash map
         commit_url = "https://github.com/#{ENV['GITHUB_REPOSITORY']}/commit/#{git_info.commit}"
