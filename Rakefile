@@ -1,5 +1,7 @@
 require 'rubocop/rake_task'
 require 'rubycritic/rake_task'
+require 'rdoc/task'
+require 'inch/rake'
 
 task default: %w[toolchain:test toolchain:lint]
 
@@ -47,6 +49,25 @@ namespace :toolchain do
     task.options = '-p /tmp/rubycritic --mode-ci --format html --format console --no-browser' \
       if ENV.key?('GITHUB_ACTIONS')
   end
+
+  namespace :rdoc do
+    RDoc::Task.new(:generate) do |task|
+      task.rdoc_files.include('bin/', 'lib/')
+    end
+
+  end
+
+  namespace :inch do
+    Inch::Rake::Suggest.new(:suggest) do |task|
+    end
+
+    desc 'Show documentation grade'
+    task :grade do
+      sh 'inch stats' do
+      end
+    end
+  end
+
 end
 
 namespace :env do
