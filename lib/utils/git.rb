@@ -63,8 +63,13 @@ module Toolchain
           branch: branch.to_s,
           time: commit.date.strftime('%H:%M %d.%m.%Y')
         )
-      rescue ArgumentError => _e
-        log('GIT', "No Git repository at #{content_path}")
+      rescue StandardError => _e
+        log('GIT', "Error opening Git repository at #{content_path}")
+        hash = Hash.new('<N/A>')
+        %i[author commit branch time].each do |key|
+          hash[key]
+        end
+        git_info = OpenStruct.new(hash)
       end
       return git_info
     end
