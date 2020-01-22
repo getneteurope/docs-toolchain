@@ -48,7 +48,6 @@ def collect_attributes(doc, attribs = {})
 
   incs.each do |inc|
     inc_file_path = doc.options[:attributes]['docdir'] + '/' + inc + '.adoc'
-    pp 'include file: ' + inc_file_path
     doc = Asciidoctor.load_file(
       inc_file_path,
       catalog_assets: true,

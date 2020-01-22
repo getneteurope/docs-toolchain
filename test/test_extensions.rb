@@ -90,7 +90,8 @@ include::#{attr_in_anchors_inc2_file_name}[]
     attr_in_anchors_file_path = write_tempfile('attributes_in_anchors.adoc', adoc_content)
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
     errors = Toolchain::IdChecker.new.run(adoc)
-    assert_equal(0, errors.length)
+    assert_equal(1, errors.length)
+    assert_match /bad_chapter _anchor/, errors[0][:msg]
   end
 
   private

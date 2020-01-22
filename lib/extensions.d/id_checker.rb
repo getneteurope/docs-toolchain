@@ -19,37 +19,16 @@ module Toolchain
       # TODO: research why read_lines can be empty
       lines = converted.reader.read_lines
       lines = converted.reader.source_lines if lines.empty?
-
-      # get ids that asciidoctor recognizes as such
-      adoc_ids = converted.catalog[:refs].keys.to_set
-      # p (original.instance_variable_get :@attributes).to_a
-
-      require 'pp'
-
-       reader = Asciidoctor::PreprocessorReader.new converted, lines
-       combined_source = reader.read_lines
-    #   pp combined_source
-
-       doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
-       doc.convert
-       adoc_ids = doc.catalog[:refs].keys.to_set
-
-    #   pp doc
-    #  pp attributes
-    #   pp doc.reader.read_lines
-
-    #   exit
       
+      reader = Asciidoctor::PreprocessorReader.new converted, lines
+      combined_source = reader.read_lines
 
-      #a = Asciidoctor::Document.new lines, safe: :safe, standalone: false, parse: true, base_dir: '/tmp'
-      
-      #converted.blocks.each {|b|
-      #pp b.lines}
-      
+      doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
+      doc.convert
+      adoc_ids = doc.catalog[:refs].keys.to_set
 
       # parse everything that COULD be an anchor or id manually
       parsed_ids = combined_source.map do |line|
-        #pp line
         # match both long and short ids
         /\[(\[|#)(?<id>[^\]]+)/.match(line) do |m|
           m[:id]
@@ -57,31 +36,17 @@ module Toolchain
       end.reject(&:nil?).to_set # reject all nil entries
 
       # if parsed id is unresolved attribute, look up attribute and replace
-      log('PARSED_IDS', parsed_ids)
-      log('ADOC_IDS', adoc_ids)
       parsed_ids = parsed_ids.map do |pid|
         id = pid
-        log('ID', id)
         if ATTR_REGEX.match? pid
-          log('ID', id + ' looks like it contains an anchor')
           r_pid = pid.gsub ATTR_REGEX, '\1'
           if attributes.keys.any? r_pid
-            log('ATTR_FOUND', r_pid, :yellow)
             attributes[r_pid]
             id = attributes[r_pid]
-          else
-            log('ID', id + " not found in attributes:\n" + attributes.inspect)
           end
         end
         id # TODO: fix ugly return
       end.reject(&:nil?).to_set
-
-      # parsed_ids = parsed_ids.map do |pid|
-      #   p pid
-      #   p reader.process_line(pid)
-      #   reader.resolve_expr_val(pid)
-      # end.reject(&:nil?).to_set
-
 
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
