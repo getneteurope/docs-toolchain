@@ -42,7 +42,7 @@ jobs:
       run: |
         mkdir -p /tmp/public
         mv /tmp/rdoc /tmp/rubycritic coverage /tmp/public
-        ln -s /tmp/rubycritic/{index,overview}.html
+        ln -s /tmp/public/rubycritic/{overview,index}.html
 
     - name: "Deploy reports to Github Pages"
       uses: crazy-max/ghaction-github-pages@v1
