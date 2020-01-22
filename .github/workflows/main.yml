@@ -20,6 +20,7 @@ jobs:
     - name: "Install Gems"
       run: |
         bash setup/setup.sh
+        rake --tasks
 
     - name: "Running unit tests"
       run: |
