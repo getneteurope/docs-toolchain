@@ -56,7 +56,7 @@ namespace :toolchain do
 
   RubyCritic::RakeTask.new(:quality) do |task|
     task.options = '-p /tmp/rubycritic'
-    task.options = '-p /tmp/rubycritic --mode-ci --format html --format console --no-browser' \
+    task.options = '-p /tmp/rubycritic --format console --format html --no-browser' \
       if ENV.key?('GITHUB_ACTIONS')
   end
 
