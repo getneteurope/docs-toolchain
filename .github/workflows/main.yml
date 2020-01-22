@@ -40,8 +40,11 @@ jobs:
 
     - name: "Prepare upload"
       run: |
-        ls
-        scripts/prepare_deployment.sh
+        mkdir -p public
+        mv /tmp/rdoc public/
+        mv /tmp/rubycritic public/
+        mv coverage public/
+        cp public/{overview,index}.html
 
     - name: "Deploy reports to Github Pages"
       uses: crazy-max/ghaction-github-pages@v1
