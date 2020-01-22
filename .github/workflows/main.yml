@@ -40,7 +40,8 @@ jobs:
 
     - name: "Prepare upload"
       run: |
-        ./scripts/prepare_deployment.sh
+        ls
+        scripts/prepare_deployment.sh
 
     - name: "Deploy reports to Github Pages"
       uses: crazy-max/ghaction-github-pages@v1
