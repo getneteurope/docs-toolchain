@@ -54,9 +54,8 @@ namespace :toolchain do
     :rdoc => 'rdoc', :clobber_rdoc => 'rdoc:clean', :rerdoc => 'rdoc:force'
   ) do |task|
     task.rdoc_files.include('bin/', 'lib/')
-    task.rdoc_dir = 'rdoc'
-    task.options = %w[--all -o /tmp/rdoc]
-    puts task.options
+    task.rdoc_dir = '/tmp/rdoc'
+    task.options << '--all'
   end
 
   namespace :inch do
