@@ -2,6 +2,7 @@ require 'rubocop/rake_task'
 require 'rubycritic/rake_task'
 require 'rdoc/task'
 require 'inch/rake'
+require 'rake/testtask'
 
 task default: %w[toolchain:test toolchain:lint]
 
@@ -35,6 +36,15 @@ namespace :docs do
 end
 
 namespace :toolchain do
+  desc 'Run toolchain unit tests (rake task)'
+  Rake::TestTask.new(:testtask) do |task|
+    ENV['UNITTEST'] = 'true'
+
+    task.libs << 'test'
+    task.test_files = FileList['test/test_*.rb']
+    # task.verbose = true
+  end
+
   desc 'Run toolchain unit tests'
   task :test do
     ruby 'test/main.rb'
