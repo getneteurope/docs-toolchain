@@ -50,11 +50,13 @@ namespace :toolchain do
       if ENV.key?('GITHUB_ACTIONS')
   end
 
-  namespace :rdoc do
-    RDoc::Task.new(:generate) do |task|
-      task.rdoc_files.include('bin/', 'lib/')
-    end
-
+  RDoc::Task.new(
+    :rdoc => 'rdoc', :clobber_rdoc => 'rdoc:clean', :rerdoc => 'rdoc:force'
+  ) do |task|
+    task.rdoc_files.include('bin/', 'lib/')
+    task.rdoc_dir = 'rdoc'
+    task.options = %w[--all -o /tmp/rdoc]
+    puts task.options
   end
 
   namespace :inch do
