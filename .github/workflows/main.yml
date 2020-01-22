@@ -1,11 +1,11 @@
-name: Testing
+name: Main
 
 on: [push, pull_request]
 env:
   TOOLCHAIN_PATH: .
 
 jobs:
-  test:
+  test-and-publish:
     runs-on: ubuntu-latest
     # container:
     #   image: ruby:2.6
