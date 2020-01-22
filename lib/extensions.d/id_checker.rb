@@ -12,15 +12,15 @@ module Toolchain
 
     def run(adoc)
       original = adoc.original
-      converted = adoc.converted
+      parsed = adoc.parsed
       attributes = adoc.attributes
 
       errors = []
       # TODO: research why read_lines can be empty
-      lines = converted.reader.read_lines
-      lines = converted.reader.source_lines if lines.empty?
-      
-      reader = Asciidoctor::PreprocessorReader.new converted, lines
+      lines = parsed.reader.read_lines
+      lines = parsed.reader.source_lines if lines.empty?
+
+      reader = Asciidoctor::PreprocessorReader.new parsed, lines
       combined_source = reader.read_lines
 
       doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes

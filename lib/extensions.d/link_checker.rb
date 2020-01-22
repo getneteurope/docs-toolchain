@@ -7,12 +7,12 @@ require_relative '../base_extension.rb'
 module Toolchain
   class LinkChecker < BaseExtension
     def run(adoc)
-      converted = adoc.converted
+      parsed = adoc.parsed
       errors = []
-      links = converted.references[:links]
+      links = parsed.references[:links]
       links.each do |link|
         msg = test_link(link)
-        errors << create_error(msg: msg, filename: converted.attr('docfile')) unless msg.nil?
+        errors << create_error(msg: msg, filename: parsed.attr('docfile')) unless msg.nil?
       end
       return errors
     end

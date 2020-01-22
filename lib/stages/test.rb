@@ -11,7 +11,7 @@ ADOC_MAP = Hash.new(nil)
 DEFAULT_INDEX = 'content/index.adoc'
 
 # Attributes = Hash.new(nil)
-Entry = Struct.new(:original, :converted)
+Entry = Struct.new(:original, :parsed)
 
 # print help
 # print all loaded extensions
@@ -60,19 +60,12 @@ def collect_attributes(doc, attribs = {})
     get_mod_attrs_from_doc(doc).each do |k, v|
       attribs[k] = v
     end
-    #pp attribs
     collect_attributes(doc, attribs)
   end
-
-  # original.reader.read_lines.grep(/^:.+:/).each { |line|
-  # # TODO use asciidoctor to do this for attributes in attributes
-  #   k, v = line.match(/^:(.+): ?(.*)/).captures
-  #   attribs[k] = v
-  # }
   attribs
 end
 
-# load adoc file, convert and return
+# load adoc file, parse, collect attributes and return
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
 def load_doc(filename, attribs = {})
   original = Asciidoctor.load_file(
@@ -83,22 +76,19 @@ def load_doc(filename, attribs = {})
     parse: false,
     attributes: attribs
   )
-  converted = Asciidoctor.load_file(
+  parsed = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
     sourcemap: true,
     safe: :unsafe,
     parse: true,
-    attributes: attributes
+    attributes: attribs
   )
-  attributes = collect_attributes converted, attribs
-
-  # converted = Marshal.load(Marshal.dump(original)) # deep copy. I don't trust it
-  converted.convert
+  attributes = collect_attributes parsed, attribs
 
   adoc = OpenStruct.new(
     original: original,
-    converted: converted,
+    parsed: parsed,
     attributes: attributes
   )
   return adoc
@@ -125,14 +115,14 @@ def run_tests(filename)
 
     adoc = load_doc filename
     original = adoc.original
-    converted = adoc.converted
+    parsed = adoc.parsed
     attributes = adoc.attributes
 
-    entry = Entry.new(original: original, converted: converted, attributes: attributes)
+    entry = Entry.new(original: original, parsed: parsed, attributes: attributes)
     ADOC_MAP[filename] = entry
   else
     entry = ADOC_MAP[filename]
-    converted = entry.converted
+    parsed = entry.parsed
     original = entry.original
     attributes = entry.attributes
   end
@@ -186,10 +176,10 @@ def main(argv = ARGV)
   # included_files = adoc.catalog[:includes]
   adoc = load_doc index_adoc
   original = adoc.original
-  converted = adoc.converted
+  parsed = adoc.parsed
   attributes = adoc.attributes
 
-  included_files = converted.catalog[:includes]
+  included_files = parsed.catalog[:includes]
   # included_files = load_doc(index_adoc)
   stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
   log('INCLUDES', included_files)

@@ -116,8 +116,8 @@ class TestLinkChecker < Test::Unit::TestCase
 3. https://adfasdgea.asd/adfadfasdf/[Unknown Domain]
 4. http://111.222.123.48[Random IP]
     '
-    adoc = init(adoc_content, self.class.name)
-    assert_equal(4, original.references[:links].length)
+    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+    assert_equal(4, adoc.parsed.references[:links].length)
     errors = Toolchain::LinkChecker.new.run(adoc)
     assert_equal(3, errors.length)
     assert_any_startwith(errors, '[404] Not Found') # 2.

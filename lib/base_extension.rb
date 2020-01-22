@@ -27,7 +27,7 @@ module Toolchain
     end
 
     def run(_adoc)
-      # run takes adoc.document, adoc.converted asciidoctor document and adoc.attributes as input and
+      # run takes adoc.document, adoc.parsed asciidoctor document and adoc.attributes as input and
       # must return an array of Hashes of errors.
       # if there are no errors, an empty Hash must be returned.
       # the Hash has the following format:

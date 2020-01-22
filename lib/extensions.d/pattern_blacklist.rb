@@ -8,7 +8,7 @@ module Toolchain
   class PatternBlacklist < BaseExtension
     def run(adoc, blacklist_file = '../blacklist.txt')
       original = adoc.original
-      converted = adoc.converted
+      parsed = adoc.parsed
       attributes = adoc.attributes
       errors = []
       unless File.exist?(blacklist_file)
@@ -35,7 +35,7 @@ module Toolchain
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
           log('PATTERN', msg, color: :magenta)
-          errors << create_error(msg: msg, filename: converted.attr('docfile'))
+          errors << create_error(msg: msg, filename: parsed.attr('docfile'))
         end
       end
       return errors
