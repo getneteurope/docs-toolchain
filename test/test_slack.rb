@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/notify/slack.rb'
+require_relative './util.rb'
 
 Slack = Toolchain::Notify::Slack
 

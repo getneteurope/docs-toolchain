@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../lib/extension_manager.rb'
+require_relative './util.rb'
 
 EM = Toolchain::ExtensionManager
 
