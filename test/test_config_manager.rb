@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../lib/config_manager.rb'
+require_relative './util.rb'
 
 class TestConfigManager < Test::Unit::TestCase
   def test_load
