@@ -62,21 +62,31 @@ The toolchain is designed to run through different stages, that have specific re
 ## Development
 Quality assurance:
 * `rake toolchain:lint` calls rubocop
-* `rake tooclhain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
+* `rake toolchain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
 * `rake toolchain:quality` runs `rubycritic` and generates an overview in `/tmp/rubycritic/overview.html`
+* `rake toolchain:rdoc` generates rdoc documentation in `/tmp/rdoc`
+* `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch** on the code base
 
 ## Configuration
 There are some variables that need to be secret, while others can be public.
 Configuration files are public.
 
-### Secret
-* **AWS**
-    * `AWS_ACCESS_KEY_ID`
-    * `AWS_SECRET_ACCESS_KEY`
-    * `AWS_REGION`
-    * `AWS_S3_BUCKET`
-* **Slack**
-    * `SLACK_TOKEN` (Optional)
+### Secrets
+#### AWS
+
+**Needed:**
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
+* `AWS_REGION`
+* `AWS_S3_BUCKET**
+
+#### Slack
+
+**Needed:**
+* `SLACK_TOKEN` (Optional)
+    
+The **test** and **build** stages produce `/tmp/slack.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
+`lib/notify/slack.rb` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
 
 ### Public
 #### Variables
@@ -89,21 +99,11 @@ Configuration files:
 * `config/error-types.json`: lists all warning/error types with a unique string ID, a unique error code (grouped like HTTP codes), and a format string like error message.
 * `static/privacy-policy.(txt|adoc)`
 
-
-## Utilities
-The **test** and **build** stages produce `/tmp/errors.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
-Warnings and errors are defined in `error-types.json` and further ignored or interpreted as errors according to `settings.json`.
-`slack-notifiy.py` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
-Otherwise
-
 ## Run
 
 To run the toolchain locally, or run the unit tests, the following requirements must be met:
-* bats
 * Ruby 2.x
-* Python 3
-* Node.js 13
-* installed dependencies
+** installed dependencies (Gemfile)
 
 In order to install dependencies, run the following at the root of the project:
 ```bash
