@@ -18,6 +18,12 @@ Toolchain for TecDoc managed documentation repositories
 Under heavy development, everything is subject to change and most likely will not be up-to-date!
 
 
+## Docs and Metrics
+* [Source Code Documentation (rdoc)](https://wirecard.github.io/docs-toolchain/rdoc/)
+* [SimpleCov Coverage](https://wirecard.github.io/docs-toolchain/coverage/)
+* [RubyCritic](https://wirecard.github.io/docs-toolchain/rubycritic)
+
+
 ## Stages
 The toolchain is designed to run through different stages, that have specific responsibilities:
 1. **setup**: install required dependencies
