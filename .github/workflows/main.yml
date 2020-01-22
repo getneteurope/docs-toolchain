@@ -40,10 +40,10 @@ jobs:
 
     - name: "Prepare upload"
       run: |
+        ls -l
         mkdir -p public
-        mv /tmp/rdoc public/
-        mv /tmp/rubycritic public/
-        mv coverage public/
+        mv /tmp/rdoc /tmp/rubycritic coverage public/
+        ls -l public/
         cp public/rubycritic/{overview,index}.html
 
     - name: "Deploy reports to Github Pages"
