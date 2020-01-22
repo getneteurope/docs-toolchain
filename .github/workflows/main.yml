@@ -20,7 +20,6 @@ jobs:
     - name: "Install Gems"
       run: |
         bash setup/setup.sh
-        rake --tasks
 
     - name: "Running unit tests"
       run: |
@@ -30,13 +29,14 @@ jobs:
       run: |
         rake toolchain:lint
 
+    - name: "Generate rdoc"
+      run: |
+        rake --tasks
+        rake toolchain:rdoc
+
     - name: "Quality check"
       run: |
         rake toolchain:quality
-
-    - name: "Generate rdoc"
-      run: |
-        rake toolchain:rdoc
 
     - name: "Prepare upload"
       run: |
