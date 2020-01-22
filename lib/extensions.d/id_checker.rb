@@ -26,8 +26,26 @@ module Toolchain
 
       require 'pp'
 
+      # p "#################"
+
+      # doc = Asciidoctor::Document.new attributes: { :safe => :safe }
+
+      reader = Asciidoctor::PreprocessorReader.new original, lines
+      #p "####moooooo####"
+
+      combined_source = reader.read_lines
+
+      p combined_source.inspect
+#      exit
+
+      #a = Asciidoctor::Document.new lines, safe: :safe, standalone: false, parse: true, base_dir: '/tmp'
+      
+      #converted.blocks.each {|b|
+      #pp b.lines}
+      
+
       # parse everything that COULD be an anchor or id manually
-      parsed_ids = lines.map do |line|
+      parsed_ids = combined_source.map do |line|
         pp line
         # match both long and short ids
         /\[(\[|#)(?<id>[^\]]+)/.match(line) do |m|
@@ -38,22 +56,22 @@ module Toolchain
       # if parsed id is unresolved attribute, look up attribute and replace
       log('PARSED_IDS', parsed_ids)
       log('ADOC_IDS', adoc_ids)
-      # adoc_ids = adoc_ids.map do |pid|
-      #   id = pid
-      #   log('ID', id)
-      #   if ATTR_REGEX.match? pid
-      #     log('ID', id + ' looks like it contains an anchor')
-      #     r_pid = pid.gsub ATTR_REGEX, '\1'
-      #     if attributes.keys.any? r_pid
-      #       log('ATTR_FOUND', r_pid, :yellow)
-      #       attributes[r_pid]
-      #       id = attributes[r_pid]
-      #     else
-      #       log('ID', id + " not found in attributes:\n" + attributes.inspect)
-      #     end
-      #   end
-      #   id # TODO: fix ugly return
-      # end.reject(&:nil?).to_set
+      parsed_ids = parsed_ids.map do |pid|
+        id = pid
+        log('ID', id)
+        if ATTR_REGEX.match? pid
+          log('ID', id + ' looks like it contains an anchor')
+          r_pid = pid.gsub ATTR_REGEX, '\1'
+          if attributes.keys.any? r_pid
+            log('ATTR_FOUND', r_pid, :yellow)
+            attributes[r_pid]
+            id = attributes[r_pid]
+          else
+            log('ID', id + " not found in attributes:\n" + attributes.inspect)
+          end
+        end
+        id # TODO: fix ugly return
+      end.reject(&:nil?).to_set
 
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)

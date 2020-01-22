@@ -56,7 +56,7 @@ def load_doc(filename, attribs={})
     catalog_assets: true,
     sourcemap: true,
     safe: :unsafe,
-    parse: false,
+    parse: true,
     attributes: attributes
   )
   # converted = Marshal.load(Marshal.dump(original)) # deep copy. I don't trust it
