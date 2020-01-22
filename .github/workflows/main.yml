@@ -44,8 +44,8 @@ jobs:
         ls -l
         mv /tmp/rdoc /tmp/rubycritic coverage public/
         ls -l public/
-        cp public/rubycritic/{overview,index}.html
         ls -l public/rubycritic/
+        cp public/rubycritic/{overview,index}.html
 
     - name: "Deploy reports to Github Pages"
       uses: crazy-max/ghaction-github-pages@v1
