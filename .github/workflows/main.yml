@@ -40,9 +40,7 @@ jobs:
 
     - name: "Prepare upload"
       run: |
-        mkdir -p public
-        mv /tmp/rdoc /tmp/rubycritic coverage public
-        cp public/rubycritic/{overview,index}.html
+        ./scripts/prepare_deployment.sh
 
     - name: "Deploy reports to Github Pages"
       uses: crazy-max/ghaction-github-pages@v1
