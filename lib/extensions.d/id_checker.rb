@@ -26,17 +26,20 @@ module Toolchain
 
       require 'pp'
 
-      # p "#################"
+       reader = Asciidoctor::PreprocessorReader.new converted, lines
+       combined_source = reader.read_lines
+    #   pp combined_source
 
-      # doc = Asciidoctor::Document.new attributes: { :safe => :safe }
+       doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
+       doc.convert
+       adoc_ids = doc.catalog[:refs].keys.to_set
 
-      reader = Asciidoctor::PreprocessorReader.new original, lines
-      #p "####moooooo####"
+    #   pp doc
+    #  pp attributes
+    #   pp doc.reader.read_lines
 
-      combined_source = reader.read_lines
-
-      p combined_source.inspect
-#      exit
+    #   exit
+      
 
       #a = Asciidoctor::Document.new lines, safe: :safe, standalone: false, parse: true, base_dir: '/tmp'
       
@@ -46,7 +49,7 @@ module Toolchain
 
       # parse everything that COULD be an anchor or id manually
       parsed_ids = combined_source.map do |line|
-        pp line
+        #pp line
         # match both long and short ids
         /\[(\[|#)(?<id>[^\]]+)/.match(line) do |m|
           m[:id]
@@ -72,6 +75,13 @@ module Toolchain
         end
         id # TODO: fix ugly return
       end.reject(&:nil?).to_set
+
+      # parsed_ids = parsed_ids.map do |pid|
+      #   p pid
+      #   p reader.process_line(pid)
+      #   reader.resolve_expr_val(pid)
+      # end.reject(&:nil?).to_set
+
 
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)

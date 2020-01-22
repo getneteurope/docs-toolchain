@@ -10,7 +10,7 @@ ADOC_MAP = Hash.new(nil)
 # default index file
 DEFAULT_INDEX = 'content/index.adoc'
 
-#Attributes = Hash.new(nil)
+# Attributes = Hash.new(nil)
 Entry = Struct.new(:original, :converted)
 
 # print help
@@ -30,18 +30,52 @@ def print_errors(errors_map)
   end
 end
 
-def get_modified_attributes(original, attribs={})
-  original.reader.read_lines.grep(/^:.+:/).each { |line|
-  # TODO use asciidoctor to do this for attributes in attributes
-    k, v = line.match(/^:(.+): ?(.*)/).captures
-    attribs[k] = v
-  }
+def get_mod_attrs_from_doc(doc)
+  attribs = {}
+  doc.convert
+  attrs_mod = doc.instance_variable_get :@attributes_modified
+  attrs_mod.each do |k, _v|
+    attribs[k] = doc.attributes[k]
+  end
+  attribs
+end
+
+def collect_attributes(doc, attribs = {})
+  # get initial attribs set in index
+  attribs = get_mod_attrs_from_doc(doc) if attribs == {}
+  incs = doc.catalog[:includes].keys.to_set
+  return attribs if incs.empty?
+
+  incs.each do |inc|
+    inc_file_path = doc.options[:attributes]['docdir'] + '/' + inc + '.adoc'
+    pp 'include file: ' + inc_file_path
+    doc = Asciidoctor.load_file(
+      inc_file_path,
+      catalog_assets: true,
+      sourcemap: true,
+      safe: :unsafe,
+      parse: false,
+      attributes: attribs
+    )
+    # combine new modified attr from current file with existing attribs
+    get_mod_attrs_from_doc(doc).each do |k, v|
+      attribs[k] = v
+    end
+    #pp attribs
+    collect_attributes(doc, attribs)
+  end
+
+  # original.reader.read_lines.grep(/^:.+:/).each { |line|
+  # # TODO use asciidoctor to do this for attributes in attributes
+  #   k, v = line.match(/^:(.+): ?(.*)/).captures
+  #   attribs[k] = v
+  # }
   attribs
 end
 
 # load adoc file, convert and return
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
-def load_doc(filename, attribs={})
+def load_doc(filename, attribs = {})
   original = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
@@ -50,7 +84,6 @@ def load_doc(filename, attribs={})
     parse: false,
     attributes: attribs
   )
-  attributes = get_modified_attributes original, attribs
   converted = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
@@ -59,8 +92,11 @@ def load_doc(filename, attribs={})
     parse: true,
     attributes: attributes
   )
+  attributes = collect_attributes converted, attribs
+
   # converted = Marshal.load(Marshal.dump(original)) # deep copy. I don't trust it
   converted.convert
+
   adoc = OpenStruct.new(
     original: original,
     converted: converted,
@@ -155,7 +191,7 @@ def main(argv = ARGV)
   attributes = adoc.attributes
 
   included_files = converted.catalog[:includes]
-  #included_files = load_doc(index_adoc)
+  # included_files = load_doc(index_adoc)
   stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
   log('INCLUDES', included_files)
   log('ATTRIBUTES2', attributes)
