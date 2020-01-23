@@ -11,6 +11,16 @@ jobs:
     #   image: ruby:2.6
 
     steps:
+    - name: Extract branch name
+      shell: bash
+      id: extract_branch
+      run: |
+        if [[ ${GITHUB_EVENT_NAME} == 'pull_request' ]]; then
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|refs/pull/\([0-9]\+\)/merge|PR\1|')"
+        else
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+        fi
+
     - name: "Setup ruby 2.6"
       uses: actions/setup-ruby@v1
       with:
@@ -46,11 +56,28 @@ jobs:
         ls -l public/
         ls -l public/rubycritic/
         cp public/rubycritic/{overview,index}.html
+        if [[ ${GITHUB_REF##*/} != 'master' ]]; then
+          mv public "${GITHUB_REF##*/}"
+          mkdir public
+          mv "${GITHUB_REF##*/}" public/
+        fi
 
-    - name: "Deploy reports to Github Pages"
-      uses: crazy-max/ghaction-github-pages@v1
-      with:
-        target_branch: gh-pages
-        build_dir: public
+    - name: "Deploy reports to Github Pages (Master branch)"
+      if: steps.extract_branch.outputs.branch == 'master'
+      uses: peaceiris/actions-gh-pages@v2
       env:
-        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./public
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_PAT }}
+      with:
+        keepFiles: true
+
+    - name: "Deploy reports to Github Pages (Dev branches)"
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./public
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_PAT }}
+        TARGET_FOLDER: ${{ steps.extract_branch.outputs.branch }}
+      with:
+        keepFiles: true
