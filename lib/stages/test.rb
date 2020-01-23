@@ -40,9 +40,9 @@ def print_loaded_extensions
 end
 
 ##
-# print all errors in +errors_map+.
+# Print all errors in +errors_map+.
 # +errors_map+ is a hash containing a mapping of filename -> [errors].
-# format: "id message"
+# Format: "id message"
 #
 # Returns +nil+.
 #
@@ -54,6 +54,10 @@ def print_errors(errors_map)
   end
 end
 
+##
+# Takes document +doc+.
+# Returns +attribs+ all attributes newly set in this document.
+# 
 def get_mod_attrs_from_doc(doc)
   attribs = {}
   doc.convert
@@ -64,6 +68,9 @@ def get_mod_attrs_from_doc(doc)
   attribs
 end
 
+##
+# Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
+# Returns collection of attributes +attribs+.
 def collect_attributes(doc, attribs = {})
   # get initial attribs set in index
   attribs = get_mod_attrs_from_doc(doc) if attribs == {}
