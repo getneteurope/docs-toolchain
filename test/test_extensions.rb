@@ -7,6 +7,21 @@ require_relative './util.rb'
 extensions_dir = File.join(__dir__, '..', 'lib', 'extensions.d', '*.rb')
 Dir[extensions_dir].each { |file| require file }
 
+class TestLocation < Test::Unit::TestCase
+  def test_to_s
+    loc = Toolchain::Location.new('test.adoc', 12)
+    assert_equal('test.adoc:12', loc.to_s)
+  end
+end
+
+class TestBaseExtension < Test::Unit::TestCase
+  def test_run
+    assert_raise(NotImplementedError) do
+      Toolchain::BaseExtension.new.run(nil)
+    end
+  end
+end
+
 class TestIDChecker < Test::Unit::TestCase
   def test_short_ids
     wrong_ref = %w[illegal_$ign my_se¢tion]
@@ -121,6 +136,11 @@ class TestLinkChecker < Test::Unit::TestCase
     assert_any_startwith(errors, 'SocketError') # 3.
     assert_any_startwith(errors, 'Net::OpenTimeout') # 4.
   end
+
+  def test_format_net_exception
+    msg = Toolchain.format_net_exception(StandardError.new('Test'), nil)
+    assert_match(/Unknown Exception/, msg)
+  end
 end
 
 class TestPatternBlacklist < Test::Unit::TestCase
@@ -145,5 +165,11 @@ document
     adoc = init(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
     errors = Toolchain::PatternBlacklist.new.run(adoc, blacklist_file_path)
     assert_equal(3, errors.length)
+  end
+
+  def test_no_blacklist
+    adoc = init(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
+    errors = Toolchain::PatternBlacklist.new.run(adoc, '/does/not/exist.txt')
+    assert_empty(errors)
   end
 end

@@ -23,7 +23,7 @@ module Toolchain
     def self.parse_ref(ref = ENV['GITHUB_REF'], fallback = nil)
       return fallback unless ref
 
-      return ref.split('/').last if ref.count('/')
+      return ref.split('/').last unless ref.count('/').zero?
 
       return ref
     end
@@ -38,12 +38,12 @@ module Toolchain
     # The path of the git repo is controlled by ENV: $PWD > $TOOLCHAIN_PATH/..
     #
     # Returns a OpenStruct containing the information described above.
-    def self.generate_info
-      content_path = '.'
-      # only works with content repository
-      content_path = File.join(ENV['TOOLCHAIN_PATH'], '..') if ENV['TOOLCHAIN_PATH']
-      # fix Github CI error when testing toolchain only (no content repo)
-      content_path = ENV['GITHUB_WORKSPACE'] if ENV['GITHUB_WORKSPACE']
+    def self.generate_info(path = nil)
+      content_path = '..'
+      content_path = ENV['GITHUB_WORKSPACE'] \
+        if ENV.key?('TOOLCHAIN_TEST') || ENV.key?('GITHUB_ACTIONS')
+      # Unit testing
+      content_path = path unless path.nil?
 
       git_info = nil
       begin
@@ -65,9 +65,9 @@ module Toolchain
         )
       rescue StandardError => _e
         log('GIT', "Error opening Git repository at #{content_path}")
-        hash = Hash.new('<N/A>')
+        hash = {}
         %i[author commit branch time].each do |key|
-          hash[key]
+          hash[key] = '<N/A>'
         end
         git_info = OpenStruct.new(hash)
       end
