@@ -5,3 +5,7 @@ log:
 notify:
   - slack:
       - file: /tmp/slack.json
+
+checkers:
+  - pattern:
+      - blacklist: blacklist.txt
