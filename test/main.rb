@@ -3,6 +3,7 @@
 require 'simplecov'
 SimpleCov.start do |config|
   add_filter 'test/'
+  add_filter 'lib/stages/'
 end
 
 ENV['UNITTEST'] = 'true'
