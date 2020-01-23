@@ -56,21 +56,28 @@ jobs:
         ls -l public/
         ls -l public/rubycritic/
         cp public/rubycritic/{overview,index}.html
+        if [[ ${GITHUB_REF##*/} != 'master' ]]; then
+          mv public "${GITHUB_REF##*/}"
+          mkdir public
+          mv "${GITHUB_REF##*/}" public/
+        fi
 
     - name: "Deploy reports to Github Pages (Master branch)"
       if: steps.extract_branch.outputs.branch == 'master'
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./public
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_PAT }}
       with:
-        BRANCH: gh-pages
-        FOLDER: public
-        ACCESS_TOKEN: ${{ secrets.GITHUB_PAT }}
-        CLEAN: false
+        keepFiles: true
 
     - name: "Deploy reports to Github Pages (Dev branches)"
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        BRANCH: gh-pages
-        FOLDER: public
-        ACCESS_TOKEN: ${{ secrets.GITHUB_PAT }}
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./public
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_PAT }}
         TARGET_FOLDER: ${{ steps.extract_branch.outputs.branch }}
-        CLEAN: false
+      with:
+        keepFiles: true
