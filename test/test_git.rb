@@ -26,8 +26,7 @@ class TestGit < Test::Unit::TestCase
   end
 
   def test_git_info_empty
-    ENV['GITHUB_WORKSPACE'] = 'asgasdg71243234'
-    git_info = Toolchain::Git.generate_info
+    git_info = Toolchain::Git.generate_info('asgasdg71243234')
     not_available = '<N/A>'
     assert_equal(git_info.author, not_available)
     assert_equal(git_info.commit, not_available)

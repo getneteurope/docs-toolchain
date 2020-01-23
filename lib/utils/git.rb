@@ -38,12 +38,12 @@ module Toolchain
     # The path of the git repo is controlled by ENV: $PWD > $TOOLCHAIN_PATH/..
     #
     # Returns a OpenStruct containing the information described above.
-    def self.generate_info
+    def self.generate_info(path = nil)
       content_path = '..'
-      # only works with content repository
-      content_path = File.join(ENV['TOOLCHAIN_PATH'], '..') if ENV['TOOLCHAIN_PATH']
-      # fix Github CI error when testing toolchain only (no content repo)
-      content_path = ENV['GITHUB_WORKSPACE'] if ENV['GITHUB_WORKSPACE']
+      content_path = ENV['GITHUB_WORKSPACE'] \
+        if ENV.key?('TOOLCHAIN_TEST') || ENV.key?('GITHUB_ACTIONS')
+      # Unit testing
+      content_path = path unless path.nil?
 
       git_info = nil
       begin

@@ -3,6 +3,7 @@ name: Main
 on: [push, pull_request]
 env:
   TOOLCHAIN_PATH: .
+  TOOLCHAIN_TEST: true
 
 jobs:
   test-and-publish:
