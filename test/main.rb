@@ -2,7 +2,7 @@
 
 require 'simplecov'
 SimpleCov.start do |config|
-  puts "SimpleCov loaded"
+  add_filter 'test/'
 end
 
 ENV['UNITTEST'] = 'true'
