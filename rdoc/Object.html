@@ -288,7 +288,7 @@
 
           
           <div class="method-source-code" id="colorize-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 9</span>
+            <pre><span class="ruby-comment"># File lib/utils/string.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">colorize</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">color</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">color</span>
   <span class="ruby-keyword">when</span> <span class="ruby-value">:black</span>
@@ -484,7 +484,7 @@
 
           
           <div class="method-source-code" id="log-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 37</span>
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>)
 
@@ -646,7 +646,8 @@
           
           <div class="method-source-code" id="post_process_errors-source">
             <pre><span class="ruby-comment"># File lib/stages/test.rb, line 207</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>); <span class="ruby-keyword">end</span></pre>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
+<span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -817,7 +818,7 @@
 
           
           <div class="method-source-code" id="stage_log-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 53</span>
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">color:</span> <span class="ruby-value">:green</span>)
   <span class="ruby-identifier">stages</span> = <span class="ruby-node">%w[setup test build deploy post notify]</span>
   <span class="ruby-identifier">stage</span> = <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>

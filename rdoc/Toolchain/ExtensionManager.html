@@ -86,6 +86,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-create_error">::create_error</a>
+    
     <li ><a href="#method-c-new">::new</a>
     
     <li ><a href="#method-i-clear">#clear</a>
@@ -130,6 +132,74 @@
        </header>
 
     
+      <div id="method-c-create_error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_error</span><span
+            class="method-args">(msg:, type:, location: nil, extras: nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates an error, consisting of the following fields:</p>
+<dl class="rdoc-list label-list"><dt>id
+<dd>
+<p>continuous ID to identify order of errors</p>
+</dd><dt>type
+<dd>
+<p>type of error, defaults to the name of the extension</p>
+</dd><dt>msg
+<dd>
+<p>the error message</p>
+</dd><dt>location
+<dd>
+<p>location of the error, described by <code>Location</code></p>
+</dd><dt>extras
+<dd>
+<p>for future use, unused right now</p>
+</dd></dl>
+
+<p>Only a subset of the keys can be passed to the function:</p>
+<ul><li>
+<p><code>msg</code></p>
+</li><li>
+<p><code>type</code></p>
+</li><li>
+<p><code>location</code></p>
+</li><li>
+<p><code>extras</code></p>
+</li></ul>
+
+<p>Returns the error as Hash.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="create_error-source">
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_error</span>(<span class="ruby-value">msg:</span>, <span class="ruby-value">type:</span>, <span class="ruby-value">location:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">extras:</span> <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">return</span> {
+    <span class="ruby-value">id:</span> <span class="ruby-identifier">instance</span>.<span class="ruby-identifier">next_id</span>,
+    <span class="ruby-value">type:</span> <span class="ruby-identifier">type</span>,
+    <span class="ruby-value">msg:</span> <span class="ruby-identifier">msg</span>,
+    <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>,
+    <span class="ruby-value">extras:</span> <span class="ruby-identifier">extras</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
@@ -149,7 +219,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 44</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 72</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@extensions</span> = []
   <span class="ruby-ivar">@id</span> = <span class="ruby-value">0</span>
@@ -191,7 +261,7 @@
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 37</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-ivar">@extensions</span>.<span class="ruby-identifier">clear</span>
   <span class="ruby-ivar">@id</span> = <span class="ruby-value">0</span>
@@ -225,7 +295,7 @@
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 24</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@extensions</span>
 <span class="ruby-keyword">end</span></pre>
@@ -258,7 +328,7 @@
 
           
           <div class="method-source-code" id="next_id-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 30</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">next_id</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@id</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
 <span class="ruby-keyword">end</span></pre>
@@ -293,7 +363,7 @@
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 17</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">register</span>(<span class="ruby-identifier">ext</span>)
   <span class="ruby-ivar">@extensions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ext</span>
 <span class="ruby-keyword">end</span></pre>

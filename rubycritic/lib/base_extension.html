@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 11:37:00 +0100'>2020-01-23 11:37:00 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-23 16:11:36 +0100'>2020-01-23 16:11:36 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">71</span><small> lines of codes</small></div>
+              <div><span class="metric">52</span><small> lines of codes</small></div>
               <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">2.5</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">2.3</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">12.6</span><small> complexity</small></div>
+              <div><span class="metric">11.7</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -127,29 +127,10 @@ module Toolchain
   # Toolchain::ExtensionManager.instance.register(Toolchain::ExampleChecker.new)
   #
   class BaseExtension
-    ##
-    # Creates an error, consisting of the following fields:
-    # [id]       continuous ID to identify order of errors
-    # [type]     type of error, defaults to the name of the extension
-    # [msg]      the error message
-    # [location] location of the error, described by +Location+
-    # [extras]   for future use, unused right now
-    #
-    # Only a subset of the keys can be passed to the function:
-    # * +msg+
-    # * +location+
-    # * +extras+
-    #
-    # Returns the error as Hash.
-    #
     def create_error(msg:, location: nil, extras: nil)
-      return {
-        id: Toolchain::ExtensionManager.instance.next_id,
-        type: self.class.name,
-        msg: msg,
-        location: location,
-        extras: extras
-      }
+      return Toolchain::ExtensionManager.create_error(
+        msg: msg, type: self.class.name, location: location, extras: extras
+      )
     end
 
     ##

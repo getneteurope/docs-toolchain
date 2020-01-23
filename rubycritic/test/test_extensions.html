@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 11:37:00 +0100'>2020-01-23 11:37:00 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-23 16:11:36 +0100'>2020-01-23 16:11:36 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">149</span><small> lines of codes</small></div>
-              <div><span class="metric">6</span><small> methods</small></div>
+              <div><span class="metric">175</span><small> lines of codes</small></div>
+              <div><span class="metric">10</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">16.2</span><small> complexity/method</small></div>
-              <div><span class="metric">26</span><small> churn</small></div>
+              <div><span class="metric">11.7</span><small> complexity/method</small></div>
+              <div><span class="metric">27</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">96.92</span><small> complexity</small></div>
+              <div><span class="metric">117.4</span><small> complexity</small></div>
               <div><span class="metric">70</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                5
+                7
                 smells
               </a>
             </li>
@@ -106,8 +106,23 @@ require_relative &#39;./util.rb&#39;
 extensions_dir = File.join(__dir__, &#39;..&#39;, &#39;lib&#39;, &#39;extensions.d&#39;, &#39;*.rb&#39;)
 Dir[extensions_dir].each { |file| require file }
 
+class TestLocation &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestLocation has no descriptive comment</span>          </div>  </li></ol>
+  def test_to_s
+    loc = Toolchain::Location.new(&#39;test.adoc&#39;, 12)
+    assert_equal(&#39;test.adoc:12&#39;, loc.to_s)
+  end
+end
+
+class TestBaseExtension &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestBaseExtension has no descriptive comment</span>          </div>  </li></ol>
+  def test_run
+    assert_raise(NotImplementedError) do
+      Toolchain::BaseExtension.new.run(nil)
+    end
+  end
+end
+
 class TestIDChecker &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestIDChecker has no descriptive comment</span>          </div>  </li></ol>
-  def test_short_ids<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_extensions.html#L11" class="js-smell-location">0</a>                  <a href="test_extensions.html#L35" class="js-smell-location">1</a>                  </div>  </li></ol>
+  def test_short_ids<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_extensions.html#L26" class="js-smell-location">0</a>                  <a href="test_extensions.html#L50" class="js-smell-location">1</a>                  </div>  </li></ol>
     wrong_ref = %w[illegal_$ign my_se¢tion]
     adoc_content = &#39;= Test IDs
 [#first]
@@ -131,7 +146,7 @@ Thank you.
     assert_equal(wrong_ref, wrong_ids)
   end
 
-  def test_long_ids<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_extensions.html#L11" class="js-smell-location">0</a>                  <a href="test_extensions.html#L35" class="js-smell-location">1</a>                  </div>  </li></ol>
+  def test_long_ids<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_extensions.html#L26" class="js-smell-location">0</a>                  <a href="test_extensions.html#L50" class="js-smell-location">1</a>                  </div>  </li></ol>
     wrong_ref = %w[illegal_$ign my_se¢tion]
     adoc_content = &#39;= Test IDs
 [[first]]
@@ -220,6 +235,11 @@ class TestLinkChecker &lt; Test::Unit::TestCase<ol class="nocode errors smells">
     assert_any_startwith(errors, &#39;SocketError&#39;) # 3.
     assert_any_startwith(errors, &#39;Net::OpenTimeout&#39;) # 4.
   end
+
+  def test_format_net_exception
+    msg = Toolchain.format_net_exception(StandardError.new(&#39;Test&#39;), nil)
+    assert_match(/Unknown Exception/, msg)
+  end
 end
 
 class TestPatternBlacklist &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestPatternBlacklist has no descriptive comment</span>          </div>  </li></ol>
@@ -244,6 +264,12 @@ document
     adoc = init(adoc, &quot;#{self.class.name}_#{__method__}&quot;, &#39;test_toolchain_pattern_blacklist.adoc&#39;)
     errors = Toolchain::PatternBlacklist.new.run(adoc, blacklist_file_path)
     assert_equal(3, errors.length)
+  end
+
+  def test_no_blacklist
+    adoc = init(adoc, &quot;#{self.class.name}_#{__method__}&quot;, &#39;test_toolchain_pattern_blacklist.adoc&#39;)
+    errors = Toolchain::PatternBlacklist.new.run(adoc, &#39;/does/not/exist.txt&#39;)
+    assert_empty(errors)
   end
 end
 </code>

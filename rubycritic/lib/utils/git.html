@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-22 12:43:45 +0100'>2020-01-22 12:43:45 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-23 10:42:48 +0100'>2020-01-23 10:42:48 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">23.2</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">22.7</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">46.36</span><small> complexity</small></div>
+              <div><span class="metric">45.34</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -122,7 +122,7 @@ module Toolchain
     def self.parse_ref(ref = ENV[&#39;GITHUB_REF&#39;], fallback = nil)
       return fallback unless ref
 
-      return ref.split(&#39;/&#39;).last if ref.count(&#39;/&#39;)
+      return ref.split(&#39;/&#39;).last unless ref.count(&#39;/&#39;).zero?
 
       return ref
     end
@@ -137,12 +137,12 @@ module Toolchain
     # The path of the git repo is controlled by ENV: $PWD &gt; $TOOLCHAIN_PATH/..
     #
     # Returns a OpenStruct containing the information described above.
-    def self.generate_info<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Git::generate_info has a flog score of 41</span>          </div>  </li></ol>
-      content_path = &#39;.&#39;
-      # only works with content repository
-      content_path = File.join(ENV[&#39;TOOLCHAIN_PATH&#39;], &#39;..&#39;) if ENV[&#39;TOOLCHAIN_PATH&#39;]
-      # fix Github CI error when testing toolchain only (no content repo)
-      content_path = ENV[&#39;GITHUB_WORKSPACE&#39;] if ENV[&#39;GITHUB_WORKSPACE&#39;]
+    def self.generate_info(path = nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Git::generate_info has a flog score of 38</span>          </div>  </li></ol>
+      content_path = &#39;..&#39;
+      content_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
+        if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
+      # Unit testing
+      content_path = path unless path.nil?
 
       git_info = nil
       begin
@@ -164,9 +164,9 @@ module Toolchain
         )
       rescue StandardError =&gt; _e
         log(&#39;GIT&#39;, &quot;Error opening Git repository at #{content_path}&quot;)
-        hash = Hash.new(&#39;&lt;N/A&gt;&#39;)
+        hash = {}
         %i[author commit branch time].each do |key|
-          hash[key]
+          hash[key] = &#39;&lt;N/A&gt;&#39;
         end
         git_info = OpenStruct.new(hash)
       end

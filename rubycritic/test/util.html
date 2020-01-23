@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-21 14:16:11 +0100'>2020-01-21 14:16:11 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-23 16:11:36 +0100'>2020-01-23 16:11:36 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">4.8</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">8</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">24.19</span><small> complexity</small></div>
@@ -123,7 +123,7 @@ def with_captured_stdout<ol class="nocode errors smells">  <li>    <div class="d
   original_stdout = $stdout  # capture previous value of $stdout
   $stdout = StringIO.new     # assign a string buffer to $stdout
   yield                      # perform the body of the user code
-  $stdout.string             # return the contents of the string buffer
+  return $stdout.string      # return the contents of the string buffer
 ensure
   $stdout = original_stdout  # restore $stdout to its previous value
 end
