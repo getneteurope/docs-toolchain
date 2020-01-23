@@ -10,12 +10,15 @@ module Toolchain
   # Checks the text against a predefined list of patterns which are not allowed.
   class PatternBlacklist < BaseExtension
     ##
-    # Run the Pattern tests on the given document (+document+, +original+).
+    # Run the Pattern tests on the given document (+adoc+).
     # Illegal patterns are loaded from +blacklist_file+.
     #
     # Returns a list of errors (can be empty).
     #
-    def run(document, original, blacklist_file = '../blacklist.txt')
+    def run(adoc, blacklist_file = '../blacklist.txt')
+      original = adoc.original
+      parsed = adoc.parsed
+      attributes = adoc.attributes
       errors = []
       unless File.exist?(blacklist_file)
         log(
@@ -35,17 +38,15 @@ module Toolchain
         Regexp.new(pattern.chomp.gsub(%r{^/(.+)/$}, '\1'))
       end
 
-      lines = original.reader.read_lines
-      lines = original.reader.source_lines if lines.empty?
-
-      lines.each_with_index do |line, index|
+      original.reader.source_lines.each_with_index do |line, index|
         blacklist_patterns.each_with_index do |pattern, _p_idx|
           next unless line.match? pattern
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
           log('PATTERN', msg, color: :magenta)
           errors << create_error(
-            msg: msg, location: Location.new(document.attr('docfile'), nil)
+            msg: msg,
+            location: Location.new(parsed.attr('docfile'), nil)
           )
         end
       end

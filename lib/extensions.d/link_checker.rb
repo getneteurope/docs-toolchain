@@ -28,19 +28,20 @@ module Toolchain
   # Check links and detect whether a link is dead, has moved, cannot be reached, etc.
   class LinkChecker < BaseExtension
     ##
-    # Run the Link tests on the given document (+document+, +_original+).
+    # Run the Link tests on the given document (+adoc+).
     #
     # Returns a list of errors (can be empty).
     #
-    def run(document, _original = nil)
+    def run(adoc)
+      parsed = adoc.parsed
       errors = []
-      links = document.references[:links]
+      links = parsed.references[:links]
       links.each do |link|
         msg = test_link(link)
         next if msg.nil?
 
         errors << create_error(
-          msg: msg, location: Location.new(document.attr('docfile'), nil)
+          msg: msg, location: Location.new(parsed.attr('docfile'), nil)
         )
       end
       return errors

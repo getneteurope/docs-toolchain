@@ -9,39 +9,60 @@ module Toolchain
   #
   # Check IDs according to a stricter standard than the default Asciidoctor standard.
   class IdChecker < BaseExtension
-    # ID regex
-    REGEX = /^[A-Za-z0-9_]+$/.freeze
+    ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
+    ATTR_REGEX = /^\{(.+)\}$/.freeze
 
     ##
-    # Run the ID tests on the given document (+document+, +original+).
+    # Run the ID tests on the given document (+adoc+).
     #
     # Returns a list of errors (can be empty).
     #
-    def run(document, original)
+    def run(adoc)
+      original = adoc.original
+      parsed = adoc.parsed
+      attributes = adoc.attributes
+
       errors = []
       # TODO: research why read_lines can be empty
-      lines = original.reader.read_lines
-      lines = original.reader.source_lines if lines.empty?
+      lines = parsed.reader.read_lines
+      lines = parsed.reader.source_lines if lines.empty?
 
-      # get ids that asciidoctor recognizes as such
-      adoc_ids = document.catalog[:refs].keys.to_set
+      reader = Asciidoctor::PreprocessorReader.new parsed, lines
+      combined_source = reader.read_lines
+
+      doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
+      doc.convert
+      adoc_ids = doc.catalog[:refs].keys.to_set
 
       # parse everything that COULD be an anchor or id manually
-      parsed_ids = lines.map do |line|
+      parsed_ids = combined_source.map do |line|
         # match both long and short ids
         /\[(\[|#)(?<id>[^\]]+)/.match(line) do |m|
           m[:id]
         end
       end.reject(&:nil?).to_set # reject all nil entries
 
+      # if parsed id is unresolved attribute, look up attribute and replace
+      parsed_ids = parsed_ids.map do |pid|
+        id = pid
+        if ATTR_REGEX.match? pid
+          r_pid = pid.gsub ATTR_REGEX, '\1'
+          if attributes.keys.any? r_pid
+            attributes[r_pid]
+            id = attributes[r_pid]
+          end
+        end
+        id # TODO: fix ugly return
+      end.reject(&:nil?).to_set
+
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
-        msg = "Illegal character: '#{id}' does not match ID criteria (#{REGEX.inspect})"
-        next if REGEX.match?(id)
+        msg = "Illegal character: '#{id}' does not match ID criteria (#{ID_PATTERN_REGEX.inspect})"
+        next if ID_PATTERN_REGEX.match?(id)
 
         errors << create_error(
           msg: msg,
-          location: Location.new(document.attr('docfile'), nil)
+          location: Location.new(original.attr('docfile'), nil)
         )
       end
       return errors
