@@ -4,7 +4,10 @@ require_relative '../extension_manager.rb'
 require_relative '../base_extension.rb'
 
 module Toolchain
-  # looks up a list of prohibited patterns
+  ##
+  # Pattern Checker
+  #
+  # Checks the text against a predefined list of patterns which are not allowed.
   class PatternBlacklist < BaseExtension
     def run(adoc, blacklist_file = '../blacklist.txt')
       original = adoc.original
@@ -35,7 +38,9 @@ module Toolchain
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
           log('PATTERN', msg, color: :magenta)
-          errors << create_error(msg: msg, filename: parsed.attr('docfile'))
+          errors << create_error(
+            msg: msg, location: Location.new(parsed.attr('docfile'), nil)
+          )
         end
       end
       return errors

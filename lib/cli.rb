@@ -4,11 +4,18 @@ require 'ostruct'
 require 'optparse'
 
 module Toolchain
+  ##
+  # Build module
   module Build
+    ##
+    # CLI for Build stage
     module CLI
+      ##
+      # Parse arguments given as +argv+.
+      #
+      # Returns hash containing all options as key=value pairs and the parser object.
       def self.parse_args(argv = ARGV)
-        args = { content: 'content', index: 'index.adoc',
-          debug: false, help: false }
+        args = { content: 'content', index: 'index.adoc', debug: false, help: false }
 
         # TODO: add options for custom build dir
         # TODO: add support for debug flag
@@ -41,13 +48,16 @@ Defaults:
   end
   # END BUILD
 
+  ##
+  # Test module
   module Test
-    # CLI argument parsing
+    # CLI for Test stage
     module CLI
+      ##
+      # Parse arguments given as +argv+.
+      #
+      # Returns hash containing all options as key=value pairs and the parser object.
       def self.parse_args(argv = ARGV)
-        # parses argv (default: argv=ARGV) and returns the arguments as ostruct and the parser object
-        # return: OpenSruct(args), parser
-        #
         args = { help: false, debug: false, index: nil, files: [] }
 
         opt_parser = OptionParser.new do |parser|

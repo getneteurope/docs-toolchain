@@ -3,6 +3,24 @@
 require_relative './extension_manager.rb'
 
 module Toolchain
+  # Location describes a source location, made up of +filename+ and +lineno+.
+  # Params:
+  # * +filename+: adoc filename
+  # * +lineno+: line number
+  Location = Struct.new(:filename, :lineno) do
+    ##
+    # Returns a String representation of the location
+    def to_s
+      return "#{filename}:#{lineno}"
+    end
+
+    private
+
+    def filename=; end
+
+    def lineno=; end
+  end
+
   # Base class for extensions,
   # all derived extensions must implement the run(document) function
   # and register with the ExtensionManager, e.g.:
@@ -10,18 +28,27 @@ module Toolchain
   # Toolchain::ExtensionManager.instance.register(Toolchain::ExampleChecker.new)
   #
   class BaseExtension
-    def next_id
-      return Toolchain::ExtensionManager.instance.next_id
-    end
-
-    def create_error(id: next_id, type: self.class.name, msg:, filename:, lineno: nil, extras: nil)
-      where = filename
-      lineno&.each { |line| where << ":#{line}" }
+    ##
+    # Creates an error, consisting of the following fields:
+    # [id]       continuous ID to identify order of errors
+    # [type]     type of error, defaults to the name of the extension
+    # [msg]      the error message
+    # [location] location of the error, described by +Location+
+    # [extras]   for future use, unused right now
+    #
+    # Only a subset of the keys can be passed to the function:
+    # * +msg+
+    # * +location+
+    # * +extras+
+    #
+    # Returns the error as Hash.
+    #
+    def create_error(msg:, location: nil, extras: nil)
       return {
-        id: id,
-        type: type,
+        id: Toolchain::ExtensionManager.instance.next_id,
+        type: self.class.name,
         msg: msg,
-        where: where,
+        location: location,
         extras: extras
       }
     end
