@@ -49,11 +49,4 @@ class TestTestCLI < Test::Unit::TestCase
   def test_index_and_file
     assert_raise(ArgumentError) { Toolchain::Test::CLI.parse_args(%w[--index index.adoc --file file.adoc]) }
   end
-
-  def test_help_cli
-    output = with_captured_stdout do
-      main(%w[--help])
-    end
-    assert_true(output.start_with?('Usage:'))
-  end
 end
