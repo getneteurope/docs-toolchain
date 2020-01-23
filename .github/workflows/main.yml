@@ -11,6 +11,11 @@ jobs:
     #   image: ruby:2.6
 
     steps:
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
     - name: "Setup ruby 2.6"
       uses: actions/setup-ruby@v1
       with:
@@ -47,10 +52,18 @@ jobs:
         ls -l public/rubycritic/
         cp public/rubycritic/{overview,index}.html
 
-    - name: "Deploy reports to Github Pages"
-      uses: crazy-max/ghaction-github-pages@v1
+    - name: "Deploy reports to Github Pages (Master branch)"
+      if: steps.extract_branch.outputs.branch == 'master'
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        target_branch: gh-pages
-        build_dir: public
-      env:
-        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+        BRANCH: gh-pages
+        FOLDER: public
+        ACCESS_TOKEN: ${{ secrets.GITHUB_PAT }}
+
+    - name: "Deploy reports to Github Pages (Dev branches)"
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        BRANCH: gh-pages
+        FOLDER: public
+        ACCESS_TOKEN: ${{ secrets.GITHUB_PAT }}
+        TARGET_FOLDER: ${{ steps.extract_branch.outputs.branch }}
