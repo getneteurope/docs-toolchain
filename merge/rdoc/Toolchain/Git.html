@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module Toolchain::Git - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-generate_info">::generate_info</a>
+    
+    <li ><a href="#method-c-parse_ref">::parse_ref</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-Toolchain::Git">
+  <h1 id="module-Toolchain::Git" class="module">
+    module Toolchain::Git
+  </h1>
+
+  <section class="description">
+    
+<p><a href="Git.html"><code>Git</code></a> module</p>
+
+<p>Umbrella module for all <a href="Git.html"><code>Git</code></a> related actions.</p>
+
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-generate_info" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate_info</span><span
+            class="method-args">(path = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Generate a hash containing <a href="Git.html"><code>Git</code></a> information:</p>
+<dl class="rdoc-list label-list"><dt>author
+<dd>
+<p>author name and email</p>
+</dd><dt>commit
+<dd>
+<p>commit hash</p>
+</dd><dt>branch
+<dd>
+<p>git reference (branch or tag)</p>
+</dd><dt>time
+<dd>
+<p>commit time and date</p>
+</dd></dl>
+
+<p>The path of the git repo is controlled by ENV: $PWD &gt; $TOOLCHAIN_PATH/..</p>
+
+<p>Returns a OpenStruct containing the information described above.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="generate_info-source">
+            <pre><span class="ruby-comment"># File lib/utils/git.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">generate_info</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">content_path</span> = <span class="ruby-string">&#39;..&#39;</span>
+  <span class="ruby-identifier">content_path</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_WORKSPACE&#39;</span>] \
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;TOOLCHAIN_TEST&#39;</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;GITHUB_ACTIONS&#39;</span>)
+  <span class="ruby-comment"># Unit testing</span>
+  <span class="ruby-identifier">content_path</span> = <span class="ruby-identifier">path</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span>
+
+  <span class="ruby-identifier">git_info</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-comment"># parse git info of latest commit</span>
+    <span class="ruby-identifier">repo</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Git</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">content_path</span>)
+    <span class="ruby-identifier">head</span> = <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">object</span>(<span class="ruby-string">&#39;HEAD&#39;</span>).<span class="ruby-identifier">sha</span>
+    <span class="ruby-identifier">commit</span> = <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">gcommit</span>(<span class="ruby-identifier">head</span>)
+    <span class="ruby-identifier">author</span> = <span class="ruby-identifier">commit</span>.<span class="ruby-identifier">author</span>
+    <span class="ruby-identifier">branch</span> = <span class="ruby-identifier">parse_ref</span>(
+      <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_REPOSITORY&#39;</span>],
+      <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">remote</span>(<span class="ruby-string">&#39;origin&#39;</span>)
+    ) <span class="ruby-operator">||</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">revparse</span>(<span class="ruby-identifier">commit</span>.<span class="ruby-identifier">sha</span>)
+
+    <span class="ruby-identifier">git_info</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-value">author:</span> <span class="ruby-node">&quot;#{author.name} &lt;#{author.email}&gt;&quot;</span>,
+      <span class="ruby-value">commit:</span> <span class="ruby-identifier">commit</span>.<span class="ruby-identifier">sha</span>,
+      <span class="ruby-value">branch:</span> <span class="ruby-identifier">branch</span>.<span class="ruby-identifier">to_s</span>,
+      <span class="ruby-value">time:</span> <span class="ruby-identifier">commit</span>.<span class="ruby-identifier">date</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%H:%M %d.%m.%Y&#39;</span>)
+    )
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">_e</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;GIT&#39;</span>, <span class="ruby-node">&quot;Error opening Git repository at #{content_path}&quot;</span>)
+    <span class="ruby-identifier">hash</span> = {}
+    <span class="ruby-node">%i[author commit branch time]</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-string">&#39;&lt;N/A&gt;&#39;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">git_info</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">git_info</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-parse_ref" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_ref</span><span
+            class="method-args">(ref = ENV[&#39;GITHUB_REF&#39;], fallback = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Pass a reference <code>ref</code> and a fallback <code>fallback</code> and return the parsed reference.</p>
+
+<p>Reference, in this case, describes a git reference like a branch name or a tag. Depending on the environment this reference can occur in many different places.</p>
+
+<p>Returns a parsed reference or fallback if no reference was found.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="parse_ref-source">
+            <pre><span class="ruby-comment"># File lib/utils/git.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">parse_ref</span>(<span class="ruby-identifier">ref</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_REF&#39;</span>], <span class="ruby-identifier">fallback</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">fallback</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ref</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;/&#39;</span>).<span class="ruby-identifier">last</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">count</span>(<span class="ruby-string">&#39;/&#39;</span>).<span class="ruby-identifier">zero?</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ref</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
