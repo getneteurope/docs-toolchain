@@ -2,7 +2,7 @@
   <a href="https://undraw.co/"><img src="logo/landing_page.svg" alt="Docs Toolchain Logo"></a>
 </h1>
 
-# docs-toolchain [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wirecard/docs-toolchain/Testing?style=flat-square)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=flat-square)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)   [![Inline docs](http://inch-ci.org/github/wirecard/docs-toolchain.svg?branch=master&style=flat-square)](http://inch-ci.org/github/wirecard/docs-toolchain)
+# docs-toolchain [![Github workflow](https://github.com/wirecard/docs-toolchain/workflows/Main/badge.svg)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)   [![Inline docs](http://inch-ci.org/github/wirecard/docs-toolchain.svg?branch=master)](http://inch-ci.org/github/wirecard/docs-toolchain)
 
 Toolchain for TecDoc managed documentation repositories
 
@@ -78,7 +78,7 @@ Configuration files are public.
 * `AWS_ACCESS_KEY_ID`
 * `AWS_SECRET_ACCESS_KEY`
 * `AWS_REGION`
-* `AWS_S3_BUCKET**
+* `AWS_S3_BUCKET`
 
 #### Slack
 

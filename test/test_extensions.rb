@@ -17,7 +17,7 @@ end
 class TestBaseExtension < Test::Unit::TestCase
   def test_run
     assert_raise(NotImplementedError) do
-      Toolchain::BaseExtension.new.run(nil, nil)
+      Toolchain::BaseExtension.new.run(nil)
     end
   end
 end
@@ -25,7 +25,7 @@ end
 class TestIDChecker < Test::Unit::TestCase
   def test_short_ids
     wrong_ref = %w[illegal_$ign my_se¢tion]
-    adoc = '= Test IDs
+    adoc_content = '= Test IDs
 [#first]
 == First
 This is my first section.
@@ -40,8 +40,8 @@ Sign here please.
 Here is my very own section.
 Thank you.
     '
-    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
-    errors = Toolchain::IdChecker.new.run(document, original)
+    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::IdChecker.new.run(adoc)
     assert_equal(2, errors.length)
     wrong_ids = parse(errors)
     assert_equal(wrong_ref, wrong_ids)
@@ -49,7 +49,7 @@ Thank you.
 
   def test_long_ids
     wrong_ref = %w[illegal_$ign my_se¢tion]
-    adoc = '= Test IDs
+    adoc_content = '= Test IDs
 [[first]]
 == First
 This is my first section.
@@ -64,11 +64,46 @@ Sign here please.
 Here is my very own section.
 Thank you.
     '
-    document, original = init2(adoc, "#{self.class.name}_#{__method__}")
-    errors = Toolchain::IdChecker.new.run(document, original)
+    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::IdChecker.new.run(adoc)
     assert_equal(2, errors.length)
     wrong_ids = parse(errors)
     assert_equal(wrong_ref, wrong_ids)
+  end
+
+  def test_attributes_in_anchors
+    inc1_adoc = ':bad_anchor: bad_chapter _anchor
+:good_anchor: this_is_good
+=== Boo
+soome text
+    '
+
+    inc2_adoc = '=== chapter 2
+one more chapter with invalid ANCHOR
+hui
+[#{good_anchor}]
+== some
+text
+[[hardcoded]]
+[#{bad_anchor}]
+== heading in chapter 2
+    '
+    attr_in_anchors_inc1_file_name = File.basename write_tempfile('attributes_in_anchors_inc1.adoc', inc1_adoc)
+    attr_in_anchors_inc2_file_name = File.basename write_tempfile('attributes_in_anchors_inc2.adoc', inc2_adoc)
+
+    adoc_content = ":env-payment-processor:
+index text
+include::#{attr_in_anchors_inc1_file_name}[]
+filler
+include::#{attr_in_anchors_inc2_file_name}[]
+
+//- comment
+    "
+    attr_in_anchors_file_path = write_tempfile('attributes_in_anchors.adoc', adoc_content)
+    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+    errors = Toolchain::IdChecker.new.run(adoc)
+    assert_equal(1, errors.length)
+    assert_match /bad_chapter _anchor/, errors[0][:msg]
   end
 
   private
@@ -86,16 +121,16 @@ end
 class TestLinkChecker < Test::Unit::TestCase
   def test_links
     omit_if(ENV.key?('SKIP_NETWORK'), 'Tests with networking disabled')
-    adoc = '= Test links
+    adoc_content = '= Test links
 
 1. https://github.com/wirecard/docs-toolchain[Docs Toolchain]
 2. https://github.com/asciidoctor/asciidoctor-exteansions-lab[Asciidoctor Extensions Lab]
 3. https://adfasdgea.asd/adfadfasdf/[Unknown Domain]
 4. http://111.222.123.48[Random IP]
     '
-    document = init(adoc, self.class.name)
-    assert_equal(4, document.references[:links].length)
-    errors = Toolchain::LinkChecker.new.run(document)
+    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+    assert_equal(4, adoc.parsed.references[:links].length)
+    errors = Toolchain::LinkChecker.new.run(adoc)
     assert_equal(3, errors.length)
     assert_any_startwith(errors, '[404] Not Found') # 2.
     assert_any_startwith(errors, 'SocketError') # 3.
@@ -127,13 +162,14 @@ document
 /bad_word/
     '
     blacklist_file_path = write_tempfile('blacklist_patterns.txt', blacklist_patterns)
-    document, original = init2(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
-    errors = Toolchain::PatternBlacklist.new.run(document, original, blacklist_file_path)
+    adoc = init(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
+    errors = Toolchain::PatternBlacklist.new.run(adoc, blacklist_file_path)
     assert_equal(3, errors.length)
   end
 
   def test_no_blacklist
-    errors = Toolchain::PatternBlacklist.new.run(nil, nil, '/does/not/exist.txt')
+    adoc = init(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
+    errors = Toolchain::PatternBlacklist.new.run(adoc, '/does/not/exist.txt')
     assert_empty(errors)
   end
 end

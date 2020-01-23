@@ -32,10 +32,23 @@ def main(argv = ARGV)
   end
 
   ### Run checks on default files
-  index_adoc = args.index_file || DEFAULT_INDEX
-  included_files = load_doc(index_adoc)[0].catalog[:includes]
-  stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
+  index_adoc = args.index || DEFAULT_INDEX
+  log('ARGS', args)
   log('INDEX', index_adoc)
+
+  ############# adoc, original = load_doc(index_adoc)
+  # included_files = adoc.catalog[:includes]
+  adoc = load_doc index_adoc
+  original = adoc.original
+  parsed = adoc.parsed
+  attributes = adoc.attributes
+
+  included_files = parsed.catalog[:includes]
+  # included_files = load_doc(index_adoc)
+  stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
+  log('INCLUDES', included_files)
+  log('ATTRIBUTES2', attributes)
+
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)
   print_errors(index_adoc => index_errors)

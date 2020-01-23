@@ -15,15 +15,18 @@ DEFAULT_INDEX = 'content/index.adoc'
 ##
 # represents a pair of parsed, resolved adoc and original adoc
 # Params:
-# * +adoc+:     converted adoc document
 # * +original+: original adoc source code before conversion
+# * +parsed+: parsed adoc source code
+# * +attributes+: attributes of document
 #
-Entry = Struct.new(:adoc, :original) do
+Entry = Struct.new(:original, :parsed, :attributes) do
   private
 
-  def adoc=; end
-
   def original=; end
+
+  def parsed=; end
+
+  def attributes=; end
 end
 
 ##
@@ -37,9 +40,9 @@ def print_loaded_extensions
 end
 
 ##
-# print all errors in +errors_map+.
+# Print all errors in +errors_map+.
 # +errors_map+ is a hash containing a mapping of filename -> [errors].
-# format: "id message"
+# Format: "id message"
 #
 # Returns +nil+.
 #
@@ -52,26 +55,78 @@ def print_errors(errors_map)
 end
 
 ##
+# Takes document +doc+.
+# Returns +attribs+ all attributes newly set in this document.
+#
+def get_mod_attrs_from_doc(doc)
+  attribs = {}
+  doc.convert
+  attrs_mod = doc.instance_variable_get :@attributes_modified
+  attrs_mod.each do |k, _v|
+    attribs[k] = doc.attributes[k]
+  end
+  attribs
+end
+
+##
+# Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
+# Returns collection of attributes +attribs+.
+def collect_attributes(doc, attribs = {})
+  # get initial attribs set in index
+  attribs = get_mod_attrs_from_doc(doc) if attribs == {}
+  incs = doc.catalog[:includes].keys.to_set
+  return attribs if incs.empty?
+
+  incs.each do |inc|
+    inc_file_path = doc.normalize_asset_path(inc + '.adoc')
+    doc = Asciidoctor.load_file(
+      inc_file_path,
+      catalog_assets: true,
+      sourcemap: true,
+      safe: :unsafe,
+      parse: false,
+      attributes: attribs
+    )
+    # combine new modified attr from current file with existing attribs
+    get_mod_attrs_from_doc(doc).each do |k, v|
+      attribs[k] = v
+    end
+    collect_attributes(doc, attribs)
+  end
+  attribs
+end
+
+##
 # Load adoc file +filename+, convert given the parameters +safe+ and +parse+
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
 #
 # Returns a pair of converted adoc +adoc+, original adoc +original+
 #
-def load_doc(filename, safe: :safe, parse: false)
-  adoc = Asciidoctor.load_file(
-    filename,
-    catalog_assets: true,
-    safe: safe,
-    parse: parse
-  )
+def load_doc(filename, attribs = {})
   original = Asciidoctor.load_file(
     filename,
     catalog_assets: true,
-    safe: safe,
-    parse: parse
+    sourcemap: true,
+    safe: :unsafe,
+    parse: false,
+    attributes: attribs
   )
-  adoc.convert
-  return adoc, original
+  parsed = Asciidoctor.load_file(
+    filename,
+    catalog_assets: true,
+    sourcemap: true,
+    safe: :unsafe,
+    parse: true,
+    attributes: attribs
+  )
+  attributes = collect_attributes parsed, attribs
+
+  adoc = OpenStruct.new(
+    original: original,
+    parsed: parsed,
+    attributes: attributes
+  )
+  return adoc
 end
 
 ##
@@ -100,20 +155,26 @@ end
 #
 # Returns +errors+ for the given file.
 def run_tests(filename)
-  if ADOC_MAP.key?(filename)
-    adoc, original = load_doc(filename)
-    entry = Entry.new(adoc: adoc, original: original)
+  if ADOC_MAP[filename].nil?
+
+    adoc = load_doc filename
+    original = adoc.original
+    parsed = adoc.parsed
+    attributes = adoc.attributes
+
+    entry = Entry.new(original: original, parsed: parsed, attributes: attributes)
     ADOC_MAP[filename] = entry
   else
     entry = ADOC_MAP[filename]
-    adoc = entry.adoc
+    parsed = entry.parsed
     original = entry.original
+    attributes = entry.attributes
   end
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
     log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(adoc, original)
+    errors += ext.run(adoc)
   end
   return errors
 end
@@ -145,4 +206,3 @@ end
 # Returns +nil+.
 def post_process_errors(index_errors, errors_map)
 end
-

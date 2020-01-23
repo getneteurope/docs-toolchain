@@ -37,8 +37,7 @@ module Toolchain
     ##
     # Takes a document (a converted asciidoctor document) as input.
     #
-    # Parameters: +_document+ is the converted Asciidoctor document, whereas
-    #             +_original+ is the original source code of the document.
+    # Parameters: +_adoc+ contains parsed and original and attributes of Asciidoctor document.
     #
     # If there are no errors, an empty Hash must be returned.
     # Errors can only be created by +create_error+.
@@ -46,7 +45,7 @@ module Toolchain
     #
     # Returns an array of Hashes of errors (can be empty if no errors found).
     #
-    def run(_document, _original)
+    def run(_adoc)
       raise NotImplementedError.new, "#{self.class.name}: no implementation for 'run'"
     end
   end
