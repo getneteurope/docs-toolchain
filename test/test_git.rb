@@ -15,8 +15,6 @@ class TestGit < Test::Unit::TestCase
   end
 
   def test_git_info_full
-    ENV.delete('TOOLCHAIN_PATH')
-    ENV.delete('GITHUB_WORKSPACE')
     git_info = Toolchain::Git.generate_info
     not_available = '<N/A>'
     assert_not_equal(git_info.author, not_available)
