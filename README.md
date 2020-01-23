@@ -2,13 +2,12 @@
   <a href="https://undraw.co/"><img src="logo/landing_page.svg" alt="Docs Toolchain Logo"></a>
 </h1>
 
-# docs-toolchain
+# docs-toolchain [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wirecard/docs-toolchain/Testing?style=flat-square)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=flat-square)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)   [![Inline docs](http://inch-ci.org/github/wirecard/docs-toolchain.svg?branch=master&style=flat-square)](http://inch-ci.org/github/wirecard/docs-toolchain)
+
 Toolchain for TecDoc managed documentation repositories
 
 <div align="center">
   
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wirecard/docs-toolchain/Testing?style=for-the-badge)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain?style=for-the-badge)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
-
 [![Built with Ruby](https://forthebadge.com/images/badges/made-with-ruby.svg)](https://forthebadge.com) [![Built with Science](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![Uses Badges](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com) [![Approved](https://forthebadge.com/images/badges/approved-by-george-costanza.svg)](https://forthebadge.com)
 
 </div>
@@ -17,6 +16,12 @@ Toolchain for TecDoc managed documentation repositories
 ## Disclaimer
 
 Under heavy development, everything is subject to change and most likely will not be up-to-date!
+
+
+## Docs and Metrics
+* [Source Code Documentation (rdoc)](https://wirecard.github.io/docs-toolchain/rdoc/)
+* [SimpleCov Coverage](https://wirecard.github.io/docs-toolchain/coverage/)
+* [RubyCritic](https://wirecard.github.io/docs-toolchain/rubycritic)
 
 
 ## Stages
@@ -53,19 +58,35 @@ The toolchain is designed to run through different stages, that have specific re
     * required variables, see [Configuration/Secret/AWS](#Secret)
 6. **notify**:
     * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
+    
+## Development
+Quality assurance:
+* `rake toolchain:lint` calls rubocop
+* `rake toolchain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
+* `rake toolchain:quality` runs `rubycritic` and generates an overview in `/tmp/rubycritic/overview.html`
+* `rake toolchain:rdoc` generates rdoc documentation in `/tmp/rdoc`
+* `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch** on the code base
 
 ## Configuration
 There are some variables that need to be secret, while others can be public.
 Configuration files are public.
 
-### Secret
-* **AWS**
-    * `AWS_ACCESS_KEY_ID`
-    * `AWS_SECRET_ACCESS_KEY`
-    * `AWS_REGION`
-    * `AWS_S3_BUCKET`
-* **Slack**
-    * `SLACK_TOKEN` (Optional)
+### Secrets
+#### AWS
+
+**Needed:**
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
+* `AWS_REGION`
+* `AWS_S3_BUCKET**
+
+#### Slack
+
+**Needed:**
+* `SLACK_TOKEN` (Optional)
+    
+The **test** and **build** stages produce `/tmp/slack.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
+`lib/notify/slack.rb` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
 
 ### Public
 #### Variables
@@ -78,21 +99,11 @@ Configuration files:
 * `config/error-types.json`: lists all warning/error types with a unique string ID, a unique error code (grouped like HTTP codes), and a format string like error message.
 * `static/privacy-policy.(txt|adoc)`
 
-
-## Utilities
-The **test** and **build** stages produce `/tmp/errors.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
-Warnings and errors are defined in `error-types.json` and further ignored or interpreted as errors according to `settings.json`.
-`slack-notifiy.py` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
-Otherwise
-
 ## Run
 
 To run the toolchain locally, or run the unit tests, the following requirements must be met:
-* bats
 * Ruby 2.x
-* Python 3
-* Node.js 13
-* installed dependencies
+** installed dependencies (Gemfile)
 
 In order to install dependencies, run the following at the root of the project:
 ```bash

@@ -4,12 +4,19 @@ require_relative '../extension_manager.rb'
 require_relative '../base_extension.rb'
 
 module Toolchain
+  ##
   # ID Checker
-  # check IDs according to a stricter standard than the default Asciidoctor standard
+  #
+  # Check IDs according to a stricter standard than the default Asciidoctor standard.
   class IdChecker < BaseExtension
     ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
     ATTR_REGEX = /^\{(.+)\}$/.freeze
 
+    ##
+    # Run the ID tests on the given document (+adoc+).
+    #
+    # Returns a list of errors (can be empty).
+    #
     def run(adoc)
       original = adoc.original
       parsed = adoc.parsed
@@ -51,7 +58,12 @@ module Toolchain
       (adoc_ids | parsed_ids).to_a.each do |id|
         log('ID', "checking #{id}", :magenta)
         msg = "Illegal character: '#{id}' does not match ID criteria (#{ID_PATTERN_REGEX.inspect})"
-        errors << create_error(msg: msg, filename: original.attr('docfile')) unless ID_PATTERN_REGEX.match?(id)
+        next if ID_PATTERN_REGEX.match?(id)
+
+        errors << create_error(
+          msg: msg,
+          location: Location.new(original.attr('docfile'), nil)
+        )
       end
       return errors
     end

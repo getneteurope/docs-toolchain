@@ -9,17 +9,34 @@ module Toolchain
   class ExtensionManager
     include Singleton
 
-    def register(ext, testing = ENV['UNITTEST'])
-      @extensions << ext unless testing
+    ##
+    # Register an extension +ext+ with the +ExtensionManager+.
+    #
+    # Returns nothing.
+    #
+    def register(ext)
+      @extensions << ext
     end
 
+    ##
+    # Return the list of registered extensions.
+    #
     def get
       return @extensions
     end
 
+    ##
+    # Return the next id.
     def next_id
-      @id += 1
-      return @id
+      return @id += 1
+    end
+
+    ##
+    # Clear the internal state, reset to default state.
+    # Returns nothing.
+    def clear
+      @extensions.clear
+      @id = 0
     end
 
     private
