@@ -3,32 +3,6 @@
 require_relative '../utils.rb'
 
 ##
-# Colorize +text+ in the color specified by +color+.
-#
-# Returns the colorized string
-def colorize(text, color)
-  case color
-  when :black
-    text = text.black
-  when :red
-    text = text.red
-  when :green
-    text = text.green
-  when :brown
-    text = text.brown
-  when :blue
-    text = text.blue
-  when :magenta
-    text = text.magenta
-  when :cyan
-    text = text.cyan
-  when :gray
-    text = text.gray
-  end
-  return text
-end
-
-##
 # Create a log entry in the format:
 #     [tag] msg
 # using the given color and font weight
