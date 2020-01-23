@@ -28,29 +28,10 @@ module Toolchain
   # Toolchain::ExtensionManager.instance.register(Toolchain::ExampleChecker.new)
   #
   class BaseExtension
-    ##
-    # Creates an error, consisting of the following fields:
-    # [id]       continuous ID to identify order of errors
-    # [type]     type of error, defaults to the name of the extension
-    # [msg]      the error message
-    # [location] location of the error, described by +Location+
-    # [extras]   for future use, unused right now
-    #
-    # Only a subset of the keys can be passed to the function:
-    # * +msg+
-    # * +location+
-    # * +extras+
-    #
-    # Returns the error as Hash.
-    #
     def create_error(msg:, location: nil, extras: nil)
-      return {
-        id: Toolchain::ExtensionManager.instance.next_id,
-        type: self.class.name,
-        msg: msg,
-        location: location,
-        extras: extras
-      }
+      return Toolchain::ExtensionManager.create_error(
+        msg: msg, type: self.class.name, location: location, extras: extras
+      )
     end
 
     ##
