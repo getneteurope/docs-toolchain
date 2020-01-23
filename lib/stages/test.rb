@@ -47,7 +47,7 @@ def collect_attributes(doc, attribs = {})
   return attribs if incs.empty?
 
   incs.each do |inc|
-    inc_file_path = doc.options[:attributes]['docdir'] + '/' + inc + '.adoc'
+    inc_file_path = doc.normalize_asset_path(inc + '.adoc')
     doc = Asciidoctor.load_file(
       inc_file_path,
       catalog_assets: true,
