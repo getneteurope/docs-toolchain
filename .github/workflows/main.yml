@@ -13,8 +13,13 @@ jobs:
     steps:
     - name: Extract branch name
       shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed -e 's|refs/pull/:\([0-9]\+\)/merge|PR\1|' -e 's|refs/heads/\(.\+\)|\1|')"
       id: extract_branch
+      run: |
+        if [[ ${GITHUB_EVENT_NAME} == 'pull_request']]; then
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|refs/pull/:\([0-9]\+\)/merge|PR\1|')"
+        else
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/}"
+        fi
 
     - name: "Setup ruby 2.6"
       uses: actions/setup-ruby@v1
