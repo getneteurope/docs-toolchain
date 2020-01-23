@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 15:02:25 +0100'>2020-01-23 15:02:25 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-15 11:00:07 +0100'>2020-01-15 11:00:07 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">59</span><small> lines of codes</small></div>
-              <div><span class="metric">1</span><small> methods</small></div>
+              <div><span class="metric">7</span><small> lines of codes</small></div>
+              <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">32.7</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">N/A</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">32.72</span><small> complexity</small></div>
+              <div><span class="metric">0.0</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -102,58 +102,6 @@
 
 require &#39;asciidoctor&#39;
 require_relative &#39;../lib/stages/test.rb&#39;
-
-##
-# Execute the test stage with +argv+ as argument vector.
-#
-# This stage will pass if there are no errors found.
-# Otherwise, the errors are logged and execution of the toolchain ends here,
-# as the stage aborts.
-#
-# Returns +nil+.
-def main(argv = ARGV)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#main has a flog score of 33</span>          </div>  </li></ol>
-  args, opt_parser = Toolchain::Test::CLI.parse_args(argv)
-  ### Print help
-  if args.help
-    puts opt_parser
-    return 0
-  end
-
-  ### Print loaded modules
-  print_loaded_extensions if args.debug
-
-  ### Run on file arguments
-  files = args.files
-  if files
-    stage_log(:test, &quot;Running file checks on file set: #{files}&quot;)
-    stage_log(:test, &#39;Will exit after this.&#39;)
-    test_files(files) # will exit if run
-  end
-
-  ### Run checks on default files
-  index_adoc = args.index_file || DEFAULT_INDEX
-  included_files = load_doc(index_adoc)[0].catalog[:includes]
-  stage_log(:test, &quot;Running checks on index and included files (total: #{included_files.length + 1})&quot;)
-  log(&#39;INDEX&#39;, index_adoc)
-  ### CHECK INDEX FIRST
-  index_errors = run_tests(index_adoc)
-  print_errors(index_adoc =&gt; index_errors)
-  # if index_errors.empty?
-  #   puts &#39;No errors found in index.adoc!&#39;.bold.green
-  #   return 0
-  # end
-
-  ### CHECK INCLUDED FILES
-  # errors_map = check_docs(included_files, File.join(ENV[&#39;PWD&#39;],
-  #                                                   File.dirname(index_adoc)))
-  errors_map = check_docs(included_files, File.dirname(index_adoc))
-  stage_log(:test, &#39;Printing errors map (filename =&gt; errors)&#39;)
-  print_errors(errors_map)
-
-  # TODO: process errors_map to show which error in index is in which source file
-  # post_process_errors(index_errors, errors_map)
-  stage_log(:test, &#39;Test done.&#39;)
-end
 
 main
 </code>

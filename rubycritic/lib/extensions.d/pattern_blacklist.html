@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-21 14:22:36 +0100'>2020-01-21 14:22:36 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-23 11:37:00 +0100'>2020-01-23 11:37:00 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">57</span><small> lines of codes</small></div>
+              <div><span class="metric">58</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">37.9</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">38.0</span><small> complexity/method</small></div>
+              <div><span class="metric">8</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">37.93</span><small> complexity</small></div>
+              <div><span class="metric">37.97</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -109,12 +109,15 @@ module Toolchain
   # Checks the text against a predefined list of patterns which are not allowed.
   class PatternBlacklist &lt; BaseExtension
     ##
-    # Run the Pattern tests on the given document (+document+, +original+).
+    # Run the Pattern tests on the given document (+adoc+).
     # Illegal patterns are loaded from +blacklist_file+.
     #
     # Returns a list of errors (can be empty).
     #
-    def run(document, original, blacklist_file = &#39;../blacklist.txt&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run has a flog score of 38</span>          </div>  </li></ol>
+    def run(adoc, blacklist_file = &#39;../blacklist.txt&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run has a flog score of 38</span>          </div>  </li></ol>
+      original = adoc.original
+      parsed = adoc.parsed
+      attributes = adoc.attributes
       errors = []
       unless File.exist?(blacklist_file)
         log(
@@ -134,17 +137,15 @@ module Toolchain
         Regexp.new(pattern.chomp.gsub(%r{^/(.+)/$}, &#39;\1&#39;))
       end
 
-      lines = original.reader.read_lines
-      lines = original.reader.source_lines if lines.empty?
-
-      lines.each_with_index do |line, index|
+      original.reader.source_lines.each_with_index do |line, index|
         blacklist_patterns.each_with_index do |pattern, _p_idx|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run contains iterators nested 2 deep</span>          </div>  </li></ol>
           next unless line.match? pattern
 
           msg = &quot;Illegal pattern in line #{index + 1}: #{pattern.inspect}&quot;
           log(&#39;PATTERN&#39;, msg, color: :magenta)
           errors &lt;&lt; create_error(
-            msg: msg, location: Location.new(document.attr(&#39;docfile&#39;), nil)
+            msg: msg,
+            location: Location.new(parsed.attr(&#39;docfile&#39;), nil)
           )
         end
       end

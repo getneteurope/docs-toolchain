@@ -128,17 +128,48 @@
 
         <div class="method-description">
           
-          
+          <p>Creates an error, consisting of the following fields:</p>
+<dl class="rdoc-list label-list"><dt>id
+<dd>
+<p>continuous ID to identify order of errors</p>
+</dd><dt>type
+<dd>
+<p>type of error, defaults to the name of the extension</p>
+</dd><dt>msg
+<dd>
+<p>the error message</p>
+</dd><dt>location
+<dd>
+<p>location of the error, described by <code>Location</code></p>
+</dd><dt>extras
+<dd>
+<p>for future use, unused right now</p>
+</dd></dl>
+
+<p>Only a subset of the keys can be passed to the function:</p>
+<ul><li>
+<p><code>msg</code></p>
+</li><li>
+<p><code>location</code></p>
+</li><li>
+<p><code>extras</code></p>
+</li></ul>
+
+<p>Returns the error as Hash.</p>
           
           
 
           
           <div class="method-source-code" id="create_error-source">
-            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 31</span>
+            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_error</span>(<span class="ruby-value">msg:</span>, <span class="ruby-value">location:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">extras:</span> <span class="ruby-keyword">nil</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">create_error</span>(
-    <span class="ruby-value">msg:</span> <span class="ruby-identifier">msg</span>, <span class="ruby-value">type:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>, <span class="ruby-value">extras:</span> <span class="ruby-identifier">extras</span>
-  )
+  <span class="ruby-keyword">return</span> {
+    <span class="ruby-value">id:</span> <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">next_id</span>,
+    <span class="ruby-value">type:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>,
+    <span class="ruby-value">msg:</span> <span class="ruby-identifier">msg</span>,
+    <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>,
+    <span class="ruby-value">extras:</span> <span class="ruby-identifier">extras</span>
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -154,7 +185,7 @@
         
         <div class="method-heading">
           <span class="method-name">run</span><span
-            class="method-args">(_document, _original)</span>
+            class="method-args">(_adoc)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -165,9 +196,7 @@
           
           <p>Takes a document (a converted asciidoctor document) as input.</p>
 
-<p>Parameters: <code>_document</code> is the converted Asciidoctor document, whereas</p>
-
-<pre>+_original+ is the original source code of the document.</pre>
+<p>Parameters: <code>_adoc</code> contains parsed and original and attributes of Asciidoctor document.</p>
 
 <p>If there are no errors, an empty Hash must be returned. Errors can only be created by <code>create_error</code>. *DO NOT* create errors manually, use <code>create_error</code> and pass the necessary parameters.</p>
 
@@ -177,8 +206,8 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 49</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">_document</span>, <span class="ruby-identifier">_original</span>)
+            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">_adoc</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>.<span class="ruby-identifier">new</span>, <span class="ruby-node">&quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

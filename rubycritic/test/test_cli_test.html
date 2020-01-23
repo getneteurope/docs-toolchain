@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 15:02:25 +0100'>2020-01-23 15:02:25 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-14 16:50:13 +0100'>2020-01-14 16:50:13 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">52</span><small> lines of codes</small></div>
-              <div><span class="metric">6</span><small> methods</small></div>
+              <div><span class="metric">59</span><small> lines of codes</small></div>
+              <div><span class="metric">7</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.5</span><small> complexity/method</small></div>
-              <div><span class="metric">14</span><small> churn</small></div>
+              <div><span class="metric">8.9</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">57.17</span><small> complexity</small></div>
+              <div><span class="metric">62.12</span><small> complexity</small></div>
               <div><span class="metric">48</span><small> duplications</small></div>
             </div>
           </div>
@@ -147,6 +147,13 @@ class TestTestCLI &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <l
 
   def test_index_and_file
     assert_raise(ArgumentError) { Toolchain::Test::CLI.parse_args(%w[--index index.adoc --file file.adoc]) }
+  end
+
+  def test_help_cli
+    output = with_captured_stdout do
+      main(%w[--help])
+    end
+    assert_true(output.start_with?(&#39;Usage:&#39;))
   end
 end
 </code>

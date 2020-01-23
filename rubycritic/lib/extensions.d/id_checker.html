@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-21 14:22:36 +0100'>2020-01-21 14:22:36 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-23 11:37:00 +0100'>2020-01-23 11:37:00 +0100</time>
         
       </span>
     </div>
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">52</span><small> lines of codes</small></div>
+              <div><span class="metric">73</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">37.3</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">66.8</span><small> complexity/method</small></div>
+              <div><span class="metric">16</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">37.34</span><small> complexity</small></div>
+              <div><span class="metric">66.75</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -108,39 +108,60 @@ module Toolchain
   #
   # Check IDs according to a stricter standard than the default Asciidoctor standard.
   class IdChecker &lt; BaseExtension
-    # ID regex
-    REGEX = /^[A-Za-z0-9_]+$/.freeze
+    ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
+    ATTR_REGEX = /^\{(.+)\}$/.freeze
 
     ##
-    # Run the ID tests on the given document (+document+, +original+).
+    # Run the ID tests on the given document (+adoc+).
     #
     # Returns a list of errors (can be empty).
     #
-    def run(document, original)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run has a flog score of 37</span>          </div>  </li></ol>
+    def run(adoc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run has a flog score of 67</span>          </div>  </li></ol>
+      original = adoc.original
+      parsed = adoc.parsed
+      attributes = adoc.attributes
+
       errors = []
       # TODO: research why read_lines can be empty
-      lines = original.reader.read_lines
-      lines = original.reader.source_lines if lines.empty?
+      lines = parsed.reader.read_lines
+      lines = parsed.reader.source_lines if lines.empty?
 
-      # get ids that asciidoctor recognizes as such
-      adoc_ids = document.catalog[:refs].keys.to_set
+      reader = Asciidoctor::PreprocessorReader.new parsed, lines
+      combined_source = reader.read_lines
+
+      doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
+      doc.convert
+      adoc_ids = doc.catalog[:refs].keys.to_set
 
       # parse everything that COULD be an anchor or id manually
-      parsed_ids = lines.map do |line|
+      parsed_ids = combined_source.map do |line|
         # match both long and short ids
         /\[(\[|#)(?&lt;id&gt;[^\]]+)/.match(line) do |m|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run contains iterators nested 2 deep</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run has the variable name 'm'</span>          </div>  </li></ol>
           m[:id]
         end
       end.reject(&amp;:nil?).to_set # reject all nil entries
 
+      # if parsed id is unresolved attribute, look up attribute and replace
+      parsed_ids = parsed_ids.map do |pid|
+        id = pid
+        if ATTR_REGEX.match? pid
+          r_pid = pid.gsub ATTR_REGEX, &#39;\1&#39;
+          if attributes.keys.any? r_pid
+            attributes[r_pid]
+            id = attributes[r_pid]
+          end
+        end
+        id # TODO: fix ugly return
+      end.reject(&amp;:nil?).to_set
+
       (adoc_ids | parsed_ids).to_a.each do |id|
         log(&#39;ID&#39;, &quot;checking #{id}&quot;, :magenta)
-        msg = &quot;Illegal character: &#39;#{id}&#39; does not match ID criteria (#{REGEX.inspect})&quot;
-        next if REGEX.match?(id)
+        msg = &quot;Illegal character: &#39;#{id}&#39; does not match ID criteria (#{ID_PATTERN_REGEX.inspect})&quot;
+        next if ID_PATTERN_REGEX.match?(id)
 
         errors &lt;&lt; create_error(
           msg: msg,
-          location: Location.new(document.attr(&#39;docfile&#39;), nil)
+          location: Location.new(original.attr(&#39;docfile&#39;), nil)
         )
       end
       return errors

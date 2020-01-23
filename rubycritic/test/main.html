@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 15:52:48 +0100'>2020-01-23 15:52:48 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-22 12:43:22 +0100'>2020-01-22 12:43:22 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">10</span><small> lines of codes</small></div>
+              <div><span class="metric">9</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">9</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">0.0</span><small> complexity</small></div>
@@ -101,8 +101,7 @@
 
 require &#39;simplecov&#39;
 SimpleCov.start do |config|
-  add_filter &#39;test/&#39;
-  add_filter &#39;lib/stages/&#39;
+  puts &quot;SimpleCov loaded&quot;
 end
 
 ENV[&#39;UNITTEST&#39;] = &#39;true&#39;

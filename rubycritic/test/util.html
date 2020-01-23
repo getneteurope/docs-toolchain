@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 12:52:46 +0100'>2020-01-23 12:52:46 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-21 14:16:11 +0100'>2020-01-21 14:16:11 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">48</span><small> lines of codes</small></div>
-              <div><span class="metric">6</span><small> methods</small></div>
+              <div><span class="metric">42</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">5.0</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">4.8</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">30.01</span><small> complexity</small></div>
+              <div><span class="metric">24.19</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                2
                 smells
               </a>
             </li>
@@ -123,7 +123,7 @@ def with_captured_stdout<ol class="nocode errors smells">  <li>    <div class="d
   original_stdout = $stdout  # capture previous value of $stdout
   $stdout = StringIO.new     # assign a string buffer to $stdout
   yield                      # perform the body of the user code
-  return $stdout.string      # return the contents of the string buffer
+  $stdout.string             # return the contents of the string buffer
 ensure
   $stdout = original_stdout  # restore $stdout to its previous value
 end
@@ -132,19 +132,13 @@ def assert_any_startwith(errors, text)
   assert_true(errors.any? { |err| err[:msg].start_with?(text) })
 end
 
-def init(content, name)
-  document, _original = init2(content, name)
-  return document
-end
-
-def init2(content, name, filename = nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Method-Name.md" target="_blank"><b>UncommunicativeMethodName</b></a>        </span>      </div>      <span>init2 has the name 'init2'</span>          </div>  </li></ol>
+def init(content, name, filename = nil)
   filename = name + &#39;.adoc&#39; if filename.nil?
   tempfile_path = write_tempfile(filename, content)
-  document = Asciidoctor.load_file(tempfile_path, safe: :safe, catalog_assets: true)
-  document.convert
-  original = Asciidoctor.load_file(tempfile_path, safe: :safe, catalog_assets: true)
-  return document, original
+  adoc = load_doc tempfile_path
+  return adoc
 end
+
 </code>
   </div>
 </div>

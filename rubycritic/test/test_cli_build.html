@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 10:33:54 +0100'>2020-01-23 10:33:54 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-14 14:47:38 +0100'>2020-01-14 14:47:38 +0100</time>
         
       </span>
     </div>
@@ -62,22 +62,22 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating c big">
-              C
+            <div class="rating a big">
+              A
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">55</span><small> lines of codes</small></div>
-              <div><span class="metric">6</span><small> methods</small></div>
+              <div><span class="metric">0</span><small> lines of codes</small></div>
+              <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.5</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">N/A</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">57.08</span><small> complexity</small></div>
-              <div><span class="metric">52</span><small> duplications</small></div>
+              <div><span class="metric">0.0</span><small> complexity</small></div>
+              <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                0
+                smell
               </a>
             </li>
           </ul>
@@ -97,62 +97,7 @@
       </div>
     </div>
 
-    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
-
-require &#39;test/unit&#39;
-require_relative &#39;../lib/stages/build.rb&#39;
-require_relative &#39;../lib/cli.rb&#39;
-require_relative &#39;./util.rb&#39;
-
-
-class TestBuildCLI &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestBuildCLI has no descriptive comment</span>          </div>  </li></ol>
-  def initialize(test_method_name)
-    super(test_method_name)
-    @default_content = &#39;content&#39;
-    @default_index = &#39;index.adoc&#39;
-  end
-
-  def test_default
-    args, = Toolchain::Build::CLI.parse_args([])
-    assert_false(args.help)
-    assert_false(args.debug)
-    assert_equal(@default_content, args.content)
-    assert_equal(@default_index, args.index)
-  end
-
-  def test_help<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_cli_build.html#L24" class="js-smell-location">0</a>                  <a href="test_cli_build.html#L32" class="js-smell-location">1</a>                  </div>  </li></ol>
-    args, = Toolchain::Build::CLI.parse_args(%w[--help])
-    assert_true(args.help)
-    assert_false(args.debug)
-    assert_equal(@default_content, args.content)
-    assert_equal(@default_index, args.index)
-  end
-
-  def test_debug<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_cli_build.html#L24" class="js-smell-location">0</a>                  <a href="test_cli_build.html#L32" class="js-smell-location">1</a>                  </div>  </li></ol>
-    args, = Toolchain::Build::CLI.parse_args(%w[--debug])
-    assert_false(args.help)
-    assert_true(args.debug)
-    assert_equal(@default_content, args.content)
-    assert_equal(@default_index, args.index)
-  end
-
-  def test_content
-    args, = Toolchain::Build::CLI.parse_args(%w[--content mycontent])
-    assert_false(args.help)
-    assert_false(args.debug)
-    assert_equal(&#39;mycontent&#39;, args.content)
-    assert_equal(@default_index, args.index)
-  end
-
-  def test_index
-    args, = Toolchain::Build::CLI.parse_args(%w[--index myindex.adoc])
-    assert_false(args.help)
-    assert_false(args.debug)
-    assert_equal(@default_content, args.content)
-    assert_equal(&#39;myindex.adoc&#39;, args.index)
-  end
-end
-</code>
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"></code>
   </div>
 </div>
 

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 08:57:51 +0100'>2020-01-23 08:57:51 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-21 14:24:57 +0100'>2020-01-21 14:24:57 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">1</span><small> lines of codes</small></div>
-              <div><span class="metric">0</span><small> methods</small></div>
+              <div><span class="metric">33</span><small> lines of codes</small></div>
+              <div><span class="metric">21</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">0.0</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">0.0</span><small> complexity</small></div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
+                1
                 smell
               </a>
             </li>
@@ -97,7 +97,39 @@
       </div>
     </div>
 
-    <code class="prettyprint linenums lang-ruby file-code js-file-code">Dir[&#39;utils/*.rb&#39;].each { |f| require f }
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+require_relative &#39;./log/log.rb&#39;
+
+##
+# Default class: String
+#
+# Text color and weight modifications
+class String<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Methods.md" target="_blank"><b>TooManyMethods</b></a>        </span>      </div>      <span>String has at least 21 methods</span>          </div>  </li></ol>
+  def black;          &quot;\e[30m#{self}\e[0m&quot; end
+  def red;            &quot;\e[31m#{self}\e[0m&quot; end
+  def green;          &quot;\e[32m#{self}\e[0m&quot; end
+  def brown;          &quot;\e[33m#{self}\e[0m&quot; end
+  def blue;           &quot;\e[34m#{self}\e[0m&quot; end
+  def magenta;        &quot;\e[35m#{self}\e[0m&quot; end
+  def cyan;           &quot;\e[36m#{self}\e[0m&quot; end
+  def gray;           &quot;\e[37m#{self}\e[0m&quot; end
+
+  def bg_black;       &quot;\e[40m#{self}\e[0m&quot; end
+  def bg_red;         &quot;\e[41m#{self}\e[0m&quot; end
+  def bg_green;       &quot;\e[42m#{self}\e[0m&quot; end
+  def bg_brown;       &quot;\e[43m#{self}\e[0m&quot; end
+  def bg_blue;        &quot;\e[44m#{self}\e[0m&quot; end
+  def bg_magenta;     &quot;\e[45m#{self}\e[0m&quot; end
+  def bg_cyan;        &quot;\e[46m#{self}\e[0m&quot; end
+  def bg_gray;        &quot;\e[47m#{self}\e[0m&quot; end
+
+  def bold;           &quot;\e[1m#{self}\e[22m&quot; end
+  def italic;         &quot;\e[3m#{self}\e[23m&quot; end
+  def underline;      &quot;\e[4m#{self}\e[24m&quot; end
+  def blink;          &quot;\e[5m#{self}\e[25m&quot; end
+  def reverse_color;  &quot;\e[7m#{self}\e[27m&quot; end
+end
 </code>
   </div>
 </div>
