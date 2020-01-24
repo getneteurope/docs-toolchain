@@ -14,6 +14,7 @@ jobs:
       shell: bash
       id: extract_branch
       run: |
+        echo "GITHUB_REF: "${GITHUB_REF}
         if [[ ${GITHUB_EVENT_NAME} == 'pull_request' ]]; then
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|refs/pull/\([0-9]\+\)/merge|PR\1|')"
         else
