@@ -151,11 +151,11 @@
   <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span>, <span class="ruby-identifier">lineno</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;ifdef::&#39;</span>)
       <span class="ruby-identifier">stack_open</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">lineno</span>)
-      <span class="ruby-identifier">vars</span>[<span class="ruby-identifier">lineno</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;:&#39;</span>).<span class="ruby-identifier">last</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-3</span>]
+      <span class="ruby-identifier">vars</span>[<span class="ruby-identifier">lineno</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;:&#39;</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;[&#39;</span>).<span class="ruby-identifier">first</span>
       <span class="ruby-identifier">ifs</span>[<span class="ruby-identifier">lineno</span>] = <span class="ruby-keyword">nil</span>
     <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;endif::&#39;</span>)
       <span class="ruby-identifier">open_lineno</span> = <span class="ruby-identifier">stack_open</span>.<span class="ruby-identifier">pop</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">open_lineno</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-comment"># if no opening part, remember this closing part</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">open_lineno</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-comment"># if no opening if, remember this closing</span>
         <span class="ruby-identifier">unmatched_close</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">lineno</span>
       <span class="ruby-keyword">else</span>
         <span class="ruby-identifier">ifs</span>[<span class="ruby-identifier">open_lineno</span>] = <span class="ruby-identifier">lineno</span>
@@ -163,6 +163,7 @@
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
+  <span class="ruby-comment"># select all opening ifs without closing and iterate over the line numbers</span>
   <span class="ruby-identifier">ifs</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">_</span>, <span class="ruby-identifier">val</span><span class="ruby-operator">|</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">nil?</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lineno</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;Mismatched IF: unmatched ifdef found on line #{lineno}: ifdef::#{vars[lineno]}[]&quot;</span>
     <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">create_error</span>(
@@ -170,6 +171,8 @@
       <span class="ruby-value">location:</span> <span class="ruby-constant">Location</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;docfile&#39;</span>), <span class="ruby-identifier">lineno</span>)
     )
   <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># iterate over list of closing ifs without opening counterparts</span>
   <span class="ruby-identifier">unmatched_close</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lineno</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;Mismatched IF: unmatched endif found on line #{lineno}&quot;</span>
     <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">create_error</span>(
