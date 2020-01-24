@@ -215,13 +215,13 @@ class TestIfChecker < Test::Unit::TestCase
     endif::[]
     Lorem ipsum blabla di blabla du.
     ".gsub('    ', '')
-    main_adoc = init(content, "#{self.class.name}_#{__method__}_main")
+    main_adoc = nil
+    with_captured do # suppress asciidoctor errors
+      main_adoc = init(content, "#{self.class.name}_#{__method__}_main")
+    end
 
-    errors = nil
     Dir.chdir('/tmp') do
-      with_captured do # suppress asciidoctor errors
-        errors = Toolchain::IfChecker.new.run(main_adoc)
-      end
+      errors = Toolchain::IfChecker.new.run(main_adoc)
       assert_equal(1, errors.length)
       assert_equal(14, errors.first[:location].lineno)
       assert_match(/unmatched endif found/, errors.first[:msg])

@@ -19,26 +19,16 @@ def with_tempfile(content)
   yield(file) # call block with file as argument
 end
 
-##
-# https://stackoverflow.com/a/22777806
 def with_captured_stdout
-  original_stdout = $stdout  # capture previous value of $stdout
-  $stdout = StringIO.new     # assign a string buffer to $stdout
-  yield                      # perform the body of the user code
-  return $stdout.string      # return the contents of the string buffer
-ensure
-  $stdout = original_stdout  # restore $stdout to its previous value
+  return with_captured(stderr: false) { yield }
 end
 
 def with_captured_stderr
-  original_stderr = $stderr
-  $stderr = StringIO.new
-  yield
-  return $stderr.string
-ensure
-  $stderr = original_stderr
+  return with_captured(stdout: false) { yield }
 end
 
+##
+# https://stackoverflow.com/a/22777806
 def with_captured(stdout: true, stderr: true)
   original = [$stdout, $stderr]
   tmp = StringIO.new
@@ -57,6 +47,6 @@ end
 def init(content, name, filename = nil)
   filename = name + '.adoc' if filename.nil?
   tempfile_path = write_tempfile(filename, content)
-  adoc = load_doc tempfile_path
+  adoc = load_doc(tempfile_path)
   return adoc
 end
