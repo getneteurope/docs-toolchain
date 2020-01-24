@@ -30,11 +30,11 @@ module Toolchain
       lines.each_with_index do |line, lineno|
         if line.start_with?('ifdef::')
           stack_open.push(lineno)
-          vars[lineno] = line.split(':').last[0..-3]
+          vars[lineno] = line.split(':').last.split('[').first
           ifs[lineno] = nil
         elsif line.start_with?('endif::')
           open_lineno = stack_open.pop
-          if open_lineno.nil? # if no opening part, remember this closing part
+          if open_lineno.nil? # if no opening if, remember this closing
             unmatched_close << lineno
           else
             ifs[open_lineno] = lineno
@@ -42,6 +42,7 @@ module Toolchain
         end
       end
 
+      # select all opening ifs without closing and iterate over the line numbers
       ifs.select { |_, val| val.nil? }.each do |lineno, _|
         msg = "Mismatched IF: unmatched ifdef found on line #{lineno}: ifdef::#{vars[lineno]}[]"
         errors << create_error(
@@ -49,6 +50,8 @@ module Toolchain
           location: Location.new(parsed.attr('docfile'), lineno)
         )
       end
+
+      # iterate over list of closing ifs without opening counterparts
       unmatched_close.each do |lineno|
         msg = "Mismatched IF: unmatched endif found on line #{lineno}"
         errors << create_error(
