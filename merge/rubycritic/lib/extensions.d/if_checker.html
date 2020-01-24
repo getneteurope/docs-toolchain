@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-24 14:13:03 +0100'>2020-01-24 14:13:03 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-24 14:45:20 +0100'>2020-01-24 14:45:20 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">64</span><small> lines of codes</small></div>
+              <div><span class="metric">67</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">45.2</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">47.0</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">45.22</span><small> complexity</small></div>
+              <div><span class="metric">47.03</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -113,7 +113,7 @@ module Toolchain
     #
     # Returns a list of errors (can be empty).
     #
-    def run(adoc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::IfChecker#run has a flog score of 45</span>          </div>  </li></ol>
+    def run(adoc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::IfChecker#run has a flog score of 47</span>          </div>  </li></ol>
       parsed = adoc.parsed
       errors = []
 
@@ -129,11 +129,11 @@ module Toolchain
       lines.each_with_index do |line, lineno|
         if line.start_with?(&#39;ifdef::&#39;)
           stack_open.push(lineno)
-          vars[lineno] = line.split(&#39;:&#39;).last[0..-3]
+          vars[lineno] = line.split(&#39;:&#39;).last.split(&#39;[&#39;).first
           ifs[lineno] = nil
         elsif line.start_with?(&#39;endif::&#39;)
           open_lineno = stack_open.pop
-          if open_lineno.nil? # if no opening part, remember this closing part
+          if open_lineno.nil? # if no opening if, remember this closing
             unmatched_close &lt;&lt; lineno
           else
             ifs[open_lineno] = lineno
@@ -141,6 +141,7 @@ module Toolchain
         end
       end
 
+      # select all opening ifs without closing and iterate over the line numbers
       ifs.select { |_, val| val.nil? }.each do |lineno, _|
         msg = &quot;Mismatched IF: unmatched ifdef found on line #{lineno}: ifdef::#{vars[lineno]}[]&quot;
         errors &lt;&lt; create_error(
@@ -148,6 +149,8 @@ module Toolchain
           location: Location.new(parsed.attr(&#39;docfile&#39;), lineno)
         )
       end
+
+      # iterate over list of closing ifs without opening counterparts
       unmatched_close.each do |lineno|
         msg = &quot;Mismatched IF: unmatched endif found on line #{lineno}&quot;
         errors &lt;&lt; create_error(
