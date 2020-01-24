@@ -8,8 +8,6 @@ env:
 jobs:
   test-and-publish:
     runs-on: ubuntu-latest
-    # container:
-    #   image: ruby:2.6
 
     steps:
     - name: Extract branch name
@@ -21,6 +19,11 @@ jobs:
         else
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
         fi
+
+    - name: "Install tools"
+      run: |
+        sudo snap install --classic ripgrep
+        rg --version
 
     - name: "Setup ruby 2.6"
       uses: actions/setup-ruby@v1
@@ -42,7 +45,6 @@ jobs:
 
     - name: "Generate rdoc"
       run: |
-        rake --tasks
         rake toolchain:rdoc
 
     - name: "Quality check"
@@ -82,3 +84,7 @@ jobs:
         TARGET_FOLDER: ${{ steps.extract_branch.outputs.branch }}
       with:
         keepFiles: true
+
+    - name: "Show TODOs"
+      run: rg -f .github/patterns.txt -t ruby .
+
