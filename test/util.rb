@@ -19,6 +19,7 @@ def with_tempfile(content)
   yield(file) # call block with file as argument
 end
 
+##
 # https://stackoverflow.com/a/22777806
 def with_captured_stdout
   original_stdout = $stdout  # capture previous value of $stdout
@@ -27,6 +28,26 @@ def with_captured_stdout
   return $stdout.string      # return the contents of the string buffer
 ensure
   $stdout = original_stdout  # restore $stdout to its previous value
+end
+
+def with_captured_stderr
+  original_stderr = $stderr
+  $stderr = StringIO.new
+  yield
+  return $stderr.string
+ensure
+  $stderr = original_stderr
+end
+
+def with_captured(stdout: true, stderr: true)
+  original = [$stdout, $stderr]
+  tmp = StringIO.new
+  $stdout = tmp if stdout
+  $stderr = tmp if stderr
+  yield
+  return tmp.string
+ensure
+  $stdout, $stderr = original
 end
 
 def assert_any_startwith(errors, text)
@@ -39,4 +60,3 @@ def init(content, name, filename = nil)
   adoc = load_doc tempfile_path
   return adoc
 end
-

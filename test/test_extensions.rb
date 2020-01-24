@@ -141,6 +141,92 @@ class TestIfChecker < Test::Unit::TestCase
       assert_empty(errors)
     end
   end
+
+  def test_nested_if
+    content = "= Header 1 - Main
+    :do-include: fralle
+    :include2: yes
+    :another-one: dj-khaled
+    ifdef::do-include[]
+    = Header 2
+    This is another section.
+    ifdef::include2[]
+    == Let's go down
+    I am a submarine.
+    ifdef::another-one[]
+    == Let's play a game
+    Bravo Six, goin' dark.
+    endif::[]
+    endif::[]
+    endif::[]
+    Lorem ipsum blabla di blabla du.
+    ".gsub('    ', '')
+    main_adoc = init(content, "#{self.class.name}_#{__method__}_main")
+
+    Dir.chdir('/tmp') do
+      errors = Toolchain::IfChecker.new.run(main_adoc)
+      assert_empty(errors)
+    end
+  end
+
+  def test_missing_close
+    content = "= Header 1 - Main
+    :do-include: fralle
+    :include2: yes
+    :another-one: dj-khaled
+    ifdef::do-include[]
+    = Header 2
+    This is another section.
+    ifdef::include2[]
+    == Let's go down
+    I am a submarine.
+    ifdef::another-one[]
+    == Let's play a game
+    Bravo Six, goin' dark.
+    endif::[]
+    endif::[]
+    Lorem ipsum blabla di blabla du.
+    ".gsub('    ', '')
+    main_adoc = init(content, "#{self.class.name}_#{__method__}_main")
+
+    Dir.chdir('/tmp') do
+      errors = Toolchain::IfChecker.new.run(main_adoc)
+      assert_equal(1, errors.length)
+      assert_equal(4, errors.first[:location].lineno)
+      assert_match(/unmatched ifdef found/, errors.first[:msg])
+    end
+  end
+
+  def test_missing_open
+    content = "= Header 1 - Main
+    :do-include: fralle
+    :include2: yes
+    :another-one: dj-khaled
+    ifdef::do-include[]
+    = Header 2
+    This is another section.
+    ifdef::include2[]
+    == Let's go down
+    I am a submarine.
+    == Let's play a game
+    Bravo Six, goin' dark.
+    endif::[]
+    endif::[]
+    endif::[]
+    Lorem ipsum blabla di blabla du.
+    ".gsub('    ', '')
+    main_adoc = init(content, "#{self.class.name}_#{__method__}_main")
+
+    errors = nil
+    Dir.chdir('/tmp') do
+      with_captured do # suppress asciidoctor errors
+        errors = Toolchain::IfChecker.new.run(main_adoc)
+      end
+      assert_equal(1, errors.length)
+      assert_equal(14, errors.first[:location].lineno)
+      assert_match(/unmatched endif found/, errors.first[:msg])
+    end
+  end
 end
 
 class TestLinkChecker < Test::Unit::TestCase
