@@ -14,26 +14,26 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-01-23T15:12:43+00:00">2020-01-23T15:12:43+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-01-24T13:36:40+00:00">2020-01-24T13:36:40+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">93.48%</span></span>
+    (<span class="covered_percent"><span class="green">94.05%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.88
+         3.29
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
-    <b>12</b> files in total.
-    <b>322</b> relevant lines. 
-    <span class="green"><b>301</b> lines covered</span> and
+    <b>13</b> files in total.
+    <b>353</b> relevant lines. 
+    <span class="green"><b>332</b> lines covered</span> and
     <span class="red"><b>21</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -57,7 +57,7 @@
         <td>13</td>
         <td>13</td>
         <td>0</td>
-        <td>1.8</td>
+        <td>1.9</td>
       </tr>
       
       <tr>
@@ -87,7 +87,7 @@
         <td>20</td>
         <td>20</td>
         <td>0</td>
-        <td>2.4</td>
+        <td>2.7</td>
       </tr>
       
       <tr>
@@ -98,6 +98,16 @@
         <td>36</td>
         <td>0</td>
         <td>4.9</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#09d4c330a36d22e577aa1ca6448eca47b51b31a4" class="src_link" title="lib/extensions.d/if_checker.rb">lib/extensions.d/if_checker.rb</a></td>
+        <td class="green strong">100.0 %</td>
+        <td>64</td>
+        <td>31</td>
+        <td>31</td>
+        <td>0</td>
+        <td>7.2</td>
       </tr>
       
       <tr>
@@ -127,7 +137,7 @@
         <td>12</td>
         <td>12</td>
         <td>0</td>
-        <td>11.0</td>
+        <td>11.4</td>
       </tr>
       
       <tr>
@@ -386,8 +396,8 @@
           <code class="ruby">    def create_error(msg:, location: nil, extras: nil)</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="32">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="13" data-linenumber="32">
+          <span class="hits">13</span>
           
           <code class="ruby">      return Toolchain::ExtensionManager.create_error(</code>
         </li>
@@ -1811,8 +1821,8 @@
           <code class="ruby">        return {</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="31">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="13" data-linenumber="31">
+          <span class="hits">13</span>
           
           <code class="ruby">          id: instance.next_id,</code>
         </li>
@@ -1901,8 +1911,8 @@
           <code class="ruby">    def register(ext)</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="46">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="5" data-linenumber="46">
+          <span class="hits">5</span>
           
           <code class="ruby">      @extensions &lt;&lt; ext</code>
         </li>
@@ -1979,8 +1989,8 @@
           <code class="ruby">    def next_id</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="59">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="16" data-linenumber="59">
+          <span class="hits">16</span>
           
           <code class="ruby">      return @id += 1</code>
         </li>
@@ -2545,6 +2555,409 @@
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="73">
+          <span class="hits">1</span>
+          
+          <code class="ruby">Toolchain::ExtensionManager.instance.register(Toolchain::IdChecker.new)</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+
+      
+        <div class="source_table" id="09d4c330a36d22e577aa1ca6448eca47b51b31a4">
+  <div class="header">
+    <h3>lib/extensions.d/if_checker.rb</h3>
+    <h4><span class="green">100.0 %</span> covered</h4>
+    <div>
+      <b>31</b> relevant lines. 
+      <span class="green"><b>31</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        <li class="never" data-hits="" data-linenumber="1">
+          
+          
+          <code class="ruby"># frozen_string_literal: true</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="2">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="3">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../extension_manager.rb&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="4">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../base_extension.rb&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="5">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="6">
+          <span class="hits">1</span>
+          
+          <code class="ruby">module Toolchain</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="7">
+          
+          
+          <code class="ruby">  ##</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="8">
+          
+          
+          <code class="ruby">  # Include Checker</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="9">
+          
+          
+          <code class="ruby">  #</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="10">
+          
+          
+          <code class="ruby">  # Check the number of open and closing IFs</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="11">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  class IfChecker &lt; BaseExtension</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="12">
+          
+          
+          <code class="ruby">    ##</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="13">
+          
+          
+          <code class="ruby">    # Run the if tests on the given document (+adoc+).</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="14">
+          
+          
+          <code class="ruby">    #</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="15">
+          
+          
+          <code class="ruby">    # Returns a list of errors (can be empty).</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="16">
+          
+          
+          <code class="ruby">    #</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="17">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def run(adoc)</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="18">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      parsed = adoc.parsed</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="19">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      errors = []</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="20">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="21">
+          
+          
+          <code class="ruby">      # TODO: research why read_lines can be empty</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="22">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      lines = parsed.reader.read_lines</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="23">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      lines = parsed.reader.source_lines if lines.empty?</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="24">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="25">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      ifs = {}             # open_if_lineno -&gt; close_if_lineno</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="26">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      vars = {}            # hash to save ifdef variables</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="27">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      stack_open = []      # stack of currently open ifs</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="28">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      unmatched_close = [] # list of closing ifs without an opening counterpart</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="29">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="30">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      lines.each_with_index do |line, lineno|</code>
+        </li>
+      
+        <li class="covered" data-hits="55" data-linenumber="31">
+          <span class="hits">55</span>
+          
+          <code class="ruby">        if line.start_with?(&#39;ifdef::&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="32">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          stack_open.push(lineno)</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="33">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          vars[lineno] = line.split(&#39;:&#39;).last[0..-3]</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="34">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          ifs[lineno] = nil</code>
+        </li>
+      
+        <li class="covered" data-hits="46" data-linenumber="35">
+          <span class="hits">46</span>
+          
+          <code class="ruby">        elsif line.start_with?(&#39;endif::&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="36">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          open_lineno = stack_open.pop</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="37">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          if open_lineno.nil? # if no opening part, remember this closing part</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="38">
+          <span class="hits">1</span>
+          
+          <code class="ruby">            unmatched_close &lt;&lt; lineno</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="39">
+          
+          
+          <code class="ruby">          else</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="40">
+          <span class="hits">8</span>
+          
+          <code class="ruby">            ifs[open_lineno] = lineno</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          
+          <code class="ruby">          end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="42">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="43">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="44">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="13" data-linenumber="45">
+          <span class="hits">13</span>
+          
+          <code class="ruby">      ifs.select { |_, val| val.nil? }.each do |lineno, _|</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="46">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        msg = &quot;Mismatched IF: unmatched ifdef found on line #{lineno}: ifdef::#{vars[lineno]}[]&quot;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="47">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        errors &lt;&lt; create_error(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="48">
+          
+          
+          <code class="ruby">          msg: msg,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="49">
+          
+          
+          <code class="ruby">          location: Location.new(parsed.attr(&#39;docfile&#39;), lineno)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="50">
+          
+          
+          <code class="ruby">        )</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="51">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="52">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      unmatched_close.each do |lineno|</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="53">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        msg = &quot;Mismatched IF: unmatched endif found on line #{lineno}&quot;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="54">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        errors &lt;&lt; create_error(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="55">
+          
+          
+          <code class="ruby">          msg: msg,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="56">
+          
+          
+          <code class="ruby">          location: Location.new(parsed.attr(&#39;docfile&#39;), lineno)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="57">
+          
+          
+          <code class="ruby">        )</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="58">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="59">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      return errors</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="60">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="61">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="62">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="63">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="64">
           <span class="hits">1</span>
           
           <code class="ruby">Toolchain::ExtensionManager.instance.register(Toolchain::IdChecker.new)</code>
@@ -3543,8 +3956,8 @@
           <code class="ruby">def log(tag, msg, color = :blue, bold = false)</code>
         </li>
       
-        <li class="covered" data-hits="42" data-linenumber="12">
-          <span class="hits">42</span>
+        <li class="covered" data-hits="47" data-linenumber="12">
+          <span class="hits">47</span>
           
           <code class="ruby">  return if ENV.key?(&#39;UNITTEST&#39;)</code>
         </li>
