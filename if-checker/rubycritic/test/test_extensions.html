@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-24 14:13:03 +0100'>2020-01-24 14:13:03 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-24 14:27:59 +0100'>2020-01-24 14:27:59 +0100</time>
         
       </span>
     </div>
@@ -73,11 +73,11 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">14.4</span><small> complexity/method</small></div>
-              <div><span class="metric">29</span><small> churn</small></div>
+              <div><span class="metric">30</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">201.03</span><small> complexity</small></div>
-              <div><span class="metric">70</span><small> duplications</small></div>
+              <div><span class="metric">201.01</span><small> complexity</small></div>
+              <div><span class="metric">126</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                10
+                11
                 smells
               </a>
             </li>
@@ -288,7 +288,7 @@ class TestIfChecker &lt; Test::Unit::TestCase<ol class="nocode errors smells">  
     &quot;.gsub(&#39;    &#39;, &#39;&#39;)
     main_adoc = init(content, &quot;#{self.class.name}_#{__method__}_main&quot;)
 
-    Dir.chdir(&#39;/tmp&#39;) do
+    Dir.chdir(&#39;/tmp&#39;) do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_extensions.html#L192" class="js-smell-location">0</a>                  <a href="test_extensions.html#L223" class="js-smell-location">1</a>                  </div>  </li></ol>
       errors = Toolchain::IfChecker.new.run(main_adoc)
       assert_equal(1, errors.length)
       assert_equal(4, errors.first[:location].lineno)
@@ -314,13 +314,13 @@ class TestIfChecker &lt; Test::Unit::TestCase<ol class="nocode errors smells">  
     endif::[]
     Lorem ipsum blabla di blabla du.
     &quot;.gsub(&#39;    &#39;, &#39;&#39;)
-    main_adoc = init(content, &quot;#{self.class.name}_#{__method__}_main&quot;)
+    main_adoc = nil
+    with_captured do # suppress asciidoctor errors
+      main_adoc = init(content, &quot;#{self.class.name}_#{__method__}_main&quot;)
+    end
 
-    errors = nil
-    Dir.chdir(&#39;/tmp&#39;) do
-      with_captured do # suppress asciidoctor errors
-        errors = Toolchain::IfChecker.new.run(main_adoc)
-      end
+    Dir.chdir(&#39;/tmp&#39;) do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_extensions.html#L192" class="js-smell-location">0</a>                  <a href="test_extensions.html#L223" class="js-smell-location">1</a>                  </div>  </li></ol>
+      errors = Toolchain::IfChecker.new.run(main_adoc)
       assert_equal(1, errors.length)
       assert_equal(14, errors.first[:location].lineno)
       assert_match(/unmatched endif found/, errors.first[:msg])
