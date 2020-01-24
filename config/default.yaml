@@ -1,11 +1,11 @@
 
 log:
-  - path: /tmp/log.json
+  path: /tmp/log.json
 
 notify:
-  - slack:
-      - file: /tmp/slack.json
+  slack:
+      file: /tmp/slack.json
 
 checkers:
-  - pattern:
+  pattern:
       - blacklist: blacklist.txt
