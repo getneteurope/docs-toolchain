@@ -97,6 +97,10 @@ def collect_attributes(doc, attribs = {})
 end
 
 ##
+# TODO: 1. use a Struct instead of an OpenStruct (with proper documentation of the fields)
+# TODO: 2. move function to a util file or something else (should not be in test.rb,
+#                                                           because we use it in unit tests)
+#
 # Load adoc file +filename+, convert given the parameters +safe+ and +parse+
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
 #
@@ -124,7 +128,8 @@ def load_doc(filename, attribs = {})
   adoc = OpenStruct.new(
     original: original,
     parsed: parsed,
-    attributes: attributes
+    attributes: attributes,
+    filename: filename
   )
   return adoc
 end

@@ -118,6 +118,31 @@ include::#{attr_in_anchors_inc2_file_name}[]
   end
 end
 
+class TestIfChecker < Test::Unit::TestCase
+  def test_simple_if
+    content = '== Section 2
+
+    Help me figure this out.
+    Thanks!
+    '.gsub('    ', '')
+    include_adoc = init(content, "#{self.class.name}_#{__method__}_include")
+
+    content = "= Header 1 - Main
+    :do-include: fralle
+    ifdef::do-include[]
+    include::#{include_adoc.filename}[]
+    endif::[]
+    Lorem ipsum blabla di blabla du.
+    ".gsub('    ', '')
+    main_adoc = init(content, "#{self.class.name}_#{__method__}_main")
+
+    Dir.chdir('/tmp') do
+      errors = Toolchain::IfChecker.new.run(main_adoc)
+      assert_empty(errors)
+    end
+  end
+end
+
 class TestLinkChecker < Test::Unit::TestCase
   def test_links
     omit_if(ENV.key?('SKIP_NETWORK'), 'Tests with networking disabled')
