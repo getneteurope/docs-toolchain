@@ -193,7 +193,7 @@
 
           
           <div class="method-source-code" id="check_docs-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 188</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 193</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">check_docs</span>(<span class="ruby-identifier">included_files</span>, <span class="ruby-identifier">content_dir</span>)
   <span class="ruby-identifier">errors_map</span> = {}
   <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
@@ -414,7 +414,11 @@
 
         <div class="method-description">
           
-          <p>Load adoc file <code>filename</code>, convert given the parameters <code>safe</code> and <code>parse</code> <a href="https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html">discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html</a></p>
+          <p>TODO: 1. use a Struct instead of an OpenStruct (with proper documentation of the fields) TODO: 2. move function to a util file or something else (should not be in test.rb,</p>
+
+<pre>because we use it in unit tests)</pre>
+
+<p>Load adoc file <code>filename</code>, convert given the parameters <code>safe</code> and <code>parse</code> <a href="https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html">discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html</a></p>
 
 <p>Returns a pair of converted adoc <code>adoc</code>, original adoc <code>original</code></p>
           
@@ -422,7 +426,7 @@
 
           
           <div class="method-source-code" id="load_doc-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 104</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_doc</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">attribs</span> = {})
   <span class="ruby-identifier">original</span> = <span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">load_file</span>(
     <span class="ruby-identifier">filename</span>,
@@ -445,7 +449,8 @@
   <span class="ruby-identifier">adoc</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
     <span class="ruby-value">original:</span> <span class="ruby-identifier">original</span>,
     <span class="ruby-value">parsed:</span> <span class="ruby-identifier">parsed</span>,
-    <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attributes</span>
+    <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attributes</span>,
+    <span class="ruby-value">filename:</span> <span class="ruby-identifier">filename</span>
   )
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">adoc</span>
 <span class="ruby-keyword">end</span></pre>
@@ -645,7 +650,7 @@
 
           
           <div class="method-source-code" id="post_process_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 206</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 211</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -756,7 +761,7 @@
 
           
           <div class="method-source-code" id="run_tests-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 156</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 161</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_tests</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>].<span class="ruby-identifier">nil?</span>
 
@@ -857,7 +862,7 @@
 
           
           <div class="method-source-code" id="test_files-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 136</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_files</span>(<span class="ruby-identifier">files</span>)
   <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)

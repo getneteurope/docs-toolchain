@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 16:11:36 +0100'>2020-01-23 16:11:36 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-24 14:27:59 +0100'>2020-01-24 14:27:59 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">42</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">52</span><small> lines of codes</small></div>
+              <div><span class="metric">7</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">4.8</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">4.4</span><small> complexity/method</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">24.19</span><small> complexity</small></div>
+              <div><span class="metric">31.06</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
+                4
                 smells
               </a>
             </li>
@@ -118,14 +118,25 @@ def with_tempfile(content)
   yield(file) # call block with file as argument
 end
 
+def with_captured_stdout
+  return with_captured(stderr: false) { yield }
+end
+
+def with_captured_stderr
+  return with_captured(stdout: false) { yield }
+end
+
+##
 # https://stackoverflow.com/a/22777806
-def with_captured_stdout<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>with_captured_stdout doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
-  original_stdout = $stdout  # capture previous value of $stdout
-  $stdout = StringIO.new     # assign a string buffer to $stdout
-  yield                      # perform the body of the user code
-  return $stdout.string      # return the contents of the string buffer
+def with_captured(stdout: true, stderr: true)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>with_captured has boolean parameter 'stderr'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>with_captured has boolean parameter 'stdout'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>with_captured doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+  original = [$stdout, $stderr]
+  tmp = StringIO.new
+  $stdout = tmp if stdout
+  $stderr = tmp if stderr
+  yield
+  return tmp.string
 ensure
-  $stdout = original_stdout  # restore $stdout to its previous value
+  $stdout, $stderr = original
 end
 
 def assert_any_startwith(errors, text)
@@ -135,10 +146,9 @@ end
 def init(content, name, filename = nil)
   filename = name + &#39;.adoc&#39; if filename.nil?
   tempfile_path = write_tempfile(filename, content)
-  adoc = load_doc tempfile_path
+  adoc = load_doc(tempfile_path)
   return adoc
 end
-
 </code>
   </div>
 </div>

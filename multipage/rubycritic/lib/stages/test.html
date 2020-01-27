@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-27 14:43:42 +0100'>2020-01-27 14:43:42 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-27 15:13:58 +0100'>2020-01-27 15:13:58 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">207</span><small> lines of codes</small></div>
+              <div><span class="metric">212</span><small> lines of codes</small></div>
               <div><span class="metric">12</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">9.3</span><small> complexity/method</small></div>
-              <div><span class="metric">18</span><small> churn</small></div>
+              <div><span class="metric">19</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">111.59</span><small> complexity</small></div>
@@ -146,7 +146,7 @@ end
 #
 def print_errors(errors_map)
   errors_map.each do |_file, errors|
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L50" class="js-smell-location">0</a>                  <a href="test.html#L142" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L50" class="js-smell-location">0</a>                  <a href="test.html#L147" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
@@ -195,6 +195,10 @@ def collect_attributes(doc, attribs = {})
 end
 
 ##
+# TODO: 1. use a Struct instead of an OpenStruct (with proper documentation of the fields)
+# TODO: 2. move function to a util file or something else (should not be in test.rb,
+#                                                           because we use it in unit tests)
+#
 # Load adoc file +filename+, convert given the parameters +safe+ and +parse+
 # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
 #
@@ -222,7 +226,8 @@ def load_doc(filename, attribs = {})
   adoc = OpenStruct.new(
     original: original,
     parsed: parsed,
-    attributes: attributes
+    attributes: attributes,
+    filename: filename
   )
   return adoc
 end
@@ -238,7 +243,7 @@ def test_files(files)
     next if errors.empty?
 
     puts f.blue.bold
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L50" class="js-smell-location">0</a>                  <a href="test.html#L142" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L50" class="js-smell-location">0</a>                  <a href="test.html#L147" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
