@@ -39,11 +39,7 @@ module Toolchain
     #
     # Returns a OpenStruct containing the information described above.
     def self.generate_info(path = nil)
-      content_path = '..'
-      content_path = ENV['GITHUB_WORKSPACE'] \
-        if ENV.key?('TOOLCHAIN_TEST') || ENV.key?('GITHUB_ACTIONS')
-      # Unit testing
-      content_path = path unless path.nil?
+      content_path = ::Toolchain.content_path(path)
 
       git_info = nil
       begin
