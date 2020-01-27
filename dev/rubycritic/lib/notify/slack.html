@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ruby Critic - Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- StyleSheets -->
+    <link href="../../assets/stylesheets/bootstrap.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/stylesheets/font-awesome.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/stylesheets/prettify.custom_theme.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/stylesheets/application.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <header class="navbar navbar-default navbar-fixed-top">
+      <a href="#menu-toggle" class="btn btn-default hidden-lg visible-sm-* hidden-md visible-xs-* pull-left" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+      <a href="../../overview.html"><img src="../../assets/images/logo.png" alt="Ruby Critic Logo" title="Ruby Critic Logo" width="55"><span class="logo">RUBYCRITIC</span></a>
+      
+    </header>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <aside id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a href="../../overview.html" class="project-nav-item overview-nav"><i class="fa fa-dashboard"></i>Overview</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../code_index.html" class="project-nav-item code-index-nav"><i class="fa fa-code"></i>Code</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../smells_index.html" class="project-nav-item smells-index-nav"><i class="fa fa-warning"></i>Smells</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../simple_cov_index.html" class="project-nav-item coverage-index-nav"><i class="fa fa-umbrella"></i>Coverage</a>
+          </li>
+        </ul>
+      </aside>
+      <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+  <!--Page Title -->
+  <div class="Page_Title">
+    <div class="file-time">
+      <span class="committed-at">
+        
+          Updated <time class='js-timeago' datetime='2020-01-21 14:23:15 +0100'>2020-01-21 14:23:15 +0100</time>
+        
+      </span>
+    </div>
+    <div>
+      <h3><small>lib/notify /</small> slack.rb</h3>
+    </div>
+  </div>
+  <!--End Page Title -->
+  <div class="Content_Wrapper">
+    <!-- code detail -->
+    <div class="code-top-detail clearfix row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="rating b big">
+              B
+            </div>
+          </div>
+          <div class="code-statistics col-md-11">
+            <div class="col-md-3">
+              <div><span class="metric">140</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">14.7</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">73.4</span><small> complexity</small></div>
+              <div><span class="metric">0</span><small> duplications</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="code-tabs">
+          <ul class="nav nav-pills right-to-left">
+            <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
+            <li class="active">
+              <a href="#" id="toggle-smells" class="toggle-button button">
+                2
+                smells
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+require &#39;optparse&#39;
+require &#39;json&#39;
+require &#39;net/http&#39;
+require &#39;singleton&#39;
+require_relative &#39;../config_manager.rb&#39;
+require_relative &#39;../log/log.rb&#39;
+require_relative &#39;../utils/git.rb&#39;
+
+##
+# Toolchain module
+#
+module Toolchain
+  ##
+  # Notify module
+  #
+  # Umbrella namespace for all notification connectors
+  module Notify
+    ##
+    # *Slack class*
+    #
+    # Class representing a messaging connection to a Slack token.
+    #
+    # = Example
+    # &lt;code&gt;
+    # require_relative &#39;./lib/notify/slack.rb&#39;
+    # Toolchain::Notify::Slack.instance.add(&#39;My test message&#39;)
+    # Toolchain::Notify::Slack.instance.send
+    # &lt;/code&gt;
+    #
+    class Slack
+      include Singleton
+
+      ##
+      # Add a message +msg+ to the Slack message file.
+      #
+      # Returns nothing.
+      def add(msg)
+        # load json
+        json = nil
+        File.open(@file, &#39;r&#39;) do |msg_file|
+          json = JSON.load(msg_file)
+        end
+
+        # add text to json
+        json[&#39;blocks&#39;] &lt;&lt; template(msg)
+        json[&#39;blocks&#39;] &lt;&lt; @divider
+
+        # write json to file again
+        File.open(@file, &#39;w&#39;) do |msg_file|
+          msg_file.write(JSON.dump(json))
+        end
+      end
+
+      ##
+      # Send the message defined in +@file+ to the Slack channel
+      # in +ENV[&#39;SLACK_TOKEN&#39;]+.
+      #
+      # Returns nothing.
+      def send<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Notify::Slack#send has a flog score of 40</span>          </div>  </li></ol>
+        token = ENV[&#39;SLACK_TOKEN&#39;]
+        debug = ENV[&#39;DEBUG&#39;]
+        msg = nil
+        File.open(@file, &#39;r&#39;) do |msg_file|
+          msg = JSON.load(msg_file)
+        end
+
+        closing = { &#39;type&#39; =&gt; &#39;context&#39;, &#39;elements&#39; =&gt; [
+          { &#39;type&#39; =&gt; &#39;mrkdwn&#39;,
+            &#39;text&#39; =&gt; &quot;Sent from &lt;https://github.com/#{ENV[&#39;GITHUB_REPOSITORY&#39;]}|Github Actions&gt;&quot; }
+        ] }
+        msg[&#39;blocks&#39;] &lt;&lt; closing unless msg[&#39;blocks&#39;].last[&#39;type&#39;] == &#39;context&#39;
+
+        if token.nil? || debug
+          log(&#39;SLACK&#39;, &#39;No $SLACK_TOKEN: printing to stdout&#39;) if token.nil?
+          log(&#39;SLACK&#39;, &#39;DEBUG mode is on: printing to stdout&#39;) if debug
+          puts(msg.to_json)
+          return
+        end
+
+        # request to slack
+        log(&#39;SLACK&#39;, &#39;Sending message...&#39;)
+        url = &quot;https://hooks.slack.com/services/#{token}&quot;
+        # url = &#39;http://requestbin.net/r/1alhka81&#39;
+        uri = URI(url)
+        req = Net::HTTP::Post.new(uri, &#39;Content-type&#39; =&gt; &#39;application/json&#39;)
+        req.body = JSON.pretty_generate(msg) # JSON.dump(msg) # .encode(&#39;ASCII&#39;, &#39;UTF-8&#39;)
+        puts req.body
+        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+          http.request(req)
+        end
+        log(&#39;SLACK&#39;, &quot;Status code: [#{res.code}] #{res.message}&quot;)
+      end
+
+      private
+
+      def initialize
+        @file = ENV[&#39;SLACK_MSG_FILE&#39;] ||
+          Toolchain::ConfigManager.instance.get(&#39;notify.slack.file&#39;) ||
+          &#39;/tmp/slack.json&#39;
+        @divider = { &#39;type&#39; =&gt; &#39;divider&#39; }
+        init
+      end
+
+      ##
+      # Returns a Slack template with +msg+ as message part.
+      # Returned format it Slack-readable JSON.
+      #
+      def template(msg)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Notify::Slack#template doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+        return { &#39;type&#39; =&gt; &#39;section&#39;, &#39;text&#39; =&gt; { &#39;type&#39; =&gt; &#39;mrkdwn&#39;, &#39;text&#39; =&gt; msg.to_s } }
+      end
+
+      ##
+      # *MUST* be called before the first use.
+      # Initializes all needed variables like +content_path+, but
+      # also creates a +git_info+ struct used attach author and commit
+      # information to the message.
+      #
+      def init
+        git_info = Toolchain::Git.generate_info
+
+        # format the header using the git info hash map
+        commit_url = &quot;https://github.com/#{ENV[&#39;GITHUB_REPOSITORY&#39;]}/commit/#{git_info.commit}&quot;
+        header = [
+          &quot;*Author:* #{git_info.author}&quot;,
+          &quot;*Branch:* `#{git_info.branch}`&quot;,
+          &quot;*Commit:* `#{git_info.commit}` (&lt;#{commit_url}|Link&gt;)&quot;,
+          &quot;*Time:* #{git_info.time}&quot;
+        ].join(&quot;\n&quot;)
+
+        # generate the basic json structure and write it to the file
+        msg = { &#39;blocks&#39; =&gt; [template(header), @divider] }
+        File.open(@file, &#39;w+&#39;) do |msg_file|
+          msg_file.write(JSON.pretty_generate(msg))
+        end
+      end
+    end
+  end
+end
+</code>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScripts -->
+    <script src='../../assets/javascripts/jquery.min.js'></script>
+    <script src='../../assets/javascripts/jquery.tablesorter.min.js'></script>
+    <script src='../../assets/javascripts/jquery.scrollTo.min.js'></script>
+    <script src='../../assets/javascripts/jquery.timeago.js'></script>
+    <script src='../../assets/javascripts/highcharts.src-4.0.1.js'></script>
+    <script src='../../assets/javascripts/prettify.js'></script>
+    <script src='../../assets/javascripts/bootstrap.min.js'></script>
+    <script src='../../assets/javascripts/application.js'></script>
+    <script src='../../assets/javascripts/jquery.filtertable.min.js'></script>
+  </body>
+</html>
