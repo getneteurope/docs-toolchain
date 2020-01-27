@@ -193,7 +193,7 @@
 
           
           <div class="method-source-code" id="check_docs-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 193</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 194</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">check_docs</span>(<span class="ruby-identifier">included_files</span>, <span class="ruby-identifier">content_dir</span>)
   <span class="ruby-identifier">errors_map</span> = {}
   <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
@@ -232,7 +232,7 @@
 
           
           <div class="method-source-code" id="collect_attributes-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 73</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">collect_attributes</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attribs</span> = {})
   <span class="ruby-comment"># get initial attribs set in index</span>
   <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">attribs</span> <span class="ruby-operator">==</span> {}
@@ -339,7 +339,7 @@
 
           
           <div class="method-source-code" id="get_mod_attrs_from_doc-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 60</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>)
   <span class="ruby-identifier">attribs</span> = {}
   <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">convert</span>
@@ -426,7 +426,7 @@
 
           
           <div class="method-source-code" id="load_doc-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 108</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_doc</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">attribs</span> = {})
   <span class="ruby-identifier">original</span> = <span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">load_file</span>(
     <span class="ruby-identifier">filename</span>,
@@ -650,7 +650,7 @@
 
           
           <div class="method-source-code" id="post_process_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 211</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 212</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -684,7 +684,7 @@
 
           
           <div class="method-source-code" id="print_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_errors</span>(<span class="ruby-identifier">errors_map</span>)
   <span class="ruby-identifier">errors_map</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">_file</span>, <span class="ruby-identifier">errors</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">err</span><span class="ruby-operator">|</span>
@@ -721,7 +721,7 @@
 
           
           <div class="method-source-code" id="print_loaded_extensions-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 34</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_loaded_extensions</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;*** Loaded extensions:&#39;</span>
   <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
@@ -761,7 +761,7 @@
 
           
           <div class="method-source-code" id="run_tests-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 161</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 162</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_tests</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>].<span class="ruby-identifier">nil?</span>
 
@@ -862,7 +862,7 @@
 
           
           <div class="method-source-code" id="test_files-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 141</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_files</span>(<span class="ruby-identifier">files</span>)
   <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)
