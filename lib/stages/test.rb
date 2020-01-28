@@ -2,7 +2,7 @@
 
 require_relative '../cli.rb'
 require_relative '../extension_manager.rb'
-require_relative '../utils.rb'
+require_relative '../log/log.rb'
 Dir[File.join(__dir__, '../', 'extensions.d', '*.rb')].each { |file| require file }
 
 ##

@@ -2,7 +2,7 @@
 
 require 'asciidoctor'
 require 'fileutils'
-require_relative '../utils.rb'
+require_relative '../log/log.rb'
 
 ##
 # mkdir
