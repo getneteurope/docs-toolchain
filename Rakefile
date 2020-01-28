@@ -38,7 +38,7 @@ end
 namespace :toolchain do
   desc 'Run toolchain unit tests (rake task)'
   Rake::TestTask.new(:testtask) do |task|
-    ENV['UNITTEST'] = 'true'
+    # ENV['UNITTEST'] = 'true'
 
     task.libs << 'test'
     task.test_files = FileList['test/test_*.rb']
@@ -86,5 +86,6 @@ namespace :env do
     puts "PWD   = #{ENV['PWD']}"
     puts "DEBUG = #{ENV['DEBUG']}"
     puts "TOOLCHAIN_PATH = #{ENV['TOOLCHAIN_PATH']}"
+    puts "UNITTEST = #{ENV['UNITTEST']}"
   end
 end
