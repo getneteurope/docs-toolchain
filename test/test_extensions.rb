@@ -3,7 +3,9 @@
 require 'asciidoctor'
 require 'test/unit'
 require_relative '../lib/stages/test.rb'
+require_relative '../lib/log/log.rb'
 require_relative './util.rb'
+
 extensions_dir = File.join(__dir__, '..', 'lib', 'extensions.d', '*.rb')
 Dir[extensions_dir].each { |file| require file }
 
@@ -294,29 +296,30 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
     js_header_files_contents = ['[1, 2, 3].map(n => n ** 2);', 'var [a,,b] = [1,2,3];']
     js_header_files_paths = []
     js_header_files_contents.each_with_index do |script, i|
-      js_header_files_paths << write_tempfile('js_' + i + '.js', script)
+      js_header_files_paths << write_tempfile('js_' + i.to_s + '.js', script)
     end
     html_header = '<html><head>'
     js_header_files_paths.each do |path|
-      html_header = html_header + '<script src="' + path + '">'
+      html_header += '<script src="' + path + '"></script>'
     end
     html_header += '</head>'
     html_header_filepath = write_tempfile('html_head.html', html_header)
 
-    js_footer_files_contents = js_header_files_contents.invert
+    js_footer_files_contents = js_header_files_contents.reverse
     js_footer_files_paths = []
     js_footer_files_contents.each_with_index do |script, i|
-      js_footer_files_paths << write_tempfile('js_' + i + '.js', script)
+      js_footer_files_paths << write_tempfile('js_' + i.to_s + '.js', script)
     end
     html_footer = ''
     js_footer_files_paths.each do |path|
-      html_footer = html_footer + '<script src="' + path + '">'
+      html_footer += '<script src="' + path + '">'
     end
     html_footer += '</body></html>'
     html_footer_filepath = write_tempfile('html_footer.html', html_footer)
 
     docinfo_files_paths = OpenStruct.new('header' => html_header_filepath, 'footer' => html_footer_filepath)
     errors = Toolchain::CombineAndTranspileJs.new.run(docinfo_files_paths)
+    pp errors
     assert_equal(3, errors.length)
   end
 

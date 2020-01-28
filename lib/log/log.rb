@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../utils.rb'
+require_relative '../utils/string.rb'
 
 ##
 # Create a log entry in the format:
