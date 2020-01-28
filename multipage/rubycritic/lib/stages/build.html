@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-27 14:43:42 +0100'>2020-01-27 14:43:42 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-28 11:46:43 +0100'>2020-01-28 11:46:43 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">98</span><small> lines of codes</small></div>
+              <div><span class="metric">100</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">9.2</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">27.61</span><small> complexity</small></div>
@@ -163,18 +163,20 @@ module Toolchain
       # call asciidoctor
       # FIXME hardcoded, extract attributes and read config file from content repo
       # or overwrite default attributes with a config file
+      # requires: %w[lib/extensions.adoc.d/multipage-html5-converter.rb]
       options = {
+        requires: %w[lib/extensions.adoc.d/asciidoctor-multipage.rb],
         attributes: {
           &#39;linkcss&#39; =&gt; true,
           &#39;stylesdir&#39; =&gt; &#39;css&#39;,
           &#39;stylesheet&#39; =&gt; &#39;main.css&#39;,
           &#39;icons&#39; =&gt; &#39;font&#39;,
           &#39;toc&#39; =&gt; &#39;left&#39;,
-          &#39;systemtimestamp&#39; =&gt; %x(date +%s)
+          &#39;systemtimestamp&#39; =&gt; %x(date +%s),
+          &#39;backend&#39; =&gt; &#39;multipage_html5&#39;
         },
         safe: :safe,
-        failure_level: &#39;WARN&#39;,
-        requires: %w[lib/extensions.adoc.d/multipage-html5-converter.rb]
+        failure_level: &#39;WARN&#39;
       }
       Asciidoctor.convert_file(index_path, options)
       # doc = Asciidoctor.load_file(index_path, options)

@@ -178,7 +178,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 140</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 101</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">backend</span>, <span class="ruby-identifier">opts</span> = {})
   <span class="ruby-ivar">@xml_mode</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@void_element_slash</span> = <span class="ruby-keyword">nil</span>
@@ -223,7 +223,7 @@
 
           
           <div class="method-source-code" id="add_nav_links-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 149</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_nav_links</span>(<span class="ruby-identifier">page</span>)
   <span class="ruby-identifier">block</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">page</span>,
                                  <span class="ruby-value">:paragraph</span>,
@@ -260,7 +260,7 @@
 
           
           <div class="method-source-code" id="convert-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 157</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 118</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">convert</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">transform</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">opts</span> = {})
   <span class="ruby-identifier">transform</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">node_name</span>
   <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> (<span class="ruby-identifier">send</span> <span class="ruby-identifier">transform</span>, <span class="ruby-identifier">node</span>) <span class="ruby-operator">:</span> (<span class="ruby-identifier">send</span> <span class="ruby-identifier">transform</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">opts</span>)
@@ -299,7 +299,7 @@
 
           
           <div class="method-source-code" id="document-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 163</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">document</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">processed</span>
     <span class="ruby-comment"># This node can now be handled by Html5Converter.</span>
@@ -406,7 +406,7 @@
 
           
           <div class="method-source-code" id="embedded-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 238</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 199</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">embedded</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">processed</span>
     <span class="ruby-comment"># This node can now be handled by Html5Converter.</span>
@@ -446,7 +446,7 @@
 
           
           <div class="method-source-code" id="generate_nav_links-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 250</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 211</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_nav_links</span>(<span class="ruby-identifier">doc</span>)
   <span class="ruby-identifier">pages</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-value">context:</span> <span class="ruby-value">:section</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span>
     [<span class="ruby-value">:root</span>, <span class="ruby-value">:branch</span>, <span class="ruby-value">:leaf</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">section</span>.<span class="ruby-identifier">mplevel</span>)}
@@ -460,18 +460,18 @@
       <span class="ruby-identifier">home_page</span> = <span class="ruby-identifier">doc</span>
       <span class="ruby-comment"># NOTE, there are some non-breaking spaces (U+00A0) below.</span>
       <span class="ruby-keyword">if</span> <span class="ruby-identifier">previous_page</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">parent_page</span>
-        <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(← &lt;&lt;#{previous_page.id}&gt;&gt;)</span>
+        <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(← Previous: &lt;&lt;#{previous_page.id}&gt;&gt;)</span>
       <span class="ruby-keyword">end</span>
-      <span class="ruby-comment">#links &lt;&lt; %(↑ &lt;&lt;#{parent_page.id}&gt;&gt;)</span>
-      <span class="ruby-comment">#links &lt;&lt; %(⌂ &lt;&lt;#{home_page.id}&gt;&gt;) if home_page != parent_page</span>
+      <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(↑ Up: &lt;&lt;#{parent_page.id}&gt;&gt;)</span>
+      <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(⌂ Home: &lt;&lt;#{home_page.id}&gt;&gt;)</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">home_page</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">parent_page</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">page_index</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">length</span><span class="ruby-value">-1</span>
       <span class="ruby-identifier">next_page</span> = <span class="ruby-identifier">pages</span>[<span class="ruby-identifier">page_index</span><span class="ruby-value">+1</span>]
-      <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%( &lt;&lt;#{next_page.id}&gt;&gt; →)</span>
+      <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(Next: &lt;&lt;#{next_page.id}&gt;&gt; →)</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">block</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">doc</span>,
                                    <span class="ruby-identifier">context</span> = <span class="ruby-value">:paragraph</span>,
-                                   <span class="ruby-identifier">opts</span> = {<span class="ruby-value">:source</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39; | &#39;</span>),
+                                   <span class="ruby-identifier">opts</span> = {<span class="ruby-value">:source</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39; | &#39;</span>),
                                            <span class="ruby-value">:subs</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-value">:default</span>})
     <span class="ruby-identifier">page</span>.<span class="ruby-identifier">nav_links</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">content</span>
   <span class="ruby-keyword">end</span>
@@ -506,11 +506,10 @@
 
           
           <div class="method-source-code" id="generate_outline-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 283</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 244</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_outline</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">opts</span> = {})
   <span class="ruby-comment"># This is the same as Html5Converter outline()</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections?</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-identifier">sectnumlevels</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:sectnumlevels</span>] <span class="ruby-operator">||</span> (<span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">attr</span> <span class="ruby-string">&#39;sectnumlevels&#39;</span>, <span class="ruby-value">3</span>).<span class="ruby-identifier">to_i</span>
   <span class="ruby-identifier">toclevels</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:toclevels</span>] <span class="ruby-operator">||</span> (<span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">attr</span> <span class="ruby-string">&#39;toclevels&#39;</span>, <span class="ruby-value">2</span>).<span class="ruby-identifier">to_i</span>
   <span class="ruby-identifier">sections</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections</span>
@@ -594,7 +593,7 @@
 
           
           <div class="method-source-code" id="inline_anchor-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 339</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 299</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inline_anchor</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:xref</span>
     <span class="ruby-comment"># This is the same as super...</span>
@@ -625,8 +624,6 @@
     <span class="ruby-comment"># need to include the anchor.</span>
     <span class="ruby-keyword">if</span> <span class="ruby-node">&quot;##{parent_page.id}&quot;</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">target</span>
       <span class="ruby-identifier">target</span> = <span class="ruby-node">&quot;#{parent_page.id}.html&quot;</span>
-    <span class="ruby-keyword">elsif</span> <span class="ruby-node">&quot;#{parent_page.id}&quot;</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;&quot;</span>
-      <span class="ruby-identifier">target</span> = <span class="ruby-node">&quot;#{node.target}&quot;</span>
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">target</span> = <span class="ruby-node">&quot;#{parent_page.id}.html#{node.target}&quot;</span>
     <span class="ruby-keyword">end</span>
@@ -666,7 +663,7 @@
 
           
           <div class="method-source-code" id="new_outline_doc-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 388</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 346</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_outline_doc</span>(<span class="ruby-identifier">node</span>, <span class="ruby-value">new_parent:</span><span class="ruby-keyword">nil</span>, <span class="ruby-value">for_page:</span><span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Document</span>
     <span class="ruby-identifier">new_document</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>([])
@@ -729,7 +726,7 @@
 
           
           <div class="method-source-code" id="outline-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 423</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 381</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outline</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">opts</span> = {})
   <span class="ruby-identifier">doc</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>
   <span class="ruby-comment"># Find this node in the @@full_outline skeleton document</span>
@@ -776,7 +773,7 @@
 
           
           <div class="method-source-code" id="reparent-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 442</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 400</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reparent</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">parent</span>)
   <span class="ruby-identifier">node</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">parent</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">context</span> <span class="ruby-operator">==</span> <span class="ruby-value">:dlist</span>
@@ -833,7 +830,7 @@
 
           
           <div class="method-source-code" id="section-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 467</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 425</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">section</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-identifier">doc</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">processed</span>
@@ -866,7 +863,7 @@
           <span class="ruby-identifier">chapter</span>.<span class="ruby-identifier">convert</span>
           <span class="ruby-identifier">text</span> = <span class="ruby-node">%(&lt;&lt;#{chapter.id},#{chapter.captioned_title}&gt;&gt;)</span>
           <span class="ruby-comment"># NOTE, there is a non-breaking space (Unicode U+00A0) below.</span>
-          <span class="ruby-keyword">if</span> <span class="ruby-identifier">desc</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;desc&#39;</span>) <span class="ruby-keyword">then</span> <span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%( – #{desc})</span> <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">desc</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;desc&#39;</span>) <span class="ruby-keyword">then</span> <span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%( – #{desc})</span> <span class="ruby-keyword">end</span>
           <span class="ruby-identifier">chapters_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">ListItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">chapters_list</span>, <span class="ruby-identifier">text</span>)
           <span class="ruby-keyword">true</span>
         <span class="ruby-keyword">end</span>
@@ -924,7 +921,7 @@
 
           
           <div class="method-source-code" id="set_multipage_attrs-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 530</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 488</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">set_multipage_attrs</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-identifier">doc</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>
   <span class="ruby-identifier">node</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-value">:root</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>
@@ -983,7 +980,7 @@
 
           
           <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/multipage-html5-converter.rb, line 561</span>
+            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 519</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write</span>(<span class="ruby-identifier">output</span>, <span class="ruby-identifier">target</span>)
   <span class="ruby-comment"># Write primary (book) landing page</span>
   <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">target</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>

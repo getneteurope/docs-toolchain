@@ -163,18 +163,20 @@
   <span class="ruby-comment"># call asciidoctor</span>
   <span class="ruby-comment"># FIXME hardcoded, extract attributes and read config file from content repo</span>
   <span class="ruby-comment"># or overwrite default attributes with a config file</span>
+  <span class="ruby-comment"># requires: %w[lib/extensions.adoc.d/multipage-html5-converter.rb]</span>
   <span class="ruby-identifier">options</span> = {
+    <span class="ruby-value">requires:</span> <span class="ruby-node">%w[lib/extensions.adoc.d/asciidoctor-multipage.rb]</span>,
     <span class="ruby-value">attributes:</span> {
       <span class="ruby-string">&#39;linkcss&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>,
       <span class="ruby-string">&#39;stylesdir&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;css&#39;</span>,
       <span class="ruby-string">&#39;stylesheet&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;main.css&#39;</span>,
       <span class="ruby-string">&#39;icons&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;font&#39;</span>,
       <span class="ruby-string">&#39;toc&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;left&#39;</span>,
-      <span class="ruby-string">&#39;systemtimestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">%x(date +%s)</span>
+      <span class="ruby-string">&#39;systemtimestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">%x(date +%s)</span>,
+      <span class="ruby-string">&#39;backend&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;multipage_html5&#39;</span>
     },
     <span class="ruby-value">safe:</span> <span class="ruby-value">:safe</span>,
-    <span class="ruby-value">failure_level:</span> <span class="ruby-string">&#39;WARN&#39;</span>,
-    <span class="ruby-value">requires:</span> <span class="ruby-node">%w[lib/extensions.adoc.d/multipage-html5-converter.rb]</span>
+    <span class="ruby-value">failure_level:</span> <span class="ruby-string">&#39;WARN&#39;</span>
   }
   <span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">convert_file</span>(<span class="ruby-identifier">index_path</span>, <span class="ruby-identifier">options</span>)
   <span class="ruby-comment"># doc = Asciidoctor.load_file(index_path, options)</span>
