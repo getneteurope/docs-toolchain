@@ -1,4 +1,5 @@
 module Toolchain
+  require 'zlib'
   ##
   # content_path
   # Returns path to content directory +content_dir_path+.

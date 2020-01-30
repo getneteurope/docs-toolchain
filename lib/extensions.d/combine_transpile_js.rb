@@ -3,6 +3,7 @@
 require_relative '../extension_manager.rb'
 require_relative '../base_extension.rb'
 require 'Nokogiri'
+require 'babel/transpiler'
 
 module Toolchain
   ##
@@ -10,12 +11,15 @@ module Toolchain
   class CombineAndTranspileJs < BaseExtension
     @docinfo_header_name_default = 'docinfo.html'
     @docinfo_footer_name_default = 'docinfo-footer.html'
+
+    SCRIPT_TAG_REGEX = %r{<script\ .*\ *src=['"](?<source>[a-zA-Z0-9_\.\-/]+)['"]>}.freeze
+
     ##
     # Combines js files referenced in docinfo{,-footer}.html to a single .js file
     # and transpiles them with BabelJS
     # then reinserts the combined and transpiled file as script tags into tbe html files
     # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
-    def combine_and_transpile_js(docinfo_filepaths = nil)
+    def run(docinfo_filepaths = nil)
       content_path = ::Toolchain.content_path
       docinfo_header_path = if docinfo_filepaths.nil?
                               content_path + '/' + @docinfo_header_name_default
@@ -28,28 +32,77 @@ module Toolchain
                             else
                               docinfo_filepaths.footer
                             end
-      #js_header_files = Dir[content_path + '/js/header.js.d/*.js']
+      # js_header_files = Dir[content_path + '/js/header.js.d/*.js']
+      results = []
       [docinfo_header_path, docinfo_footer_path].each do |docpath|
-        replace_js_files_with_blob(docpath)
+        results << combine_and_replace_js(docpath)
       end
+      return results
+    end
+
+    ##
+    # Combines JS files found in html file
+    # Returns string of combined js files
+    #
+    def combine_js(path, seperator = "\n\n")
+      get_script_src_from_html_file(path).map do |s|
+        File.read(s)
+      end.join(seperator)
+    end
+
+    ##
+    # Remove all <script src="..."/> tags and replace with single <script src="blob"/>
+    # Takes +path+ and string +js_blob+ as input
+    # Returns html string +html_string+
+    # TODO: solve this with nokogiri fragment parser (which either removes needed or adds unnecessary tags..)
+    def replace_js_tags_with_blob(path, js_blob)
+      # derive .js path from html filename
+      # e.g. docinfo-footer.html => content/js/docinfo-footer.js
+      js_blob_path = ::Toolchain.content_path + '/js/' + File.basename(path, File.extname(path)) + '_blob.js'
+      js_blob_path_relative = js_blob_path.gsub(::Toolchain.content_path + '/', '')
+      js_dir = File.dirname(js_blob_path)
+      FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
+      File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
+
+      html_content_lines = File.read(path).lines
+
+      # get lines where there are script tags with src attribute
+      scripts_line_numbers = []
+      html_content_lines.each_with_index { |l, i| scripts_line_numbers << i if l.match?(SCRIPT_TAG_REGEX) }
+
+      # replace last script tag with blob script tag
+      html_content_lines[scripts_line_numbers.pop] = '<script src="' + js_blob_path_relative + '"></sctipt>' + "\n"
+
+      # remove all other script tags that use src attribute
+      scripts_line_numbers.each { |i| html_content_lines[i] = nil }.reject(&:nil?)
+
+      html_string = html_content_lines.join
+      return html_string
     end
 
     ##
     # Replaces all js tags in an html file +path+ with a tag that includes one big blob js.
     # Writes to file and returns +path+ or nil if an error occured.
-    def replace_js_files_with_blob(path)
-      sources = get_script_src_from_html_file(path)
-      js_blob = sources.map do |s|
-        File.read(s)
-      end.join("\n\n")
-      puts js_blob
-      # check if head tag exits ===> isHeader
+    def combine_and_replace_js(path)
+      js_blob = combine_js(path)
+      js_blob = Babel::Transpiler.transform(js_blob)['code']
+      # TODO: minify js blob. may be unnecessary using transport stream compression anyway
+      html_string = replace_js_tags_with_blob(path, js_blob)
+      File.open(path, 'w+') do |file|
+        log('JS', 'insert js tag for blob into ' + path, :yellow)
+        file.puts(html_string)
+      end
+      return OpenStruct.new(
+        path: path,
+        js_blob: js_blob,
+        html: html_string
+      )
     end
 
     ##
     # Parses html file +path+ loking for javascript files
     #
-    # Returns +script_source_files+ array containing "src" attribute values of script 
+    # Returns +script_source_files+ array containing "src" attribute values of script
     #   e.g. <script src="js/1.js"> --> ['js/1.js']
     def get_script_src_from_html_file(path)
       unless File.file?(path)
@@ -75,10 +128,6 @@ module Toolchain
       end
       script_source_files = script_source_files.compact # remove nil
       return script_source_files
-    end
-
-    def run(docinfo_filepaths = nil)
-      combine_and_transpile_js(docinfo_filepaths)
     end
   end
 end
