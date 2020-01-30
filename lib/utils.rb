@@ -1,23 +1,16 @@
 module Toolchain
-  @@content_path
-
   ##
-  # Sets content path across all instances
+  # content_path
+  # Returns path to content directory +content_dir_path+.
   #
-  def initialize
+  def self.content_path(path = nil)
     content_dir_path = '..'
     content_dir_path = ENV['GITHUB_WORKSPACE'] \
       if ENV.key?('TOOLCHAIN_TEST') || ENV.key?('GITHUB_ACTIONS')
     content_dir_path = ENV['CONTENT_PATH'] if ENV.key?('CONTENT_PATH')
-    @@content_path = content_dir_path
-  end
-
-  ##
-  # Returns path to content directory +@@content_path+.
-  #
-  def self.content_path(path = nil)
-    @@content_path unless path.nil?
-    path
+    # For Unit testing:
+    content_dir_path = path unless path.nil?
+    return content_dir_path
   end
 end
 
