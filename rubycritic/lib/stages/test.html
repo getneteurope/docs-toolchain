@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-28 11:53:03 +0100'>2020-01-28 11:53:03 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-31 12:57:48 +0100'>2020-01-31 12:57:48 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">213</span><small> lines of codes</small></div>
+              <div><span class="metric">214</span><small> lines of codes</small></div>
               <div><span class="metric">12</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.3</span><small> complexity/method</small></div>
-              <div><span class="metric">19</span><small> churn</small></div>
+              <div><span class="metric">9.4</span><small> complexity/method</small></div>
+              <div><span class="metric">20</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">111.59</span><small> complexity</small></div>
+              <div><span class="metric">112.99</span><small> complexity</small></div>
               <div><span class="metric">34</span><small> duplications</small></div>
             </div>
           </div>
@@ -147,7 +147,7 @@ end
 #
 def print_errors(errors_map)
   errors_map.each do |_file, errors|
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L148" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L149" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
@@ -175,11 +175,12 @@ def collect_attributes(doc, attribs = {})
   attribs = get_mod_attrs_from_doc(doc) if attribs == {}
   incs = doc.catalog[:includes].keys.to_set
   return attribs if incs.empty?
-
+  document_base_dir = doc.base_dir
   incs.each do |inc|
     inc_file_path = doc.normalize_asset_path(inc + &#39;.adoc&#39;)
     doc = Asciidoctor.load_file(
       inc_file_path,
+      base_dir: document_base_dir,
       catalog_assets: true,
       sourcemap: true,
       safe: :unsafe,
@@ -244,7 +245,7 @@ def test_files(files)
     next if errors.empty?
 
     puts f.blue.bold
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L148" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L149" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
