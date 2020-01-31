@@ -134,7 +134,7 @@
 
           
           <div class="method-source-code" id="create_error-source">
-            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 31</span>
+            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_error</span>(<span class="ruby-value">msg:</span>, <span class="ruby-value">location:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">extras:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">create_error</span>(
     <span class="ruby-value">msg:</span> <span class="ruby-identifier">msg</span>, <span class="ruby-value">type:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>, <span class="ruby-value">extras:</span> <span class="ruby-identifier">extras</span>
@@ -175,7 +175,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">_adoc</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>.<span class="ruby-identifier">new</span>, <span class="ruby-node">&quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
