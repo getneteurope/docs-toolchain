@@ -68,6 +68,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-content_path">::content_path</a>
+    
     <li ><a href="#method-c-format_net_exception">::format_net_exception</a>
     
   </ul>
@@ -123,6 +125,45 @@
        <header>
          <h3>Public Class Methods</h3>
        </header>
+
+    
+      <div id="method-c-content_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">content_path</span><span
+            class="method-args">(path = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="Toolchain.html#method-c-content_path"><code>content_path</code></a> Returns path to content directory <code>content_dir_path</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="content_path-source">
+            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">content_path</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">content_dir_path</span> = <span class="ruby-string">&#39;..&#39;</span>
+  <span class="ruby-identifier">content_dir_path</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_WORKSPACE&#39;</span>] \
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;TOOLCHAIN_TEST&#39;</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;GITHUB_ACTIONS&#39;</span>)
+  <span class="ruby-identifier">content_dir_path</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;CONTENT_PATH&#39;</span>] <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;CONTENT_PATH&#39;</span>)
+  <span class="ruby-comment"># For Unit testing:</span>
+  <span class="ruby-identifier">content_dir_path</span> = <span class="ruby-identifier">path</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">content_dir_path</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-c-format_net_exception" class="method-detail ">

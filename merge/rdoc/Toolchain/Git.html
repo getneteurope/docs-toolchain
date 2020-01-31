@@ -146,11 +146,7 @@
           <div class="method-source-code" id="generate_info-source">
             <pre><span class="ruby-comment"># File lib/utils/git.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">generate_info</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
-  <span class="ruby-identifier">content_path</span> = <span class="ruby-string">&#39;..&#39;</span>
-  <span class="ruby-identifier">content_path</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_WORKSPACE&#39;</span>] \
-    <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;TOOLCHAIN_TEST&#39;</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;GITHUB_ACTIONS&#39;</span>)
-  <span class="ruby-comment"># Unit testing</span>
-  <span class="ruby-identifier">content_path</span> = <span class="ruby-identifier">path</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">content_path</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>(<span class="ruby-identifier">path</span>)
 
   <span class="ruby-identifier">git_info</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">begin</span>
