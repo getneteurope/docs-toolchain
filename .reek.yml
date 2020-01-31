@@ -21,3 +21,6 @@ detectors:
 
   TooManyStatements:
     enabled: false
+
+  UncommunicativeVariableName:
+    enabled: false
