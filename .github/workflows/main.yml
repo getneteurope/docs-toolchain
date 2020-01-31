@@ -18,7 +18,7 @@ jobs:
         if [[ ${GITHUB_EVENT_NAME} == 'pull_request' ]]; then
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|refs/pull/\([0-9]\+\)/merge|PR\1|')"
         else
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##refs\/head/})"
         fi
 
     - name: "Install tools"
