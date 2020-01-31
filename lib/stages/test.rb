@@ -76,11 +76,12 @@ def collect_attributes(doc, attribs = {})
   attribs = get_mod_attrs_from_doc(doc) if attribs == {}
   incs = doc.catalog[:includes].keys.to_set
   return attribs if incs.empty?
-
+  document_base_dir = doc.base_dir
   incs.each do |inc|
     inc_file_path = doc.normalize_asset_path(inc + '.adoc')
     doc = Asciidoctor.load_file(
       inc_file_path,
+      base_dir: document_base_dir,
       catalog_assets: true,
       sourcemap: true,
       safe: :unsafe,
