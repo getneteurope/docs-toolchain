@@ -25,7 +25,7 @@ def main(argv = ARGV)
 
   ### Run on file arguments
   files = args.files
-  if files
+  unless files.empty?
     stage_log(:test, "Running file checks on file set: #{files}")
     stage_log(:test, 'Will exit after this.')
     test_files(files) # will exit if run
