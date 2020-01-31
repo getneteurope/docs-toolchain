@@ -2,7 +2,7 @@
 
 require_relative '../extension_manager.rb'
 require_relative '../base_extension.rb'
-require 'Nokogiri'
+require 'nokogiri'
 require 'babel/transpiler'
 
 module Toolchain
