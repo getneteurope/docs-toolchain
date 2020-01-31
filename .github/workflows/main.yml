@@ -23,6 +23,7 @@ jobs:
 
     - name: "Install tools"
       run: |
+        sudo apt-get install -y patch zlib1g-dev liblzma-dev
         sudo snap install --classic ripgrep
         rg --version
 

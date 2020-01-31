@@ -323,7 +323,6 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
 
     docinfo_files_paths = OpenStruct.new('header' => html_header_filepath, 'footer' => html_footer_filepath)
     results = Toolchain::CombineAndTranspileJs.new.run(docinfo_files_paths)
-    #TODO: proper asserts, not just number of errors
     assert_equal(Zlib.crc32(results[0].js_blob), 2284332409)
     assert_equal(Zlib.crc32(results[0].html), 3050793018)
     assert_equal(Zlib.crc32(results[1].js_blob), 1211914232)
