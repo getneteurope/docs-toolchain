@@ -90,5 +90,44 @@ Default: index file is \'content/index.adoc\''
     # END CLI
   end
   # END TEST
+  ##
+  # Pre- and Post-processing module
+  module Process
+    # CLI for Pre- and Post-processing stages
+    module CLI
+      ##
+      # Parse arguments given as +argv+.
+      #
+      # Returns hash containing all options as key=value pairs and the parser object.
+      def self.parse_args(argv = ARGV)
+        args = { help: false, debug: false, list: false, run: false }
+
+        opt_parser = OptionParser.new do |parser|
+          parser.banner = 'Usage: main.rb [--help | --debug | --list | --run]'
+
+          parser.on('-d', '--debug', 'enable debug mode') do
+            args[:debug] = true
+          end
+
+          parser.on('-l', '--list', 'list all pre-processing units that will be loaded') do
+            args[:list] = true
+          end
+
+          parser.on('-r', '--run', 'run all pre-processing units in pre.d/') do
+            args[:run] = true
+          end
+
+          parser.on('-h', '--help', 'print this help') do
+            args[:help] = true
+          end
+        end
+        opt_parser.parse!(argv)
+
+        return OpenStruct.new(args), opt_parser
+      end
+    end
+    # END CLI
+  end
+  # END Processing
 end
 # END TOOLCHAIN

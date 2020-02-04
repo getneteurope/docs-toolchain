@@ -17,6 +17,12 @@ namespace :docs do
     ruby "#{toolchain_path}/bin/test.rb #{debug}"
   end
 
+  desc 'Run pre-processing stage'
+  task :pre do
+    debug = '--debug' if ENV.key?('DEBUG')
+    ruby "#{toolchain_path}/bin/pre.rb #{debug}"
+  end
+
   desc 'Run build stage'
   task :build do
     debug = '--debug' if ENV.key?('DEBUG')
@@ -24,9 +30,9 @@ namespace :docs do
   end
 
   desc 'Run post processing'
-  task :postprocess do
+  task :post do
     debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/bin/post-process.rb #{debug}"
+    ruby "#{toolchain_path}/bin/post.rb #{debug}"
   end
 
   desc 'Send notifications'
