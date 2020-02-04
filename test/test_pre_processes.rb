@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/pre.d/combine_transpile_js.rb'
+require 'zlib'
 
 class TestJsCombineAndTranspile < Test::Unit::TestCase
   ##
@@ -38,9 +39,9 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
 
     docinfo_files_paths = OpenStruct.new('header' => html_header_filepath, 'footer' => html_footer_filepath)
     results = Toolchain::Pre::CombineAndTranspileJS.new.run(docinfo_files_paths)
-    assert_equal(Zlib.crc32(results[0].js_blob), 2284332409)
-    assert_equal(Zlib.crc32(results[0].html), 3050793018)
-    assert_equal(Zlib.crc32(results[1].js_blob), 1211914232)
-    assert_equal(Zlib.crc32(results[1].html), 30269091)
+    assert_equal(2284332409, Zlib.crc32(results[0].js_blob))
+    assert_equal(1293230988, Zlib.crc32(results[0].html))
+    assert_equal(1211914232, Zlib.crc32(results[1].js_blob))
+    assert_equal(2246984566, Zlib.crc32(results[1].html))
   end
 end

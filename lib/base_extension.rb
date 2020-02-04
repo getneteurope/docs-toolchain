@@ -4,8 +4,6 @@ require_relative './extension_manager.rb'
 require_relative './utils/paths.rb'
 
 module Toolchain
-  require 'zlib'
-
   # Location describes a source location, made up of +filename+ and +lineno+.
   # Params:
   # * +filename+: adoc filename
