@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 15:38:02 +0100'>2020-01-31 15:38:02 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 09:28:49 +0100'>2020-02-04 09:28:49 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">130</span><small> lines of codes</small></div>
+              <div><span class="metric">136</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">17.2</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">18.6</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">103.42</span><small> complexity</small></div>
+              <div><span class="metric">111.44</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -128,7 +128,13 @@ module Toolchain
         # js_header_files = Dir[content_path + &#39;/js/header.js.d/*.js&#39;]
         results = []
         [header_path, footer_path].each do |docpath|
-          results &lt;&lt; combine_and_replace_js(docpath)
+          stage_log(&#39;pre&#39;, &quot;[JS Combine and Transpile] -&gt; #{docpath}&quot;)
+          begin
+            results &lt;&lt; combine_and_replace_js(docpath)
+          rescue StandardError =&gt; e
+            log(&#39;ERROR&#39;, &quot;JS Combine and Transpile: #{e.message}&quot;, :red)
+            raise e if ENV.key?(&#39;DEBUG&#39;)
+          end
         end
         return results
       end
@@ -164,7 +170,7 @@ module Toolchain
         html_content_lines.each_with_index { |l, i| scripts_line_numbers &lt;&lt; i if l.match?(SCRIPT_TAG_REGEX) }
 
         # replace last script tag with blob script tag
-        html_content_lines[scripts_line_numbers.pop] = &#39;&lt;script src=&quot;&#39; + js_blob_path_relative + &#39;&quot;&gt;&lt;/sctipt&gt;&#39; + &quot;\n&quot;
+        html_content_lines[scripts_line_numbers.pop] = &#39;&lt;script src=&quot;&#39; + js_blob_path_relative + &#39;&quot;&gt;&lt;/script&gt;&#39; + &quot;\n&quot;
 
         # remove all other script tags that use src attribute
         scripts_line_numbers.each { |i| html_content_lines[i] = nil }.reject(&amp;:nil?)

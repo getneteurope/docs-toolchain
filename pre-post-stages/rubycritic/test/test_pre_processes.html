@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 15:38:02 +0100'>2020-01-31 15:38:02 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 09:50:33 +0100'>2020-02-04 09:50:33 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">46</span><small> lines of codes</small></div>
+              <div><span class="metric">47</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">74.4</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">74.44</span><small> complexity</small></div>
@@ -100,6 +100,7 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require_relative &#39;../lib/pre.d/combine_transpile_js.rb&#39;
+require &#39;zlib&#39;
 
 class TestJsCombineAndTranspile &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestJsCombineAndTranspile has no descriptive comment</span>          </div>  </li></ol>
   ##
@@ -137,10 +138,10 @@ class TestJsCombineAndTranspile &lt; Test::Unit::TestCase<ol class="nocode error
 
     docinfo_files_paths = OpenStruct.new(&#39;header&#39; =&gt; html_header_filepath, &#39;footer&#39; =&gt; html_footer_filepath)
     results = Toolchain::Pre::CombineAndTranspileJS.new.run(docinfo_files_paths)
-    assert_equal(Zlib.crc32(results[0].js_blob), 2284332409)
-    assert_equal(Zlib.crc32(results[0].html), 3050793018)
-    assert_equal(Zlib.crc32(results[1].js_blob), 1211914232)
-    assert_equal(Zlib.crc32(results[1].html), 30269091)
+    assert_equal(2284332409, Zlib.crc32(results[0].js_blob))
+    assert_equal(1293230988, Zlib.crc32(results[0].html))
+    assert_equal(1211914232, Zlib.crc32(results[1].js_blob))
+    assert_equal(2246984566, Zlib.crc32(results[1].html))
   end
 end
 </code>

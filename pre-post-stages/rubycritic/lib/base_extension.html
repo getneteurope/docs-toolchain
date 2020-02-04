@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 11:27:05 +0100'>2020-01-31 11:27:05 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 09:50:33 +0100'>2020-02-04 09:50:33 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">67</span><small> lines of codes</small></div>
-              <div><span class="metric">6</span><small> methods</small></div>
+              <div><span class="metric">53</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">3.6</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">2.3</span><small> complexity/method</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">21.8</span><small> complexity</small></div>
+              <div><span class="metric">11.7</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -100,23 +100,9 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require_relative &#39;./extension_manager.rb&#39;
+require_relative &#39;./utils/paths.rb&#39;
 
-module Toolchain<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain has no descriptive comment</span>          </div>  </li></ol>
-  require &#39;zlib&#39;
-  ##
-  # content_path
-  # Returns path to content directory +content_dir_path+.
-  #
-  def self.content_path(path = nil)
-    content_dir_path = &#39;..&#39;
-    content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
-      if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
-    content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)
-    # For Unit testing:
-    content_dir_path = path unless path.nil?
-    return content_dir_path
-  end
-
+module Toolchain
   # Location describes a source location, made up of +filename+ and +lineno+.
   # Params:
   # * +filename+: adoc filename
