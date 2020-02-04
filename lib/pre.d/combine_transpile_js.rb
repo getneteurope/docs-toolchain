@@ -29,7 +29,13 @@ module Toolchain
         # js_header_files = Dir[content_path + '/js/header.js.d/*.js']
         results = []
         [header_path, footer_path].each do |docpath|
-          results << combine_and_replace_js(docpath)
+          stage_log('pre', "[JS Combine and Transpile] -> #{docpath}")
+          begin
+            results << combine_and_replace_js(docpath)
+          rescue StandardError => e
+            log('ERROR', "JS Combine and Transpile: #{e.message}", :red)
+            raise e if ENV.key?('DEBUG')
+          end
         end
         return results
       end
@@ -65,7 +71,7 @@ module Toolchain
         html_content_lines.each_with_index { |l, i| scripts_line_numbers << i if l.match?(SCRIPT_TAG_REGEX) }
 
         # replace last script tag with blob script tag
-        html_content_lines[scripts_line_numbers.pop] = '<script src="' + js_blob_path_relative + '"></sctipt>' + "\n"
+        html_content_lines[scripts_line_numbers.pop] = '<script src="' + js_blob_path_relative + '"></script>' + "\n"
 
         # remove all other script tags that use src attribute
         scripts_line_numbers.each { |i| html_content_lines[i] = nil }.reject(&:nil?)

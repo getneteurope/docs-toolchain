@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative './utils/paths.rb'
+
 module Toolchain
   ##
   # Foundation for all pre and post processing related steps.
