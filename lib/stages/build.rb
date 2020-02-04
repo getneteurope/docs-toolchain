@@ -87,11 +87,19 @@ module Toolchain
       mkdir(html_dir)
 
       index_html = "#{File.basename(index, '.adoc')}.html"
-      files_to_copy = %w[css js]
-      files_to_copy << index_html
-      files_to_copy.each do |file|
-        file = File.join(build_dir, file)
-        FileUtils.mv(file, html_dir, force: true) if File.exist?(file)
+      need_to_copy = %w[css js]
+      # TODO needs to be adapted for the multipage converter
+      need_to_copy << index_html
+      need_to_copy.each do |file|
+        abs_dir = abs_file = File.join(build_dir, file)
+        FileUtils.mv(abs_file, html_dir, force: true) if File.exist?(file)
+        next unless Dir.exist?(abs_dir)
+
+        sub_dir = File.join(html_dir, file)
+        mkdir(sub_dir)
+        Dir[File.join(abs_dir, '*')].each do |f|
+          FileUtils.mv(f, sub_dir)
+        end
       end
       stage_log(:build, "Files are in #{html_dir}")
     end
