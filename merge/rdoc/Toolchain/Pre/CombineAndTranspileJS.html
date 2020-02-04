@@ -190,13 +190,13 @@
 
         <div class="method-description">
           
-          <p>Replaces all js tags in an html file <code>path</code> with a tag that includes one big blob js. Writes to file and returns <code>path</code> or nil if an error occured.</p>
+          <p>Replaces all js tags in an html file <code>path</code> with a tag that includes one big blob js. Writes to file and returns <code>path</code> or nil if an error occurred.</p>
           
           
 
           
           <div class="method-source-code" id="combine_and_replace_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace_js</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">js_blob</span> = <span class="ruby-identifier">combine_js</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">js_blob</span> = <span class="ruby-constant">Babel</span><span class="ruby-operator">::</span><span class="ruby-constant">Transpiler</span>.<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">js_blob</span>)[<span class="ruby-string">&#39;code&#39;</span>]
@@ -241,7 +241,7 @@
 
           
           <div class="method-source-code" id="combine_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 47</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_js</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">seperator</span> = <span class="ruby-string">&quot;\n\n&quot;</span>)
   <span class="ruby-identifier">get_script_src_from_html_file</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">s</span>)
@@ -280,25 +280,26 @@
 
           
           <div class="method-source-code" id="get_script_src_from_html_file-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 107</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_script_src_from_html_file</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path</span>)
     <span class="ruby-comment"># raise Exception.new(&quot;Could not read html file &quot; + path)</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">doc</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">f</span>) }
   <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-comment"># change dir to content/ so we can find js/*.js</span>
   <span class="ruby-identifier">script_source_files</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;//script&#39;</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">line_nr</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">line</span>.<span class="ruby-identifier">to_s</span>
     <span class="ruby-keyword">unless</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;src&#39;</span>)
-      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;#{file}:#{line_nr}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; skipping script tag without &quot;src&quot; attribute.&#39;</span>, <span class="ruby-value">:yellow</span>)
+      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;[#{file}:#{line_nr}] skipping script tag without \&quot;src\&quot; attribute.&quot;</span>, <span class="ruby-value">:yellow</span>)
       <span class="ruby-keyword">next</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">&#39;src&#39;</span>))
-      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;#{file}:#{line_nr}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; skipping tag, src not found: &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">&#39;src&#39;</span>), <span class="ruby-value">:yellow</span>)
+      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;[#{file}:#{line_nr}] skipping tag, src not found: #{s.attribute(&#39;src&#39;)}&quot;</span>, <span class="ruby-value">:yellow</span>)
       <span class="ruby-keyword">next</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">unless</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>
-      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;#{file}:#{line_nr}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; skipping invalid script tag.&#39;</span>, <span class="ruby-value">:yellow</span>)
+      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;[#{file}:#{line_nr}] skipping invalid script tag.&quot;</span>, <span class="ruby-value">:yellow</span>)
       <span class="ruby-keyword">next</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">s</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">&#39;src&#39;</span>)
@@ -335,12 +336,12 @@
 
           
           <div class="method-source-code" id="replace_js_tags_with_blob-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 58</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">replace_js_tags_with_blob</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">js_blob</span>)
   <span class="ruby-comment"># derive .js path from html filename</span>
   <span class="ruby-comment"># e.g. docinfo-footer.html =&gt; content/js/docinfo-footer.js</span>
-  <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/js/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;_blob.js&#39;</span>
-  <span class="ruby-identifier">js_blob_path_relative</span> = <span class="ruby-identifier">js_blob_path</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>, <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>, <span class="ruby-string">&#39;js&#39;</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;_blob.js&#39;</span>)
+  <span class="ruby-identifier">js_blob_path_relative</span> = <span class="ruby-identifier">js_blob_path</span>.<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>).<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-string">&#39;content/&#39;</span>)
   <span class="ruby-identifier">js_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">js_blob_path</span>)
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">js_dir</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">js_dir</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">js_blob_path</span>, <span class="ruby-string">&#39;w+&#39;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">js_blob</span>) }
@@ -391,21 +392,23 @@
           <div class="method-source-code" id="run-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">filepaths</span> = <span class="ruby-keyword">nil</span>)
-  <span class="ruby-identifier">content_path</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>
+  <span class="ruby-identifier">content_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>, <span class="ruby-string">&#39;content&#39;</span>)
   <span class="ruby-identifier">header_path</span> = <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">content_path</span>, <span class="ruby-ivar">@header_name_default</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">header</span>
   <span class="ruby-identifier">footer_path</span> = <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">content_path</span>, <span class="ruby-ivar">@footer_name_default</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">footer</span>
   <span class="ruby-comment"># js_header_files = Dir[content_path + &#39;/js/header.js.d/*.js&#39;]</span>
   <span class="ruby-identifier">results</span> = []
-  [<span class="ruby-identifier">header_path</span>, <span class="ruby-identifier">footer_path</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">docpath</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">stage_log</span>(<span class="ruby-string">&#39;pre&#39;</span>, <span class="ruby-node">&quot;[JS Combine and Transpile] -&gt; #{docpath}&quot;</span>)
-    <span class="ruby-keyword">begin</span>
-      <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">combine_and_replace_js</span>(<span class="ruby-identifier">docpath</span>)
-    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
-      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-node">&quot;JS Combine and Transpile: #{e.message}&quot;</span>, <span class="ruby-value">:red</span>)
-      <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;DEBUG&#39;</span>)
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">header_path</span>) <span class="ruby-keyword">do</span>
+    [<span class="ruby-identifier">header_path</span>, <span class="ruby-identifier">footer_path</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">docpath</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">stage_log</span>(<span class="ruby-string">&#39;pre&#39;</span>, <span class="ruby-node">&quot;[JS Combine and Transpile] -&gt; #{docpath}&quot;</span>)
+      <span class="ruby-keyword">begin</span>
+        <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">combine_and_replace_js</span>(<span class="ruby-identifier">docpath</span>)
+      <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
+        <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-node">&quot;JS Combine and Transpile: #{e.message}&quot;</span>, <span class="ruby-value">:red</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;DEBUG&#39;</span>)
+      <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
