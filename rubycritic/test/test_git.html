@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                4
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -104,9 +104,9 @@ require &#39;git&#39;
 
 class TestGit &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestGit has no descriptive comment</span>          </div>  </li></ol>
   def test_parse_ref
-    a = &#39;a&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>TestGit#test_parse_ref has the variable name 'a'</span>          </div>  </li></ol>
-    b = &#39;b&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>TestGit#test_parse_ref has the variable name 'b'</span>          </div>  </li></ol>
-    c = &#39;a/b/c&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>TestGit#test_parse_ref has the variable name 'c'</span>          </div>  </li></ol>
+    a = &#39;a&#39;
+    b = &#39;b&#39;
+    c = &#39;a/b/c&#39;
     assert_equal(a, Toolchain::Git.parse_ref(a, b))
     assert_equal(b, Toolchain::Git.parse_ref(nil, b))
     assert_equal(&#39;c&#39;, Toolchain::Git.parse_ref(c, nil))

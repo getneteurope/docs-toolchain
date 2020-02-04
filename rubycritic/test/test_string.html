@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                2
                 smells
               </a>
             </li>
@@ -114,7 +114,7 @@ class TestString &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li
 
   def test_bg_colors
     colors = \
-      %w[black red green brown blue magenta cyan gray].map { |s| &quot;bg_#{s}&quot;.to_sym }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>TestString#test_bg_colors has the variable name 's'</span>          </div>  </li></ol>
+      %w[black red green brown blue magenta cyan gray].map { |s| &quot;bg_#{s}&quot;.to_sym }
     text = &#39;Test&#39;
     colors.each do |color|
       colorized = text.public_send(color)

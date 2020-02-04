@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 11:37:00 +0100'>2020-01-23 11:37:00 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 11:40:11 +0100'>2020-02-04 11:40:11 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>lib/extensions.d /</small> link_checker.rb</h3>
+      <h3><small>lib/utils /</small> paths.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating b big">
-              B
+            <div class="rating a big">
+              A
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">87</span><small> lines of codes</small></div>
-              <div><span class="metric">4</span><small> methods</small></div>
+              <div><span class="metric">18</span><small> lines of codes</small></div>
+              <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">13.7</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">15.7</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">54.93</span><small> complexity</small></div>
+              <div><span class="metric">15.67</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -99,91 +99,22 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require &#39;net/http&#39;
-require_relative &#39;../extension_manager.rb&#39;
-require_relative &#39;../base_extension.rb&#39;
-
 module Toolchain<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain has no descriptive comment</span>          </div>  </li></ol>
   ##
-  # Given an exception +exc+ and a link +link+, format the message which shall be displayed.
+  # content_path
+  # Returns path to content directory +content_dir_path+.
   #
-  # Returns the formatted message.
-  def self.format_net_exception(exc, link)
-    msg = exc.message
-    case exc
-    when SocketError
-      idx = msg.index(&#39;(&#39;) - 1
-      return &quot;#{exc.class.name}: #{msg[0..idx]}&quot;
-    when Net::OpenTimeout
-      return &quot;#{exc.class.name}: #{msg} for #{link}&quot;
-    else
-      return &quot;Unknown Exception: #{msg}&quot;
-    end
-  end
-
-  ##
-  # Link Checker
-  #
-  # Check links and detect whether a link is dead, has moved, cannot be reached, etc.
-  class LinkChecker &lt; BaseExtension
-    ##
-    # Run the Link tests on the given document (+adoc+).
-    #
-    # Returns a list of errors (can be empty).
-    #
-    def run(adoc)
-      parsed = adoc.parsed
-      errors = []
-      links = parsed.references[:links]
-      links.each do |link|
-        msg = test_link(link)
-        next if msg.nil?
-
-        errors &lt;&lt; create_error(
-          msg: msg, location: Location.new(parsed.attr(&#39;docfile&#39;), nil)
-        )
-      end
-      return errors
-    end
-
-    private
-
-    ##
-    # Test a +link+, i.e. try to perform a +GET+ request.
-    #
-    # Return nil if success, or +msg+ if an error occured.
-    def test_link(link)
-      log(&#39;LINK&#39;, link, :magenta)
-      msg = nil
-      resp = nil
-      begin
-        resp = get_response(link)
-        msg = &quot;[#{resp.code}] #{resp.message}: #{link}&quot; if !resp.nil? &amp;&amp; resp.code != &#39;200&#39;
-        msg = &#39;Unknown error: response is nil&#39; if resp.nil?
-      rescue StandardError =&gt; e
-        msg = Toolchain.format_net_exception(e, link)
-      end
-
-      return msg
-    end
-
-    ##
-    # Send a +GET+ request to +link+ and return the result.
-    def get_response(link)
-      uri = URI(link)
-      http = Net::HTTP.new(uri.host, uri.port)
-      timeout = 0.8
-      http.open_timeout = timeout
-      http.read_timeout = timeout
-      http.write_timeout = timeout
-      http.use_ssl = true if link =~ /^https/
-      http.start
-      return http.request(Net::HTTP::Get.new(uri))
-    end
+  def self.content_path(path = nil)
+    content_dir_path = Dir.pwd
+    content_dir_path = File.join(Dir.pwd, &#39;..&#39;) if File.basename(Dir.pwd) == &#39;toolchain&#39;
+    content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
+      if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
+    content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)
+    # For Unit testing:
+    content_dir_path = path unless path.nil?
+    return content_dir_path
   end
 end
-
-Toolchain::ExtensionManager.instance.register(Toolchain::LinkChecker.new)
 </code>
   </div>
 </div>

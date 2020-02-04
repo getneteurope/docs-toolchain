@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                13
+                8
                 smells
               </a>
             </li>
@@ -161,7 +161,7 @@ def get_mod_attrs_from_doc(doc)<ol class="nocode errors smells">  <li>    <div c
   attribs = {}
   doc.convert
   attrs_mod = doc.instance_variable_get :@attributes_modified
-  attrs_mod.each do |k, _v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>get_mod_attrs_from_doc has the variable name 'k'</span>          </div>  </li></ol>
+  attrs_mod.each do |k, _v|
     attribs[k] = doc.attributes[k]
   end
   attribs
@@ -188,7 +188,7 @@ def collect_attributes(doc, attribs = {})
       attributes: attribs
     )
     # combine new modified attr from current file with existing attribs
-    get_mod_attrs_from_doc(doc).each do |k, v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>collect_attributes contains iterators nested 2 deep</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>collect_attributes has the variable name 'k'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>collect_attributes has the variable name 'v'</span>          </div>  </li></ol>
+    get_mod_attrs_from_doc(doc).each do |k, v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>collect_attributes contains iterators nested 2 deep</span>          </div>  </li></ol>
       attribs[k] = v
     end
     collect_attributes(doc, attribs)
@@ -240,7 +240,7 @@ end
 #
 # Returns nothing, this function will exit.
 def test_files(files)
-  files.each do |f|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>test_files has the variable name 'f'</span>          </div>  </li></ol>
+  files.each do |f|
     errors = run_tests(f)
     next if errors.empty?
 
@@ -293,7 +293,7 @@ end
 # Returns a map of +errors_map+ with schema filename =&gt; [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
-  included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }.each do |f|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>check_docs has the variable name 'f'</span>          </div>  </li></ol>
+  included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }.each do |f|
     log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
     errors = run_tests(f)
     errors_map[f] = errors

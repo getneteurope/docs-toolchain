@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                2
                 smells
               </a>
             </li>
@@ -136,7 +136,7 @@ module Toolchain
       # parse everything that COULD be an anchor or id manually
       parsed_ids = combined_source.map do |line|
         # match both long and short ids
-        /\[(\[|#)(?&lt;id&gt;[^\]]+)/.match(line) do |m|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run contains iterators nested 2 deep</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run has the variable name 'm'</span>          </div>  </li></ol>
+        /\[(\[|#)(?&lt;id&gt;[^\]]+)/.match(line) do |m|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run contains iterators nested 2 deep</span>          </div>  </li></ol>
           m[:id]
         end
       end.reject(&amp;:nil?).to_set # reject all nil entries
