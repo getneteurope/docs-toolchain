@@ -8,10 +8,11 @@ require_relative '../utils/string.rb'
 # using the given color and font weight
 #
 # Returns nothing.
-def log(tag, msg, color = :blue, bold = false)
+def log(tag, msg, color = :blue, bold = false, length: 14)
   return if ENV.key?('UNITTEST')
 
-  tag = "[#{colorize(tag, color)}]".bold
+  length = tag.length if length.zero?
+  tag = "[#{colorize(tag.center(length), color)}]".bold
   msg = msg.bold if bold
   puts "#{tag} #{msg}"
 end
@@ -25,9 +26,6 @@ end
 #
 # Returns nothing.
 def stage_log(stage, msg, color: :green)
-  stages = %w[setup test build deploy post notify]
   stage = stage.to_s.upcase
-  longest = stages.max { |left, right| left.length <=> right.length }.length
-  stage = ' ' * (longest - stage.length) + stage
   log(stage, msg, color, true)
 end

@@ -24,7 +24,7 @@ module Toolchain
         log(
           'PATTERN',
           "Blacklist file '#{blacklist_file}' not found. Skipping this test.",
-          color: :magenta
+          :magenta
         )
         return errors
       end
