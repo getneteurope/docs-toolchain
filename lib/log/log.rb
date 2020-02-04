@@ -25,7 +25,7 @@ end
 # using the given color.
 #
 # Returns nothing.
-def stage_log(stage, msg, color: :green)
+def stage_log(stage, msg, color = :green)
   stage = stage.to_s.upcase
   log(stage, msg, color, true)
 end

@@ -17,8 +17,8 @@ class TestLog < Test::Unit::TestCase
   def test_log
     outputs = [
       with_captured_stdout { log('TEST', 'This is a test!') },
-      with_captured_stdout { log('TEST', 'This is a test!', color: :red) },
-      with_captured_stdout { log('TEST', 'This is a test!', color: :green, bold: true) }
+      with_captured_stdout { log('TEST', 'This is a test!', :red) },
+      with_captured_stdout { log('TEST', 'This is a test!', :green, true) }
     ]
 
     outputs.each do |output|
