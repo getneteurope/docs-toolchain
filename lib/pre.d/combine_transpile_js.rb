@@ -61,7 +61,7 @@ module Toolchain
         # derive .js path from html filename
         # e.g. docinfo-footer.html => content/js/docinfo-footer.js
         js_blob_path = File.join(::Toolchain.content_path, 'js', File.basename(path, File.extname(path)) + '_blob.js')
-        js_blob_path_relative = js_blob_path.gsub(::Toolchain.content_path + '/content/', '')
+        js_blob_path_relative = js_blob_path.delete_prefix(::Toolchain.content_path + '/').delete_prefix('content/')
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
