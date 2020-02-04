@@ -23,21 +23,23 @@ module Toolchain
       # then reinserts the combined and transpiled file as script tags into tbe html files
       # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
       def run(filepaths = nil)
-        content_path = ::Toolchain.content_path
+        content_path = File.join(::Toolchain.content_path, 'content')
         header_path = filepaths.nil? ? File.join(content_path, @header_name_default) : filepaths.header
         footer_path = filepaths.nil? ? File.join(content_path, @footer_name_default) : filepaths.footer
         # js_header_files = Dir[content_path + '/js/header.js.d/*.js']
         results = []
-        [header_path, footer_path].each do |docpath|
-          stage_log('pre', "[JS Combine and Transpile] -> #{docpath}")
-          begin
-            results << combine_and_replace_js(docpath)
-          rescue StandardError => e
-            log('ERROR', "JS Combine and Transpile: #{e.message}", :red)
-            raise e if ENV.key?('DEBUG')
+        Dir.chdir File.dirname(header_path) do
+          [header_path, footer_path].each do |docpath|
+            stage_log('pre', "[JS Combine and Transpile] -> #{docpath}")
+            begin
+              results << combine_and_replace_js(docpath)
+            rescue StandardError => e
+              log('ERROR', "JS Combine and Transpile: #{e.message}", :red)
+              raise e if ENV.key?('DEBUG')
+            end
           end
+          return results
         end
-        return results
       end
 
       ##
@@ -58,8 +60,8 @@ module Toolchain
       def replace_js_tags_with_blob(path, js_blob)
         # derive .js path from html filename
         # e.g. docinfo-footer.html => content/js/docinfo-footer.js
-        js_blob_path = ::Toolchain.content_path + '/js/' + File.basename(path, File.extname(path)) + '_blob.js'
-        js_blob_path_relative = js_blob_path.gsub(::Toolchain.content_path + '/', '')
+        js_blob_path = File.join(::Toolchain.content_path, 'js', File.basename(path, File.extname(path)) + '_blob.js')
+        js_blob_path_relative = js_blob_path.gsub(::Toolchain.content_path + '/content/', '')
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
@@ -82,7 +84,7 @@ module Toolchain
 
       ##
       # Replaces all js tags in an html file +path+ with a tag that includes one big blob js.
-      # Writes to file and returns +path+ or nil if an error occured.
+      # Writes to file and returns +path+ or nil if an error occurred.
       def combine_and_replace_js(path)
         js_blob = combine_js(path)
         js_blob = Babel::Transpiler.transform(js_blob)['code']
@@ -110,18 +112,19 @@ module Toolchain
         end
         doc = File.open(path) { |f| Nokogiri::HTML(f) }
         file = File.basename(path)
+        # change dir to content/ so we can find js/*.js
         script_source_files = doc.xpath('//script').map do |s|
           line_nr = s.line.to_s
           unless s.key?('src')
-            log('JS', "#{file}:#{line_nr}" + ' skipping script tag without "src" attribute.', :yellow)
+            log('JS', "[#{file}:#{line_nr}] skipping script tag without \"src\" attribute.", :yellow)
             next
           end
           unless File.exist?(s.attribute('src'))
-            log('JS', "#{file}:#{line_nr}" + ' skipping tag, src not found: ' + s.attribute('src'), :yellow)
+            log('JS', "[#{file}:#{line_nr}] skipping tag, src not found: #{s.attribute('src')}", :yellow)
             next
           end
           unless s.children.empty?
-            log('JS', "#{file}:#{line_nr}" + ' skipping invalid script tag.', :yellow)
+            log('JS', "[#{file}:#{line_nr}] skipping invalid script tag.", :yellow)
             next
           end
           s.attribute('src')
