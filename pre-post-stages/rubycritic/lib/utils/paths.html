@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-04 10:17:06 +0100'>2020-02-04 10:17:06 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 11:40:11 +0100'>2020-02-04 11:40:11 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">17</span><small> lines of codes</small></div>
+              <div><span class="metric">18</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.9</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">15.7</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.94</span><small> complexity</small></div>
+              <div><span class="metric">15.67</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -106,6 +106,7 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
   #
   def self.content_path(path = nil)
     content_dir_path = Dir.pwd
+    content_dir_path = File.join(Dir.pwd, &#39;..&#39;) if File.basename(Dir.pwd) == &#39;toolchain&#39;
     content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
       if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
     content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)

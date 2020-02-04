@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-04 09:28:49 +0100'>2020-02-04 09:28:49 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 11:52:08 +0100'>2020-02-04 11:52:08 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">136</span><small> lines of codes</small></div>
+              <div><span class="metric">139</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">18.6</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">18.3</span><small> complexity/method</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">111.44</span><small> complexity</small></div>
+              <div><span class="metric">109.77</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                4
                 smells
               </a>
             </li>
@@ -121,22 +121,24 @@ module Toolchain
       # and transpiles them with BabelJS
       # then reinserts the combined and transpiled file as script tags into tbe html files
       # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
-      def run(filepaths = nil)
-        content_path = ::Toolchain.content_path
+      def run(filepaths = nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#run has a flog score of 27</span>          </div>  </li></ol>
+        content_path = File.join(::Toolchain.content_path, &#39;content&#39;)
         header_path = filepaths.nil? ? File.join(content_path, @header_name_default) : filepaths.header
         footer_path = filepaths.nil? ? File.join(content_path, @footer_name_default) : filepaths.footer
         # js_header_files = Dir[content_path + &#39;/js/header.js.d/*.js&#39;]
         results = []
-        [header_path, footer_path].each do |docpath|
-          stage_log(&#39;pre&#39;, &quot;[JS Combine and Transpile] -&gt; #{docpath}&quot;)
-          begin
-            results &lt;&lt; combine_and_replace_js(docpath)
-          rescue StandardError =&gt; e
-            log(&#39;ERROR&#39;, &quot;JS Combine and Transpile: #{e.message}&quot;, :red)
-            raise e if ENV.key?(&#39;DEBUG&#39;)
+        Dir.chdir File.dirname(header_path) do
+          [header_path, footer_path].each do |docpath|
+            stage_log(&#39;pre&#39;, &quot;[JS Combine and Transpile] -&gt; #{docpath}&quot;)
+            begin
+              results &lt;&lt; combine_and_replace_js(docpath)
+            rescue StandardError =&gt; e
+              log(&#39;ERROR&#39;, &quot;JS Combine and Transpile: #{e.message}&quot;, :red)
+              raise e if ENV.key?(&#39;DEBUG&#39;)
+            end
           end
+          return results
         end
-        return results
       end
 
       ##
@@ -157,8 +159,8 @@ module Toolchain
       def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 37</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
         # derive .js path from html filename
         # e.g. docinfo-footer.html =&gt; content/js/docinfo-footer.js
-        js_blob_path = ::Toolchain.content_path + &#39;/js/&#39; + File.basename(path, File.extname(path)) + &#39;_blob.js&#39;
-        js_blob_path_relative = js_blob_path.gsub(::Toolchain.content_path + &#39;/&#39;, &#39;&#39;)
+        js_blob_path = File.join(::Toolchain.content_path, &#39;js&#39;, File.basename(path, File.extname(path)) + &#39;_blob.js&#39;)
+        js_blob_path_relative = js_blob_path.delete_prefix(::Toolchain.content_path + &#39;/&#39;).delete_prefix(&#39;content/&#39;)
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, &#39;w+&#39;) { |file| file.puts(js_blob) }
@@ -181,7 +183,7 @@ module Toolchain
 
       ##
       # Replaces all js tags in an html file +path+ with a tag that includes one big blob js.
-      # Writes to file and returns +path+ or nil if an error occured.
+      # Writes to file and returns +path+ or nil if an error occurred.
       def combine_and_replace_js(path)
         js_blob = combine_js(path)
         js_blob = Babel::Transpiler.transform(js_blob)[&#39;code&#39;]
@@ -203,24 +205,25 @@ module Toolchain
       #
       # Returns +script_source_files+ array containing &quot;src&quot; attribute values of script
       #   e.g. &lt;script src=&quot;js/1.js&quot;&gt; --&gt; [&#39;js/1.js&#39;]
-      def get_script_src_from_html_file(path)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#get_script_src_from_html_file has a flog score of 34</span>          </div>  </li></ol>
+      def get_script_src_from_html_file(path)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#get_script_src_from_html_file has a flog score of 27</span>          </div>  </li></ol>
         unless File.file?(path)
           # raise Exception.new(&quot;Could not read html file &quot; + path)
         end
         doc = File.open(path) { |f| Nokogiri::HTML(f) }
         file = File.basename(path)
+        # change dir to content/ so we can find js/*.js
         script_source_files = doc.xpath(&#39;//script&#39;).map do |s|
           line_nr = s.line.to_s
           unless s.key?(&#39;src&#39;)
-            log(&#39;JS&#39;, &quot;#{file}:#{line_nr}&quot; + &#39; skipping script tag without &quot;src&quot; attribute.&#39;, :yellow)
+            log(&#39;JS&#39;, &quot;[#{file}:#{line_nr}] skipping script tag without \&quot;src\&quot; attribute.&quot;, :yellow)
             next
           end
           unless File.exist?(s.attribute(&#39;src&#39;))
-            log(&#39;JS&#39;, &quot;#{file}:#{line_nr}&quot; + &#39; skipping tag, src not found: &#39; + s.attribute(&#39;src&#39;), :yellow)
+            log(&#39;JS&#39;, &quot;[#{file}:#{line_nr}] skipping tag, src not found: #{s.attribute(&#39;src&#39;)}&quot;, :yellow)
             next
           end
           unless s.children.empty?
-            log(&#39;JS&#39;, &quot;#{file}:#{line_nr}&quot; + &#39; skipping invalid script tag.&#39;, :yellow)
+            log(&#39;JS&#39;, &quot;[#{file}:#{line_nr}] skipping invalid script tag.&quot;, :yellow)
             next
           end
           s.attribute(&#39;src&#39;)
