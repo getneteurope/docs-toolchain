@@ -6,8 +6,7 @@ module Toolchain
   # Returns path to content directory +content_dir_path+.
   #
   def self.content_path(path = nil)
-    content_dir_path = File.join(Dir.pwd, 'content')
-    content_dir_path = File.join(Dir.pwd, '..', 'content') if File.basename(Dir.getwd) == 'toolchain'
+    content_dir_path = Dir.pwd
     content_dir_path = ENV['GITHUB_WORKSPACE'] \
       if ENV.key?('TOOLCHAIN_TEST') || ENV.key?('GITHUB_ACTIONS')
     content_dir_path = ENV['CONTENT_PATH'] if ENV.key?('CONTENT_PATH')
