@@ -113,7 +113,7 @@
         
         <div class="method-heading">
           <span class="method-name">process</span><span
-            class="method-args">(doc)</span>
+            class="method-args">(_doc)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -128,8 +128,8 @@
 
           
           <div class="method-source-code" id="process-source">
-            <pre><span class="ruby-comment"># File lib/extensions.adoc.d/asciidoctor-multipage.rb, line 542</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">process</span> <span class="ruby-identifier">doc</span>
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 578</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">process</span>(<span class="ruby-identifier">_doc</span>)
   <span class="ruby-identifier">css</span> = []
   <span class="ruby-comment"># Style Table Of Contents entry for current page</span>
   <span class="ruby-identifier">css</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">%(.toc-current{font-weight: bold;})</span>

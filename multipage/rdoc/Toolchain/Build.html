@@ -154,7 +154,7 @@
 
           
           <div class="method-source-code" id="build-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 60</span>
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">index:</span> <span class="ruby-string">&#39;index.adoc&#39;</span>)
   <span class="ruby-identifier">index_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">index</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-node">&quot;File #{index_path} does not exist&quot;</span> <span class="ruby-keyword">unless</span>
@@ -164,7 +164,7 @@
   <span class="ruby-comment"># FIXME hardcoded, extract attributes and read config file from content repo</span>
   <span class="ruby-comment"># or overwrite default attributes with a config file</span>
   <span class="ruby-identifier">options</span> = {
-    <span class="ruby-value">requires:</span> <span class="ruby-node">%w[adoc-extensions.d/multipage_html5.adoc]</span>,
+    <span class="ruby-value">requires:</span> [<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">toolchain_path</span>, <span class="ruby-string">&#39;lib/adoc-extensions.d/multipage_html5.rb&#39;</span>)],
     <span class="ruby-value">attributes:</span> {
       <span class="ruby-string">&#39;linkcss&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>,
       <span class="ruby-string">&#39;stylesdir&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;css&#39;</span>,
@@ -242,7 +242,7 @@
 
           
           <div class="method-source-code" id="setup-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 38</span>
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">setup</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">content:</span> <span class="ruby-string">&#39;content&#39;</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Directory &#39;#{content}&#39; does not exist&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">content</span>.<span class="ruby-identifier">to_s</span>)
 
