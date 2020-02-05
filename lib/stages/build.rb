@@ -66,14 +66,15 @@ module Toolchain
       # FIXME hardcoded, extract attributes and read config file from content repo
       # or overwrite default attributes with a config file
       options = {
-        requires: %w[],
+        requires: %w[adoc-extensions.d/multipage_html5.adoc],
         attributes: {
           'linkcss' => true,
           'stylesdir' => 'css',
           'stylesheet' => 'main.css',
           'icons' => 'font',
           'toc' => 'left',
-          'systemtimestamp' => %x(date +%s)
+          'systemtimestamp' => %x(date +%s),
+          'backend' => 'multipage_html5'
         },
         safe: :safe,
         failure_level: 'WARN'
