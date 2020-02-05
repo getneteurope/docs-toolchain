@@ -20,3 +20,4 @@ gem "pry", "~> 0.12.2"
 
 gem "nokogiri", "~> 1.10.7"
 gem "babel-transpiler", "~> 0.7.0s"
+gem "therubyracer"

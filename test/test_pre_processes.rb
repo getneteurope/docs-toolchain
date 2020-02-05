@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../lib/pre.d/combine_transpile_js.rb'
+require_relative '../lib/pre.d/compile_search_index.rb'
+require_relative './util.rb'
 require 'zlib'
 
 class TestJsCombineAndTranspile < Test::Unit::TestCase
@@ -43,5 +45,37 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
     assert_equal(1293230988, Zlib.crc32(results[0].html))
     assert_equal(1211914232, Zlib.crc32(results[1].js_blob))
     assert_equal(2246984566, Zlib.crc32(results[1].html))
+  end
+end
+
+class TestCompileSearchIndex < Test::Unit::TestCase
+  ##
+  # Creates lunr index json from an adoc file with include(s)
+  #
+  def test_compile_search_index
+    include_content = 
+'[#subsection_one]
+== Subsection One
+Some more keywords: Credentials, Toolchain, Payment
+
+[#subsubsection_one]
+=== Sub Sub Section One
+Search for these: Github, Credentials, Toolchain, Payment, Documentation, Credit Card, Rest API, Mooh
+It should return the correct anchor(s)
+'
+include_file_name = File.basename write_tempfile('search_index_include_content.adoc', include_content)
+adoc_content = '= Document Title
+
+Put some keywords here
+- Credit Card
+- Rest API
+- Mooh
+
+//-' + "
+include::#{include_file_name}[]
+"
+    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+    results = Toolchain::Pre::CompileSearchIndex.new.run(adoc)
+    assert_equal(2246984566, 2246984566)
   end
 end
