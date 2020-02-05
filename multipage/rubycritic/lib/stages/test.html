@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-27 16:06:14 +0100'>2020-01-27 16:06:14 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-31 12:57:48 +0100'>2020-01-31 12:57:48 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">213</span><small> lines of codes</small></div>
+              <div><span class="metric">214</span><small> lines of codes</small></div>
               <div><span class="metric">12</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.3</span><small> complexity/method</small></div>
+              <div><span class="metric">9.4</span><small> complexity/method</small></div>
               <div><span class="metric">20</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">111.59</span><small> complexity</small></div>
+              <div><span class="metric">112.99</span><small> complexity</small></div>
               <div><span class="metric">34</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                13
+                8
                 smells
               </a>
             </li>
@@ -147,7 +147,7 @@ end
 #
 def print_errors(errors_map)
   errors_map.each do |_file, errors|
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L148" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L149" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
@@ -161,7 +161,7 @@ def get_mod_attrs_from_doc(doc)<ol class="nocode errors smells">  <li>    <div c
   attribs = {}
   doc.convert
   attrs_mod = doc.instance_variable_get :@attributes_modified
-  attrs_mod.each do |k, _v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>get_mod_attrs_from_doc has the variable name 'k'</span>          </div>  </li></ol>
+  attrs_mod.each do |k, _v|
     attribs[k] = doc.attributes[k]
   end
   attribs
@@ -175,11 +175,12 @@ def collect_attributes(doc, attribs = {})
   attribs = get_mod_attrs_from_doc(doc) if attribs == {}
   incs = doc.catalog[:includes].keys.to_set
   return attribs if incs.empty?
-
+  document_base_dir = doc.base_dir
   incs.each do |inc|
     inc_file_path = doc.normalize_asset_path(inc + &#39;.adoc&#39;)
     doc = Asciidoctor.load_file(
       inc_file_path,
+      base_dir: document_base_dir,
       catalog_assets: true,
       sourcemap: true,
       safe: :unsafe,
@@ -187,7 +188,7 @@ def collect_attributes(doc, attribs = {})
       attributes: attribs
     )
     # combine new modified attr from current file with existing attribs
-    get_mod_attrs_from_doc(doc).each do |k, v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>collect_attributes contains iterators nested 2 deep</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>collect_attributes has the variable name 'k'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>collect_attributes has the variable name 'v'</span>          </div>  </li></ol>
+    get_mod_attrs_from_doc(doc).each do |k, v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>collect_attributes contains iterators nested 2 deep</span>          </div>  </li></ol>
       attribs[k] = v
     end
     collect_attributes(doc, attribs)
@@ -239,12 +240,12 @@ end
 #
 # Returns nothing, this function will exit.
 def test_files(files)
-  files.each do |f|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>test_files has the variable name 'f'</span>          </div>  </li></ol>
+  files.each do |f|
     errors = run_tests(f)
     next if errors.empty?
 
     puts f.blue.bold
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L148" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L149" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
@@ -292,7 +293,7 @@ end
 # Returns a map of +errors_map+ with schema filename =&gt; [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
-  included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }.each do |f|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>check_docs has the variable name 'f'</span>          </div>  </li></ol>
+  included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }.each do |f|
     log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
     errors = run_tests(f)
     errors_map[f] = errors

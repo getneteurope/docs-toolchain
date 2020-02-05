@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-21 14:24:10 +0100'>2020-01-21 14:24:10 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-01-31 15:49:00 +0100'>2020-01-31 15:49:00 +0100</time>
         
       </span>
     </div>
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">94</span><small> lines of codes</small></div>
-              <div><span class="metric">2</span><small> methods</small></div>
+              <div><span class="metric">133</span><small> lines of codes</small></div>
+              <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">19.4</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">17.8</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">38.71</span><small> complexity</small></div>
+              <div><span class="metric">53.41</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -189,6 +189,45 @@ Default: index file is \&#39;content/index.adoc\&#39;&#39;
     # END CLI
   end
   # END TEST
+  ##
+  # Pre- and Post-processing module
+  module Process
+    # CLI for Pre- and Post-processing stages
+    module CLI
+      ##
+      # Parse arguments given as +argv+.
+      #
+      # Returns hash containing all options as key=value pairs and the parser object.
+      def self.parse_args(argv = ARGV)
+        args = { help: false, debug: false, list: false, run: false }
+
+        opt_parser = OptionParser.new do |parser|
+          parser.banner = &#39;Usage: main.rb [--help | --debug | --list | --run]&#39;
+
+          parser.on(&#39;-d&#39;, &#39;--debug&#39;, &#39;enable debug mode&#39;) do
+            args[:debug] = true
+          end
+
+          parser.on(&#39;-l&#39;, &#39;--list&#39;, &#39;list all pre-processing units that will be loaded&#39;) do
+            args[:list] = true
+          end
+
+          parser.on(&#39;-r&#39;, &#39;--run&#39;, &#39;run all pre-processing units in pre.d/&#39;) do
+            args[:run] = true
+          end
+
+          parser.on(&#39;-h&#39;, &#39;--help&#39;, &#39;print this help&#39;) do
+            args[:help] = true
+          end
+        end
+        opt_parser.parse!(argv)
+
+        return OpenStruct.new(args), opt_parser
+      end
+    end
+    # END CLI
+  end
+  # END Processing
 end
 # END TOOLCHAIN
 </code>

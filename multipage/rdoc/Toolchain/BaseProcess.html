@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Toolchain::BaseExtension - RDoc Documentation</title>
+<title>class Toolchain::BaseProcess - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -75,7 +75,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-create_error">#create_error</a>
+    <li ><a href="#method-c-new">::new</a>
     
     <li ><a href="#method-i-run">#run</a>
     
@@ -85,16 +85,14 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Toolchain::BaseExtension">
-  <h1 id="class-Toolchain::BaseExtension" class="class">
-    class Toolchain::BaseExtension
+<main role="main" aria-labelledby="class-Toolchain::BaseProcess">
+  <h1 id="class-Toolchain::BaseProcess" class="class">
+    class Toolchain::BaseProcess
   </h1>
 
   <section class="description">
     
-<p>Base class for extensions, all derived extensions must implement the run(document) function and register with the <a href="ExtensionManager.html"><code>ExtensionManager</code></a>, e.g.:</p>
-
-<p>Toolchain::ExtensionManager.instance.register(Toolchain::ExampleChecker.new)</p>
+<p>Foundation for all pre and post processing related steps. {priority} will determine the order in which processes are run.</p>
 
   </section>
 
@@ -107,19 +105,40 @@
     
 
     
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-priority" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">priority</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
+    
 
     
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Instance Methods</h3>
+         <h3>Public Class Methods</h3>
        </header>
 
     
-      <div id="method-i-create_error" class="method-detail ">
+      <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">create_error</span><span
-            class="method-args">(msg:, location: nil, extras: nil)</span>
+          <span class="method-name">new</span><span
+            class="method-args">(priority = 0)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -133,12 +152,10 @@
           
 
           
-          <div class="method-source-code" id="create_error-source">
-            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 32</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_error</span>(<span class="ruby-value">msg:</span>, <span class="ruby-value">location:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">extras:</span> <span class="ruby-keyword">nil</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">create_error</span>(
-    <span class="ruby-value">msg:</span> <span class="ruby-identifier">msg</span>, <span class="ruby-value">type:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>, <span class="ruby-value">extras:</span> <span class="ruby-identifier">extras</span>
-  )
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/base_process.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
+  <span class="ruby-ivar">@priority</span> = <span class="ruby-identifier">priority</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -150,11 +167,19 @@
       </div>
 
     
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
       <div id="method-i-run" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">run</span><span
-            class="method-args">(_adoc)</span>
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -163,20 +188,14 @@
 
         <div class="method-description">
           
-          <p>Takes a document (a converted asciidoctor document) as input.</p>
-
-<p>Parameters: <code>_adoc</code> contains parsed and original and attributes of Asciidoctor document.</p>
-
-<p>If there are no errors, an empty Hash must be returned. Errors can only be created by <code>create_error</code>. *DO NOT* create errors manually, use <code>create_error</code> and pass the necessary parameters.</p>
-
-<p>Returns an array of Hashes of errors (can be empty if no errors found).</p>
+          
           
           
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/base_extension.rb, line 49</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">_adoc</span>)
+            <pre><span class="ruby-comment"># File lib/base_process.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>.<span class="ruby-identifier">new</span>, <span class="ruby-node">&quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

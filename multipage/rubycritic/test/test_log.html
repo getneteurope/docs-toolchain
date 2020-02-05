@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 13:51:02 +0100'>2020-01-23 13:51:02 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 16:24:54 +0100'>2020-02-04 16:24:54 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">9.4</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">37.52</span><small> complexity</small></div>
@@ -116,8 +116,8 @@ class TestLog &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>  
   def test_log
     outputs = [
       with_captured_stdout { log(&#39;TEST&#39;, &#39;This is a test!&#39;) },
-      with_captured_stdout { log(&#39;TEST&#39;, &#39;This is a test!&#39;, color: :red) },
-      with_captured_stdout { log(&#39;TEST&#39;, &#39;This is a test!&#39;, color: :green, bold: true) }
+      with_captured_stdout { log(&#39;TEST&#39;, &#39;This is a test!&#39;, :red) },
+      with_captured_stdout { log(&#39;TEST&#39;, &#39;This is a test!&#39;, :green, true) }
     ]
 
     outputs.each do |output|
