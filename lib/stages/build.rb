@@ -3,6 +3,7 @@
 require 'asciidoctor'
 require 'fileutils'
 require_relative '../log/log.rb'
+require_relative '../utils/paths.rb'
 
 ##
 # mkdir
@@ -66,7 +67,7 @@ module Toolchain
       # FIXME hardcoded, extract attributes and read config file from content repo
       # or overwrite default attributes with a config file
       options = {
-        requires: %w[adoc-extensions.d/multipage_html5.adoc],
+        requires: [File.join(::Toolchain.toolchain_path, 'lib/adoc-extensions.d/multipage_html5.rb')],
         attributes: {
           'linkcss' => true,
           'stylesdir' => 'css',
