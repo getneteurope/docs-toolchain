@@ -77,7 +77,9 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-i-full_html">#full_html</a>
+    <li ><a href="#method-i-combine_to_single_doc">#combine_to_single_doc</a>
+    
+    <li ><a href="#method-i-convert_full_to_html">#convert_full_to_html</a>
     
     <li ><a href="#method-i-generate_index_json">#generate_index_json</a>
     
@@ -109,6 +111,40 @@
     
 
     
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-full_doc" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">full_doc</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-full_html" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">full_html</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
+    
 
     
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
@@ -136,9 +172,8 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -176,9 +211,10 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 17</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">adoc</span>)
- <span class="ruby-identifier">pp</span> <span class="ruby-identifier">full_html</span>(<span class="ruby-identifier">adoc</span>)
+ <span class="ruby-ivar">@full_html</span> = <span class="ruby-identifier">convert_full_to_html</span>(<span class="ruby-identifier">adoc</span>)
+ <span class="ruby-identifier">pp</span> <span class="ruby-ivar">@full_html</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -198,10 +234,10 @@
        </header>
 
     
-      <div id="method-i-full_html" class="method-detail ">
+      <div id="method-i-combine_to_single_doc" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">full_html</span><span
+          <span class="method-name">combine_to_single_doc</span><span
             class="method-args">(adoc)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -211,31 +247,54 @@
 
         <div class="method-description">
           
-          <p>Returns full HTML code <code>html</code> of (index) asciidoc file</p>
+          <p>Returns Asciidoctor::Document <code>full_doc</code> with all includes included.</p>
           
           
 
           
-          <div class="method-source-code" id="full_html-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 26</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">full_html</span>(<span class="ruby-identifier">adoc</span>)
-  <span class="ruby-identifier">original</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">original</span>
-  <span class="ruby-identifier">parsed</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">parsed</span>
-  <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>
-  
-  <span class="ruby-identifier">errors</span> = []
-  <span class="ruby-comment"># TODO: research why read_lines can be empty</span>
-  <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">reader</span>.<span class="ruby-identifier">read_lines</span>
-  <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">reader</span>.<span class="ruby-identifier">source_lines</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">empty?</span>
-  
-  <span class="ruby-identifier">reader</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">PreprocessorReader</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">parsed</span>, <span class="ruby-identifier">lines</span>
+          <div class="method-source-code" id="combine_to_single_doc-source">
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_to_single_doc</span>(<span class="ruby-identifier">adoc</span>)
+  <span class="ruby-identifier">parsed_adoc</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">parsed</span>
+  <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">parsed_adoc</span>.<span class="ruby-identifier">reader</span>.<span class="ruby-identifier">source_lines</span>
+  <span class="ruby-identifier">reader</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">PreprocessorReader</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">parsed_adoc</span>, <span class="ruby-identifier">lines</span>
   <span class="ruby-identifier">combined_source</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">read_lines</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">combined_source</span>, <span class="ruby-value">safe:</span> <span class="ruby-value">:unsafe</span>, <span class="ruby-value">attributes:</span> <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
 
-  <span class="ruby-identifier">pp</span> <span class="ruby-identifier">combined_source</span>
+        
 
-  <span class="ruby-identifier">doc</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">combined_source</span>, <span class="ruby-value">safe:</span> <span class="ruby-value">:unsafe</span>, <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attributes</span>
-  <span class="ruby-identifier">html</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">convert</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">html</span>
+        
+      </div>
+
+    
+      <div id="method-i-convert_full_to_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">convert_full_to_html</span><span
+            class="method-args">(adoc)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns full HTML code <code>full_html</code> of (index) asciidoc file</p>
+          
+          
+
+          
+          <div class="method-source-code" id="convert_full_to_html-source">
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">convert_full_to_html</span>(<span class="ruby-identifier">adoc</span>)
+  <span class="ruby-identifier">full_doc</span> = <span class="ruby-identifier">combine_to_single_doc</span>(<span class="ruby-identifier">adoc</span>)
+  <span class="ruby-identifier">full_html</span> = <span class="ruby-identifier">full_doc</span>.<span class="ruby-identifier">convert</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">full_html</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -269,7 +328,7 @@
             <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_index_json</span>(<span class="ruby-identifier">html</span>)
   <span class="ruby-identifier">js_context</span> = <span class="ruby-constant">V8</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>
-  <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">load</span>(<span class="ruby-string">&#39;/tmp/lunr.js&#39;</span>)
+  <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">load</span>(<span class="ruby-string">&#39;../utils/lunr.js&#39;</span>)
   <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">eval</span>(<span class="ruby-string">&#39;lunr.Index.prototype.dumpIndex = function(){return JSON.stringify(this.toJSON());}&#39;</span>)
   <span class="ruby-identifier">ref</span> = <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">eval</span>(<span class="ruby-string">&#39;lunr&#39;</span>)
   
