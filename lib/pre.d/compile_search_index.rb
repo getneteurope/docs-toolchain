@@ -9,38 +9,38 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CompileSearchIndex < BaseProcess
-      def initialize
-      end
+      attr_reader :full_html #unused
+      attr_reader :full_doc
+
+      def initialize; end
 
       ##
       # 
       def run(adoc)
-       pp full_html(adoc)
+       @full_html = convert_full_to_html(adoc)
+       pp @full_html
       end
 
       private
 
       ##
-      # Returns full HTML code +html+ of (index) asciidoc file
+      # Returns Asciidoctor::Document +full_doc+ with all includes included.
       #
-      def full_html(adoc)
-        original = adoc.original
-        parsed = adoc.parsed
-        attributes = adoc.attributes
-  
-        errors = []
-        # TODO: research why read_lines can be empty
-        lines = parsed.reader.read_lines
-        lines = parsed.reader.source_lines if lines.empty?
-  
-        reader = Asciidoctor::PreprocessorReader.new parsed, lines
+      def combine_to_single_doc(adoc)
+        parsed_adoc = adoc.parsed
+        lines = parsed_adoc.reader.source_lines
+        reader = Asciidoctor::PreprocessorReader.new parsed_adoc, lines
         combined_source = reader.read_lines
+        return Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: adoc.attributes
+      end
 
-        pp combined_source
-
-        doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
-        html = doc.convert
-        return html
+      ##
+      # Returns full HTML code +full_html+ of (index) asciidoc file
+      #
+      def convert_full_to_html(adoc)
+        full_doc = combine_to_single_doc(adoc)
+        full_html = full_doc.convert
+        return full_html
       end
 
       ##
@@ -48,7 +48,7 @@ module Toolchain
       #
       def generate_index_json(html)
         js_context = V8::Context.new
-        js_context.load('/tmp/lunr.js')
+        js_context.load('../utils/lunr.js')
         js_context.eval('lunr.Index.prototype.dumpIndex = function(){return JSON.stringify(this.toJSON());}')
         ref = js_context.eval('lunr')
   

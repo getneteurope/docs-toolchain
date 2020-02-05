@@ -6,7 +6,7 @@ AllCops:
     - Gemfile
     - Rakefile
 
-Metrics/LineLength:
+Layout:
   Enabled: false
 
 # Lint/NonDeterministicRequireOrder:
