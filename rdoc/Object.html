@@ -469,7 +469,7 @@
         
         <div class="method-heading">
           <span class="method-name">log</span><span
-            class="method-args">(tag, msg, color = :blue, bold = false)</span>
+            class="method-args">(tag, msg, color = :blue, bold = false, length: 14)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -491,10 +491,11 @@
           
           <div class="method-source-code" id="log-source">
             <pre><span class="ruby-comment"># File lib/log/log.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>, <span class="ruby-value">length:</span> <span class="ruby-value">14</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>)
 
-  <span class="ruby-identifier">tag</span> = <span class="ruby-node">&quot;[#{colorize(tag, color)}]&quot;</span>.<span class="ruby-identifier">bold</span>
+  <span class="ruby-identifier">length</span> = <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">length</span>.<span class="ruby-identifier">zero?</span>
+  <span class="ruby-identifier">tag</span> = <span class="ruby-node">&quot;[#{colorize(tag.center(length), color)}]&quot;</span>.<span class="ruby-identifier">bold</span>
   <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">bold</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bold</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{tag} #{msg}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -801,7 +802,7 @@
         
         <div class="method-heading">
           <span class="method-name">stage_log</span><span
-            class="method-args">(stage, msg, color: :green)</span>
+            class="method-args">(stage, msg, color = :green)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -824,12 +825,9 @@
 
           
           <div class="method-source-code" id="stage_log-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 27</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">color:</span> <span class="ruby-value">:green</span>)
-  <span class="ruby-identifier">stages</span> = <span class="ruby-node">%w[setup test build deploy post notify]</span>
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:green</span>)
   <span class="ruby-identifier">stage</span> = <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>
-  <span class="ruby-identifier">longest</span> = <span class="ruby-identifier">stages</span>.<span class="ruby-identifier">max</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">left</span>, <span class="ruby-identifier">right</span><span class="ruby-operator">|</span> <span class="ruby-identifier">left</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">right</span>.<span class="ruby-identifier">length</span> }.<span class="ruby-identifier">length</span>
-  <span class="ruby-identifier">stage</span> = <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">*</span> (<span class="ruby-identifier">longest</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">length</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">stage</span>
   <span class="ruby-identifier">log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span>, <span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>

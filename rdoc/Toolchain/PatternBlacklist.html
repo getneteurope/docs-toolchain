@@ -144,7 +144,7 @@
     <span class="ruby-identifier">log</span>(
       <span class="ruby-string">&#39;PATTERN&#39;</span>,
       <span class="ruby-node">&quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;</span>,
-      <span class="ruby-value">color:</span> <span class="ruby-value">:magenta</span>
+      <span class="ruby-value">:magenta</span>
     )
     <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors</span>
   <span class="ruby-keyword">end</span>
@@ -163,7 +163,7 @@
       <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">match?</span> <span class="ruby-identifier">pattern</span>
 
       <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;Illegal pattern in line #{index + 1}: #{pattern.inspect}&quot;</span>
-      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;PATTERN&#39;</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">color:</span> <span class="ruby-value">:magenta</span>)
+      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;PATTERN&#39;</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">:magenta</span>)
       <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">create_error</span>(
         <span class="ruby-value">msg:</span> <span class="ruby-identifier">msg</span>,
         <span class="ruby-value">location:</span> <span class="ruby-constant">Location</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;docfile&#39;</span>), <span class="ruby-keyword">nil</span>)
