@@ -37,6 +37,7 @@ module Toolchain
     # Returns nothing.
     #
     def self.setup(build_dir = DEFAULT_BUILD_DIR, content: 'content')
+      stage_log(:build, "setting up build dir @ #{build_dir}")
       raise "Directory '#{content}' does not exist" unless Dir.exist?(content.to_s)
 
       mkdir(build_dir)
@@ -66,8 +67,11 @@ module Toolchain
       # call asciidoctor
       # FIXME hardcoded, extract attributes and read config file from content repo
       # or overwrite default attributes with a config file
+      # NOTE Requires need to be required explicitly with require or require_relative
+      # instead of being passed as options[:requires]
+      stage_log(:build, "HTML5 Multipage Backend loaded")
+      require File.join(::Toolchain.toolchain_path, 'lib/adoc-extensions.d/multipage_html5.rb')
       options = {
-        requires: [File.join(::Toolchain.toolchain_path, 'lib/adoc-extensions.d/multipage_html5.rb')],
         attributes: {
           'linkcss' => true,
           'stylesdir' => 'css',
