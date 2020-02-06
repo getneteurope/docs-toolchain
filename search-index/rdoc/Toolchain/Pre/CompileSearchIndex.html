@@ -81,6 +81,8 @@
     
     <li ><a href="#method-i-convert_full_to_html">#convert_full_to_html</a>
     
+    <li ><a href="#method-i-extract_from_html">#extract_from_html</a>
+    
     <li ><a href="#method-i-generate_index_json">#generate_index_json</a>
     
     <li ><a href="#method-i-run">#run</a>
@@ -109,41 +111,31 @@
     
 
     
-
-    
-    <section class="attribute-method-details" class="method-section">
+    <section class="constants-list">
       <header>
-        <h3>Attributes</h3>
+        <h3>Constants</h3>
       </header>
-
+      <dl>
       
-      <div id="attribute-i-full_doc" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">full_doc</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
+        <dt id="SELECTOR_HEADINGS">SELECTOR_HEADINGS
         
+        <dd>
         
-        
-        </div>
-      </div>
       
-      <div id="attribute-i-full_html" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">full_html</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
+        <dt id="SELECTOR_PARAGRAPHS">SELECTOR_PARAGRAPHS
         
+        <dd>
         
-        
-        </div>
-      </div>
       
+        <dt id="SELECTOR_SECTIONS">SELECTOR_SECTIONS
+        
+        <dd>
+        
+      
+      </dl>
     </section>
+    
+
     
 
     
@@ -172,7 +164,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 15</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -205,16 +197,16 @@
 
         <div class="method-description">
           
-          
+          <p>Takes adoc Struct <code>adoc</code> Returns .json search index for lunr</p>
           
           
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 19</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">adoc</span>)
- <span class="ruby-ivar">@full_html</span> = <span class="ruby-identifier">convert_full_to_html</span>(<span class="ruby-identifier">adoc</span>)
- <span class="ruby-identifier">pp</span> <span class="ruby-ivar">@full_html</span>
+ <span class="ruby-identifier">full_html</span> = <span class="ruby-identifier">convert_full_to_html</span>(<span class="ruby-identifier">adoc</span>)
+ <span class="ruby-keyword">return</span> <span class="ruby-identifier">generate_index_json</span>(<span class="ruby-identifier">full_html</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -253,7 +245,7 @@
 
           
           <div class="method-source-code" id="combine_to_single_doc-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_to_single_doc</span>(<span class="ruby-identifier">adoc</span>)
   <span class="ruby-identifier">parsed_adoc</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">parsed</span>
   <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">parsed_adoc</span>.<span class="ruby-identifier">reader</span>.<span class="ruby-identifier">source_lines</span>
@@ -290,11 +282,44 @@
 
           
           <div class="method-source-code" id="convert_full_to_html-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 40</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">convert_full_to_html</span>(<span class="ruby-identifier">adoc</span>)
   <span class="ruby-identifier">full_doc</span> = <span class="ruby-identifier">combine_to_single_doc</span>(<span class="ruby-identifier">adoc</span>)
   <span class="ruby-identifier">full_html</span> = <span class="ruby-identifier">full_doc</span>.<span class="ruby-identifier">convert</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">full_html</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-extract_from_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">extract_from_html</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="CompileSearchIndex.html#method-i-extract_from_html"><code>extract_from_html</code></a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="extract_from_html-source">
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">extract_from_html</span>
+  <span class="ruby-keyword">return</span> { <span class="ruby-value">id:</span> <span class="ruby-identifier">ref</span>, <span class="ruby-value">title:</span> <span class="ruby-identifier">title</span>, <span class="ruby-value">body:</span> <span class="ruby-identifier">body</span>}
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -325,27 +350,71 @@
 
           
           <div class="method-source-code" id="generate_index_json-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/compile_search_index.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_index_json</span>(<span class="ruby-identifier">html</span>)
+  <span class="ruby-identifier">page</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">html</span>)
+  <span class="ruby-identifier">ref</span> = []
+  <span class="ruby-identifier">title</span> = []
+  <span class="ruby-identifier">body</span> = []
+  <span class="ruby-identifier">sections</span> = <span class="ruby-identifier">page</span>.<span class="ruby-identifier">css</span>(<span class="ruby-constant">SELECTOR_SECTIONS</span>)
+  <span class="ruby-identifier">sections</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">headings</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">css</span>(<span class="ruby-constant">SELECTOR_HEADINGS</span>)
+    <span class="ruby-identifier">paragraphs</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">css</span>(<span class="ruby-constant">SELECTOR_PARAGRAPHS</span>)
+    <span class="ruby-identifier">headings</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">ref</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">h</span>[<span class="ruby-string">&#39;id&#39;</span>]
+      <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">content</span>
+      <span class="ruby-keyword">end</span>.<span class="ruby-identifier">join</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">paragraphs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">content</span>
+      <span class="ruby-keyword">end</span>.<span class="ruby-identifier">join</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">pp</span> <span class="ruby-identifier">ref</span>
+  <span class="ruby-identifier">pp</span> <span class="ruby-identifier">title</span>
+  <span class="ruby-identifier">pp</span> <span class="ruby-identifier">body</span>
+  <span class="ruby-identifier">exit</span>
+
   <span class="ruby-identifier">js_context</span> = <span class="ruby-constant">V8</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>
-  <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">load</span>(<span class="ruby-string">&#39;../utils/lunr.js&#39;</span>)
+  <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">__dir__</span>, <span class="ruby-string">&#39;../&#39;</span>, <span class="ruby-string">&#39;utils&#39;</span>, <span class="ruby-string">&#39;lunr.js&#39;</span>))
   <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">eval</span>(<span class="ruby-string">&#39;lunr.Index.prototype.dumpIndex = function(){return JSON.stringify(this.toJSON());}&#39;</span>)
   <span class="ruby-identifier">ref</span> = <span class="ruby-identifier">js_context</span>.<span class="ruby-identifier">eval</span>(<span class="ruby-string">&#39;lunr&#39;</span>)
   
+  <span class="ruby-comment"># TODO: rewrite this</span>
+  <span class="ruby-comment"># function htmlElementsToJSON(listSelector, unmarshalFunction) {</span>
+  <span class="ruby-comment">#   // add the list elements to lunr</span>
+  <span class="ruby-comment">#   var qs = $(listSelector, &quot;#content .sect2, #content .sect3&quot;);</span>
+  <span class="ruby-comment">#   var entries = [];</span>
+  <span class="ruby-comment">#   for (var i = 0; i &lt; qs.length; i++) {</span>
+  <span class="ruby-comment">#     var $q = $(qs[i]);</span>
+  <span class="ruby-comment">#     entries.push(unmarshalFunction($q));</span>
+  <span class="ruby-comment">#   }</span>
+  <span class="ruby-comment">#   return entries;</span>
+  <span class="ruby-comment"># }</span>
+  <span class="ruby-comment"># var documents = htmlElementsToJSON(listSelector, function($element) {</span>
+  <span class="ruby-comment">#   var ref = $element.find(&quot;h2, h3, h4&quot;).attr(&#39;id&#39;);</span>
+  <span class="ruby-comment">#   var title = $element.find(&quot;h2, h3, h4&quot;).text();</span>
+  <span class="ruby-comment">#   var body = $element.find(&quot;p&quot;).text();</span>
+  <span class="ruby-comment">#   return { id: ref, title: title, body: body };</span>
+  <span class="ruby-comment"># });</span>
+
+
+  <span class="ruby-identifier">fields</span> = <span class="ruby-node">%w[title body]</span>
   <span class="ruby-identifier">lunr_conf</span> = <span class="ruby-identifier">proc</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">this</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">this</span>.<span class="ruby-identifier">ref</span>(<span class="ruby-string">&#39;id&#39;</span>)
     <span class="ruby-identifier">fields</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">this</span>.<span class="ruby-identifier">field</span>(<span class="ruby-identifier">name</span>) <span class="ruby-comment">#, {:boost =&gt; boost})</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-identifier">idx</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">lunr_conf</span>)
-  
   <span class="ruby-identifier">docs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">doc</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">idx</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">doc</span>)
   <span class="ruby-keyword">end</span>
   
-  <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">idx</span>.<span class="ruby-identifier">dumpIndex</span>(), <span class="ruby-value">max_nesting:</span> <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">idx</span>.<span class="ruby-identifier">dumpIndex</span>, <span class="ruby-value">max_nesting:</span> <span class="ruby-keyword">false</span>)
   
   { <span class="ruby-value">index:</span> <span class="ruby-identifier">data</span>, <span class="ruby-value">map:</span> <span class="ruby-identifier">map</span> }
 <span class="ruby-keyword">end</span></pre>
