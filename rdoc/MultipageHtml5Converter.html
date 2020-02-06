@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class MultipageHtml5Converter - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/navigation.js" defer></script>
+<script src="./js/search.js" defer></script>
+<script src="./js/search_index.js" defer></script>
+<script src="./js/searcher.js" defer></script>
+<script src="./js/darkfish.js" defer></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">Asciidoctor::Converter::Html5Converter
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Asciidoctor.html">Asciidoctor</a>
+  
+  
+  
+    <li><span class="include">Asciidoctor::Converter</span>
+  
+  
+  
+    <li><span class="include">Asciidoctor::Writer</span>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-add_nav_links">#add_nav_links</a>
+    
+    <li ><a href="#method-i-convert">#convert</a>
+    
+    <li class="calls-super" ><a href="#method-i-document">#document</a>
+    
+    <li class="calls-super" ><a href="#method-i-embedded">#embedded</a>
+    
+    <li ><a href="#method-i-generate_nav_links">#generate_nav_links</a>
+    
+    <li ><a href="#method-i-generate_outline">#generate_outline</a>
+    
+    <li class="calls-super" ><a href="#method-i-inline_anchor">#inline_anchor</a>
+    
+    <li ><a href="#method-i-new_outline_doc">#new_outline_doc</a>
+    
+    <li ><a href="#method-i-outline">#outline</a>
+    
+    <li ><a href="#method-i-reparent">#reparent</a>
+    
+    <li class="calls-super" ><a href="#method-i-section">#section</a>
+    
+    <li ><a href="#method-i-set_multipage_attrs">#set_multipage_attrs</a>
+    
+    <li ><a href="#method-i-write">#write</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-MultipageHtml5Converter">
+  <h1 id="class-MultipageHtml5Converter" class="class">
+    class MultipageHtml5Converter
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(backend, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 141</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">backend</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-ivar">@xml_mode</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@void_element_slash</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@stylesheets</span> = <span class="ruby-constant">Stylesheets</span>.<span class="ruby-identifier">instance</span>
+  <span class="ruby-ivar">@pages</span> = []
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-add_nav_links" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_nav_links</span><span
+            class="method-args">(page)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Add navigation links to the page (from nav_links)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add_nav_links-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_nav_links</span>(<span class="ruby-identifier">page</span>)
+  <span class="ruby-identifier">block</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">page</span>,
+                                 <span class="ruby-value">:paragraph</span>,
+                                 <span class="ruby-identifier">opts</span> = { <span class="ruby-value">source:</span> <span class="ruby-identifier">page</span>.<span class="ruby-identifier">nav_links</span> })
+  <span class="ruby-identifier">block</span>.<span class="ruby-identifier">add_role</span>(<span class="ruby-string">&#39;nav-footer&#39;</span>)
+  <span class="ruby-identifier">page</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">block</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-convert" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">convert</span><span
+            class="method-args">(node, transform = nil, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="convert-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 158</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">convert</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">transform</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">transform</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">node_name</span>
+  <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> (<span class="ruby-identifier">send</span> <span class="ruby-identifier">transform</span>, <span class="ruby-identifier">node</span>) <span class="ruby-operator">:</span> (<span class="ruby-identifier">send</span> <span class="ruby-identifier">transform</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">opts</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-document" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">document</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Process Document (either the original full document or a processed page)</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="document-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 164</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">document</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">processed</span>
+    <span class="ruby-comment"># This node can now be handled by Html5Converter.</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># This node is the original full document which has not yet been</span>
+    <span class="ruby-comment"># processed; this is the entry point for the extension.</span>
+
+    <span class="ruby-comment"># Turn off extensions to avoid running them twice.</span>
+    <span class="ruby-comment"># FIXME: DocinfoProcessor, InlineMacroProcessor, and Postprocessor</span>
+    <span class="ruby-comment"># extensions should be retained. Is this possible with the API?</span>
+    <span class="ruby-comment"># Asciidoctor::Extensions.unregister_all</span>
+
+    <span class="ruby-comment"># Check toclevels and multipage-level attributes</span>
+    <span class="ruby-identifier">mplevel</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">to_i</span>
+    <span class="ruby-identifier">toclevels</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;toclevels&#39;</span>, <span class="ruby-value">2</span>).<span class="ruby-identifier">to_i</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">toclevels</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">mplevel</span>
+      <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-string">&#39;toclevels attribute should be &gt;= multipage-level&#39;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">mplevel</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-string">&#39;multipage-level attribute must be &gt;= 0&#39;</span>
+      <span class="ruby-identifier">mplevel</span> = <span class="ruby-value">0</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">set_attribute</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>, <span class="ruby-identifier">mplevel</span>.<span class="ruby-identifier">to_s</span>)
+
+    <span class="ruby-comment"># Set multipage chunk types</span>
+    <span class="ruby-identifier">set_multipage_attrs</span>(<span class="ruby-identifier">node</span>)
+
+    <span class="ruby-comment"># Set the &quot;id&quot; attribute for the Document, using the &quot;docname&quot;, which is</span>
+    <span class="ruby-comment"># based on the file name. Then register the document ID using the</span>
+    <span class="ruby-comment"># document title. This allows cross-references to refer to (1) the</span>
+    <span class="ruby-comment"># top-level document itself or (2) anchors in top-level content (blocks</span>
+    <span class="ruby-comment"># that are specified before any sections).</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-string">&#39;docname&#39;</span>]
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">register</span>(<span class="ruby-value">:refs</span>, [<span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span>,
+                          <span class="ruby-constant">Inline</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">node</span>,
+                                     <span class="ruby-identifier">context</span> = <span class="ruby-value">:anchor</span>,
+                                     <span class="ruby-identifier">text</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">doctitle</span>,
+                                     <span class="ruby-identifier">opts</span> = { <span class="ruby-value">type:</span> <span class="ruby-value">:ref</span>,
+                                              <span class="ruby-value">id:</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span> }),
+                          <span class="ruby-identifier">node</span>.<span class="ruby-identifier">doctitle</span>])
+
+    <span class="ruby-comment"># Generate navigation links for all pages</span>
+    <span class="ruby-identifier">generate_nav_links</span>(<span class="ruby-identifier">node</span>)
+
+    <span class="ruby-comment"># Create and save a skeleton document for generating the TOC lists.</span>
+    <span class="ruby-identifier">@@full_outline</span> = <span class="ruby-identifier">new_outline_doc</span>(<span class="ruby-identifier">node</span>)
+    <span class="ruby-comment"># Save the document catalog to use for each part/chapter page.</span>
+    <span class="ruby-ivar">@catalog</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">catalog</span>
+
+    <span class="ruby-comment"># Retain any book intro blocks, delete others, and add a list of sections</span>
+    <span class="ruby-comment"># for the book landing page.</span>
+    <span class="ruby-identifier">parts_list</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">node</span>, <span class="ruby-value">:ulist</span>)
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">blocks</span>.<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">context</span> <span class="ruby-operator">==</span> <span class="ruby-value">:section</span>
+        <span class="ruby-identifier">part</span> = <span class="ruby-identifier">block</span>
+        <span class="ruby-identifier">part</span>.<span class="ruby-identifier">convert</span>
+        <span class="ruby-identifier">text</span> = <span class="ruby-node">%(&lt;&lt;#{part.id},#{part.captioned_title}&gt;&gt;)</span>
+        <span class="ruby-comment"># if desc = block.attr(&#39;desc&#39;) then text &lt;&lt; %( – #{desc}) end</span>
+        <span class="ruby-identifier">parts_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">ListItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parts_list</span>, <span class="ruby-identifier">text</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">parts_list</span>
+
+    <span class="ruby-comment"># Add navigation links</span>
+    <span class="ruby-identifier">add_nav_links</span>(<span class="ruby-identifier">node</span>)
+
+    <span class="ruby-comment"># Mark page as processed and return converted result</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">processed</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">convert</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-embedded" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">embedded</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Process Document in embeddable mode (either the original full document or a processed page)</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="embedded-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 239</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">embedded</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">processed</span>
+    <span class="ruby-comment"># This node can now be handled by Html5Converter.</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># This node is the original full document which has not yet been</span>
+    <span class="ruby-comment"># processed; it can be handled by document().</span>
+    <span class="ruby-identifier">document</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-generate_nav_links" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate_nav_links</span><span
+            class="method-args">(doc)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Generate navigation links for all pages in document; save HTML to nav_links</p>
+          
+          
+
+          
+          <div class="method-source-code" id="generate_nav_links-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 251</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_nav_links</span>(<span class="ruby-identifier">doc</span>)
+  <span class="ruby-identifier">pages</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-value">context:</span> <span class="ruby-value">:section</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span>
+    <span class="ruby-node">%i[root branch leaf]</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">section</span>.<span class="ruby-identifier">mplevel</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">insert</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">doc</span>)
+  <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">page_index</span> = <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">find_index</span>(<span class="ruby-identifier">page</span>)
+    <span class="ruby-identifier">links</span> = []
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">page</span>.<span class="ruby-identifier">mplevel</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:root</span>
+      <span class="ruby-identifier">previous_page</span> = <span class="ruby-identifier">pages</span>[<span class="ruby-identifier">page_index</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>]
+      <span class="ruby-identifier">parent_page</span> = <span class="ruby-identifier">page</span>.<span class="ruby-identifier">parent</span>
+      <span class="ruby-identifier">home_page</span> = <span class="ruby-identifier">doc</span>
+      <span class="ruby-comment"># NOTE, there are some non-breaking spaces (U+00A0) below.</span>
+      <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(← &lt;&lt;#{previous_page.id}&gt;&gt;)</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">previous_page</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">parent_page</span>
+      <span class="ruby-comment"># links &lt;&lt; %(↑ &lt;&lt;#{parent_page.id}&gt;&gt;)</span>
+      <span class="ruby-comment"># links &lt;&lt; %(⌂ &lt;&lt;#{home_page.id}&gt;&gt;) if home_page != parent_page</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">page_index</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+      <span class="ruby-identifier">next_page</span> = <span class="ruby-identifier">pages</span>[<span class="ruby-identifier">page_index</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>]
+      <span class="ruby-identifier">links</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%( &lt;&lt;#{next_page.id}&gt;&gt; →)</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">block</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">doc</span>,
+                                   <span class="ruby-identifier">context</span> = <span class="ruby-value">:paragraph</span>,
+                                   <span class="ruby-identifier">opts</span> = { <span class="ruby-value">source:</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39; | &#39;</span>), <span class="ruby-value">subs:</span> <span class="ruby-value">:default</span> })
+    <span class="ruby-identifier">page</span>.<span class="ruby-identifier">nav_links</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">content</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-generate_outline" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate_outline</span><span
+            class="method-args">(node, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Generate the actual HTML outline for the TOC. This method is analogous to Html5Converter outline().</p>
+          
+          
+
+          
+          <div class="method-source-code" id="generate_outline-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 283</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_outline</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-comment"># This is the same as Html5Converter outline()</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">sectnumlevels</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:sectnumlevels</span>] <span class="ruby-operator">||</span> (<span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">attr</span> <span class="ruby-string">&#39;sectnumlevels&#39;</span>, <span class="ruby-value">3</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">toclevels</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:toclevels</span>] <span class="ruby-operator">||</span> (<span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">attr</span> <span class="ruby-string">&#39;toclevels&#39;</span>, <span class="ruby-value">2</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">sections</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections</span>
+  <span class="ruby-identifier">result</span> = [<span class="ruby-node">%(&lt;ul class=&quot;sectlevel#{sections[0].level}&quot;&gt;)</span>]
+  <span class="ruby-identifier">sections</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">slevel</span> = <span class="ruby-identifier">section</span>.<span class="ruby-identifier">level</span>
+    <span class="ruby-identifier">stitle</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">caption</span>
+               <span class="ruby-identifier">section</span>.<span class="ruby-identifier">captioned_title</span>
+             <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">numbered</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">slevel</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">sectnumlevels</span>
+               <span class="ruby-node">%(#{section.sectnum} #{section.title})</span>
+             <span class="ruby-keyword">else</span>
+               <span class="ruby-identifier">section</span>.<span class="ruby-identifier">title</span>
+             <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">stitle</span> = <span class="ruby-identifier">stitle</span>.<span class="ruby-identifier">gsub</span> <span class="ruby-constant">DropAnchorRx</span>, <span class="ruby-string">&#39;&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">stitle</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&#39;&lt;a&#39;</span>
+
+    <span class="ruby-comment"># But add a special style for current page in TOC</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">:page_id</span>]
+      <span class="ruby-identifier">stitle</span> = <span class="ruby-node">%(&lt;span class=&quot;toc-current&quot;&gt;#{stitle}&lt;/span&gt;)</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># And we also need to find the parent page of the target node</span>
+    <span class="ruby-identifier">current</span> = <span class="ruby-identifier">section</span>
+    <span class="ruby-identifier">current</span> = <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span> <span class="ruby-keyword">until</span> <span class="ruby-identifier">current</span>.<span class="ruby-identifier">mplevel</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:content</span>
+    <span class="ruby-identifier">parent_chapter</span> = <span class="ruby-identifier">current</span>
+
+    <span class="ruby-comment"># If the target is the top-level section of the parent page, there is no</span>
+    <span class="ruby-comment"># need to include the anchor.</span>
+    <span class="ruby-identifier">link</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">parent_chapter</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span>
+             <span class="ruby-node">%(#{parent_chapter.id}.html)</span>
+           <span class="ruby-keyword">else</span>
+             <span class="ruby-node">%(#{parent_chapter.id}.html##{section.id})</span>
+           <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(&lt;li&gt;&lt;a href=&quot;#{link}&quot;&gt;#{stitle}&lt;/a&gt;)</span>
+
+    <span class="ruby-comment"># Finish in a manner similar to Html5Converter outline()</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">slevel</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">toclevels</span> <span class="ruby-operator">&amp;&amp;</span>
+       (<span class="ruby-identifier">child_toc_level</span> = <span class="ruby-identifier">generate_outline</span> <span class="ruby-identifier">section</span>,
+                                           <span class="ruby-value">toclevels:</span> <span class="ruby-identifier">toclevels</span>,
+                                           <span class="ruby-value">secnumlevels:</span> <span class="ruby-identifier">sectnumlevels</span>,
+                                           <span class="ruby-value">page_id:</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">:page_id</span>])
+      <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child_toc_level</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;&lt;/li&gt;&#39;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;&lt;/ul&gt;&#39;</span>
+  <span class="ruby-identifier">result</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">LF</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-inline_anchor" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inline_anchor</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Include chapter pages in cross-reference links. This method overrides for the :xref node type only.</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="inline_anchor-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 338</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inline_anchor</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:xref</span>
+    <span class="ruby-comment"># This is the same as super...</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">path</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-string">&#39;path&#39;</span>])
+      <span class="ruby-identifier">attrs</span> = (<span class="ruby-identifier">append_link_constraint_attrs</span> <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">role</span> <span class="ruby-operator">?</span> [<span class="ruby-node">%( class=&quot;#{node.role}&quot;)</span>] <span class="ruby-operator">:</span> []).<span class="ruby-identifier">join</span>
+      <span class="ruby-identifier">text</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">text</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">path</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">attrs</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">role</span> <span class="ruby-operator">?</span> <span class="ruby-node">%( class=&quot;#{node.role}&quot;)</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>
+      <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">text</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">text</span>)
+        <span class="ruby-identifier">refid</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-string">&#39;refid&#39;</span>]
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">AbstractNode</span> <span class="ruby-operator">===</span> (<span class="ruby-identifier">ref</span> = (<span class="ruby-ivar">@refs</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:refs</span>])[<span class="ruby-identifier">refid</span>])
+          <span class="ruby-identifier">text</span> = (<span class="ruby-identifier">ref</span>.<span class="ruby-identifier">xreftext</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;xrefstyle&#39;</span>)) <span class="ruby-operator">||</span> <span class="ruby-node">%([#{refid}])</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">text</span> = <span class="ruby-node">%([#{refid}])</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># But we also need to find the parent page of the target node.</span>
+    <span class="ruby-identifier">current</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:refs</span>][<span class="ruby-identifier">node</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-string">&#39;refid&#39;</span>]]
+    <span class="ruby-keyword">until</span> <span class="ruby-identifier">current</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:mplevel</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">current</span>.<span class="ruby-identifier">mplevel</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:content</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-node">%(&lt;a href=&quot;#{node.target}&quot;#{attrs}&gt;#{text}&lt;/a&gt;)</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">current</span>
+
+      <span class="ruby-identifier">current</span> = <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">parent_page</span> = <span class="ruby-identifier">current</span>
+
+    <span class="ruby-comment"># If the target is the top-level section of the parent page, there is no</span>
+    <span class="ruby-comment"># need to include the anchor.</span>
+    <span class="ruby-identifier">target</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">target</span> <span class="ruby-operator">==</span> <span class="ruby-node">&quot;##{parent_page.id}&quot;</span>
+               <span class="ruby-node">&quot;#{parent_page.id}.html&quot;</span>
+             <span class="ruby-keyword">else</span>
+               <span class="ruby-node">&quot;#{parent_page.id}.html#{node.target}&quot;</span>
+             <span class="ruby-keyword">end</span>
+
+    <span class="ruby-node">%(&lt;a href=&quot;#{target}&quot;#{attrs}&gt;#{text}&lt;/a&gt;)</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># Other anchor types can be handled as normal.</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-new_outline_doc" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new_outline_doc</span><span
+            class="method-args">(node, new_parent: nil, for_page: nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>From node, create a skeleton document that will be used to generate the TOC. This is first used to create a full skeleton (@@full_outline) from the original document (for_page=nil). Then it is used for each individual page to create a second skeleton from the first. In this way, TOC entries are included that are not part of the current page, or excluded if not applicable for the current page.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new_outline_doc-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 386</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_outline_doc</span>(<span class="ruby-identifier">node</span>, <span class="ruby-value">new_parent:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">for_page:</span> <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Document</span>
+    <span class="ruby-identifier">new_document</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>([])
+    <span class="ruby-identifier">new_document</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">mplevel</span>
+    <span class="ruby-identifier">new_document</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">new_document</span>.<span class="ruby-identifier">set_attr</span>(<span class="ruby-string">&#39;sectnumlevels&#39;</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-value">:sectnumlevels</span>))
+    <span class="ruby-identifier">new_document</span>.<span class="ruby-identifier">set_attr</span>(<span class="ruby-string">&#39;toclevels&#39;</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-value">:toclevels</span>))
+    <span class="ruby-identifier">new_parent</span> = <span class="ruby-identifier">new_document</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">new_outline_doc</span>(<span class="ruby-identifier">section</span>, <span class="ruby-value">new_parent:</span> <span class="ruby-identifier">new_parent</span>,
+                               <span class="ruby-value">for_page:</span> <span class="ruby-identifier">for_page</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-comment"># Include the node if either (1) we are creating the full skeleton from the</span>
+  <span class="ruby-comment"># original document or (2) the node is applicable to the current page.</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">for_page</span> <span class="ruby-operator">||</span>
+        <span class="ruby-identifier">node</span>.<span class="ruby-identifier">related_to?</span>(<span class="ruby-identifier">for_page</span>)
+    <span class="ruby-identifier">new_section</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">new_parent</span>,
+                              <span class="ruby-identifier">level</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">level</span>,
+                              <span class="ruby-identifier">numbered</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">numbered</span>)
+    <span class="ruby-identifier">new_section</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">new_section</span>.<span class="ruby-identifier">caption</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">caption</span>
+    <span class="ruby-identifier">new_section</span>.<span class="ruby-identifier">title</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">title</span>
+    <span class="ruby-identifier">new_section</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">mplevel</span>
+    <span class="ruby-identifier">new_parent</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">new_section</span>
+    <span class="ruby-identifier">new_parent</span>.<span class="ruby-identifier">sections</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">numeral</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">numeral</span>
+    <span class="ruby-identifier">new_parent</span> = <span class="ruby-identifier">new_section</span>
+
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">new_outline_doc</span>(<span class="ruby-identifier">section</span>, <span class="ruby-value">new_parent:</span> <span class="ruby-identifier">new_parent</span>,
+                               <span class="ruby-value">for_page:</span> <span class="ruby-identifier">for_page</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">new_document</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-outline" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">outline</span><span
+            class="method-args">(node, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Override Html5Converter outline() to return a custom TOC outline</p>
+          
+          
+
+          
+          <div class="method-source-code" id="outline-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 422</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outline</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">doc</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>
+  <span class="ruby-comment"># Find this node in the @@full_outline skeleton document</span>
+  <span class="ruby-identifier">page_node</span> = <span class="ruby-identifier">@@full_outline</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-value">id:</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-comment"># Create a skeleton document for this particular page</span>
+  <span class="ruby-identifier">custom_outline_doc</span> = <span class="ruby-identifier">new_outline_doc</span>(<span class="ruby-identifier">@@full_outline</span>, <span class="ruby-value">for_page:</span> <span class="ruby-identifier">page_node</span>)
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:page_id</span>] = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-comment"># Generate an extra TOC entry for the root page. Add additional styling if</span>
+  <span class="ruby-comment"># the current page is the root page.</span>
+  <span class="ruby-identifier">root_file</span> = <span class="ruby-node">%(#{doc.attr(&#39;docname&#39;)}#{doc.attr(&#39;outfilesuffix&#39;)})</span>
+  <span class="ruby-identifier">root_link</span> = <span class="ruby-node">%(&lt;a href=&quot;#{root_file}&quot;&gt;#{doc.doctitle}&lt;/a&gt;)</span>
+  <span class="ruby-identifier">classes</span> = [<span class="ruby-string">&#39;toc-root&#39;</span>]
+  <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;toc-current&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;docname&#39;</span>)
+  <span class="ruby-identifier">root</span> = <span class="ruby-node">%(&lt;span class=&quot;#{classes.join(&#39; &#39;)}&quot;&gt;#{root_link}&lt;/span&gt;)</span>
+  <span class="ruby-comment"># Create and return the HTML</span>
+  <span class="ruby-node">%(&lt;p&gt;#{root}&lt;/p&gt;#{generate_outline(custom_outline_doc, opts)})</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-reparent" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reparent</span><span
+            class="method-args">(node, parent)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Change node parent to new parent recursively</p>
+          
+          
+
+          
+          <div class="method-source-code" id="reparent-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 441</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reparent</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">parent</span>)
+  <span class="ruby-identifier">node</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">parent</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">context</span> <span class="ruby-operator">==</span> <span class="ruby-value">:dlist</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-value">context:</span> <span class="ruby-value">:list_item</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">reparent</span>(<span class="ruby-identifier">block</span>, <span class="ruby-identifier">node</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">blocks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">reparent</span>(<span class="ruby-identifier">block</span>, <span class="ruby-identifier">node</span>)
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">context</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table</span>
+
+      <span class="ruby-identifier">block</span>.<span class="ruby-identifier">columns</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">col</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">col</span>.<span class="ruby-identifier">parent</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">block</span>.<span class="ruby-identifier">rows</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">row</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cell</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">parent</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-section" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">section</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Process a Section. Each Section will either be split off into its own page or processed as normal by Html5Converter.</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="section-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 466</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">section</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">doc</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">processed</span>
+    <span class="ruby-comment"># This node can now be handled by Html5Converter.</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># This node is from the original document and has not yet been processed.</span>
+
+    <span class="ruby-comment"># Create a new page for this section</span>
+    <span class="ruby-identifier">page</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>([],
+                                     <span class="ruby-value">attributes:</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">clone</span>,
+                                     <span class="ruby-value">doctype:</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">doctype</span>,
+                                     <span class="ruby-value">header_footer:</span> <span class="ruby-operator">!</span><span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attr?</span>(<span class="ruby-value">:embedded</span>),
+                                     <span class="ruby-value">safe:</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">safe</span>)
+    <span class="ruby-comment"># Retain webfonts attribute (why is doc.attributes.clone not adequate?)</span>
+    <span class="ruby-identifier">page</span>.<span class="ruby-identifier">set_attr</span>(<span class="ruby-string">&#39;webfonts&#39;</span>, <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-value">:webfonts</span>))
+    <span class="ruby-comment"># Save sectnum for use later (a Document object normally has no sectnum)</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:numbered</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">numbered</span>
+      <span class="ruby-identifier">page</span>.<span class="ruby-identifier">sectnum</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">sectnum</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Process node according to mplevel</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">mplevel</span> <span class="ruby-operator">==</span> <span class="ruby-value">:branch</span>
+      <span class="ruby-comment"># Retain any part intro blocks, delete others, and add a list</span>
+      <span class="ruby-comment"># of sections for the part landing page.</span>
+      <span class="ruby-identifier">chapters_list</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">node</span>, <span class="ruby-value">:ulist</span>)
+      <span class="ruby-identifier">node</span>.<span class="ruby-identifier">blocks</span>.<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">context</span> <span class="ruby-operator">==</span> <span class="ruby-value">:section</span>
+          <span class="ruby-identifier">chapter</span> = <span class="ruby-identifier">block</span>
+          <span class="ruby-identifier">chapter</span>.<span class="ruby-identifier">convert</span>
+          <span class="ruby-identifier">text</span> = <span class="ruby-node">%(&lt;&lt;#{chapter.id},#{chapter.captioned_title}&gt;&gt;)</span>
+          <span class="ruby-comment"># NOTE, there is a non-breaking space (Unicode U+00A0) below.</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">desc</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;desc&#39;</span>) <span class="ruby-keyword">then</span> <span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%( – #{desc})</span> <span class="ruby-keyword">end</span>
+          <span class="ruby-identifier">chapters_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">ListItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">chapters_list</span>, <span class="ruby-identifier">text</span>)
+          <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-comment"># Add chapters list to node, reparent node to new page, add</span>
+      <span class="ruby-comment"># node to page, mark as processed, and add page to @pages.</span>
+      <span class="ruby-identifier">node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chapters_list</span>
+      <span class="ruby-identifier">reparent</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">page</span>)
+      <span class="ruby-identifier">page</span>.<span class="ruby-identifier">blocks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">node</span>
+    <span class="ruby-keyword">else</span> <span class="ruby-comment"># :leaf</span>
+      <span class="ruby-comment"># Reparent node to new page, add node to page, mark as</span>
+      <span class="ruby-comment"># processed, and add page to @pages.</span>
+      <span class="ruby-identifier">reparent</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">page</span>)
+      <span class="ruby-identifier">page</span>.<span class="ruby-identifier">blocks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">node</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Add navigation links using saved HTML</span>
+    <span class="ruby-identifier">page</span>.<span class="ruby-identifier">nav_links</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">nav_links</span>
+    <span class="ruby-identifier">add_nav_links</span>(<span class="ruby-identifier">page</span>)
+
+    <span class="ruby-comment"># Mark page as processed and add to collection of pages</span>
+    <span class="ruby-ivar">@pages</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">page</span>
+    <span class="ruby-identifier">page</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">page</span>.<span class="ruby-identifier">catalog</span> = <span class="ruby-ivar">@catalog</span>
+    <span class="ruby-identifier">page</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">mplevel</span>
+    <span class="ruby-identifier">page</span>.<span class="ruby-identifier">processed</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-set_multipage_attrs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">set_multipage_attrs</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Add multipage attribute to all sections in node, recursively.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="set_multipage_attrs-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 529</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">set_multipage_attrs</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">doc</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">document</span>
+  <span class="ruby-identifier">node</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-value">:root</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>
+  <span class="ruby-identifier">node</span>.<span class="ruby-identifier">sections</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">attr?</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>)
+      <span class="ruby-identifier">section</span>.<span class="ruby-identifier">set_attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>))
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-comment"># Propogate custom multipage-level value to child node</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">attr?</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">false</span>) <span class="ruby-operator">&amp;&amp;</span>
+       <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>)
+      <span class="ruby-identifier">section</span>.<span class="ruby-identifier">set_attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>))
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-comment"># Set section type</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>).<span class="ruby-identifier">to_i</span>
+      <span class="ruby-identifier">section</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-value">:branch</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">level</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;multipage-level&#39;</span>).<span class="ruby-identifier">to_i</span>
+      <span class="ruby-identifier">section</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-value">:leaf</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">section</span>.<span class="ruby-identifier">mplevel</span> = <span class="ruby-value">:content</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-comment"># Set multipage attribute on child sections now.</span>
+    <span class="ruby-identifier">set_multipage_attrs</span>(<span class="ruby-identifier">section</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-write" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">write</span><span
+            class="method-args">(output, target)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Convert each page and write it to file. Use filenames based on IDs.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="write-source">
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 555</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write</span>(<span class="ruby-identifier">output</span>, <span class="ruby-identifier">target</span>)
+  <span class="ruby-comment"># Write primary (book) landing page</span>
+  <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">target</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-comment"># Write remaining part/chapter pages</span>
+  <span class="ruby-identifier">outdir</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">target</span>)
+  <span class="ruby-identifier">ext</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">target</span>)
+  <span class="ruby-identifier">target_name</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">target</span>, <span class="ruby-identifier">ext</span>)
+  <span class="ruby-ivar">@pages</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">doc</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">chapter_target</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ext</span>
+    <span class="ruby-identifier">outfile</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">outdir</span>, <span class="ruby-identifier">chapter_target</span>)
+    <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">outfile</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">convert</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
