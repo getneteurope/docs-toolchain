@@ -185,25 +185,26 @@
   <span class="ruby-comment"># doc = Asciidoctor.load_file(index_path, options)</span>
   <span class="ruby-comment"># doc.convert</span>
 
-  <span class="ruby-comment"># move web resources to html/</span>
+  <span class="ruby-comment"># create HTML folder</span>
   <span class="ruby-identifier">html_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-string">&#39;html&#39;</span>)
   <span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">html_dir</span>)
 
-  <span class="ruby-identifier">index_html</span> = <span class="ruby-node">&quot;#{File.basename(index, &#39;.adoc&#39;)}.html&quot;</span>
-  <span class="ruby-identifier">need_to_copy</span> = <span class="ruby-node">%w[css js]</span>
-  <span class="ruby-comment"># TODO needs to be adapted for the multipage converter</span>
-  <span class="ruby-identifier">need_to_copy</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">index_html</span>
-  <span class="ruby-identifier">need_to_copy</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">abs_dir</span> = <span class="ruby-identifier">abs_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">file</span>)
-    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">abs_file</span>, <span class="ruby-identifier">html_dir</span>, <span class="ruby-value">force:</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
-    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">abs_dir</span>)
+  <span class="ruby-comment"># move web pages to html/</span>
+  <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-string">&#39;*.html&#39;</span>)].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">html</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">html</span>, <span class="ruby-identifier">html_dir</span>, <span class="ruby-value">force:</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-keyword">end</span>
 
-    <span class="ruby-identifier">sub_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">html_dir</span>, <span class="ruby-identifier">file</span>)
-    <span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">sub_dir</span>)
-    <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">abs_dir</span>, <span class="ruby-string">&#39;*&#39;</span>)].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">sub_dir</span>)
+  <span class="ruby-comment"># move assets to html/</span>
+  <span class="ruby-identifier">assets</span> = <span class="ruby-node">%w[css js]</span>
+  <span class="ruby-identifier">assets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">asset</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">from_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">asset</span>)
+    <span class="ruby-identifier">to_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">html_dir</span>, <span class="ruby-identifier">asset</span>)
+    <span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">to_dir</span>)
+    <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">from_dir</span>, <span class="ruby-string">&#39;*&#39;</span>)].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">to_dir</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
+
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;Files are in #{html_dir}&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
