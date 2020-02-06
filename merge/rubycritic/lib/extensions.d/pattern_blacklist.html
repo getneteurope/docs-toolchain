@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 11:37:00 +0100'>2020-01-23 11:37:00 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 16:24:54 +0100'>2020-02-04 16:24:54 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">38.0</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">37.97</span><small> complexity</small></div>
@@ -123,7 +123,7 @@ module Toolchain
         log(
           &#39;PATTERN&#39;,
           &quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;,
-          color: :magenta
+          :magenta
         )
         return errors
       end
@@ -142,7 +142,7 @@ module Toolchain
           next unless line.match? pattern
 
           msg = &quot;Illegal pattern in line #{index + 1}: #{pattern.inspect}&quot;
-          log(&#39;PATTERN&#39;, msg, color: :magenta)
+          log(&#39;PATTERN&#39;, msg, :magenta)
           errors &lt;&lt; create_error(
             msg: msg,
             location: Location.new(parsed.attr(&#39;docfile&#39;), nil)

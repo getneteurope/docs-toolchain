@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-28 11:53:03 +0100'>2020-01-28 11:53:03 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-04 16:24:54 +0100'>2020-02-04 16:24:54 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">33</span><small> lines of codes</small></div>
+              <div><span class="metric">31</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">12.2</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">8.0</span><small> complexity/method</small></div>
+              <div><span class="metric">9</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">24.4</span><small> complexity</small></div>
+              <div><span class="metric">16.0</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -107,10 +107,11 @@ require_relative &#39;../utils/string.rb&#39;
 # using the given color and font weight
 #
 # Returns nothing.
-def log(tag, msg, color = :blue, bold = false)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>log has boolean parameter 'bold'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>log has 4 parameters</span>          </div>  </li></ol>
+def log(tag, msg, color = :blue, bold = false, length: 14)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>log has boolean parameter 'bold'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>log has 5 parameters</span>          </div>  </li></ol>
   return if ENV.key?(&#39;UNITTEST&#39;)
 
-  tag = &quot;[#{colorize(tag, color)}]&quot;.bold
+  length = tag.length if length.zero?
+  tag = &quot;[#{colorize(tag.center(length), color)}]&quot;.bold
   msg = msg.bold if bold
   puts &quot;#{tag} #{msg}&quot;
 end
@@ -123,11 +124,8 @@ end
 # using the given color.
 #
 # Returns nothing.
-def stage_log(stage, msg, color: :green)
-  stages = %w[setup test build deploy post notify]
+def stage_log(stage, msg, color = :green)
   stage = stage.to_s.upcase
-  longest = stages.max { |left, right| left.length &lt;=&gt; right.length }.length
-  stage = &#39; &#39; * (longest - stage.length) + stage
   log(stage, msg, color, true)
 end
 </code>
