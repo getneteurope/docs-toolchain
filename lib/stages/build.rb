@@ -69,8 +69,9 @@ module Toolchain
       # or overwrite default attributes with a config file
       # NOTE Requires need to be required explicitly with require or require_relative
       # instead of being passed as options[:requires]
-      stage_log(:build, "HTML5 Multipage Backend loaded")
-      require File.join(::Toolchain.toolchain_path, 'lib/adoc-extensions.d/multipage_html5.rb')
+      stage_log(:build, 'HTML5 Multipage Backend loaded')
+      require File.join(File.expand_path(::Toolchain.toolchain_path),
+        'lib/adoc-extensions.d/multipage_html5.rb')
       options = {
         attributes: {
           'linkcss' => true,
