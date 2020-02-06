@@ -10,6 +10,9 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CompileSearchIndex < BaseProcess
+      SELECTOR_SECTIONS = '.sect2, .sect3'
+      SELECTOR_HEADINGS = 'h2, h3, h4'
+      SELECTOR_PARAGRAPHS = 'p'
       def initialize; end
 
       ##
@@ -53,21 +56,37 @@ module Toolchain
       # Generates lunr index .json file from HTML
       #
       def generate_index_json(html)
-        dom = Nokogiri::HTML(html)
+        page = Nokogiri::HTML(html)
+        ref = []
+        title = []
+        body = []
+        sections = page.css(SELECTOR_SECTIONS)
+        sections.each do |s|
+          headings = s.css(SELECTOR_HEADINGS)
+          paragraphs = s.css(SELECTOR_PARAGRAPHS)
+          headings.each do |h|
+            ref << h['id']
+            title << h.children.map do |c|
+              c.content
+            end.join
+          end
+          paragraphs.each do |p|
+            body << p.children.map do |c|
+              c.content
+            end.join
+          end
+        end
+        pp ref
+        pp title
+        pp body
+        exit
 
         js_context = V8::Context.new
         js_context.load(File.join(__dir__, '../', 'utils', 'lunr.js'))
         js_context.eval('lunr.Index.prototype.dumpIndex = function(){return JSON.stringify(this.toJSON());}')
         ref = js_context.eval('lunr')
   
-        fields = %w[title body]
-        lunr_conf = proc do |this|
-          this.ref('id')
-          fields.each do |name|
-            this.field(name) #, {:boost => boost})
-          end
-        end
-  
+        # TODO: rewrite this
         # function htmlElementsToJSON(listSelector, unmarshalFunction) {
         #   // add the list elements to lunr
         #   var qs = $(listSelector, "#content .sect2, #content .sect3");
@@ -85,14 +104,21 @@ module Toolchain
         #   return { id: ref, title: title, body: body };
         # });
 
-        docs = 
+
+        fields = %w[title body]
+        lunr_conf = proc do |this|
+          this.ref('id')
+          fields.each do |name|
+            this.field(name) #, {:boost => boost})
+          end
+        end
 
         idx = ref.call(lunr_conf)
         docs.each do |doc|
           idx.add(doc)
         end
   
-        data = JSON.parse(idx.dumpIndex(), max_nesting: false)
+        data = JSON.parse(idx.dumpIndex, max_nesting: false)
   
         { index: data, map: map }
       end
