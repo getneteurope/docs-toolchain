@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'asciidoctor'
+require_relative '../lib/utils/adoc.rb'
 
 def write_tempfile(name, content, prefix: 'test_toolchain_', suffix: nil)
   tempfile_path = File.join('/tmp', "#{prefix}#{name}#{suffix}")
@@ -47,6 +48,6 @@ end
 def init(content, name, filename = nil)
   filename = name + '.adoc' if filename.nil?
   tempfile_path = write_tempfile(filename, content)
-  adoc = load_doc(tempfile_path)
+  adoc = Toolchain::Adoc.load_doc(tempfile_path)
   return adoc
 end

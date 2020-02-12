@@ -3,6 +3,7 @@
 
 require 'asciidoctor'
 require_relative '../lib/stages/test.rb'
+require_relative '../lib/utils/adoc.rb'
 
 ##
 # Execute the test stage with +argv+ as argument vector.
@@ -36,15 +37,13 @@ def main(argv = ARGV)
   log('ARGS', args)
   log('INDEX', index_adoc)
 
-  ############# adoc, original = load_doc(index_adoc)
-  # included_files = adoc.catalog[:includes]
-  adoc = load_doc index_adoc
+  adoc = Toolchain::Adoc.load_doc(index_adoc)
   original = adoc.original
   parsed = adoc.parsed
   attributes = adoc.attributes
 
   included_files = parsed.catalog[:includes]
-  # included_files = load_doc(index_adoc)
+  # included_files = Toolchain::Adoc.load_doc(index_adoc)
   stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
   log('INCLUDES', included_files)
   log('ATTRIBUTES2', attributes)

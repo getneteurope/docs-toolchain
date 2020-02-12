@@ -2,8 +2,11 @@
 
 require_relative '../process_manager.rb'
 require_relative '../base_process.rb'
+require_relative '../utils/paths.rb'
+require_relative '../utils/adoc.rb'
 require 'v8'
 require 'nokogiri'
+require 'asciidoctor'
 
 module Toolchain
   module Pre
@@ -18,9 +21,16 @@ module Toolchain
       ##
       # Takes adoc Struct +adoc+
       # Returns .json search index for lunr
-      def run(adoc)
-       full_html = convert_full_to_html(adoc)
-       return generate_index_json(full_html)
+      def run(adoc = nil)
+        unless adoc.nil?
+          adoc = Toolchain::Adoc.load_doc(
+            File.join(Toolchain.content_path, 'content', 'index.adoc')
+          )
+        end
+        adoc = Toolchain::Adoc.load_doc(adoc) if adoc.is_a?(String)
+
+        full_html = convert_full_to_html(adoc)
+        return generate_index_json(full_html)
       end
 
       private
@@ -31,9 +41,11 @@ module Toolchain
       def combine_to_single_doc(adoc)
         parsed_adoc = adoc.parsed
         lines = parsed_adoc.reader.source_lines
-        reader = Asciidoctor::PreprocessorReader.new parsed_adoc, lines
+        reader = ::Asciidoctor::PreprocessorReader.new(parsed_adoc, lines)
         combined_source = reader.read_lines
-        return Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: adoc.attributes
+        return ::Asciidoctor::Document.new(
+          combined_source, safe: :unsafe, attributes: parsed_adoc.attributes
+        )
       end
 
       ##
@@ -56,7 +68,7 @@ module Toolchain
       # Generates lunr index .json file from HTML
       #
       def generate_index_json(html)
-        page = Nokogiri::HTML(html)
+        page = ::Nokogiri::HTML(html)
         ref = []
         title = []
         body = []
@@ -79,13 +91,14 @@ module Toolchain
         pp ref
         pp title
         pp body
-        exit
 
         js_context = V8::Context.new
-        js_context.load(File.join(__dir__, '../', 'utils', 'lunr.js'))
-        js_context.eval('lunr.Index.prototype.dumpIndex = function(){return JSON.stringify(this.toJSON());}')
+        js_context.load(File.join(__dir__, '..', 'utils', 'lunr.js'))
+        js_context.eval(
+          'lunr.Index.prototype.dumpIndex = function(){return JSON.stringify(this.toJSON());}'
+        )
         ref = js_context.eval('lunr')
-  
+
         # TODO: rewrite this
         # function htmlElementsToJSON(listSelector, unmarshalFunction) {
         #   // add the list elements to lunr
@@ -117,10 +130,9 @@ module Toolchain
         docs.each do |doc|
           idx.add(doc)
         end
-  
+
         data = JSON.parse(idx.dumpIndex, max_nesting: false)
-  
-        { index: data, map: map }
+        return { index: data, map: map }
       end
     end
   end
