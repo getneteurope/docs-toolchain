@@ -24,7 +24,7 @@ module Toolchain
         log(
           'PATTERN',
           "Blacklist file '#{blacklist_file}' not found. Skipping this test.",
-          color: :magenta
+          :magenta
         )
         return errors
       end
@@ -43,7 +43,7 @@ module Toolchain
           next unless line.match? pattern
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
-          log('PATTERN', msg, color: :magenta)
+          log('PATTERN', msg, :magenta)
           errors << create_error(
             msg: msg,
             location: Location.new(parsed.attr('docfile'), nil)

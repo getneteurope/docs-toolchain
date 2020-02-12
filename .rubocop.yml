@@ -5,6 +5,7 @@ AllCops:
     - lib/utils.rb
     - Gemfile
     - Rakefile
+    - lib/adoc-extensions.d/*.rb
 
 Layout:
   Enabled: false

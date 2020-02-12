@@ -11,6 +11,11 @@ def toolchain_path
 end
 
 namespace :docs do
+  desc 'Run through all stages'
+  task :all do
+    %w[test pre build post notify].each { |t| Rake::Task["docs:#{t}"].execute }
+  end
+
   desc 'Run test stage'
   task :test do
     debug = '--debug' if ENV.key?('DEBUG')

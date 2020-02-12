@@ -3,6 +3,7 @@
 require 'asciidoctor'
 require 'fileutils'
 require_relative '../log/log.rb'
+require_relative '../utils/paths.rb'
 
 ##
 # mkdir
@@ -36,6 +37,7 @@ module Toolchain
     # Returns nothing.
     #
     def self.setup(build_dir = DEFAULT_BUILD_DIR, content: 'content')
+      stage_log(:build, "setting up build dir @ #{build_dir}")
       raise "Directory '#{content}' does not exist" unless Dir.exist?(content.to_s)
 
       mkdir(build_dir)
@@ -65,15 +67,20 @@ module Toolchain
       # call asciidoctor
       # FIXME hardcoded, extract attributes and read config file from content repo
       # or overwrite default attributes with a config file
+      # NOTE Requires need to be required explicitly with require or require_relative
+      # instead of being passed as options[:requires]
+      stage_log(:build, 'HTML5 Multipage Backend loaded')
+      require File.join(File.expand_path(::Toolchain.toolchain_path),
+        'lib/adoc-extensions.d/multipage_html5.rb')
       options = {
-        requires: %w[],
         attributes: {
           'linkcss' => true,
           'stylesdir' => 'css',
           'stylesheet' => 'main.css',
           'icons' => 'font',
           'toc' => 'left',
-          'systemtimestamp' => %x(date +%s)
+          'systemtimestamp' => %x(date +%s),
+          'backend' => 'multipage_html5'
         },
         safe: :safe,
         failure_level: 'WARN'
@@ -82,17 +89,26 @@ module Toolchain
       # doc = Asciidoctor.load_file(index_path, options)
       # doc.convert
 
-      # move web resources to html/
+      # create HTML folder
       html_dir = File.join(build_dir, 'html')
       mkdir(html_dir)
 
-      index_html = "#{File.basename(index, '.adoc')}.html"
-      files_to_copy = %w[css js]
-      files_to_copy << index_html
-      files_to_copy.each do |file|
-        file = File.join(build_dir, file)
-        FileUtils.mv(file, html_dir, force: true) if File.exist?(file)
+      # move web pages to html/
+      Dir[File.join(build_dir, '*.html')].each do |html|
+        FileUtils.mv(html, html_dir, force: true)
       end
+
+      # move assets to html/
+      assets = %w[css js]
+      assets.each do |asset|
+        from_dir = File.join(build_dir, asset)
+        to_dir = File.join(html_dir, asset)
+        mkdir(to_dir)
+        Dir[File.join(from_dir, '*')].each do |file|
+          FileUtils.mv(file, to_dir)
+        end
+      end
+
       stage_log(:build, "Files are in #{html_dir}")
     end
   end
