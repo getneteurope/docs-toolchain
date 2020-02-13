@@ -68,10 +68,11 @@ module Toolchain
       # Generates lunr index .json file from HTML
       #
       def generate_index_json(html)
-        page = ::Nokogiri::HTML(html)
         ref = []
         title = []
         body = []
+
+        page = ::Nokogiri::HTML(html)
         sections = page.css(SELECTOR_SECTIONS)
         sections.each do |s|
           headings = s.css(SELECTOR_HEADINGS)
@@ -88,48 +89,35 @@ module Toolchain
             end.join
           end
         end
-        pp ref
-        pp title
-        pp body
+        # pp ref
+        # pp title
+        # pp body
 
-        js_context = V8::Context.new
-        js_context.load(File.join(__dir__, '..', 'utils', 'lunr.js'))
-        js_context.eval(
+        ctx = V8::Context.new
+        ctx.load(File.join(__dir__, '..', 'utils', 'lunr.js'))
+        ctx.eval(
           'lunr.Index.prototype.dumpIndex = function(){return JSON.stringify(this.toJSON());}'
         )
-        ref = js_context.eval('lunr')
+        lunrjs = ctx.eval('lunr')
 
-        # TODO: rewrite this
-        # function htmlElementsToJSON(listSelector, unmarshalFunction) {
-        #   // add the list elements to lunr
-        #   var qs = $(listSelector, "#content .sect2, #content .sect3");
-        #   var entries = [];
-        #   for (var i = 0; i < qs.length; i++) {
-        #     var $q = $(qs[i]);
-        #     entries.push(unmarshalFunction($q));
-        #   }
-        #   return entries;
-        # }
-        # var documents = htmlElementsToJSON(listSelector, function($element) {
-        #   var ref = $element.find("h2, h3, h4").attr('id');
-        #   var title = $element.find("h2, h3, h4").text();
-        #   var body = $element.find("p").text();
-        #   return { id: ref, title: title, body: body };
-        # });
-
-
-        fields = %w[title body]
-        lunr_conf = proc do |this|
+        lunr_callback = proc do |this|
           this.ref('id')
-          fields.each do |name|
-            this.field(name) #, {:boost => boost})
+          this.field('title')
+          this.field('body')
+
+          docs.each do |doc|
+            this.add(doc)
           end
         end
 
-        idx = ref.call(lunr_conf)
-        docs.each do |doc|
-          idx.add(doc)
-        end
+        # TODO
+        # write this using Nokogiri in Ruby:
+        # var documents = HTML2JSON(sectionSelector, sectionContext);
+
+        idx = lunrjs.call(lunr_callback)
+        # docs.each do |doc|
+        #   idx.add(doc)
+        # end
 
         data = JSON.parse(idx.dumpIndex, max_nesting: false)
         return { index: data, map: map }
