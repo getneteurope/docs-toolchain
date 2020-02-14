@@ -90,6 +90,8 @@
 
   <section class="description">
     
+<p>HTML5 Multipage Converter adapted <a href="Document.html"><code>Asciidoctor::Document</code></a></p>
+
   </section>
 
   
@@ -144,19 +146,21 @@
         <div class="method-description">
           
           <p>Extend sectnum() to use the Document&#39;s saved sectnum. Document objects normally do not have sectnums, but here Documents are generated from Sections. The sectnum is saved in section() below.</p>
+
+<p>Returns the formatted sectnum.</p>
           
           
 
           
           <div class="method-source-code" id="sectnum-source">
-            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sectnum</span>(<span class="ruby-identifier">delimiter</span> = <span class="ruby-string">&#39;.&#39;</span>, <span class="ruby-identifier">append</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">append</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">append</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">delimiter</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@level</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
     <span class="ruby-node">%(#{@numeral}#{append})</span>
   <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@level</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Section</span> <span class="ruby-operator">||</span>
-       (<span class="ruby-ivar">@mplevel</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>)
+        (<span class="ruby-ivar">@mplevel</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>)
       <span class="ruby-node">%(#{@parent.sectnum(delimiter)}#{@numeral}#{append})</span>
     <span class="ruby-keyword">else</span>
       <span class="ruby-node">%(#{@numeral}#{append})</span>

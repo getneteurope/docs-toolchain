@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-12 13:19:36 +0100'>2020-02-12 13:19:36 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 15:58:55 +0100'>2020-02-14 15:58:55 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">88</span><small> lines of codes</small></div>
+              <div><span class="metric">91</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">11.9</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">35.62</span><small> complexity</small></div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -102,7 +102,8 @@
 require &#39;ostruct&#39;
 
 module Toolchain
-  module Adoc<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain::Adoc has no descriptive comment</span>          </div>  </li></ol>
+  # Module containing Asciidoctor related Toolchain manipulations.
+  module Adoc
     ##
     # TODO: use a Struct instead of an OpenStruct (with proper documentation of the fields)
     #
@@ -142,6 +143,7 @@ module Toolchain
     ##
     # Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
     # Returns collection of attributes +attribs+.
+    #
     def self.collect_attributes(doc, attribs = {})
       # get initial attribs set in index
       attribs = get_mod_attrs_from_doc(doc) if attribs == {}
@@ -171,6 +173,7 @@ module Toolchain
 
     ##
     # Takes document +doc+.
+    #
     # Returns +attribs+ all attributes newly set in this document.
     #
     def self.get_mod_attrs_from_doc(doc)

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 15:38:02 +0100'>2020-01-31 15:38:02 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 15:58:55 +0100'>2020-02-14 15:58:55 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">42</span><small> lines of codes</small></div>
+              <div><span class="metric">67</span><small> lines of codes</small></div>
               <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">3.6</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">18.01</span><small> complexity</small></div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
-                smells
+                0
+                smell
               </a>
             </li>
           </ul>
@@ -102,18 +102,37 @@
 require &#39;singleton&#39;
 
 module Toolchain
-  class ProcessManager<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain::ProcessManager has no descriptive comment</span>          </div>  </li></ol>
+  # Class ProcessManager
+  # Used to register processes based on +BaseProcess+,
+  # which run either before or after the build phase (pre or post).
+  #
+  # This class is an abstract class that is the base for +PreProcessManager+
+  # and +PostProcessManager+.
+  class ProcessManager
     include Singleton
 
+    ##
+    # Register a process +proc+ and sort the list of registered
+    # processes by priority.
+    #
+    # Returns nothing.
+    #
     def register(proc)
       @processes &lt;&lt; proc
       @processes.sort_by!(&amp;:priority).reverse!
+      return nil
     end
 
+    ##
+    # Returns all registered processes as list.
+    #
     def get
       return @processes
     end
 
+    ##
+    # Run all registered processes as separate threads.
+    #
     def run
       threads = []
       @processes.each do |proc|
@@ -122,6 +141,8 @@ module Toolchain
       threads.map(&amp;:join)
     end
 
+    ##
+    # Delete all registered processes.
     def clear
       @processes.clear
     end
@@ -133,10 +154,14 @@ module Toolchain
     end
   end
 
-  class PreProcessManager &lt; ProcessManager<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain::PreProcessManager has no descriptive comment</span>          </div>  </li></ol>
+  # Class representing the manager for all processes which
+  # need to be run during the *Pre Processing* stage.
+  class PreProcessManager &lt; ProcessManager
   end
 
-  class PostProcessManager &lt; ProcessManager<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain::PostProcessManager has no descriptive comment</span>          </div>  </li></ol>
+  # Class representing the manager for all processes which
+  # need to be run during the *Post Processing* stage.
+  class PostProcessManager &lt; ProcessManager
   end
 end
 </code>

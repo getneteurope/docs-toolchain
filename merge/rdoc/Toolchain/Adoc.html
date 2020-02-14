@@ -87,6 +87,8 @@
 
   <section class="description">
     
+<p>Module containing <a href="../Asciidoctor.html"><code>Asciidoctor</code></a> related <a href="../Toolchain.html"><code>Toolchain</code></a> manipulations.</p>
+
   </section>
 
   
@@ -125,7 +127,7 @@
 
           
           <div class="method-source-code" id="collect_attributes-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 46</span>
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">collect_attributes</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attribs</span> = {})
   <span class="ruby-comment"># get initial attribs set in index</span>
   <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">attribs</span> <span class="ruby-operator">==</span> {}
@@ -175,13 +177,15 @@
 
         <div class="method-description">
           
-          <p>Takes document <code>doc</code>. Returns <code>attribs</code> all attributes newly set in this document.</p>
+          <p>Takes document <code>doc</code>.</p>
+
+<p>Returns <code>attribs</code> all attributes newly set in this document.</p>
           
           
 
           
           <div class="method-source-code" id="get_mod_attrs_from_doc-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 77</span>
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>)
   <span class="ruby-identifier">attribs</span> = {}
   <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">convert</span>
@@ -224,7 +228,7 @@
 
           
           <div class="method-source-code" id="load_doc-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 15</span>
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_doc</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">attribs</span> = {})
   <span class="ruby-identifier">original</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">load_file</span>(
     <span class="ruby-identifier">filename</span>,

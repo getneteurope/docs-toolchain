@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-04 09:28:49 +0100'>2020-02-04 09:28:49 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 15:58:55 +0100'>2020-02-14 15:58:55 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">20</span><small> lines of codes</small></div>
+              <div><span class="metric">34</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">3.7</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">7.4</span><small> complexity</small></div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -104,16 +104,30 @@ require_relative &#39;./utils/paths.rb&#39;
 module Toolchain
   ##
   # Foundation for all pre and post processing related steps.
-  # {priority} will determine the order in which processes are run.
+  # The field {priority} will determine the order in which processes are run.
   class BaseProcess
-    attr_accessor :priority<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Attribute.md" target="_blank"><b>Attribute</b></a>        </span>      </div>      <span>Toolchain::BaseProcess#priority is a writable attribute</span>          </div>  </li></ol>
+    # Describes the order in which processes are executed.
+    attr_reader :priority
 
+    ##
+    # Create a new process with priority +priority+ (default: 0).
+    #
+    # Returns a new process object with {priority}.
+    #
     def initialize(priority = 0)
       @priority = priority
     end
 
+    ##
+    # Runs the process.
+    # Takes no arguments.
+    #
+    # Returns nothing, but throws an exception if not implemented
+    # in the supclass.
+    #
     def run
-      raise NotImplementedError.new, &quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;
+      raise NotImplementedError.new,
+        &quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;
     end
   end
 end

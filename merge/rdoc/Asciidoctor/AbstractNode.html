@@ -90,6 +90,8 @@
 
   <section class="description">
     
+<p>HTML5 Multipage Converter adapted <a href="AbstractNode.html"><code>Asciidoctor::AbstractNode</code></a></p>
+
   </section>
 
   
@@ -123,12 +125,14 @@
         <div class="method-description">
           
           <p>Is this node (self) of interest when generating a TOC for node?</p>
+
+<p>Returns true if node is of interest, false otherwise.</p>
           
           
 
           
           <div class="method-source-code" id="related_to-3F-source">
-            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 50</span>
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">related_to?</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">level</span>.<span class="ruby-identifier">zero?</span>
 
@@ -139,7 +143,7 @@
     <span class="ruby-identifier">current</span> = <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">node_tree</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">self</span>) <span class="ruby-operator">||</span>
-     <span class="ruby-identifier">node_tree</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">parent</span>)
+      <span class="ruby-identifier">node_tree</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">parent</span>)
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
   <span class="ruby-keyword">end</span>
 

@@ -92,7 +92,7 @@
 
   <section class="description">
     
-<p>Foundation for all pre and post processing related steps. {priority} will determine the order in which processes are run.</p>
+<p>Foundation for all pre and post processing related steps. The field {priority} will determine the order in which processes are run.</p>
 
   </section>
 
@@ -114,12 +114,12 @@
       <div id="attribute-i-priority" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">priority</span><span
-            class="attribute-access-type">[RW]</span>
+            class="attribute-access-type">[R]</span>
         </div>
 
         <div class="method-description">
         
-        
+        <p>Describes the order in which processes are executed.</p>
         
         </div>
       </div>
@@ -147,13 +147,15 @@
 
         <div class="method-description">
           
-          
+          <p>Create a new process with priority <code>priority</code> (default: 0).</p>
+
+<p>Returns a new process object with {priority}.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/base_process.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/base_process.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
   <span class="ruby-ivar">@priority</span> = <span class="ruby-identifier">priority</span>
 <span class="ruby-keyword">end</span></pre>
@@ -188,15 +190,18 @@
 
         <div class="method-description">
           
-          
+          <p>Runs the process. Takes no arguments.</p>
+
+<p>Returns nothing, but throws an exception if not implemented in the supclass.</p>
           
           
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/base_process.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/base_process.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
-  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>.<span class="ruby-identifier">new</span>, <span class="ruby-node">&quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>.<span class="ruby-identifier">new</span>,
+    <span class="ruby-node">&quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
