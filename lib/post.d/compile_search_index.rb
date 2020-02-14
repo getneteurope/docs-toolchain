@@ -29,15 +29,37 @@ module Toolchain
       # Returns JSON search index for lunr
       #
       def run(html = nil)
-        htmls = (html.is_a?(Array) ? html : [html])
+        htmls = (html.is_a?(Array) ? html : [html]) unless html.nil?
+        htmls = Dir[File.join(Toolchain.build_path, 'html', '*.html')]
+        ConfigManager.instance.get('search.index.exclude').each do |pattern|
+          htmls.delete_if do |f|
+            !!(File.basename(f) =~ _create_regex(pattern))
+          end
+        end
 
         index = generate_index(htmls)
-        File.open('lunrindex.json', 'w') do |f|
+        index_file = ConfigManager.instance.get(
+          'search.index.file', default: 'lunrindex.json'
+        )
+        index_file = File.join(Toolchain.build_path, 'html', index_file)
+        File.open(index_file, 'w') do |f|
           f.write(index)
         end
       end
 
       private
+      ##
+      # Creates a Regex object from a wildcard string +pattern+.
+      # https://stackoverflow.com/a/6449534
+      #
+      # Returns valid Regex.
+      #
+      def _create_regex(pattern)
+        escaped = Regexp.escape(pattern).gsub('\*','.*?')
+        return Regexp.new("^#{escaped}$", Regexp::IGNORECASE)
+      end
+
+
       ##
       # Parse a single HTML file +html_file+.
       # This will convert the document to a Nokogiri object and

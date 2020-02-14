@@ -2,6 +2,7 @@
 
 require 'asciidoctor'
 require 'fileutils'
+require_relative '../config_manager.rb'
 require_relative '../log/log.rb'
 require_relative '../utils/paths.rb'
 
@@ -29,7 +30,8 @@ module Toolchain
     # Setup build directory.
     #
     # Params:
-    # * +build_dir+ Build directory (default: +DEFAULT_BUILD_DIR+)
+    # * +build_dir+ Build directory
+    #               (default: ConfigManager[:build_dir] || +DEFAULT_BUILD_DIR+)
     # * +content+   Content directory (default: _content_)
     #
     # Raises error if directory does not exist.
@@ -37,6 +39,7 @@ module Toolchain
     # Returns nothing.
     #
     def self.setup(build_dir = DEFAULT_BUILD_DIR, content: 'content')
+      build_dir = ConfigManager.instance.get('build.dir', default: build_dir)
       stage_log(:build, "setting up build dir @ #{build_dir}")
       raise "Directory '#{content}' does not exist" unless Dir.exist?(content.to_s)
 

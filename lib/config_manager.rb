@@ -49,8 +49,11 @@ module Toolchain
     # Load configuration from +file+.
     #
     # Returns the configuration as hash (YAML parsed)
-    def load(file)
+    def load(
+      file = File.join(Toolchain.toolchain_path, 'config', 'default.yaml')
+    )
       @config = YAML.load_file(file)
+      @loaded = true
     end
 
     ##
@@ -71,13 +74,24 @@ module Toolchain
     # The +identifier+ is a string in the format _key1.key2.key3_,
     # where keyX is the key for the Xth level of the +@config+ hash.
     #
+    # The named parameter +default+ will be used as fallback if set.
+    #
     # Returns the corresponding value for +identifier+.
     # Returns +@config+ if +identifier+ is nil.
-    def get(identifier = nil)
+    # Returns +default+ if result is nil and +identifier+ is not nil.
+    def get(identifier = nil, default: nil)
+      load unless @loaded
       return @config if identifier.nil?
 
       keys = identifier.split('.')
-      return get_recursively(@config, keys)
+      return get_recursively(@config, keys) || default
+    end
+
+    private
+
+    def initialize
+      @loaded = false
+      @config = nil
     end
   end
 end
