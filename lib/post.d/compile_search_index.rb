@@ -26,9 +26,11 @@ module Toolchain
       # Takes a single HTML file or a list of HTML files (+html+).
       # If not provided, the HTML will be inferred from +$CONTENT_PATH+.
       #
+      # +outfile+ is used to write to a specific file for unit tests.
+      #
       # Returns JSON search index for lunr
       #
-      def run(html = nil)
+      def run(html = nil, outfile: nil)
         htmls = (html.is_a?(Array) ? html : [html]) unless html.nil?
         htmls = Dir[File.join(Toolchain.build_path, 'html', '*.html')]
         ConfigManager.instance.get('search.index.exclude').each do |pattern|
@@ -42,9 +44,11 @@ module Toolchain
           'search.index.file', default: 'lunrindex.json'
         )
         index_file = File.join(Toolchain.build_path, 'html', index_file)
+        index_file = outfile unless outfile.nil?
         File.open(index_file, 'w') do |f|
-          f.write(index)
+          f.write(JSON.generate(index))
         end
+        return index
       end
 
       private
