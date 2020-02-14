@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-05 17:00:57 +0100'>2020-02-05 17:00:57 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 10:54:18 +0100'>2020-02-14 10:54:18 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">31</span><small> lines of codes</small></div>
-              <div><span class="metric">2</span><small> methods</small></div>
+              <div><span class="metric">41</span><small> lines of codes</small></div>
+              <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">12.6</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">10.5</span><small> complexity/method</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">25.25</span><small> complexity</small></div>
+              <div><span class="metric">31.61</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -99,10 +99,12 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
+require_relative &#39;../config_manager.rb&#39;
+
 module Toolchain<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain has no descriptive comment</span>          </div>  </li></ol>
   ##
   # content_path
-  # Returns path to content directory +content_dir_path+.
+  # Returns path to content directory root.
   #
   def self.content_path(path = nil)
     content_dir_path = Dir.pwd
@@ -117,7 +119,7 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
 
   ##
   # toolchain_path
-  # Returns path to toolchain +toolchain_dir_path+.
+  # Returns path to toolchain root.
   #
   def self.toolchain_path(path = nil)
     toolchain_dir_path = File.join(Dir.pwd, &#39;toolchain&#39;)
@@ -126,6 +128,14 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
     # For Unit testing:
     toolchain_dir_path = path unless path.nil?
     return toolchain_dir_path
+  end
+
+  ##
+  # build_path
+  # Returns path to toolchain build directory.
+  #
+  def self.build_path(path = nil)
+    return (path.nil? ? ConfigManager.instance.get(&#39;build.dir&#39;) : path)
   end
 end
 </code>

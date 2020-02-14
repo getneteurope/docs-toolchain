@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module Toolchain::Adoc - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-collect_attributes">::collect_attributes</a>
+    
+    <li ><a href="#method-c-get_mod_attrs_from_doc">::get_mod_attrs_from_doc</a>
+    
+    <li ><a href="#method-c-load_doc">::load_doc</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-Toolchain::Adoc">
+  <h1 id="module-Toolchain::Adoc" class="module">
+    module Toolchain::Adoc
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-collect_attributes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">collect_attributes</span><span
+            class="method-args">(doc, attribs = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Recursively loops thourgh asdciidoc includes and collects their newly set attributes. Returns collection of attributes <code>attribs</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="collect_attributes-source">
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">collect_attributes</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attribs</span> = {})
+  <span class="ruby-comment"># get initial attribs set in index</span>
+  <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">attribs</span> <span class="ruby-operator">==</span> {}
+  <span class="ruby-identifier">incs</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:includes</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">to_set</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">attribs</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">incs</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">document_base_dir</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">base_dir</span>
+  <span class="ruby-identifier">incs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">inc</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">inc_file_path</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">normalize_asset_path</span>(<span class="ruby-identifier">inc</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.adoc&#39;</span>)
+    <span class="ruby-identifier">doc</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">load_file</span>(
+      <span class="ruby-identifier">inc_file_path</span>,
+      <span class="ruby-value">base_dir:</span> <span class="ruby-identifier">document_base_dir</span>,
+      <span class="ruby-value">catalog_assets:</span> <span class="ruby-keyword">true</span>,
+      <span class="ruby-value">sourcemap:</span> <span class="ruby-keyword">true</span>,
+      <span class="ruby-value">safe:</span> <span class="ruby-value">:unsafe</span>,
+      <span class="ruby-value">parse:</span> <span class="ruby-keyword">false</span>,
+      <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attribs</span>
+    )
+    <span class="ruby-comment"># combine new modified attr from current file with existing attribs</span>
+    <span class="ruby-identifier">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">attribs</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">collect_attributes</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attribs</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">attribs</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-get_mod_attrs_from_doc" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_mod_attrs_from_doc</span><span
+            class="method-args">(doc)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Takes document <code>doc</code>. Returns <code>attribs</code> all attributes newly set in this document.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_mod_attrs_from_doc-source">
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>)
+  <span class="ruby-identifier">attribs</span> = {}
+  <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">convert</span>
+  <span class="ruby-identifier">attrs_mod</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">instance_variable_get</span> <span class="ruby-value">:@attributes_modified</span>
+  <span class="ruby-identifier">attrs_mod</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">_v</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">attribs</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">k</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">attribs</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-load_doc" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_doc</span><span
+            class="method-args">(filename, attribs = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>TODO: use a Struct instead of an OpenStruct (with proper documentation of the fields)</p>
+
+<p>Load adoc file <code>filename</code>, convert given the parameters <code>safe</code> and <code>parse</code> <a href="https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html">discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html</a></p>
+
+<p>Returns a pair of converted adoc <code>adoc</code>, original adoc <code>original</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_doc-source">
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_doc</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">attribs</span> = {})
+  <span class="ruby-identifier">original</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">load_file</span>(
+    <span class="ruby-identifier">filename</span>,
+    <span class="ruby-value">catalog_assets:</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">sourcemap:</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">safe:</span> <span class="ruby-value">:unsafe</span>,
+    <span class="ruby-value">parse:</span> <span class="ruby-keyword">false</span>,
+    <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attribs</span>
+  )
+  <span class="ruby-identifier">parsed</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">load_file</span>(
+    <span class="ruby-identifier">filename</span>,
+    <span class="ruby-value">catalog_assets:</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">sourcemap:</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">safe:</span> <span class="ruby-value">:unsafe</span>,
+    <span class="ruby-value">parse:</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attribs</span>
+  )
+  <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">collect_attributes</span> <span class="ruby-identifier">parsed</span>, <span class="ruby-identifier">attribs</span>
+
+  <span class="ruby-identifier">adoc</span> = <span class="ruby-operator">::</span><span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-value">original:</span> <span class="ruby-identifier">original</span>,
+    <span class="ruby-value">parsed:</span> <span class="ruby-identifier">parsed</span>,
+    <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attributes</span>,
+    <span class="ruby-value">filename:</span> <span class="ruby-identifier">filename</span>
+  )
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">adoc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 12:56:57 +0100'>2020-01-31 12:56:57 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-05 09:36:02 +0100'>2020-02-05 09:36:02 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">14</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">14.4</span><small> complexity/method</small></div>
-              <div><span class="metric">36</span><small> churn</small></div>
+              <div><span class="metric">14.3</span><small> complexity/method</small></div>
+              <div><span class="metric">37</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">201.01</span><small> complexity</small></div>
+              <div><span class="metric">199.57</span><small> complexity</small></div>
               <div><span class="metric">126</span><small> duplications</small></div>
             </div>
           </div>
@@ -200,7 +200,7 @@ include::#{attr_in_anchors_inc2_file_name}[]
 
 //- comment
     &quot;
-    attr_in_anchors_filepath = write_tempfile(&#39;attributes_in_anchors.adoc&#39;, adoc_content)
+    #attr_in_anchors_filepath = write_tempfile(&#39;attributes_in_anchors.adoc&#39;, adoc_content)
     adoc = init(adoc_content, &quot;#{self.class.name}_#{__method__}&quot;)
     errors = Toolchain::IdChecker.new.run(adoc)
     assert_equal(1, errors.length)

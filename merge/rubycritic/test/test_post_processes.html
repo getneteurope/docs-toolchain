@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-12 13:19:36 +0100'>2020-02-12 13:19:36 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 13:36:59 +0100'>2020-02-14 13:36:59 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>test /</small> util.rb</h3>
+      <h3><small>test /</small> test_post_processes.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">53</span><small> lines of codes</small></div>
-              <div><span class="metric">7</span><small> methods</small></div>
+              <div><span class="metric">34</span><small> lines of codes</small></div>
+              <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">4.4</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">8.7</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">31.06</span><small> complexity</small></div>
+              <div><span class="metric">8.65</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                4
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -99,56 +99,37 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require &#39;asciidoctor&#39;
-require_relative &#39;../lib/utils/adoc.rb&#39;
+require_relative &#39;../lib/post.d/compile_search_index.rb&#39;
+require_relative &#39;./util.rb&#39;
+require &#39;zlib&#39;
 
-def write_tempfile(name, content, prefix: &#39;test_toolchain_&#39;, suffix: nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>write_tempfile has 4 parameters</span>          </div>  </li></ol>
-  tempfile_path = File.join(&#39;/tmp&#39;, &quot;#{prefix}#{name}#{suffix}&quot;)
-  tmp = File.open(tempfile_path, &#39;w+&#39;)
-  begin
-    tmp.write(content)
-  ensure
-    tmp.close
+
+
+class TestCompileSearchIndex &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestCompileSearchIndex has no descriptive comment</span>          </div>  </li></ol>
+  ##
+  # Creates lunr index json from an adoc file with include(s)
+  #
+  def test_compile_search_index
+    content =
+      &#39;&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;div id=&quot;content&quot;&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h3&gt;My First Heading&lt;/h1&gt;
+&lt;p&gt;My first paragraph.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;&#39;
+    outfile = &#39;/tmp/test_index.json&#39;
+    index = with_tempfile(content) do |file|
+      Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile)
+    end
+    assert_equal(1338626705, Zlib.crc32(index.inspect))
   end
-  log(&#39;TMP_FILE&#39;, tempfile_path, :gray)
-  return tempfile_path
-end
-
-def with_tempfile(content)
-  file = write_tempfile(&#39;tmpfile&#39;, content, prefix: &#39;unittest_&#39;) # write tempfile with content
-  yield(file) # call block with file as argument
-end
-
-def with_captured_stdout
-  return with_captured(stderr: false) { yield }
-end
-
-def with_captured_stderr
-  return with_captured(stdout: false) { yield }
-end
-
-##
-# https://stackoverflow.com/a/22777806
-def with_captured(stdout: true, stderr: true)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>with_captured has boolean parameter 'stderr'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>with_captured has boolean parameter 'stdout'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>with_captured doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
-  original = [$stdout, $stderr]
-  tmp = StringIO.new
-  $stdout = tmp if stdout
-  $stderr = tmp if stderr
-  yield
-  return tmp.string
-ensure
-  $stdout, $stderr = original
-end
-
-def assert_any_startwith(errors, text)
-  assert_true(errors.any? { |err| err[:msg].start_with?(text) })
-end
-
-def init(content, name, filename = nil)
-  filename = name + &#39;.adoc&#39; if filename.nil?
-  tempfile_path = write_tempfile(filename, content)
-  adoc = Toolchain::Adoc.load_doc(tempfile_path)
-  return adoc
 end
 </code>
   </div>
