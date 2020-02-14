@@ -10,9 +10,12 @@ require 'v8'
 require 'json'
 
 module Toolchain
+  ##
+  # Adds modules for postprocessing files.
   module Post
     ##
-    # Adds modules for postprocessing files.
+    # Provides an interface to create a lunr search index
+    # from the generated HTML files.
     class CompileSearchIndex < BaseProcess
       SELECTOR_SECTIONS = '#content .sect1, #content .sect2, #content .sect3'
       SELECTOR_HEADINGS = 'h2, h3, h4'
@@ -28,21 +31,36 @@ module Toolchain
       def run(html = nil)
         htmls = (html.is_a?(Array) ? html : [html])
 
-        index = generate_index_json(htmls)
-        # TODO write index to file
+        index = generate_index(htmls)
+        File.open('lunrindex.json', 'w') do |f|
+          f.write(index)
+        end
       end
 
       private
+      ##
+      # Parse a single HTML file +html_file+.
+      # This will convert the document to a Nokogiri object and
+      # parse each section.
+      # Returns the collective +docs+ list of relevant information
+      # to build the lunr index.
       def _parse_html(html_file)
         html = File.open(html_file, 'r') do |f|
           ::Nokogiri::HTML(f.read)
         end
+
         sections = html.search(SELECTOR_SECTIONS)
         docs = sections.map { |s| _parse_section(s) }
-        puts docs.inspect
         return docs
       end
 
+      ##
+      # Parse a Nokogiri section +sect+ and return relevant information
+      # for lunr.
+      # Included information is +ref+, the reference or id,
+      # +title+, the header of the section and
+      # +body+, the text of all p tags below the section div.
+      # Returns Hash +{ id, title, body }+
       def _parse_section(sect)
         header = sect.search(SELECTOR_HEADINGS).first
         ps = sect.search(XPATH_PARAGRAPHS)
@@ -55,13 +73,18 @@ module Toolchain
       end
 
       ##
-      # Generates lunr index .json file from HTML
+      # Generates lunr index .json file from HTMLs.
+      # +htmls+ is a list of strings, representing the HTML file names.
+      # Returns the index JSON for lunr.
       #
-      def generate_index_json(htmls)
+      def generate_index(htmls)
         docs = []
-        htmls.each { |html| docs += _parse_html(html) }
-        puts '=== DOCS ==='
-        puts docs
+        lookup = {}
+        htmls.each do |html|
+          curr = _parse_html(html)
+          curr.each { |e| lookup[e[:id]] = html}
+          docs += curr
+        end
 
         ctx = V8::Context.new
         ctx.load(File.join(__dir__, '..', 'utils', 'lunr.js'))
@@ -71,7 +94,6 @@ module Toolchain
            }'
         )
 
-        puts '///  JS  ///'
         lunrjs = ctx.eval('lunr')
         lunr_callback = proc do |this|
           this.ref('id')
@@ -87,8 +109,10 @@ module Toolchain
         idxjs = lunrjs.call(lunr_callback)
 
         index = ::JSON.parse(idxjs.dumpIndex, max_nesting: false)
-        puts '=== DATA ==='
-        pp index
+        if ENV.key?('DEBUG')
+          puts '=== DATA ==='
+          pp index
+        end
         return index
       end
     end
