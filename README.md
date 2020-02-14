@@ -7,7 +7,7 @@
 Toolchain for TecDoc managed documentation repositories
 
 <div align="center">
-  
+
 [![Built with Ruby](https://forthebadge.com/images/badges/made-with-ruby.svg)](https://forthebadge.com) [![Built with Science](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![Uses Badges](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com) [![Approved](https://forthebadge.com/images/badges/approved-by-george-costanza.svg)](https://forthebadge.com)
 
 </div>
@@ -24,7 +24,7 @@ Under heavy development, everything is subject to change and most likely will no
 * [RubyCritic](https://wirecard.github.io/docs-toolchain/rubycritic)
 
 
-## Stages
+## Stages (out-of-date)
 The toolchain is designed to run through different stages, that have specific responsibilities:
 1. **setup**: install required dependencies
 2. **test**:
@@ -58,7 +58,7 @@ The toolchain is designed to run through different stages, that have specific re
     * required variables, see [Configuration/Secret/AWS](#Secret)
 6. **notify**:
     * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
-    
+
 ## Development
 Quality assurance:
 * `rake toolchain:lint` calls rubocop
@@ -84,7 +84,7 @@ Configuration files are public.
 
 **Needed:**
 * `SLACK_TOKEN` (Optional)
-    
+
 The **test** and **build** stages produce `/tmp/slack.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
 `lib/notify/slack.rb` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
 
