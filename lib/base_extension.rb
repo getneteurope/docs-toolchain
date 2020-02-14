@@ -29,6 +29,12 @@ module Toolchain
   # Toolchain::ExtensionManager.instance.register(Toolchain::ExampleChecker.new)
   #
   class BaseExtension
+    ##
+    # Create an error using +msg+ stating the error at +location+.
+    #
+    # This method supports further extension through the hash option +extras+.
+    #
+    # Returns the formatted error according to +Toolchain::ExtensionManager#create_error+.
     def create_error(msg:, location: nil, extras: nil)
       return Toolchain::ExtensionManager.create_error(
         msg: msg, type: self.class.name, location: location, extras: extras
@@ -47,7 +53,8 @@ module Toolchain
     # Returns an array of Hashes of errors (can be empty if no errors found).
     #
     def run(_adoc)
-      raise NotImplementedError.new, "#{self.class.name}: no implementation for 'run'"
+      raise NotImplementedError.new,
+        "#{self.class.name}: no implementation for 'run'"
     end
   end
 end

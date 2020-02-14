@@ -5,16 +5,30 @@ require_relative './utils/paths.rb'
 module Toolchain
   ##
   # Foundation for all pre and post processing related steps.
-  # {priority} will determine the order in which processes are run.
+  # The field {priority} will determine the order in which processes are run.
   class BaseProcess
-    attr_accessor :priority
+    # Describes the order in which processes are executed.
+    attr_reader :priority
 
+    ##
+    # Create a new process with priority +priority+ (default: 0).
+    #
+    # Returns a new process object with {priority}.
+    #
     def initialize(priority = 0)
       @priority = priority
     end
 
+    ##
+    # Runs the process.
+    # Takes no arguments.
+    #
+    # Returns nothing, but throws an exception if not implemented
+    # in the supclass.
+    #
     def run
-      raise NotImplementedError.new, "#{self.class.name}: no implementation for 'run'"
+      raise NotImplementedError.new,
+        "#{self.class.name}: no implementation for 'run'"
     end
   end
 end

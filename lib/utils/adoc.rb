@@ -3,6 +3,7 @@
 require 'ostruct'
 
 module Toolchain
+  # Module containing Asciidoctor related Toolchain manipulations.
   module Adoc
     ##
     # TODO: use a Struct instead of an OpenStruct (with proper documentation of the fields)
@@ -43,6 +44,7 @@ module Toolchain
     ##
     # Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
     # Returns collection of attributes +attribs+.
+    #
     def self.collect_attributes(doc, attribs = {})
       # get initial attribs set in index
       attribs = get_mod_attrs_from_doc(doc) if attribs == {}
@@ -72,6 +74,7 @@ module Toolchain
 
     ##
     # Takes document +doc+.
+    #
     # Returns +attribs+ all attributes newly set in this document.
     #
     def self.get_mod_attrs_from_doc(doc)

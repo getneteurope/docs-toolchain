@@ -18,11 +18,14 @@ module Toolchain
       end
 
       ##
-      # Combines js files referenced in docinfo{,-footer}.html to a single .js file
-      # and transpiles them with BabelJS
-      # then reinserts the combined and transpiled file as script tags into tbe html files
-      # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
+      # Combines JS files referenced in docinfo{,-footer}.html
+      # into a single .js file, transpiles them with BabelJS and
+      # then reinserts the combined and transpiled file as
+      # script tags into the HTML files.
+      #
+      # Returns the results of the substitution.
       def run(filepaths = nil)
+        # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
         content_path = File.join(::Toolchain.content_path, 'content')
         header_path = filepaths.nil? ? File.join(content_path, @header_name_default) : filepaths.header
         footer_path = filepaths.nil? ? File.join(content_path, @footer_name_default) : filepaths.footer
@@ -55,13 +58,21 @@ module Toolchain
       ##
       # Remove all <script src="..."/> tags and replace with single <script src="blob"/>
       # Takes +path+ and string +js_blob+ as input
+      #
       # Returns html string +html_string+
-      # TODO: solve this with nokogiri fragment parser (which either removes needed or adds unnecessary tags..)
+      #
       def replace_js_tags_with_blob(path, js_blob)
+        # TODO: solve this with nokogiri fragment parser (which either
+        # removes needed or adds unnecessary tags..)
+        #
         # derive .js path from html filename
         # e.g. docinfo-footer.html => content/js/docinfo-footer.js
-        js_blob_path = File.join(::Toolchain.content_path, 'js', File.basename(path, File.extname(path)) + '_blob.js')
-        js_blob_path_relative = js_blob_path.delete_prefix(::Toolchain.content_path + '/').delete_prefix('content/')
+        js_blob_path = File.join(
+          ::Toolchain.content_path, 'js', File.basename(path, '.*') + '_blob.js'
+        )
+        js_blob_path_relative = js_blob_path
+          .delete_prefix(::Toolchain.content_path + '/')
+          .delete_prefix('content/')
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
@@ -70,10 +81,13 @@ module Toolchain
 
         # get lines where there are script tags with src attribute
         scripts_line_numbers = []
-        html_content_lines.each_with_index { |l, i| scripts_line_numbers << i if l.match?(SCRIPT_TAG_REGEX) }
+        html_content_lines.each_with_index do |l, i|
+          scripts_line_numbers << i if l.match?(SCRIPT_TAG_REGEX)
+        end
 
         # replace last script tag with blob script tag
-        html_content_lines[scripts_line_numbers.pop] = '<script src="' + js_blob_path_relative + '"></script>' + "\n"
+        html_content_lines[scripts_line_numbers.pop] =
+          "<script src=\"#{js_blob_path_relative}\"></script>\n"
 
         # remove all other script tags that use src attribute
         scripts_line_numbers.each { |i| html_content_lines[i] = nil }.reject(&:nil?)
@@ -84,7 +98,9 @@ module Toolchain
 
       ##
       # Replaces all js tags in an html file +path+ with a tag that includes one big blob js.
-      # Writes to file and returns +path+ or nil if an error occurred.
+      #
+      # Returns an OpenStruct +{ path, js_blob, html }+.
+      #
       def combine_and_replace_js(path)
         js_blob = combine_js(path)
         js_blob = Babel::Transpiler.transform(js_blob)['code']
