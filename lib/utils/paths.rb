@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require_relative '../config_manager.rb'
+
 module Toolchain
   ##
   # content_path
-  # Returns path to content directory +content_dir_path+.
+  # Returns path to content directory root.
   #
   def self.content_path(path = nil)
     content_dir_path = Dir.pwd
@@ -18,7 +20,7 @@ module Toolchain
 
   ##
   # toolchain_path
-  # Returns path to toolchain +toolchain_dir_path+.
+  # Returns path to toolchain root.
   #
   def self.toolchain_path(path = nil)
     toolchain_dir_path = File.join(Dir.pwd, 'toolchain')
@@ -27,5 +29,13 @@ module Toolchain
     # For Unit testing:
     toolchain_dir_path = path unless path.nil?
     return toolchain_dir_path
+  end
+
+  ##
+  # build_path
+  # Returns path to toolchain build directory.
+  #
+  def self.build_path(path = nil)
+    return (path.nil? ? ConfigManager.instance.get('build.dir') : path)
   end
 end
