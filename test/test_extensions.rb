@@ -101,7 +101,7 @@ include::#{attr_in_anchors_inc2_file_name}[]
 
 //- comment
     "
-    attr_in_anchors_filepath = write_tempfile('attributes_in_anchors.adoc', adoc_content)
+    #attr_in_anchors_filepath = write_tempfile('attributes_in_anchors.adoc', adoc_content)
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
     errors = Toolchain::IdChecker.new.run(adoc)
     assert_equal(1, errors.length)

@@ -7,7 +7,7 @@ AllCops:
     - Rakefile
     - lib/adoc-extensions.d/*.rb
 
-Metrics/LineLength:
+Layout:
   Enabled: false
 
 # Lint/NonDeterministicRequireOrder:

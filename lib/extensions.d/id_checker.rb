@@ -27,10 +27,10 @@ module Toolchain
       lines = parsed.reader.read_lines
       lines = parsed.reader.source_lines if lines.empty?
 
-      reader = Asciidoctor::PreprocessorReader.new parsed, lines
+      reader = ::Asciidoctor::PreprocessorReader.new parsed, lines
       combined_source = reader.read_lines
 
-      doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
+      doc = ::Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
       doc.convert
       adoc_ids = doc.catalog[:refs].keys.to_set
 

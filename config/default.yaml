@@ -1,3 +1,15 @@
+build:
+  dir: /tmp/build
+
+checkers:
+  pattern:
+      - blacklist: blacklist.txt
+
+search:
+  index:
+    file: lunrindex.json
+    exclude:
+      - docinfo*.html
 
 log:
   path: /tmp/log.json
@@ -6,6 +18,4 @@ notify:
   slack:
       file: /tmp/slack.json
 
-checkers:
-  pattern:
-      - blacklist: blacklist.txt
+
