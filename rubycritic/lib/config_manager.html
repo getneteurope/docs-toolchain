@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-21 14:25:22 +0100'>2020-01-21 14:25:22 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 14:48:56 +0100'>2020-02-14 14:48:56 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">83</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">97</span><small> lines of codes</small></div>
+              <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">4.0</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">4.6</span><small> complexity/method</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">20.16</span><small> complexity</small></div>
+              <div><span class="metric">27.57</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -141,15 +141,18 @@ module Toolchain
   # Configurations can be changed via certain files or direct calls
   # to +ConfigManager+.
   #
-  class ConfigManager<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Toolchain::ConfigManager assumes too much for instance variable '@config'</span>          </div>  </li></ol>
+  class ConfigManager
     include Singleton
 
     ##
     # Load configuration from +file+.
     #
     # Returns the configuration as hash (YAML parsed)
-    def load(file)
+    def load(
+      file = File.join(Toolchain.toolchain_path, &#39;config&#39;, &#39;default.yaml&#39;)
+    )
       @config = YAML.load_file(file)
+      @loaded = true
     end
 
     ##
@@ -170,13 +173,24 @@ module Toolchain
     # The +identifier+ is a string in the format _key1.key2.key3_,
     # where keyX is the key for the Xth level of the +@config+ hash.
     #
+    # The named parameter +default+ will be used as fallback if set.
+    #
     # Returns the corresponding value for +identifier+.
     # Returns +@config+ if +identifier+ is nil.
-    def get(identifier = nil)
+    # Returns +default+ if result is nil and +identifier+ is not nil.
+    def get(identifier = nil, default: nil)
+      load unless @loaded
       return @config if identifier.nil?
 
       keys = identifier.split(&#39;.&#39;)
-      return get_recursively(@config, keys)
+      return get_recursively(@config, keys) || default
+    end
+
+    private
+
+    def initialize
+      @loaded = false
+      @config = nil
     end
   end
 end

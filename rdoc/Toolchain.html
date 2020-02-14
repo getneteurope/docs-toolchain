@@ -68,6 +68,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-build_path">::build_path</a>
+    
     <li ><a href="#method-c-content_path">::content_path</a>
     
     <li ><a href="#method-c-format_net_exception">::format_net_exception</a>
@@ -129,6 +131,39 @@
        </header>
 
     
+      <div id="method-c-build_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">build_path</span><span
+            class="method-args">(path = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="Toolchain.html#method-c-build_path"><code>build_path</code></a> Returns path to toolchain build directory.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="build_path-source">
+            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build_path</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">return</span> (<span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.dir&#39;</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">path</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-c-content_path" class="method-detail ">
         
         <div class="method-heading">
@@ -142,13 +177,13 @@
 
         <div class="method-description">
           
-          <p><a href="Toolchain.html#method-c-content_path"><code>content_path</code></a> Returns path to content directory <code>content_dir_path</code>.</p>
+          <p><a href="Toolchain.html#method-c-content_path"><code>content_path</code></a> Returns path to content directory root.</p>
           
           
 
           
           <div class="method-source-code" id="content_path-source">
-            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 8</span>
+            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">content_path</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">content_dir_path</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>
   <span class="ruby-identifier">content_dir_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>, <span class="ruby-string">&#39;..&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;toolchain&#39;</span>
@@ -226,13 +261,13 @@
 
         <div class="method-description">
           
-          <p><a href="Toolchain.html#method-c-toolchain_path"><code>toolchain_path</code></a> Returns path to toolchain <code>toolchain_dir_path</code>.</p>
+          <p><a href="Toolchain.html#method-c-toolchain_path"><code>toolchain_path</code></a> Returns path to toolchain root.</p>
           
           
 
           
           <div class="method-source-code" id="toolchain_path-source">
-            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 23</span>
+            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">toolchain_path</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">toolchain_dir_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>, <span class="ruby-string">&#39;toolchain&#39;</span>)
   <span class="ruby-identifier">toolchain_dir_path</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">toolchain_dir_path</span>)

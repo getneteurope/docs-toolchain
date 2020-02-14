@@ -52,7 +52,7 @@
       </span>
     </div>
     <div>
-      <h3><small>lib/utils /</small> paths.rb</h3>
+      <h3><small>lib/utils /</small> adoc.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">41</span><small> lines of codes</small></div>
+              <div><span class="metric">88</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">10.5</span><small> complexity/method</small></div>
-              <div><span class="metric">5</span><small> churn</small></div>
+              <div><span class="metric">11.9</span><small> complexity/method</small></div>
+              <div><span class="metric">1</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">31.61</span><small> complexity</small></div>
+              <div><span class="metric">35.62</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
-                smell
+                2
+                smells
               </a>
             </li>
           </ul>
@@ -99,43 +99,90 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require_relative &#39;../config_manager.rb&#39;
+require &#39;ostruct&#39;
 
-module Toolchain<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain has no descriptive comment</span>          </div>  </li></ol>
-  ##
-  # content_path
-  # Returns path to content directory root.
-  #
-  def self.content_path(path = nil)
-    content_dir_path = Dir.pwd
-    content_dir_path = File.join(Dir.pwd, &#39;..&#39;) if File.basename(Dir.pwd) == &#39;toolchain&#39;
-    content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
-      if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
-    content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)
-    # For Unit testing:
-    content_dir_path = path unless path.nil?
-    return content_dir_path
-  end
+module Toolchain
+  module Adoc<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain::Adoc has no descriptive comment</span>          </div>  </li></ol>
+    ##
+    # TODO: use a Struct instead of an OpenStruct (with proper documentation of the fields)
+    #
+    # Load adoc file +filename+, convert given the parameters +safe+ and +parse+
+    # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
+    #
+    # Returns a pair of converted adoc +adoc+, original adoc +original+
+    #
+    def self.load_doc(filename, attribs = {})
+      original = ::Asciidoctor.load_file(
+        filename,
+        catalog_assets: true,
+        sourcemap: true,
+        safe: :unsafe,
+        parse: false,
+        attributes: attribs
+      )
+      parsed = ::Asciidoctor.load_file(
+        filename,
+        catalog_assets: true,
+        sourcemap: true,
+        safe: :unsafe,
+        parse: true,
+        attributes: attribs
+      )
+      attributes = collect_attributes parsed, attribs
 
-  ##
-  # toolchain_path
-  # Returns path to toolchain root.
-  #
-  def self.toolchain_path(path = nil)
-    toolchain_dir_path = File.join(Dir.pwd, &#39;toolchain&#39;)
-    toolchain_dir_path = Dir.pwd unless File.exist?(toolchain_dir_path)
-    toolchain_dir_path = ENV[&#39;TOOLCHAIN_PATH&#39;] if ENV.key?(&#39;TOOLCHAIN_PATH&#39;)
-    # For Unit testing:
-    toolchain_dir_path = path unless path.nil?
-    return toolchain_dir_path
-  end
+      adoc = ::OpenStruct.new(
+        original: original,
+        parsed: parsed,
+        attributes: attributes,
+        filename: filename
+      )
+      return adoc
+    end
 
-  ##
-  # build_path
-  # Returns path to toolchain build directory.
-  #
-  def self.build_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.dir&#39;) : path)
+    ##
+    # Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
+    # Returns collection of attributes +attribs+.
+    def self.collect_attributes(doc, attribs = {})
+      # get initial attribs set in index
+      attribs = get_mod_attrs_from_doc(doc) if attribs == {}
+      incs = doc.catalog[:includes].keys.to_set
+      return attribs if incs.empty?
+
+      document_base_dir = doc.base_dir
+      incs.each do |inc|
+        inc_file_path = doc.normalize_asset_path(inc + &#39;.adoc&#39;)
+        doc = ::Asciidoctor.load_file(
+          inc_file_path,
+          base_dir: document_base_dir,
+          catalog_assets: true,
+          sourcemap: true,
+          safe: :unsafe,
+          parse: false,
+          attributes: attribs
+        )
+        # combine new modified attr from current file with existing attribs
+        get_mod_attrs_from_doc(doc).each do |k, v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Adoc#self.collect_attributes contains iterators nested 2 deep</span>          </div>  </li></ol>
+          attribs[k] = v
+        end
+        collect_attributes(doc, attribs)
+      end
+      attribs
+    end
+
+    ##
+    # Takes document +doc+.
+    # Returns +attribs+ all attributes newly set in this document.
+    #
+    def self.get_mod_attrs_from_doc(doc)
+      attribs = {}
+      doc.convert
+      attrs_mod = doc.instance_variable_get :@attributes_modified
+      attrs_mod.each do |k, _v|
+        attribs[k] = doc.attributes[k]
+      end
+      attribs
+    end
+
   end
 end
 </code>

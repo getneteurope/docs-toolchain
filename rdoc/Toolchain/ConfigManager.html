@@ -86,6 +86,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-new">::new</a>
+    
     <li ><a href="#method-i-get">#get</a>
     
     <li ><a href="#method-i-load">#load</a>
@@ -122,6 +124,48 @@
     
 
     
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
+  <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
@@ -132,7 +176,7 @@
         
         <div class="method-heading">
           <span class="method-name">get</span><span
-            class="method-args">(identifier = nil)</span>
+            class="method-args">(identifier = nil, default: nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -145,18 +189,21 @@
 
 <p>The <code>identifier</code> is a string in the format <em>key1.key2.key3</em>, where keyX is the key for the Xth level of the +@config+ hash.</p>
 
-<p>Returns the corresponding value for <code>identifier</code>. Returns +@config+ if <code>identifier</code> is nil.</p>
+<p>The named parameter <code>default</code> will be used as fallback if set.</p>
+
+<p>Returns the corresponding value for <code>identifier</code>. Returns +@config+ if <code>identifier</code> is nil. Returns <code>default</code> if result is nil and <code>identifier</code> is not nil.</p>
           
           
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 76</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>(<span class="ruby-identifier">identifier</span> = <span class="ruby-keyword">nil</span>)
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>(<span class="ruby-identifier">identifier</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-value">default:</span> <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">load</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@loaded</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@config</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">nil?</span>
 
   <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">keys</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">keys</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">default</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -172,7 +219,7 @@
         
         <div class="method-heading">
           <span class="method-name">load</span><span
-            class="method-args">(file)</span>
+            class="method-args">( file = File.join(Toolchain.toolchain_path, &#39;config&#39;, &#39;default.yaml&#39;) )</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -190,8 +237,11 @@
           
           <div class="method-source-code" id="load-source">
             <pre><span class="ruby-comment"># File lib/config_manager.rb, line 52</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>(<span class="ruby-identifier">file</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>(
+  <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">toolchain_path</span>, <span class="ruby-string">&#39;config&#39;</span>, <span class="ruby-string">&#39;default.yaml&#39;</span>)
+)
   <span class="ruby-ivar">@config</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">file</span>)
+  <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">true</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -226,7 +276,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 63</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">update</span>(<span class="ruby-identifier">file</span>)
   <span class="ruby-identifier">update</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">file</span>)
   <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">merge_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">update</span>)

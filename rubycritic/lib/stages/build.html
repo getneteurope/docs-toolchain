@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-06 13:09:32 +0100'>2020-02-06 13:09:32 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 14:48:56 +0100'>2020-02-14 14:48:56 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">115</span><small> lines of codes</small></div>
+              <div><span class="metric">118</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">14.4</span><small> complexity/method</small></div>
-              <div><span class="metric">9</span><small> churn</small></div>
+              <div><span class="metric">15.2</span><small> complexity/method</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">43.12</span><small> complexity</small></div>
+              <div><span class="metric">45.66</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -101,6 +101,7 @@
 
 require &#39;asciidoctor&#39;
 require &#39;fileutils&#39;
+require_relative &#39;../config_manager.rb&#39;
 require_relative &#39;../log/log.rb&#39;
 require_relative &#39;../utils/paths.rb&#39;
 
@@ -128,7 +129,8 @@ module Toolchain
     # Setup build directory.
     #
     # Params:
-    # * +build_dir+ Build directory (default: +DEFAULT_BUILD_DIR+)
+    # * +build_dir+ Build directory
+    #               (default: ConfigManager[:build_dir] || +DEFAULT_BUILD_DIR+)
     # * +content+   Content directory (default: _content_)
     #
     # Raises error if directory does not exist.
@@ -136,6 +138,7 @@ module Toolchain
     # Returns nothing.
     #
     def self.setup(build_dir = DEFAULT_BUILD_DIR, content: &#39;content&#39;)
+      build_dir = ConfigManager.instance.get(&#39;build.dir&#39;, default: build_dir)
       stage_log(:build, &quot;setting up build dir @ #{build_dir}&quot;)
       raise &quot;Directory &#39;#{content}&#39; does not exist&quot; unless Dir.exist?(content.to_s)
 

@@ -154,7 +154,7 @@
 
           
           <div class="method-source-code" id="build-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 62</span>
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">index:</span> <span class="ruby-string">&#39;index.adoc&#39;</span>)
   <span class="ruby-identifier">index_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">index</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-node">&quot;File #{index_path} does not exist&quot;</span> <span class="ruby-keyword">unless</span>
@@ -234,7 +234,9 @@
 
 <p>Params:</p>
 <ul><li>
-<p><code>build_dir</code> <a href="Build.html"><code>Build</code></a> directory (default: <code>DEFAULT_BUILD_DIR</code>)</p>
+<p><code>build_dir</code> <a href="Build.html"><code>Build</code></a> directory</p>
+
+<pre>(default: ConfigManager[:build_dir] || +DEFAULT_BUILD_DIR+)</pre>
 </li><li>
 <p><code>content</code>   Content directory (default: <em>content</em>)</p>
 </li></ul>
@@ -247,8 +249,9 @@
 
           
           <div class="method-source-code" id="setup-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">setup</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">content:</span> <span class="ruby-string">&#39;content&#39;</span>)
+  <span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.dir&#39;</span>, <span class="ruby-value">default:</span> <span class="ruby-identifier">build_dir</span>)
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;setting up build dir @ #{build_dir}&quot;</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Directory &#39;#{content}&#39; does not exist&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">content</span>.<span class="ruby-identifier">to_s</span>)
 
