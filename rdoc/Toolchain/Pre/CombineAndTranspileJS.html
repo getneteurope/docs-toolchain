@@ -156,7 +156,7 @@
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
-  <span class="ruby-ivar">@header_name_default</span> = <span class="ruby-string">&#39;docinfo.html&#39;</span>
+  <span class="ruby-ivar">@header_name_default</span> = <span class="ruby-string">&#39;docinfo-header.html&#39;</span>
   <span class="ruby-ivar">@footer_name_default</span> = <span class="ruby-string">&#39;docinfo-footer.html&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -190,13 +190,15 @@
 
         <div class="method-description">
           
-          <p>Replaces all js tags in an html file <code>path</code> with a tag that includes one big blob js. Writes to file and returns <code>path</code> or nil if an error occurred.</p>
+          <p>Replaces all js tags in an html file <code>path</code> with a tag that includes one big blob js.</p>
+
+<p>Returns an OpenStruct +{ path, js_blob, html }+.</p>
           
           
 
           
           <div class="method-source-code" id="combine_and_replace_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 88</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace_js</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">js_blob</span> = <span class="ruby-identifier">combine_js</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">js_blob</span> = <span class="ruby-constant">Babel</span><span class="ruby-operator">::</span><span class="ruby-constant">Transpiler</span>.<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">js_blob</span>)[<span class="ruby-string">&#39;code&#39;</span>]
@@ -241,7 +243,7 @@
 
           
           <div class="method-source-code" id="combine_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_js</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">seperator</span> = <span class="ruby-string">&quot;\n\n&quot;</span>)
   <span class="ruby-identifier">get_script_src_from_html_file</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">s</span>)
@@ -280,7 +282,7 @@
 
           
           <div class="method-source-code" id="get_script_src_from_html_file-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 109</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 125</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_script_src_from_html_file</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path</span>)
     <span class="ruby-comment"># raise Exception.new(&quot;Could not read html file &quot; + path)</span>
@@ -330,18 +332,27 @@
 
         <div class="method-description">
           
-          <p>Remove all &lt;script src=“…”/&gt; tags and replace with single &lt;script src=“blob”/&gt; Takes <code>path</code> and string <code>js_blob</code> as input Returns html string <code>html_string</code> TODO: solve this with nokogiri fragment parser (which either removes needed or adds unnecessary tags..)</p>
+          <p>Remove all &lt;script src=“…”/&gt; tags and replace with single &lt;script src=“blob”/&gt; Takes <code>path</code> and string <code>js_blob</code> as input</p>
+
+<p>Returns html string <code>html_string</code></p>
           
           
 
           
           <div class="method-source-code" id="replace_js_tags_with_blob-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 60</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">replace_js_tags_with_blob</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">js_blob</span>)
+  <span class="ruby-comment"># TODO: solve this with nokogiri fragment parser (which either</span>
+  <span class="ruby-comment"># removes needed or adds unnecessary tags..)</span>
+  <span class="ruby-comment">#</span>
   <span class="ruby-comment"># derive .js path from html filename</span>
   <span class="ruby-comment"># e.g. docinfo-footer.html =&gt; content/js/docinfo-footer.js</span>
-  <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>, <span class="ruby-string">&#39;js&#39;</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;_blob.js&#39;</span>)
-  <span class="ruby-identifier">js_blob_path_relative</span> = <span class="ruby-identifier">js_blob_path</span>.<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>).<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-string">&#39;content/&#39;</span>)
+  <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(
+    <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>, <span class="ruby-string">&#39;js&#39;</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;.*&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;_blob.js&#39;</span>
+  )
+  <span class="ruby-identifier">js_blob_path_relative</span> = <span class="ruby-identifier">js_blob_path</span>
+    .<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>)
+    .<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-string">&#39;content/&#39;</span>)
   <span class="ruby-identifier">js_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">js_blob_path</span>)
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">js_dir</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">js_dir</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">js_blob_path</span>, <span class="ruby-string">&#39;w+&#39;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">js_blob</span>) }
@@ -350,10 +361,13 @@
 
   <span class="ruby-comment"># get lines where there are script tags with src attribute</span>
   <span class="ruby-identifier">scripts_line_numbers</span> = []
-  <span class="ruby-identifier">html_content_lines</span>.<span class="ruby-identifier">each_with_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">l</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">scripts_line_numbers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-constant">SCRIPT_TAG_REGEX</span>) }
+  <span class="ruby-identifier">html_content_lines</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">l</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">scripts_line_numbers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-constant">SCRIPT_TAG_REGEX</span>)
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># replace last script tag with blob script tag</span>
-  <span class="ruby-identifier">html_content_lines</span>[<span class="ruby-identifier">scripts_line_numbers</span>.<span class="ruby-identifier">pop</span>] = <span class="ruby-string">&#39;&lt;script src=&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">js_blob_path_relative</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&gt;&lt;/script&gt;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+  <span class="ruby-identifier">html_content_lines</span>[<span class="ruby-identifier">scripts_line_numbers</span>.<span class="ruby-identifier">pop</span>] =
+    <span class="ruby-node">&quot;&lt;script src=\&quot;#{js_blob_path_relative}\&quot;&gt;&lt;/script&gt;\n&quot;</span>
 
   <span class="ruby-comment"># remove all other script tags that use src attribute</span>
   <span class="ruby-identifier">scripts_line_numbers</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">html_content_lines</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-keyword">nil</span> }.<span class="ruby-identifier">reject</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:nil?</span>)
@@ -384,14 +398,17 @@
 
         <div class="method-description">
           
-          <p>Combines js files referenced in docinfo{,-footer}.html to a single .js file and transpiles them with BabelJS then reinserts the combined and transpiled file as script tags into tbe html files TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html</p>
+          <p>Combines JS files referenced in docinfo{,-footer}.html into a single .js file, transpiles them with BabelJS and then reinserts the combined and transpiled file as script tags into the HTML files.</p>
+
+<p>Returns the results of the substitution.</p>
           
           
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">filepaths</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-comment"># TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html</span>
   <span class="ruby-identifier">content_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>, <span class="ruby-string">&#39;content&#39;</span>)
   <span class="ruby-identifier">header_path</span> = <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">content_path</span>, <span class="ruby-ivar">@header_name_default</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">header</span>
   <span class="ruby-identifier">footer_path</span> = <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">content_path</span>, <span class="ruby-ivar">@footer_name_default</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">footer</span>

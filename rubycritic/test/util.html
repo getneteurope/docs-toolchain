@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-14 14:48:56 +0100'>2020-02-14 14:48:56 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-17 11:31:20 +0100'>2020-02-17 11:31:20 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">7</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">4.4</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">4.5</span><small> complexity/method</small></div>
+              <div><span class="metric">12</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">31.06</span><small> complexity</small></div>
+              <div><span class="metric">31.71</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -114,8 +114,8 @@ def write_tempfile(name, content, prefix: &#39;test_toolchain_&#39;, suffix: nil
   return tempfile_path
 end
 
-def with_tempfile(content)
-  file = write_tempfile(&#39;tmpfile&#39;, content, prefix: &#39;unittest_&#39;) # write tempfile with content
+def with_tempfile(content, suffix = &#39;&#39;)
+  file = write_tempfile(&#39;tmpfile&#39;, content, prefix: &#39;unittest_&#39;, suffix: suffix) # write tempfile with content
   yield(file) # call block with file as argument
 end
 

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-04 11:52:08 +0100'>2020-02-04 11:52:08 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-17 10:58:41 +0100'>2020-02-17 10:58:41 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">139</span><small> lines of codes</small></div>
+              <div><span class="metric">155</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">18.3</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">17.4</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">109.77</span><small> complexity</small></div>
+              <div><span class="metric">104.46</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -112,16 +112,19 @@ module Toolchain
       SCRIPT_TAG_REGEX = %r{&lt;script\ .*\ *src=[&#39;&quot;](?&lt;source&gt;[a-zA-Z0-9_\.\-/]+)[&#39;&quot;]&gt;}.freeze
 
       def initialize
-        @header_name_default = &#39;docinfo.html&#39;
+        @header_name_default = &#39;docinfo-header.html&#39;
         @footer_name_default = &#39;docinfo-footer.html&#39;
       end
 
       ##
-      # Combines js files referenced in docinfo{,-footer}.html to a single .js file
-      # and transpiles them with BabelJS
-      # then reinserts the combined and transpiled file as script tags into tbe html files
-      # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
+      # Combines JS files referenced in docinfo{,-footer}.html
+      # into a single .js file, transpiles them with BabelJS and
+      # then reinserts the combined and transpiled file as
+      # script tags into the HTML files.
+      #
+      # Returns the results of the substitution.
       def run(filepaths = nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#run has a flog score of 27</span>          </div>  </li></ol>
+        # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
         content_path = File.join(::Toolchain.content_path, &#39;content&#39;)
         header_path = filepaths.nil? ? File.join(content_path, @header_name_default) : filepaths.header
         footer_path = filepaths.nil? ? File.join(content_path, @footer_name_default) : filepaths.footer
@@ -154,13 +157,21 @@ module Toolchain
       ##
       # Remove all &lt;script src=&quot;...&quot;/&gt; tags and replace with single &lt;script src=&quot;blob&quot;/&gt;
       # Takes +path+ and string +js_blob+ as input
+      #
       # Returns html string +html_string+
-      # TODO: solve this with nokogiri fragment parser (which either removes needed or adds unnecessary tags..)
-      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 37</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+      #
+      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 32</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+        # TODO: solve this with nokogiri fragment parser (which either
+        # removes needed or adds unnecessary tags..)
+        #
         # derive .js path from html filename
         # e.g. docinfo-footer.html =&gt; content/js/docinfo-footer.js
-        js_blob_path = File.join(::Toolchain.content_path, &#39;js&#39;, File.basename(path, File.extname(path)) + &#39;_blob.js&#39;)
-        js_blob_path_relative = js_blob_path.delete_prefix(::Toolchain.content_path + &#39;/&#39;).delete_prefix(&#39;content/&#39;)
+        js_blob_path = File.join(
+          ::Toolchain.content_path, &#39;js&#39;, File.basename(path, &#39;.*&#39;) + &#39;_blob.js&#39;
+        )
+        js_blob_path_relative = js_blob_path
+          .delete_prefix(::Toolchain.content_path + &#39;/&#39;)
+          .delete_prefix(&#39;content/&#39;)
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, &#39;w+&#39;) { |file| file.puts(js_blob) }
@@ -169,10 +180,13 @@ module Toolchain
 
         # get lines where there are script tags with src attribute
         scripts_line_numbers = []
-        html_content_lines.each_with_index { |l, i| scripts_line_numbers &lt;&lt; i if l.match?(SCRIPT_TAG_REGEX) }
+        html_content_lines.each_with_index do |l, i|
+          scripts_line_numbers &lt;&lt; i if l.match?(SCRIPT_TAG_REGEX)
+        end
 
         # replace last script tag with blob script tag
-        html_content_lines[scripts_line_numbers.pop] = &#39;&lt;script src=&quot;&#39; + js_blob_path_relative + &#39;&quot;&gt;&lt;/script&gt;&#39; + &quot;\n&quot;
+        html_content_lines[scripts_line_numbers.pop] =
+          &quot;&lt;script src=\&quot;#{js_blob_path_relative}\&quot;&gt;&lt;/script&gt;\n&quot;
 
         # remove all other script tags that use src attribute
         scripts_line_numbers.each { |i| html_content_lines[i] = nil }.reject(&amp;:nil?)
@@ -183,7 +197,9 @@ module Toolchain
 
       ##
       # Replaces all js tags in an html file +path+ with a tag that includes one big blob js.
-      # Writes to file and returns +path+ or nil if an error occurred.
+      #
+      # Returns an OpenStruct +{ path, js_blob, html }+.
+      #
       def combine_and_replace_js(path)
         js_blob = combine_js(path)
         js_blob = Babel::Transpiler.transform(js_blob)[&#39;code&#39;]

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-14 14:48:56 +0100'>2020-02-14 14:48:56 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-17 11:31:20 +0100'>2020-02-17 11:31:20 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">34</span><small> lines of codes</small></div>
+              <div><span class="metric">47</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">8.7</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">8.65</span><small> complexity</small></div>
@@ -113,22 +113,35 @@ class TestCompileSearchIndex &lt; Test::Unit::TestCase<ol class="nocode errors s
     content =
       &#39;&lt;!DOCTYPE html&gt;
 &lt;html&gt;
+&lt;head&gt;&lt;title&gt;Unit test&lt;/title&gt;&lt;/head&gt;
 &lt;body&gt;
 
 &lt;div id=&quot;content&quot;&gt;
+
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;ApplePay_Main&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#ApplePay_Main&quot;&gt;&lt;/a&gt;&lt;a class=&quot;link&quot; href=&quot;#ApplePay_Main&quot;&gt;Apple Pay&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Test Apple Pay paragraph is here.&lt;/p&gt;
+&lt;/div&gt;
+
 &lt;div class=&quot;sect3&quot;&gt;
-&lt;h3&gt;My First Heading&lt;/h1&gt;
+&lt;h3 id=&quot;first-head&quot;&gt;My First Heading&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;My first paragraph.&lt;/p&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
 &lt;/div&gt;
 
 &lt;/body&gt;
 &lt;/html&gt;&#39;
     outfile = &#39;/tmp/test_index.json&#39;
-    index = with_tempfile(content) do |file|
+    index = with_tempfile(content, &#39;_CompileSearchIndex&#39;) do |file|
       Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile)
     end
-    assert_equal(1338626705, Zlib.crc32(index.inspect))
+    assert_equal(4202139800, Zlib.crc32(index.inspect))
   end
 end
 </code>

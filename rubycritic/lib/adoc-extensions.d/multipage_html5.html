@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-05 17:00:36 +0100'>2020-02-05 17:00:36 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-14 15:58:55 +0100'>2020-02-14 15:58:55 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">595</span><small> lines of codes</small></div>
+              <div><span class="metric">624</span><small> lines of codes</small></div>
               <div><span class="metric">19</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">27.9</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">530.37</span><small> complexity</small></div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                40
+                34
                 smells
               </a>
             </li>
@@ -139,13 +139,18 @@
 
 require &#39;asciidoctor/converter/html5&#39;
 
-class Asciidoctor::AbstractBlock<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Asciidoctor::AbstractBlock has no descriptive comment</span>          </div>  </li></ol>
+# HTML5 Multipage Converter adapted Asciidoctor::AbstractBlock
+class Asciidoctor::AbstractBlock
   # Allow navigation links HTML to be saved and retrieved
   attr_accessor :nav_links<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Attribute.md" target="_blank"><b>Attribute</b></a>        </span>      </div>      <span>Asciidoctor::AbstractBlock#nav_links is a writable attribute</span>          </div>  </li></ol>
 end
 
-class Asciidoctor::AbstractNode<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Asciidoctor::AbstractNode has no descriptive comment</span>          </div>  </li></ol>
+# HTML5 Multipage Converter adapted Asciidoctor::AbstractNode
+class Asciidoctor::AbstractNode
   # Is this node (self) of interest when generating a TOC for node?
+  #
+  # Returns true if node is of interest, false otherwise.
+  #
   def related_to?(node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Asciidoctor::AbstractNode#related_to? has a flog score of 26</span>          </div>  </li></ol>
     return true if level.zero?
 
@@ -156,7 +161,7 @@ class Asciidoctor::AbstractNode<ol class="nocode errors smells">  <li>    <div c
       current = current.parent
     end
     if node_tree.include?(self) ||
-       node_tree.include?(parent)
+        node_tree.include?(parent)
       return true
     end
 
@@ -174,7 +179,8 @@ class Asciidoctor::AbstractNode<ol class="nocode errors smells">  <li>    <div c
   end
 end
 
-class Asciidoctor::Document<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Document assumes too much for instance variable '@sectnum'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Asciidoctor::Document has no descriptive comment</span>          </div>  </li></ol>
+# HTML5 Multipage Converter adapted Asciidoctor::Document
+class Asciidoctor::Document<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Document assumes too much for instance variable '@sectnum'</span>          </div>  </li></ol>
   # Allow writing to the :catalog attribute in order to duplicate refs list to
   # new pages
   attr_writer :catalog<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Attribute.md" target="_blank"><b>Attribute</b></a>        </span>      </div>      <span>Asciidoctor::Document#catalog is a writable attribute</span>          </div>  </li></ol>
@@ -195,31 +201,37 @@ class Asciidoctor::Document<ol class="nocode errors smells">  <li>    <div class
   # no need for a TOC. However, we override the Html5Converter outline() in
   # order to generate a custom TOC for each page with entries that span the
   # entire document.
+  #
   def sections?
     return !sections.empty?
   end
 
   # Return the saved section number for this Document object (which was
   # originally a Section)
+  #
   def sectnum(delimiter = nil, append = nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>Asciidoctor::Document#sectnum has unused parameter 'append'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>Asciidoctor::Document#sectnum has unused parameter 'delimiter'</span>          </div>  </li></ol>
     @sectnum
   end
 end
 
-class Asciidoctor::Section<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@level'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@mplevel'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@numeral'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@parent'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Asciidoctor::Section has no descriptive comment</span>          </div>  </li></ol>
+# HTML5 Multipage Converter adapted Asciidoctor::Document
+class Asciidoctor::Section<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@level'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@mplevel'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@numeral'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::Section assumes too much for instance variable '@parent'</span>          </div>  </li></ol>
   # Allow the section type (:root, :branch, :leaf) to be saved for each section
   attr_accessor :mplevel<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Attribute.md" target="_blank"><b>Attribute</b></a>        </span>      </div>      <span>Asciidoctor::Section#mplevel is a writable attribute</span>          </div>  </li></ol>
 
   # Extend sectnum() to use the Document&#39;s saved sectnum. Document objects
   # normally do not have sectnums, but here Documents are generated from
   # Sections. The sectnum is saved in section() below.
+  #
+  # Returns the formatted sectnum.
+  #
   def sectnum(delimiter = &#39;.&#39;, append = nil)
     append ||= (append == false ? &#39;&#39; : delimiter)
     if @level == 1
       %(#{@numeral}#{append})
     elsif @level &gt; 1
       if @parent.class == Asciidoctor::Section ||
-         (@mplevel &amp;&amp; @parent.class == Asciidoctor::Document)
+          (@mplevel &amp;&amp; @parent.class == Asciidoctor::Document)
         %(#{@parent.sectnum(delimiter)}#{@numeral}#{append})
       else
         %(#{@numeral}#{append})
@@ -230,7 +242,8 @@ class Asciidoctor::Section<ol class="nocode errors smells">  <li>    <div class=
   end
 end
 
-class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>MultipageHtml5Converter assumes too much for instance variable '@catalog'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>MultipageHtml5Converter has no descriptive comment</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Instance-Variables.md" target="_blank"><b>TooManyInstanceVariables</b></a>        </span>      </div>      <span>MultipageHtml5Converter has at least 5 instance variables</span>          </div>  </li></ol>
+# HTML5 Multipage Converter based on HTML5 Converter
+class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>MultipageHtml5Converter assumes too much for instance variable '@catalog'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Instance-Variables.md" target="_blank"><b>TooManyInstanceVariables</b></a>        </span>      </div>      <span>MultipageHtml5Converter has at least 5 instance variables</span>          </div>  </li></ol>
   include Asciidoctor
   include Asciidoctor::Converter
   include Asciidoctor::Writer
@@ -246,20 +259,30 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
   end
 
   # Add navigation links to the page (from nav_links)
+  #
+  # Returns nothing.
+  #
   def add_nav_links(page)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>MultipageHtml5Converter#add_nav_links doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
     block = Asciidoctor::Block.new(parent = page,
-                                   :paragraph,
-                                   opts = { source: page.nav_links })
+      :paragraph,
+      opts = { source: page.nav_links })
     block.add_role(&#39;nav-footer&#39;)
     page &lt;&lt; block
   end
 
+  # Extend Asciidoctor&#39;s convert().
+  #
+  # Returns transformed node.
+  #
   def convert(node, transform = nil, opts = {})
     transform ||= node.node_name
     opts.empty? ? (send transform, node) : (send transform, node, opts)
   end
 
   # Process Document (either the original full document or a processed page)
+  #
+  # Returns converted node.
+  #
   def document(node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>MultipageHtml5Converter#document has a flog score of 64</span>          </div>  </li></ol>
     if node.processed
       # This node can now be handled by Html5Converter.
@@ -295,18 +318,18 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
       # that are specified before any sections).
       node.id = node.attributes[&#39;docname&#39;]
       node.register(:refs, [node.id,
-                            Inline.new(parent = node,
-                                       context = :anchor,
-                                       text = node.doctitle,
-                                       opts = { type: :ref,
-                                                id: node.id }),
-                            node.doctitle])
+        Inline.new(parent = node,
+          context = :anchor,
+          text = node.doctitle,
+          opts = { type: :ref,
+            id: node.id }),
+        node.doctitle])
 
       # Generate navigation links for all pages
       generate_nav_links(node)
 
       # Create and save a skeleton document for generating the TOC lists.
-      @@full_outline = new_outline_doc(node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L210" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L425" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L427" class="js-smell-location">2</a>                  </div>  </li></ol>
+      @@full_outline = new_outline_doc(node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L233" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L448" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L450" class="js-smell-location">2</a>                  </div>  </li></ol>
       # Save the document catalog to use for each part/chapter page.
       @catalog = node.catalog
 
@@ -370,8 +393,8 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
         links &lt;&lt; %( &lt;&lt;#{next_page.id}&gt;&gt; →)
       end
       block = Asciidoctor::Block.new(parent = doc,
-                                     context = :paragraph,
-                                     opts = { source: links.join(&#39; | &#39;), subs: :default })
+        context = :paragraph,
+        opts = { source: links.join(&#39; | &#39;), subs: :default })
       page.nav_links = block.content
     end
     return
@@ -420,10 +443,10 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
 
       # Finish in a manner similar to Html5Converter outline()
       if slevel &lt; toclevels &amp;&amp;
-         (child_toc_level = generate_outline section,
-                                             toclevels: toclevels,
-                                             secnumlevels: sectnumlevels,
-                                             page_id: opts[:page_id])
+          (child_toc_level = generate_outline section,
+            toclevels: toclevels,
+            secnumlevels: sectnumlevels,
+            page_id: opts[:page_id])
         result &lt;&lt; child_toc_level
       end
       result &lt;&lt; &#39;&lt;/li&gt;&#39;
@@ -438,10 +461,10 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
     if node.type == :xref
       # This is the same as super...
       if (path = node.attributes[&#39;path&#39;])
-        attrs = (append_link_constraint_attrs node, node.role ? [%( class=&quot;#{node.role}&quot;)] : []).join<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L342" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L345" class="js-smell-location">1</a>                  </div>  </li></ol>
+        attrs = (append_link_constraint_attrs node, node.role ? [%( class=&quot;#{node.role}&quot;)] : []).join<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L365" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L368" class="js-smell-location">1</a>                  </div>  </li></ol>
         text = node.text || path
       else
-        attrs = node.role ? %( class=&quot;#{node.role}&quot;) : &#39;&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L342" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L345" class="js-smell-location">1</a>                  </div>  </li></ol>
+        attrs = node.role ? %( class=&quot;#{node.role}&quot;) : &#39;&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L365" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L368" class="js-smell-location">1</a>                  </div>  </li></ol>
         unless (text = node.text)
           refid = node.attributes[&#39;refid&#39;]
           if AbstractNode === (ref = (@refs ||= node.document.catalog[:refs])[refid])
@@ -492,15 +515,15 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
       new_parent = new_document
       node.sections.each do |section|
         new_outline_doc(section, new_parent: new_parent,
-                                 for_page: for_page)
+          for_page: for_page)
       end
-    # Include the node if either (1) we are creating the full skeleton from the
-    # original document or (2) the node is applicable to the current page.
+      # Include the node if either (1) we are creating the full skeleton from the
+      # original document or (2) the node is applicable to the current page.
     elsif !for_page ||
-          node.related_to?(for_page)
+        node.related_to?(for_page)
       new_section = Section.new(parent = new_parent,
-                                level = node.level,
-                                numbered = node.numbered)
+        level = node.level,
+        numbered = node.numbered)
       new_section.id = node.id
       new_section.caption = node.caption
       new_section.title = node.title
@@ -511,7 +534,7 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
 
       node.sections.each do |section|
         new_outline_doc(section, new_parent: new_parent,
-                                 for_page: for_page)
+          for_page: for_page)
       end
     end
     return new_document
@@ -521,9 +544,9 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
   def outline(node, opts = {})
     doc = node.document
     # Find this node in the @@full_outline skeleton document
-    page_node = @@full_outline.find_by(id: node.id).first<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L210" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L425" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L427" class="js-smell-location">2</a>                  </div>  </li></ol>
+    page_node = @@full_outline.find_by(id: node.id).first<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L233" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L448" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L450" class="js-smell-location">2</a>                  </div>  </li></ol>
     # Create a skeleton document for this particular page
-    custom_outline_doc = new_outline_doc(@@full_outline, for_page: page_node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L210" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L425" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L427" class="js-smell-location">2</a>                  </div>  </li></ol>
+    custom_outline_doc = new_outline_doc(@@full_outline, for_page: page_node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L233" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L448" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L450" class="js-smell-location">2</a>                  </div>  </li></ol>
     opts[:page_id] = node.id
     # Generate an extra TOC entry for the root page. Add additional styling if
     # the current page is the root page.
@@ -572,10 +595,10 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
 
       # Create a new page for this section
       page = Asciidoctor::Document.new([],
-                                       attributes: doc.attributes.clone,
-                                       doctype: doc.doctype,
-                                       header_footer: !doc.attr?(:embedded),
-                                       safe: doc.safe)
+        attributes: doc.attributes.clone,
+        doctype: doc.doctype,
+        header_footer: !doc.attr?(:embedded),
+        safe: doc.safe)
       # Retain webfonts attribute (why is doc.attributes.clone not adequate?)
       page.set_attr(&#39;webfonts&#39;, doc.attr(:webfonts))
       # Save sectnum for use later (a Document object normally has no sectnum)
@@ -634,7 +657,7 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
       end
       # Propogate custom multipage-level value to child node
       if !section.attr?(&#39;multipage-level&#39;, nil, false) &amp;&amp;
-         node.attr(&#39;multipage-level&#39;) != doc.attr(&#39;multipage-level&#39;)
+          node.attr(&#39;multipage-level&#39;) != doc.attr(&#39;multipage-level&#39;)
         section.set_attr(&#39;multipage-level&#39;, node.attr(&#39;multipage-level&#39;))
       end
       # Set section type
@@ -670,10 +693,16 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
   end
 end
 
-class MultipageHtml5CSS &lt; Asciidoctor::Extensions::DocinfoProcessor<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>MultipageHtml5CSS has no descriptive comment</span>          </div>  </li></ol>
+# HTML5 Multipage Converter CSS Preprocessor
+class MultipageHtml5CSS &lt; Asciidoctor::Extensions::DocinfoProcessor
   use_dsl
   at_location :head
 
+  ##
+  # Process CSS for document +_doc+.
+  # +_doc+ is unused at the moment.
+  #
+  # Returns the CSS inside HTML style tags
   def process(_doc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>MultipageHtml5CSS#process doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
     css = []
     # Style Table Of Contents entry for current page
