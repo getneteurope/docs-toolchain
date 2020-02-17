@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-14 15:58:55 +0100'>2020-02-14 15:58:55 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-17 08:09:14 +0100'>2020-02-17 08:09:14 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">34</span><small> lines of codes</small></div>
+              <div><span class="metric">37</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">3.7</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">7.4</span><small> complexity</small></div>
@@ -110,9 +110,12 @@ module Toolchain
     attr_reader :priority
 
     ##
-    # Create a new process with priority +priority+ (default: 0).
+    # Create a new Process object with +priority+ (default: 0).
     #
-    # Returns a new process object with {priority}.
+    # +priority+ determines the order in which processes are run.
+    # A higher priority means it will run first.
+    #
+    # Returns a new process object with +priority+.
     #
     def initialize(priority = 0)
       @priority = priority
@@ -123,7 +126,7 @@ module Toolchain
     # Takes no arguments.
     #
     # Returns nothing, but throws an exception if not implemented
-    # in the supclass.
+    # in the subclass.
     #
     def run
       raise NotImplementedError.new,
