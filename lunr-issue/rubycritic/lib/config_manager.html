@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ruby Critic - Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- StyleSheets -->
+    <link href="../assets/stylesheets/bootstrap.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../assets/stylesheets/font-awesome.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../assets/stylesheets/prettify.custom_theme.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../assets/stylesheets/application.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <header class="navbar navbar-default navbar-fixed-top">
+      <a href="#menu-toggle" class="btn btn-default hidden-lg visible-sm-* hidden-md visible-xs-* pull-left" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+      <a href="../overview.html"><img src="../assets/images/logo.png" alt="Ruby Critic Logo" title="Ruby Critic Logo" width="55"><span class="logo">RUBYCRITIC</span></a>
+      
+    </header>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <aside id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a href="../overview.html" class="project-nav-item overview-nav"><i class="fa fa-dashboard"></i>Overview</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../code_index.html" class="project-nav-item code-index-nav"><i class="fa fa-code"></i>Code</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../smells_index.html" class="project-nav-item smells-index-nav"><i class="fa fa-warning"></i>Smells</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../simple_cov_index.html" class="project-nav-item coverage-index-nav"><i class="fa fa-umbrella"></i>Coverage</a>
+          </li>
+        </ul>
+      </aside>
+      <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+  <!--Page Title -->
+  <div class="Page_Title">
+    <div class="file-time">
+      <span class="committed-at">
+        
+          Updated <time class='js-timeago' datetime='2020-02-14 14:48:56 +0100'>2020-02-14 14:48:56 +0100</time>
+        
+      </span>
+    </div>
+    <div>
+      <h3><small>lib /</small> config_manager.rb</h3>
+    </div>
+  </div>
+  <!--End Page Title -->
+  <div class="Content_Wrapper">
+    <!-- code detail -->
+    <div class="code-top-detail clearfix row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="rating a big">
+              A
+            </div>
+          </div>
+          <div class="code-statistics col-md-11">
+            <div class="col-md-3">
+              <div><span class="metric">97</span><small> lines of codes</small></div>
+              <div><span class="metric">6</span><small> methods</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">4.6</span><small> complexity/method</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">27.57</span><small> complexity</small></div>
+              <div><span class="metric">0</span><small> duplications</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="code-tabs">
+          <ul class="nav nav-pills right-to-left">
+            <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
+            <li class="active">
+              <a href="#" id="toggle-smells" class="toggle-button button">
+                0
+                smell
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+require &#39;yaml&#39;
+require &#39;singleton&#39;
+
+##
+# Merge two hashes +left+ and +right+ recursively
+#
+# Merge strategy: right join
+#
+# Returns merged hash.
+#
+def merge_recursively(left, right)
+  return right unless left.is_a?(Hash)
+
+  return left.merge(right) do |_, left_item, right_item|
+    merge_recursively(left_item, right_item)
+  end
+end
+
+##
+# Get a certain value in a hash of hashes.
+#
+# The key is described by +keys+, an array of keys representing
+# the path through the hash of hashes, called +map+.
+#
+# Returns the corresponding value or nil.
+#
+def get_recursively(map, keys)
+  return nil if map.nil?
+
+  key = keys.shift
+  return map[key] if keys.empty?
+
+  return get_recursively(map[key], keys)
+end
+
+module Toolchain
+  ##
+  # Central class keeping track of all configuration options.
+  #
+  # Configurations can be changed via certain files or direct calls
+  # to +ConfigManager+.
+  #
+  class ConfigManager
+    include Singleton
+
+    ##
+    # Load configuration from +file+.
+    #
+    # Returns the configuration as hash (YAML parsed)
+    def load(
+      file = File.join(Toolchain.toolchain_path, &#39;config&#39;, &#39;default.yaml&#39;)
+    )
+      @config = YAML.load_file(file)
+      @loaded = true
+    end
+
+    ##
+    # Update current configuration with configuration from +file+.
+    #
+    # Merging of the configuration options is with a _right join_,
+    # i.e. the new +file+ options overwrite old ones.
+    #
+    # Returns the updated configuration as hash (YAML parsed)
+    def update(file)
+      update = YAML.load_file(file)
+      @config = merge_recursively(@config, update)
+    end
+
+    ##
+    # Get the configuration value for a key +identifier+.
+    #
+    # The +identifier+ is a string in the format _key1.key2.key3_,
+    # where keyX is the key for the Xth level of the +@config+ hash.
+    #
+    # The named parameter +default+ will be used as fallback if set.
+    #
+    # Returns the corresponding value for +identifier+.
+    # Returns +@config+ if +identifier+ is nil.
+    # Returns +default+ if result is nil and +identifier+ is not nil.
+    def get(identifier = nil, default: nil)
+      load unless @loaded
+      return @config if identifier.nil?
+
+      keys = identifier.split(&#39;.&#39;)
+      return get_recursively(@config, keys) || default
+    end
+
+    private
+
+    def initialize
+      @loaded = false
+      @config = nil
+    end
+  end
+end
+</code>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScripts -->
+    <script src='../assets/javascripts/jquery.min.js'></script>
+    <script src='../assets/javascripts/jquery.tablesorter.min.js'></script>
+    <script src='../assets/javascripts/jquery.scrollTo.min.js'></script>
+    <script src='../assets/javascripts/jquery.timeago.js'></script>
+    <script src='../assets/javascripts/highcharts.src-4.0.1.js'></script>
+    <script src='../assets/javascripts/prettify.js'></script>
+    <script src='../assets/javascripts/bootstrap.min.js'></script>
+    <script src='../assets/javascripts/application.js'></script>
+    <script src='../assets/javascripts/jquery.filtertable.min.js'></script>
+  </body>
+</html>
