@@ -41,7 +41,7 @@ module Toolchain
     def self.setup(build_dir = DEFAULT_BUILD_DIR, content: 'content')
       build_dir = ConfigManager.instance.get('build.dir', default: build_dir)
       stage_log(:build, "setting up build dir @ #{build_dir}")
-      raise "Directory '#{content}' does not exist" unless Dir.exist?(content.to_s)
+      raise "Directory '#{content}' does not exist" unless Dir.exist?(content)
 
       mkdir(build_dir)
       status = system("cp -r #{content}/* #{build_dir}")
@@ -83,7 +83,8 @@ module Toolchain
           'icons' => 'font',
           'toc' => 'left',
           'systemtimestamp' => %x(date +%s),
-          'backend' => 'multipage_html5'
+          'backend' => 'multipage_html5',
+          'docinfo' => 'shared'
         },
         safe: :safe,
         failure_level: 'WARN'
@@ -97,7 +98,10 @@ module Toolchain
       mkdir(html_dir)
 
       # move web pages to html/
-      Dir[File.join(build_dir, '*.html')].each do |html|
+      htmls = Dir[File.join(build_dir, '*.html')].delete_if do |file|
+        File.basename(file).start_with?('docinfo')
+      end
+      htmls.each do |html|
         FileUtils.mv(html, html_dir, force: true)
       end
 

@@ -13,7 +13,7 @@ module Toolchain
       SCRIPT_TAG_REGEX = %r{<script\ .*\ *src=['"](?<source>[a-zA-Z0-9_\.\-/]+)['"]>}.freeze
 
       def initialize
-        @header_name_default = 'docinfo.html'
+        @header_name_default = 'docinfo-header.html'
         @footer_name_default = 'docinfo-footer.html'
       end
 
