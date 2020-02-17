@@ -151,13 +151,20 @@
 
 <p><code>priority</code> determines the order in which processes are run. A higher priority means it will run first.</p>
 
+<p>@example</p>
+
+<pre class="ruby"><span class="ruby-constant">ProcessManager</span>.<span class="ruby-identifier">register</span>(<span class="ruby-constant">Process</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">10</span>))
+<span class="ruby-constant">ProcessManager</span>.<span class="ruby-identifier">register</span>(<span class="ruby-constant">Process</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">100</span>)) <span class="ruby-comment"># would run first</span>
+<span class="ruby-constant">ProcessManager</span>.<span class="ruby-identifier">run</span>() <span class="ruby-comment"># First process with priority 100, then 10</span>
+</pre>
+
 <p>Returns a new process object with <code>priority</code>.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/base_process.rb, line 21</span>
+            <pre><span class="ruby-comment"># File lib/base_process.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
   <span class="ruby-ivar">@priority</span> = <span class="ruby-identifier">priority</span>
 <span class="ruby-keyword">end</span></pre>
@@ -200,7 +207,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/base_process.rb, line 32</span>
+            <pre><span class="ruby-comment"># File lib/base_process.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>.<span class="ruby-identifier">new</span>,
     <span class="ruby-node">&quot;#{self.class.name}: no implementation for &#39;run&#39;&quot;</span>

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-17 08:09:14 +0100'>2020-02-17 08:09:14 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-17 08:16:09 +0100'>2020-02-17 08:16:09 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">37</span><small> lines of codes</small></div>
+              <div><span class="metric">42</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">3.7</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">7.4</span><small> complexity</small></div>
@@ -114,6 +114,11 @@ module Toolchain
     #
     # +priority+ determines the order in which processes are run.
     # A higher priority means it will run first.
+    #
+    # @example
+    #     ProcessManager.register(Process.new(10))
+    #     ProcessManager.register(Process.new(100)) # would run first
+    #     ProcessManager.run() # First process with priority 100, then 10
     #
     # Returns a new process object with +priority+.
     #
