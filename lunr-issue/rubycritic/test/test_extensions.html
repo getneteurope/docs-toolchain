@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-17 10:48:12 +0100'>2020-02-17 10:48:12 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-17 11:45:06 +0100'>2020-02-17 11:45:06 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">14.3</span><small> complexity/method</small></div>
-              <div><span class="metric">38</span><small> churn</small></div>
+              <div><span class="metric">39</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">199.57</span><small> complexity</small></div>
@@ -106,7 +106,7 @@ require_relative &#39;../lib/log/log.rb&#39;
 require_relative &#39;./util.rb&#39;
 
 extensions = File.join(__dir__, &#39;..&#39;, &#39;lib&#39;, &#39;extensions.d&#39;, &#39;*.rb&#39;)
-Dir[extensions].each { |file| puts file; require file }
+Dir[extensions].each { |file| require file }
 
 class TestLocation &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestLocation has no descriptive comment</span>          </div>  </li></ol>
   def test_to_s
