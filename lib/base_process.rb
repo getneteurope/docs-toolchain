@@ -16,6 +16,11 @@ module Toolchain
     # +priority+ determines the order in which processes are run.
     # A higher priority means it will run first.
     #
+    # @example
+    #     ProcessManager.register(Process.new(10))
+    #     ProcessManager.register(Process.new(100)) # would run first
+    #     ProcessManager.run() # First process with priority 100, then 10
+    #
     # Returns a new process object with +priority+.
     #
     def initialize(priority = 0)
