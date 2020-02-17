@@ -64,4 +64,4 @@ module Toolchain
   end
 end
 
-Toolchain::ExtensionManager.instance.register(Toolchain::IdChecker.new)
+Toolchain::ExtensionManager.instance.register(Toolchain::IfChecker.new)
