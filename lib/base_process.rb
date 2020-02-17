@@ -11,9 +11,12 @@ module Toolchain
     attr_reader :priority
 
     ##
-    # Create a new process with priority +priority+ (default: 0).
+    # Create a new Process object with +priority+ (default: 0).
     #
-    # Returns a new process object with {priority}.
+    # +priority+ determines the order in which processes are run.
+    # A higher priority means it will run first.
+    #
+    # Returns a new process object with +priority+.
     #
     def initialize(priority = 0)
       @priority = priority
@@ -24,7 +27,7 @@ module Toolchain
     # Takes no arguments.
     #
     # Returns nothing, but throws an exception if not implemented
-    # in the supclass.
+    # in the subclass.
     #
     def run
       raise NotImplementedError.new,
