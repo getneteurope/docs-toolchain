@@ -14,21 +14,34 @@ class TestCompileSearchIndex < Test::Unit::TestCase
     content =
       '<!DOCTYPE html>
 <html>
+<head><title>Unit test</title></head>
 <body>
 
 <div id="content">
+
+<div class="sect2">
+<h3 id="ApplePay_Main"><a class="anchor" href="#ApplePay_Main"></a><a class="link" href="#ApplePay_Main">Apple Pay</a></h3>
+<div class="paragraph">
+<p>Test Apple Pay paragraph is here.</p>
+</div>
+
 <div class="sect3">
-<h3>My First Heading</h1>
+<h3 id="first-head">My First Heading</h3>
+<div class="paragraph">
 <p>My first paragraph.</p>
 </div>
+</div>
+
+</div>
+
 </div>
 
 </body>
 </html>'
     outfile = '/tmp/test_index.json'
-    index = with_tempfile(content) do |file|
+    index = with_tempfile(content, '_CompileSearchIndex') do |file|
       Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile)
     end
-    assert_equal(1338626705, Zlib.crc32(index.inspect))
+    assert_equal(4202139800, Zlib.crc32(index.inspect))
   end
 end
