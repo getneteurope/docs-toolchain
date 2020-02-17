@@ -4,6 +4,7 @@ require_relative '../process_manager.rb'
 require_relative '../base_process.rb'
 require_relative '../utils/paths.rb'
 require_relative '../utils/adoc.rb'
+require_relative '../log/log.rb'
 require 'asciidoctor'
 require 'nokogiri'
 require 'v8'
@@ -19,7 +20,7 @@ module Toolchain
     class CompileSearchIndex < BaseProcess
       SELECTOR_SECTIONS = '#content .sect1, #content .sect2, #content .sect3'
       SELECTOR_HEADINGS = 'h2, h3, h4'
-      XPATH_PARAGRAPHS = './div/div/p'
+      XPATH_PARAGRAPHS = './div/p'
       def initialize; end
 
       ##
@@ -31,8 +32,12 @@ module Toolchain
       # Returns JSON search index for lunr
       #
       def run(html = nil, outfile: nil)
-        htmls = (html.is_a?(Array) ? html : [html]) unless html.nil?
-        htmls = Dir[File.join(Toolchain.build_path, 'html', '*.html')]
+        htmls = if html.nil?
+                  Dir[File.join(Toolchain.build_path, 'html', '*.html')]
+                else
+                  (html.is_a?(Array) ? html : [html])
+                end
+        stage_log(:pre, "Running #{self.class.name} on #{htmls.length} files")
         ConfigManager.instance.get('search.index.exclude').each do |pattern|
           htmls.delete_if do |f|
             !!(File.basename(f) =~ _create_regex(pattern))

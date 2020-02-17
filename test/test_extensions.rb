@@ -6,8 +6,8 @@ require_relative '../lib/stages/test.rb'
 require_relative '../lib/log/log.rb'
 require_relative './util.rb'
 
-extensions_dir = File.join(__dir__, '..', 'lib', 'extensions.d', '*.rb')
-Dir[extensions_dir].each { |file| require file }
+extensions = File.join(__dir__, '..', 'lib', 'extensions.d', '*.rb')
+Dir[extensions].each { |file| require file }
 
 class TestLocation < Test::Unit::TestCase
   def test_to_s
