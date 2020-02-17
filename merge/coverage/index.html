@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <script src='./assets/0.10.2/application.js' type='text/javascript'></script>    
     <link href='./assets/0.10.2/application.css' media='screen, projection, print' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" type="image/png" href="./assets/0.10.2/favicon_yellow.png" />
+    <link rel="shortcut icon" type="image/png" href="./assets/0.10.2/favicon_green.png" />
     <link rel="icon" type="image/png" href="./assets/0.10.2/favicon.png" />
   </head>
   
@@ -14,27 +14,27 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-17T07:18:52+00:00">2020-02-17T07:18:52+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-17T10:48:20+00:00">2020-02-17T10:48:20+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="yellow">89.0%</span></span>
+    (<span class="covered_percent"><span class="green">91.79%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.94
+         2.96
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>18</b> files in total.
-    <b>582</b> relevant lines. 
-    <span class="green"><b>518</b> lines covered</span> and
-    <span class="red"><b>64</b> lines missed </span>
+    <b>585</b> relevant lines. 
+    <span class="green"><b>537</b> lines covered</span> and
+    <span class="red"><b>48</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -87,7 +87,7 @@
         <td>29</td>
         <td>29</td>
         <td>0</td>
-        <td>3.8</td>
+        <td>3.4</td>
       </tr>
       
       <tr>
@@ -147,7 +147,7 @@
         <td>10</td>
         <td>10</td>
         <td>0</td>
-        <td>11.4</td>
+        <td>11.7</td>
       </tr>
       
       <tr>
@@ -162,12 +162,12 @@
       
       <tr>
         <td class="strong"><a href="#9b815df5ef3f69c5e33becbe4dac0da9fb6a9e3a" class="src_link" title="lib/post.d/compile_search_index.rb">lib/post.d/compile_search_index.rb</a></td>
-        <td class="red strong">72.86 %</td>
-        <td>148</td>
+        <td class="green strong">95.89 %</td>
+        <td>153</td>
+        <td>73</td>
         <td>70</td>
-        <td>51</td>
-        <td>19</td>
-        <td>0.7</td>
+        <td>3</td>
+        <td>1.1</td>
       </tr>
       
       <tr>
@@ -1901,8 +1901,8 @@
           <code class="ruby">def get_recursively(map, keys)</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="30">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="12" data-linenumber="30">
+          <span class="hits">12</span>
           
           <code class="ruby">  return nil if map.nil?</code>
         </li>
@@ -1913,14 +1913,14 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="13" data-linenumber="32">
-          <span class="hits">13</span>
+        <li class="covered" data-hits="11" data-linenumber="32">
+          <span class="hits">11</span>
           
           <code class="ruby">  key = keys.shift</code>
         </li>
       
-        <li class="covered" data-hits="13" data-linenumber="33">
-          <span class="hits">13</span>
+        <li class="covered" data-hits="11" data-linenumber="33">
+          <span class="hits">11</span>
           
           <code class="ruby">  return map[key] if keys.empty?</code>
         </li>
@@ -1931,8 +1931,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="35">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="7" data-linenumber="35">
+          <span class="hits">7</span>
           
           <code class="ruby">  return get_recursively(map[key], keys)</code>
         </li>
@@ -2219,14 +2219,14 @@
           <code class="ruby">    def get(identifier = nil, default: nil)</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="83">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="7" data-linenumber="83">
+          <span class="hits">7</span>
           
           <code class="ruby">      load unless @loaded</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="84">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="7" data-linenumber="84">
+          <span class="hits">7</span>
           
           <code class="ruby">      return @config if identifier.nil?</code>
         </li>
@@ -2237,14 +2237,14 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="86">
-          <span class="hits">6</span>
+        <li class="covered" data-hits="5" data-linenumber="86">
+          <span class="hits">5</span>
           
           <code class="ruby">      keys = identifier.split(&#39;.&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="87">
-          <span class="hits">6</span>
+        <li class="covered" data-hits="5" data-linenumber="87">
+          <span class="hits">5</span>
           
           <code class="ruby">      return get_recursively(@config, keys) || default</code>
         </li>
@@ -3665,7 +3665,7 @@
         <li class="covered" data-hits="1" data-linenumber="67">
           <span class="hits">1</span>
           
-          <code class="ruby">Toolchain::ExtensionManager.instance.register(Toolchain::IdChecker.new)</code>
+          <code class="ruby">Toolchain::ExtensionManager.instance.register(Toolchain::IfChecker.new)</code>
         </li>
       
     </ol>
@@ -4661,8 +4661,8 @@
           <code class="ruby">def log(tag, msg, color = :blue, bold = false, length: 14)</code>
         </li>
       
-        <li class="covered" data-hits="59" data-linenumber="12">
-          <span class="hits">59</span>
+        <li class="covered" data-hits="60" data-linenumber="12">
+          <span class="hits">60</span>
           
           <code class="ruby">  return if ENV.key?(&#39;UNITTEST&#39;)</code>
         </li>
@@ -4763,14 +4763,14 @@
           <code class="ruby">def stage_log(stage, msg, color = :green)</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="29">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="9" data-linenumber="29">
+          <span class="hits">9</span>
           
           <code class="ruby">  stage = stage.to_s.upcase</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="30">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="9" data-linenumber="30">
+          <span class="hits">9</span>
           
           <code class="ruby">  log(stage, msg, color, true)</code>
         </li>
@@ -5648,11 +5648,11 @@
         <div class="source_table" id="9b815df5ef3f69c5e33becbe4dac0da9fb6a9e3a">
   <div class="header">
     <h3>lib/post.d/compile_search_index.rb</h3>
-    <h4><span class="red">72.86 %</span> covered</h4>
+    <h4><span class="green">95.89 %</span> covered</h4>
     <div>
-      <b>70</b> relevant lines. 
-      <span class="green"><b>51</b> lines covered</span> and
-      <span class="red"><b>19</b> lines missed.</span>
+      <b>73</b> relevant lines. 
+      <span class="green"><b>70</b> lines covered</span> and
+      <span class="red"><b>3</b> lines missed.</span>
     </div>
   </div>
   
@@ -5698,451 +5698,451 @@
         <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">require &#39;asciidoctor&#39;</code>
+          <code class="ruby">require_relative &#39;../log/log.rb&#39;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="8">
           <span class="hits">1</span>
           
-          <code class="ruby">require &#39;nokogiri&#39;</code>
+          <code class="ruby">require &#39;asciidoctor&#39;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="9">
           <span class="hits">1</span>
           
-          <code class="ruby">require &#39;v8&#39;</code>
+          <code class="ruby">require &#39;nokogiri&#39;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="10">
           <span class="hits">1</span>
           
+          <code class="ruby">require &#39;v8&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="11">
+          <span class="hits">1</span>
+          
           <code class="ruby">require &#39;json&#39;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="11">
+        <li class="never" data-hits="" data-linenumber="12">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="12">
+        <li class="covered" data-hits="1" data-linenumber="13">
           <span class="hits">1</span>
           
           <code class="ruby">module Toolchain</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="13">
+        <li class="never" data-hits="" data-linenumber="14">
           
           
           <code class="ruby">  ##</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="14">
+        <li class="never" data-hits="" data-linenumber="15">
           
           
           <code class="ruby">  # Adds modules for postprocessing files.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="15">
+        <li class="covered" data-hits="1" data-linenumber="16">
           <span class="hits">1</span>
           
           <code class="ruby">  module Post</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="16">
+        <li class="never" data-hits="" data-linenumber="17">
           
           
           <code class="ruby">    ##</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="17">
+        <li class="never" data-hits="" data-linenumber="18">
           
           
           <code class="ruby">    # Provides an interface to create a lunr search index</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="18">
+        <li class="never" data-hits="" data-linenumber="19">
           
           
           <code class="ruby">    # from the generated HTML files.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="19">
+        <li class="covered" data-hits="1" data-linenumber="20">
           <span class="hits">1</span>
           
           <code class="ruby">    class CompileSearchIndex &lt; BaseProcess</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="20">
+        <li class="covered" data-hits="1" data-linenumber="21">
           <span class="hits">1</span>
           
           <code class="ruby">      SELECTOR_SECTIONS = &#39;#content .sect1, #content .sect2, #content .sect3&#39;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="21">
+        <li class="covered" data-hits="1" data-linenumber="22">
           <span class="hits">1</span>
           
           <code class="ruby">      SELECTOR_HEADINGS = &#39;h2, h3, h4&#39;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="22">
+        <li class="covered" data-hits="1" data-linenumber="23">
           <span class="hits">1</span>
           
-          <code class="ruby">      XPATH_PARAGRAPHS = &#39;./div/div/p&#39;</code>
+          <code class="ruby">      XPATH_PARAGRAPHS = &#39;./div/p&#39;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="23">
+        <li class="covered" data-hits="1" data-linenumber="24">
           <span class="hits">1</span>
           
           <code class="ruby">      def initialize; end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="24">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="25">
           
           
-          <code class="ruby">      ##</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="26">
           
           
-          <code class="ruby">      # Takes a single HTML file or a list of HTML files (+html+).</code>
+          <code class="ruby">      ##</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="27">
           
           
-          <code class="ruby">      # If not provided, the HTML will be inferred from +$CONTENT_PATH+.</code>
+          <code class="ruby">      # Takes a single HTML file or a list of HTML files (+html+).</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="28">
           
           
-          <code class="ruby">      #</code>
+          <code class="ruby">      # If not provided, the HTML will be inferred from +$CONTENT_PATH+.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="29">
           
           
-          <code class="ruby">      # +outfile+ is used to write to a specific file for unit tests.</code>
+          <code class="ruby">      #</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="30">
           
           
-          <code class="ruby">      #</code>
+          <code class="ruby">      # +outfile+ is used to write to a specific file for unit tests.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="31">
           
           
-          <code class="ruby">      # Returns JSON search index for lunr</code>
+          <code class="ruby">      #</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="32">
           
           
-          <code class="ruby">      #</code>
+          <code class="ruby">      # Returns JSON search index for lunr</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="33">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="33">
           
-          <code class="ruby">      def run(html = nil, outfile: nil)</code>
+          
+          <code class="ruby">      #</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="34">
           <span class="hits">1</span>
           
-          <code class="ruby">        htmls = (html.is_a?(Array) ? html : [html]) unless html.nil?</code>
+          <code class="ruby">      def run(html = nil, outfile: nil)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="35">
           <span class="hits">1</span>
           
-          <code class="ruby">        htmls = Dir[File.join(Toolchain.build_path, &#39;html&#39;, &#39;*.html&#39;)]</code>
+          <code class="ruby">        htmls = if html.nil?</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="36">
+        <li class="missed" data-hits="0" data-linenumber="36">
+          
+          
+          <code class="ruby">                  Dir[File.join(Toolchain.build_path, &#39;html&#39;, &#39;*.html&#39;)]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="37">
+          
+          
+          <code class="ruby">                else</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="38">
           <span class="hits">1</span>
           
-          <code class="ruby">        ConfigManager.instance.get(&#39;search.index.exclude&#39;).each do |pattern|</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="37">
-          <span class="hits">1</span>
-          
-          <code class="ruby">          htmls.delete_if do |f|</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="38">
-          
-          
-          <code class="ruby">            !!(File.basename(f) =~ _create_regex(pattern))</code>
+          <code class="ruby">                  (html.is_a?(Array) ? html : [html])</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="39">
           
           
-          <code class="ruby">          end</code>
+          <code class="ruby">                end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="40">
+        <li class="covered" data-hits="1" data-linenumber="40">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">        end</code>
+          <code class="ruby">        stage_log(:pre, &quot;Running #{self.class.name} on #{htmls.length} files&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="41">
+        <li class="covered" data-hits="1" data-linenumber="41">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">        ConfigManager.instance.get(&#39;search.index.exclude&#39;).each do |pattern|</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="42">
           <span class="hits">1</span>
           
-          <code class="ruby">        index = generate_index(htmls)</code>
+          <code class="ruby">          htmls.delete_if do |f|</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="43">
           <span class="hits">1</span>
           
-          <code class="ruby">        index_file = ConfigManager.instance.get(</code>
+          <code class="ruby">            !!(File.basename(f) =~ _create_regex(pattern))</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="44">
           
           
-          <code class="ruby">          &#39;search.index.file&#39;, default: &#39;lunrindex.json&#39;</code>
+          <code class="ruby">          end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="45">
           
           
-          <code class="ruby">        )</code>
+          <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="46">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="46">
           
-          <code class="ruby">        index_file = File.join(Toolchain.build_path, &#39;html&#39;, index_file)</code>
+          
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="47">
           <span class="hits">1</span>
           
-          <code class="ruby">        index_file = outfile unless outfile.nil?</code>
+          <code class="ruby">        index = generate_index(htmls)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="48">
           <span class="hits">1</span>
           
-          <code class="ruby">        File.open(index_file, &#39;w&#39;) do |f|</code>
+          <code class="ruby">        index_file = ConfigManager.instance.get(</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="49">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="49">
           
-          <code class="ruby">          f.write(JSON.generate(index))</code>
+          
+          <code class="ruby">          &#39;search.index.file&#39;, default: &#39;lunrindex.json&#39;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="50">
           
           
-          <code class="ruby">        end</code>
+          <code class="ruby">        )</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="51">
           <span class="hits">1</span>
           
-          <code class="ruby">        return index</code>
+          <code class="ruby">        index_file = File.join(Toolchain.build_path, &#39;html&#39;, index_file)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="52">
+        <li class="covered" data-hits="1" data-linenumber="52">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      end</code>
+          <code class="ruby">        index_file = outfile unless outfile.nil?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="53">
+        <li class="covered" data-hits="1" data-linenumber="53">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">        File.open(index_file, &#39;w&#39;) do |f|</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="54">
           <span class="hits">1</span>
           
-          <code class="ruby">      private</code>
+          <code class="ruby">          f.write(JSON.generate(index))</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="55">
           
           
-          <code class="ruby">      ##</code>
+          <code class="ruby">        end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="56">
+        <li class="covered" data-hits="1" data-linenumber="56">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      # Creates a Regex object from a wildcard string +pattern+.</code>
+          <code class="ruby">        return index</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="57">
           
           
-          <code class="ruby">      # https://stackoverflow.com/a/6449534</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="58">
           
           
-          <code class="ruby">      #</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="59">
+        <li class="covered" data-hits="1" data-linenumber="59">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      # Returns valid Regex.</code>
+          <code class="ruby">      private</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="60">
           
           
+          <code class="ruby">      ##</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="61">
+          
+          
+          <code class="ruby">      # Creates a Regex object from a wildcard string +pattern+.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="62">
+          
+          
+          <code class="ruby">      # https://stackoverflow.com/a/6449534</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="63">
+          
+          
           <code class="ruby">      #</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="61">
-          <span class="hits">1</span>
-          
-          <code class="ruby">      def _create_regex(pattern)</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="62">
-          
-          
-          <code class="ruby">        escaped = Regexp.escape(pattern).gsub(&#39;\*&#39;,&#39;.*?&#39;)</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="63">
-          
-          
-          <code class="ruby">        return Regexp.new(&quot;^#{escaped}$&quot;, Regexp::IGNORECASE)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="64">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">      # Returns valid Regex.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">      #</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="66">
+        <li class="covered" data-hits="1" data-linenumber="66">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">      def _create_regex(pattern)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="67">
+        <li class="covered" data-hits="1" data-linenumber="67">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      ##</code>
+          <code class="ruby">        escaped = Regexp.escape(pattern).gsub(&#39;\*&#39;,&#39;.*?&#39;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="68">
+        <li class="covered" data-hits="1" data-linenumber="68">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      # Parse a single HTML file +html_file+.</code>
+          <code class="ruby">        return Regexp.new(&quot;^#{escaped}$&quot;, Regexp::IGNORECASE)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="69">
           
           
-          <code class="ruby">      # This will convert the document to a Nokogiri object and</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="70">
           
           
-          <code class="ruby">      # parse each section.</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="71">
           
           
-          <code class="ruby">      # Returns the collective +docs+ list of relevant information</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="72">
           
           
-          <code class="ruby">      # to build the lunr index.</code>
+          <code class="ruby">      ##</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="73">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="73">
           
-          <code class="ruby">      def _parse_html(html_file)</code>
+          
+          <code class="ruby">      # Parse a single HTML file +html_file+.</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="74">
+        <li class="never" data-hits="" data-linenumber="74">
           
           
-          <code class="ruby">        html = File.open(html_file, &#39;r&#39;) do |f|</code>
+          <code class="ruby">      # This will convert the document to a Nokogiri object and</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="75">
+        <li class="never" data-hits="" data-linenumber="75">
           
           
-          <code class="ruby">          ::Nokogiri::HTML(f.read)</code>
+          <code class="ruby">      # parse each section.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="76">
           
           
-          <code class="ruby">        end</code>
+          <code class="ruby">      # Returns the collective +docs+ list of relevant information</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="77">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">      # to build the lunr index.</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="78">
+        <li class="covered" data-hits="1" data-linenumber="78">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">        sections = html.search(SELECTOR_SECTIONS)</code>
+          <code class="ruby">      def _parse_html(html_file)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="79">
+        <li class="covered" data-hits="1" data-linenumber="79">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">        docs = sections.map { |s| _parse_section(s) }</code>
+          <code class="ruby">        html = File.open(html_file, &#39;r&#39;) do |f|</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="80">
+        <li class="covered" data-hits="1" data-linenumber="80">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">        return docs</code>
+          <code class="ruby">          ::Nokogiri::HTML(f.read)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="81">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">        end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="82">
@@ -6151,322 +6151,322 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="83">
+        <li class="covered" data-hits="1" data-linenumber="83">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      ##</code>
+          <code class="ruby">        sections = html.search(SELECTOR_SECTIONS)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="84">
+        <li class="covered" data-hits="3" data-linenumber="84">
+          <span class="hits">3</span>
           
-          
-          <code class="ruby">      # Parse a Nokogiri section +sect+ and return relevant information</code>
+          <code class="ruby">        docs = sections.map { |s| _parse_section(s) }</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="85">
+        <li class="covered" data-hits="1" data-linenumber="85">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      # for lunr.</code>
+          <code class="ruby">        return docs</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="86">
           
           
-          <code class="ruby">      # Included information is +ref+, the reference or id,</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="87">
           
           
-          <code class="ruby">      # +title+, the header of the section and</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="88">
           
           
-          <code class="ruby">      # +body+, the text of all p tags below the section div.</code>
+          <code class="ruby">      ##</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="89">
           
           
-          <code class="ruby">      # Returns Hash +{ id, title, body }+</code>
+          <code class="ruby">      # Parse a Nokogiri section +sect+ and return relevant information</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="90">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="90">
           
-          <code class="ruby">      def _parse_section(sect)</code>
+          
+          <code class="ruby">      # for lunr.</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="91">
+        <li class="never" data-hits="" data-linenumber="91">
           
           
-          <code class="ruby">        header = sect.search(SELECTOR_HEADINGS).first</code>
+          <code class="ruby">      # Included information is +ref+, the reference or id,</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="92">
+        <li class="never" data-hits="" data-linenumber="92">
           
           
-          <code class="ruby">        ps = sect.search(XPATH_PARAGRAPHS)</code>
+          <code class="ruby">      # +title+, the header of the section and</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="93">
           
           
+          <code class="ruby">      # +body+, the text of all p tags below the section div.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="94">
+          
+          
+          <code class="ruby">      # Returns Hash +{ id, title, body }+</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="95">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      def _parse_section(sect)</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="96">
+          <span class="hits">2</span>
+          
+          <code class="ruby">        header = sect.search(SELECTOR_HEADINGS).first</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="97">
+          <span class="hits">2</span>
+          
+          <code class="ruby">        ps = sect.search(XPATH_PARAGRAPHS)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="98">
+          
+          
           <code class="ruby"></code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="94">
-          
+        <li class="covered" data-hits="2" data-linenumber="99">
+          <span class="hits">2</span>
           
           <code class="ruby">        ref = header[&#39;id&#39;]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="95">
-          
+        <li class="covered" data-hits="2" data-linenumber="100">
+          <span class="hits">2</span>
           
           <code class="ruby">        title = header.content</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="96">
-          
+        <li class="covered" data-hits="2" data-linenumber="101">
+          <span class="hits">2</span>
           
           <code class="ruby">        body = ps.map(&amp;:content).join</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="97">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="98">
-          
-          
-          <code class="ruby">        return {id: ref, title: title, body: body}</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="99">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="100">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="101">
-          
-          
-          <code class="ruby">      ##</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="102">
           
           
-          <code class="ruby">      # Generates lunr index .json file from HTMLs.</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="103">
+        <li class="covered" data-hits="2" data-linenumber="103">
+          <span class="hits">2</span>
           
-          
-          <code class="ruby">      # +htmls+ is a list of strings, representing the HTML file names.</code>
+          <code class="ruby">        return {id: ref, title: title, body: body}</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="104">
           
           
-          <code class="ruby">      # Returns the index JSON for lunr.</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="105">
           
           
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="106">
+          
+          
+          <code class="ruby">      ##</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="107">
+          
+          
+          <code class="ruby">      # Generates lunr index .json file from HTMLs.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="108">
+          
+          
+          <code class="ruby">      # +htmls+ is a list of strings, representing the HTML file names.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="109">
+          
+          
+          <code class="ruby">      # Returns the index JSON for lunr.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="110">
+          
+          
           <code class="ruby">      #</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="106">
+        <li class="covered" data-hits="1" data-linenumber="111">
           <span class="hits">1</span>
           
           <code class="ruby">      def generate_index(htmls)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="107">
+        <li class="covered" data-hits="1" data-linenumber="112">
           <span class="hits">1</span>
           
           <code class="ruby">        docs = []</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="108">
+        <li class="covered" data-hits="1" data-linenumber="113">
           <span class="hits">1</span>
           
           <code class="ruby">        lookup = {}</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="109">
+        <li class="covered" data-hits="1" data-linenumber="114">
           <span class="hits">1</span>
           
           <code class="ruby">        htmls.each do |html|</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="110">
-          
+        <li class="covered" data-hits="1" data-linenumber="115">
+          <span class="hits">1</span>
           
           <code class="ruby">          curr = _parse_html(html)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="111">
-          
+        <li class="covered" data-hits="3" data-linenumber="116">
+          <span class="hits">3</span>
           
           <code class="ruby">          curr.each { |e| lookup[e[:id]] = html}</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="112">
-          
-          
-          <code class="ruby">          docs += curr</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="113">
-          
-          
-          <code class="ruby">        end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="114">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="115">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        ctx = V8::Context.new</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="116">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        ctx.load(File.join(__dir__, &#39;..&#39;, &#39;utils&#39;, &#39;lunr.js&#39;))</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="117">
           <span class="hits">1</span>
           
-          <code class="ruby">        ctx.eval(</code>
+          <code class="ruby">          docs += curr</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="118">
           
           
-          <code class="ruby">          &#39;lunr.Index.prototype.dumpIndex = function() {</code>
+          <code class="ruby">        end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="119">
           
           
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="120">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        ctx = V8::Context.new</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="121">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        ctx.load(File.join(__dir__, &#39;..&#39;, &#39;utils&#39;, &#39;lunr.js&#39;))</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="122">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        ctx.eval(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="123">
+          
+          
+          <code class="ruby">          &#39;lunr.Index.prototype.dumpIndex = function() {</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="124">
+          
+          
           <code class="ruby">               return JSON.stringify(this.toJSON());</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="120">
+        <li class="never" data-hits="" data-linenumber="125">
           
           
           <code class="ruby">           }&#39;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="121">
+        <li class="never" data-hits="" data-linenumber="126">
           
           
           <code class="ruby">        )</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="122">
+        <li class="never" data-hits="" data-linenumber="127">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="123">
+        <li class="covered" data-hits="1" data-linenumber="128">
           <span class="hits">1</span>
           
           <code class="ruby">        lunrjs = ctx.eval(&#39;lunr&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="124">
+        <li class="covered" data-hits="1" data-linenumber="129">
           <span class="hits">1</span>
           
           <code class="ruby">        lunr_callback = proc do |this|</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="125">
+        <li class="covered" data-hits="1" data-linenumber="130">
           <span class="hits">1</span>
           
           <code class="ruby">          this.ref(&#39;id&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="126">
+        <li class="covered" data-hits="1" data-linenumber="131">
           <span class="hits">1</span>
           
           <code class="ruby">          this.field(&#39;title&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="127">
+        <li class="covered" data-hits="1" data-linenumber="132">
           <span class="hits">1</span>
           
           <code class="ruby">          this.field(&#39;body&#39;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="128">
+        <li class="never" data-hits="" data-linenumber="133">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="129">
+        <li class="covered" data-hits="1" data-linenumber="134">
           <span class="hits">1</span>
           
           <code class="ruby">          this.k1(1.3)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="130">
-          <span class="hits">1</span>
-          
-          <code class="ruby">          this.b(0)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="131">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="132">
-          <span class="hits">1</span>
-          
-          <code class="ruby">          docs.each { |doc| this.add(doc) }</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="133">
-          
-          
-          <code class="ruby">        end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="134">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
         <li class="covered" data-hits="1" data-linenumber="135">
           <span class="hits">1</span>
           
-          <code class="ruby">        idxjs = lunrjs.call(lunr_callback)</code>
+          <code class="ruby">          this.b(0)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="136">
@@ -6475,73 +6475,103 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="137">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="3" data-linenumber="137">
+          <span class="hits">3</span>
           
-          <code class="ruby">        index = ::JSON.parse(idxjs.dumpIndex, max_nesting: false)</code>
+          <code class="ruby">          docs.each { |doc| this.add(doc) }</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="138">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        if ENV.key?(&#39;DEBUG&#39;)</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="139">
-          
-          
-          <code class="ruby">          puts &#39;=== DATA ===&#39;</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="140">
-          
-          
-          <code class="ruby">          pp index</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="141">
+        <li class="never" data-hits="" data-linenumber="138">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="142">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        return index</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="143">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="144">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="145">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="146">
-          
-          
-          <code class="ruby">end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="147">
+        <li class="never" data-hits="" data-linenumber="139">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="148">
+        <li class="covered" data-hits="1" data-linenumber="140">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        idxjs = lunrjs.call(lunr_callback)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="141">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="142">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        index = ::JSON.parse(idxjs.dumpIndex, max_nesting: false)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="143">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        if ENV.key?(&#39;DEBUG&#39;)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="144">
+          
+          
+          <code class="ruby">          puts &#39;=== DATA ===&#39;</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="145">
+          
+          
+          <code class="ruby">          pp index</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="146">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="147">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        return index</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="148">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="149">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="150">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="151">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="152">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="153">
           <span class="hits">1</span>
           
           <code class="ruby">Toolchain::PostProcessManager.instance.register(Toolchain::Post::CompileSearchIndex.new)</code>
@@ -6659,7 +6689,7 @@
         <li class="covered" data-hits="2" data-linenumber="16">
           <span class="hits">2</span>
           
-          <code class="ruby">        @header_name_default = &#39;docinfo.html&#39;</code>
+          <code class="ruby">        @header_name_default = &#39;docinfo-header.html&#39;</code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="17">
@@ -9186,8 +9216,8 @@
           <code class="ruby">  def self.build_path(path = nil)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="39">
-          <span class="hits">2</span>
+        <li class="covered" data-hits="1" data-linenumber="39">
+          <span class="hits">1</span>
           
           <code class="ruby">    return (path.nil? ? ConfigManager.instance.get(&#39;build.dir&#39;) : path)</code>
         </li>

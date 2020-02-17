@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-14 14:48:56 +0100'>2020-02-14 14:48:56 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-17 09:50:35 +0100'>2020-02-17 09:50:35 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">118</span><small> lines of codes</small></div>
+              <div><span class="metric">122</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">15.2</span><small> complexity/method</small></div>
-              <div><span class="metric">10</span><small> churn</small></div>
+              <div><span class="metric">16.1</span><small> complexity/method</small></div>
+              <div><span class="metric">11</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">45.66</span><small> complexity</small></div>
+              <div><span class="metric">48.44</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -140,7 +140,7 @@ module Toolchain
     def self.setup(build_dir = DEFAULT_BUILD_DIR, content: &#39;content&#39;)
       build_dir = ConfigManager.instance.get(&#39;build.dir&#39;, default: build_dir)
       stage_log(:build, &quot;setting up build dir @ #{build_dir}&quot;)
-      raise &quot;Directory &#39;#{content}&#39; does not exist&quot; unless Dir.exist?(content.to_s)
+      raise &quot;Directory &#39;#{content}&#39; does not exist&quot; unless Dir.exist?(content)
 
       mkdir(build_dir)
       status = system(&quot;cp -r #{content}/* #{build_dir}&quot;)
@@ -161,7 +161,7 @@ module Toolchain
     #
     # Returns nil.
     #
-    def self.build(build_dir = DEFAULT_BUILD_DIR, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 32</span>          </div>  </li></ol>
+    def self.build(build_dir = DEFAULT_BUILD_DIR, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 36</span>          </div>  </li></ol>
       index_path = File.join(build_dir, index)
       raise IOError, &quot;File #{index_path} does not exist&quot; unless
         File.exist?(index_path)
@@ -182,7 +182,8 @@ module Toolchain
           &#39;icons&#39; =&gt; &#39;font&#39;,
           &#39;toc&#39; =&gt; &#39;left&#39;,
           &#39;systemtimestamp&#39; =&gt; %x(date +%s),
-          &#39;backend&#39; =&gt; &#39;multipage_html5&#39;
+          &#39;backend&#39; =&gt; &#39;multipage_html5&#39;,
+          &#39;docinfo&#39; =&gt; &#39;shared&#39;
         },
         safe: :safe,
         failure_level: &#39;WARN&#39;
@@ -196,7 +197,10 @@ module Toolchain
       mkdir(html_dir)
 
       # move web pages to html/
-      Dir[File.join(build_dir, &#39;*.html&#39;)].each do |html|
+      htmls = Dir[File.join(build_dir, &#39;*.html&#39;)].delete_if do |file|
+        File.basename(file).start_with?(&#39;docinfo&#39;)
+      end
+      htmls.each do |html|
         FileUtils.mv(html, html_dir, force: true)
       end
 
