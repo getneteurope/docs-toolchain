@@ -84,7 +84,8 @@ module Toolchain
           'toc' => 'left',
           'systemtimestamp' => %x(date +%s),
           'backend' => 'multipage_html5',
-          'docinfo' => 'shared'
+          'docinfo' => 'shared',
+          'root' => Toolchain.build_path
         },
         safe: :safe,
         failure_level: 'WARN'
@@ -106,14 +107,16 @@ module Toolchain
       end
 
       # move assets to html/
-      assets = %w[css js]
+      assets = %w[css js fonts]
       assets.each do |asset|
+        stage_log(:build, "... Copying #{asset}")
         from_dir = File.join(build_dir, asset)
         to_dir = File.join(html_dir, asset)
-        mkdir(to_dir)
-        Dir[File.join(from_dir, '*')].each do |file|
-          FileUtils.mv(file, to_dir)
-        end
+        FileUtils.mv(from_dir, to_dir, force: true)
+        # mkdir(to_dir)
+        # Dir[File.join(from_dir, '*')].each do |file|
+        #   FileUtils.mv(file, to_dir)
+        # end
       end
 
       stage_log(:build, "Files are in #{html_dir}")
