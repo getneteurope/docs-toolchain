@@ -12,10 +12,11 @@ search:
       - docinfo*.html
 
 log:
-  path: /tmp/log.json
+  file: /tmp/log.json
 
 notify:
   slack:
       file: /tmp/slack.json
 
-
+toc:
+  file: /tmp/toc.json
