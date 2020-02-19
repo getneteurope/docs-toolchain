@@ -200,10 +200,11 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># move assets to html/</span>
-  <span class="ruby-identifier">assets</span> = <span class="ruby-node">%w[css js fonts]</span>
+  <span class="ruby-identifier">assets</span> = <span class="ruby-node">%w[css js fonts images]</span>
   <span class="ruby-identifier">assets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">asset</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;... Copying #{asset}&quot;</span>)
     <span class="ruby-identifier">from_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">asset</span>)
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">from_dir</span>)
     <span class="ruby-identifier">to_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">html_dir</span>, <span class="ruby-identifier">asset</span>)
     <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">from_dir</span>, <span class="ruby-identifier">to_dir</span>, <span class="ruby-value">force:</span> <span class="ruby-keyword">true</span>)
     <span class="ruby-comment"># mkdir(to_dir)</span>
