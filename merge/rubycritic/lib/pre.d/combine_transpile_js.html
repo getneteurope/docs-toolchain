@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-17 10:58:41 +0100'>2020-02-17 10:58:41 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-19 17:13:19 +0100'>2020-02-19 17:13:19 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">155</span><small> lines of codes</small></div>
+              <div><span class="metric">156</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">17.4</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">17.6</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">104.46</span><small> complexity</small></div>
+              <div><span class="metric">105.74</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -111,7 +111,8 @@ module Toolchain
     class CombineAndTranspileJS &lt; BaseProcess
       SCRIPT_TAG_REGEX = %r{&lt;script\ .*\ *src=[&#39;&quot;](?&lt;source&gt;[a-zA-Z0-9_\.\-/]+)[&#39;&quot;]&gt;}.freeze
 
-      def initialize
+      def initialize(priority = 0)
+        super(priority)
         @header_name_default = &#39;docinfo-header.html&#39;
         @footer_name_default = &#39;docinfo-footer.html&#39;
       end

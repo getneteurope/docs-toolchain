@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-17 09:50:35 +0100'>2020-02-17 09:50:35 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-19 13:51:31 +0100'>2020-02-19 13:51:31 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">122</span><small> lines of codes</small></div>
+              <div><span class="metric">126</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">16.1</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">15.5</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">48.44</span><small> complexity</small></div>
+              <div><span class="metric">46.35</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                2
                 smells
               </a>
             </li>
@@ -161,7 +161,7 @@ module Toolchain
     #
     # Returns nil.
     #
-    def self.build(build_dir = DEFAULT_BUILD_DIR, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 36</span>          </div>  </li></ol>
+    def self.build(build_dir = DEFAULT_BUILD_DIR, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 34</span>          </div>  </li></ol>
       index_path = File.join(build_dir, index)
       raise IOError, &quot;File #{index_path} does not exist&quot; unless
         File.exist?(index_path)
@@ -183,7 +183,8 @@ module Toolchain
           &#39;toc&#39; =&gt; &#39;left&#39;,
           &#39;systemtimestamp&#39; =&gt; %x(date +%s),
           &#39;backend&#39; =&gt; &#39;multipage_html5&#39;,
-          &#39;docinfo&#39; =&gt; &#39;shared&#39;
+          &#39;docinfo&#39; =&gt; &#39;shared&#39;,
+          &#39;root&#39; =&gt; Toolchain.build_path
         },
         safe: :safe,
         failure_level: &#39;WARN&#39;
@@ -205,14 +206,17 @@ module Toolchain
       end
 
       # move assets to html/
-      assets = %w[css js]
+      assets = %w[css js fonts images]
       assets.each do |asset|
+        stage_log(:build, &quot;... Copying #{asset}&quot;)
         from_dir = File.join(build_dir, asset)
+        next unless Dir.exist?(from_dir)
         to_dir = File.join(html_dir, asset)
-        mkdir(to_dir)
-        Dir[File.join(from_dir, &#39;*&#39;)].each do |file|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Build#self.build contains iterators nested 2 deep</span>          </div>  </li></ol>
-          FileUtils.mv(file, to_dir)
-        end
+        FileUtils.mv(from_dir, to_dir, force: true)
+        # mkdir(to_dir)
+        # Dir[File.join(from_dir, &#39;*&#39;)].each do |file|
+        #   FileUtils.mv(file, to_dir)
+        # end
       end
 
       stage_log(:build, &quot;Files are in #{html_dir}&quot;)
