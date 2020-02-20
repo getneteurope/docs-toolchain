@@ -168,7 +168,7 @@
     <span class="ruby-identifier">id</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">id</span>
 
     <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value">:@attributes</span>)
-    <span class="ruby-identifier">is_discrete</span> = (<span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;discrete&#39;</span>)
+    <span class="ruby-identifier">is_discrete</span> = <span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">key?</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;discrete&#39;</span>)
 
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_discrete</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">nil?</span>
 
