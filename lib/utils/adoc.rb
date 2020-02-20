@@ -15,7 +15,7 @@ module Toolchain
     #
     # Returns a pair of converted adoc +adoc+, original adoc +original+
     #
-    def self.load_doc(filename, attribs = {'root': Toolchain.document_root})
+    def self.load_doc(filename, attribs = {'root' => Toolchain.document_root})
       original = ::Asciidoctor.load_file(
         filename,
         catalog_assets: true,
