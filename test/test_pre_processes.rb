@@ -78,13 +78,13 @@ Sign here please.
 Here is my very own section.
 Thank you.
 
-[#discrete_level_five_outlaw]
+[[discrete_level_five_outlaw]]
 [discrete]
 ===== Outlaw jumps to 5
 
 The outlaw does not get caught because he is discrete
 
-[#level_four]
+[[level_four]]
 ==== My Section 4
 
 [#level_five]
@@ -92,11 +92,15 @@ The outlaw does not get caught because he is discrete
 
 Sensing a pattern here?
 
-[#level_six]
+[[level_six]]
 ====== 66 6
 
 [#level_seven]
 ======= In too deep 7
+
+[#level_nowhere]
+[discrete]
+=== Hide me senpai
 
     '
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")

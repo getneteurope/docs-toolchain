@@ -52,7 +52,7 @@ module Toolchain
           id = ref.id
 
           attribs = ref.instance_variable_get(:@attributes)
-          is_discrete = (attribs&.fetch(1) == 'discrete')
+          is_discrete = attribs&.key?(1) && (attribs&.fetch(1) == 'discrete')
 
           next if is_discrete || title.nil?
 
