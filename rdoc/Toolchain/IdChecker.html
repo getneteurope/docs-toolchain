@@ -193,7 +193,7 @@
   <span class="ruby-keyword">end</span>.<span class="ruby-identifier">reject</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:nil?</span>).<span class="ruby-identifier">to_set</span>
 
   (<span class="ruby-identifier">adoc_ids</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">parsed_ids</span>).<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">id</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ID&#39;</span>, <span class="ruby-node">&quot;checking #{id}&quot;</span>, <span class="ruby-value">:magenta</span>)
+    <span class="ruby-comment"># log(&#39;ID&#39;, &quot;checking #{id}&quot;, :magenta)</span>
     <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;Illegal character: &#39;#{id}&#39; does not match ID criteria (#{ID_PATTERN_REGEX.inspect})&quot;</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ID_PATTERN_REGEX</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">id</span>)
 
