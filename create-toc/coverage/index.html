@@ -14,26 +14,26 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-20T09:59:02+00:00">2020-02-20T09:59:02+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-20T10:03:33+00:00">2020-02-20T10:03:33+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">92.89%</span></span>
+    (<span class="covered_percent"><span class="green">92.81%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.39
+         3.38
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>19</b> files in total.
-    <b>647</b> relevant lines. 
-    <span class="green"><b>601</b> lines covered</span> and
+    <b>640</b> relevant lines. 
+    <span class="green"><b>594</b> lines covered</span> and
     <span class="red"><b>46</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -147,7 +147,7 @@
         <td>10</td>
         <td>10</td>
         <td>0</td>
-        <td>12.4</td>
+        <td>12.2</td>
       </tr>
       
       <tr>
@@ -182,10 +182,10 @@
       
       <tr>
         <td class="strong"><a href="#f101f187cc59b34671665ad89d33c13c9e9a6d9a" class="src_link" title="lib/pre.d/create_toc.rb">lib/pre.d/create_toc.rb</a></td>
-        <td class="green strong">98.28 %</td>
-        <td>110</td>
-        <td>58</td>
-        <td>57</td>
+        <td class="green strong">98.04 %</td>
+        <td>105</td>
+        <td>51</td>
+        <td>50</td>
         <td>1</td>
         <td>4.6</td>
       </tr>
@@ -4671,8 +4671,8 @@
           <code class="ruby">def log(tag, msg, color = :blue, bold = false, length: 14)</code>
         </li>
       
-        <li class="covered" data-hits="65" data-linenumber="12">
-          <span class="hits">65</span>
+        <li class="covered" data-hits="63" data-linenumber="12">
+          <span class="hits">63</span>
           
           <code class="ruby">  return if ENV.key?(&#39;UNITTEST&#39;) &amp;&amp; !ENV.key?(&#39;DEBUG&#39;)</code>
         </li>
@@ -7550,10 +7550,10 @@
         <div class="source_table" id="f101f187cc59b34671665ad89d33c13c9e9a6d9a">
   <div class="header">
     <h3>lib/pre.d/create_toc.rb</h3>
-    <h4><span class="green">98.28 %</span> covered</h4>
+    <h4><span class="green">98.04 %</span> covered</h4>
     <div>
-      <b>58</b> relevant lines. 
-      <span class="green"><b>57</b> lines covered</span> and
+      <b>51</b> relevant lines. 
+      <span class="green"><b>50</b> lines covered</span> and
       <span class="red"><b>1</b> lines missed.</span>
     </div>
   </div>
@@ -7849,10 +7849,10 @@
           <code class="ruby">          ref = doc.catalog[:refs][r]</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="49">
-          <span class="hits">9</span>
+        <li class="never" data-hits="" data-linenumber="49">
           
-          <code class="ruby">          puts ref</code>
+          
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="9" data-linenumber="50">
@@ -7873,16 +7873,16 @@
           <code class="ruby">          id = ref.id</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="53">
-          <span class="hits">9</span>
+        <li class="never" data-hits="" data-linenumber="53">
           
-          <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
+          
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="9" data-linenumber="54">
           <span class="hits">9</span>
           
-          <code class="ruby">          puts attribs</code>
+          <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
         </li>
       
         <li class="covered" data-hits="9" data-linenumber="55">
@@ -7891,331 +7891,301 @@
           <code class="ruby">          is_discrete = (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="56">
+        <li class="never" data-hits="" data-linenumber="56">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="57">
           <span class="hits">9</span>
           
-          <code class="ruby">          if is_discrete</code>
+          <code class="ruby">          next if is_discrete || title.nil?</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="57">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="58">
           
-          <code class="ruby">            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is discrete&#39;, :grey)</code>
+          
+          <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="58">
-          <span class="hits">1</span>
-          
-          <code class="ruby">            next</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="59">
-          
-          
-          <code class="ruby">          end</code>
-        </li>
-      
-        <li class="covered" data-hits="8" data-linenumber="60">
-          <span class="hits">8</span>
-          
-          <code class="ruby">          if title.nil?</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="61">
-          <span class="hits">1</span>
-          
-          <code class="ruby">            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is invalid&#39;, :red)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="62">
-          <span class="hits">1</span>
-          
-          <code class="ruby">            next</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="63">
-          
-          
-          <code class="ruby">          end</code>
-        </li>
-      
-        <li class="covered" data-hits="7" data-linenumber="64">
+        <li class="covered" data-hits="7" data-linenumber="59">
           <span class="hits">7</span>
           
           <code class="ruby">          current = OpenStruct.new(</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="65">
+        <li class="never" data-hits="" data-linenumber="60">
           
           
           <code class="ruby">            id: id,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="66">
+        <li class="never" data-hits="" data-linenumber="61">
           
           
           <code class="ruby">            level: level,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="67">
+        <li class="never" data-hits="" data-linenumber="62">
           
           
           <code class="ruby">            title: title,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="68">
+        <li class="never" data-hits="" data-linenumber="63">
           
           
           <code class="ruby">            parent: nil,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="69">
+        <li class="never" data-hits="" data-linenumber="64">
           
           
           <code class="ruby">            children: []</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="70">
+        <li class="never" data-hits="" data-linenumber="65">
           
           
           <code class="ruby">          )</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="71">
+        <li class="covered" data-hits="7" data-linenumber="66">
           <span class="hits">7</span>
           
           <code class="ruby">          stack.pop while level &lt;= stack.last.level</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="72">
+        <li class="covered" data-hits="7" data-linenumber="67">
           <span class="hits">7</span>
           
           <code class="ruby">          current.parent = stack.last</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="73">
+        <li class="never" data-hits="" data-linenumber="68">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="74">
+        <li class="never" data-hits="" data-linenumber="69">
           
           
           <code class="ruby">          # add current element to it&#39;s parent&#39;s children list</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="75">
+        <li class="covered" data-hits="7" data-linenumber="70">
           <span class="hits">7</span>
           
           <code class="ruby">          current.parent.children &lt;&lt; current</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="76">
+        <li class="never" data-hits="" data-linenumber="71">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="77">
+        <li class="never" data-hits="" data-linenumber="72">
           
           
           <code class="ruby">          # replace parent object now with it&#39;s id to avoid loops</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="78">
+        <li class="covered" data-hits="7" data-linenumber="73">
           <span class="hits">7</span>
           
           <code class="ruby">          current.parent = current.parent.id</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="79">
+        <li class="covered" data-hits="7" data-linenumber="74">
           <span class="hits">7</span>
           
           <code class="ruby">          stack.push current</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="80">
+        <li class="never" data-hits="" data-linenumber="75">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="81">
+        <li class="covered" data-hits="1" data-linenumber="76">
           <span class="hits">1</span>
           
           <code class="ruby">        toc_openstruct = stack.first</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="82">
+        <li class="covered" data-hits="1" data-linenumber="77">
           <span class="hits">1</span>
           
           <code class="ruby">        toc_hash = openstruct_to_hash(toc_openstruct)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="83">
+        <li class="covered" data-hits="1" data-linenumber="78">
           <span class="hits">1</span>
           
           <code class="ruby">        toc_json = JSON.pretty_generate(toc_hash)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="84">
+        <li class="covered" data-hits="1" data-linenumber="79">
           <span class="hits">1</span>
           
           <code class="ruby">        File.open(json_filepath, &#39;w+&#39;) do |json_file|</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="85">
+        <li class="covered" data-hits="1" data-linenumber="80">
           <span class="hits">1</span>
           
           <code class="ruby">          json_file.write(toc_json)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="86">
+        <li class="never" data-hits="" data-linenumber="81">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="87">
+        <li class="covered" data-hits="1" data-linenumber="82">
           <span class="hits">1</span>
           
           <code class="ruby">        log(&#39;TOC&#39;, &#39;File written to: &#39; + json_filepath, :gray)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="88">
+        <li class="covered" data-hits="1" data-linenumber="83">
           <span class="hits">1</span>
           
           <code class="ruby">        return json_filepath</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="89">
+        <li class="never" data-hits="" data-linenumber="84">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="90">
+        <li class="never" data-hits="" data-linenumber="85">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="91">
+        <li class="covered" data-hits="1" data-linenumber="86">
           <span class="hits">1</span>
           
           <code class="ruby">      private</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="92">
+        <li class="never" data-hits="" data-linenumber="87">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="93">
+        <li class="never" data-hits="" data-linenumber="88">
           
           
           <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="94">
+        <li class="never" data-hits="" data-linenumber="89">
           
           
           <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="95">
+        <li class="never" data-hits="" data-linenumber="90">
           
           
           <code class="ruby">      #</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="96">
+        <li class="covered" data-hits="1" data-linenumber="91">
           <span class="hits">1</span>
           
           <code class="ruby">      def openstruct_to_hash(object, hash = {})</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="97">
+        <li class="covered" data-hits="8" data-linenumber="92">
           <span class="hits">8</span>
           
           <code class="ruby">        object.each_pair do |key, value|</code>
         </li>
       
-        <li class="covered" data-hits="38" data-linenumber="98">
+        <li class="covered" data-hits="38" data-linenumber="93">
           <span class="hits">38</span>
           
           <code class="ruby">          hash[key] = case value</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="99">
+        <li class="missed" data-hits="0" data-linenumber="94">
           
           
           <code class="ruby">                      when OpenStruct then openstruct_to_hash(value)</code>
         </li>
       
-        <li class="covered" data-hits="15" data-linenumber="100">
+        <li class="covered" data-hits="15" data-linenumber="95">
           <span class="hits">15</span>
           
           <code class="ruby">                      when Array then value.map { |v| openstruct_to_hash(v) }</code>
         </li>
       
-        <li class="covered" data-hits="30" data-linenumber="101">
+        <li class="covered" data-hits="30" data-linenumber="96">
           <span class="hits">30</span>
           
           <code class="ruby">                      else value</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="102">
+        <li class="never" data-hits="" data-linenumber="97">
           
           
           <code class="ruby">                      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="103">
+        <li class="never" data-hits="" data-linenumber="98">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="104">
+        <li class="covered" data-hits="8" data-linenumber="99">
           <span class="hits">8</span>
           
           <code class="ruby">        return hash</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="105">
+        <li class="never" data-hits="" data-linenumber="100">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="106">
+        <li class="never" data-hits="" data-linenumber="101">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="107">
+        <li class="never" data-hits="" data-linenumber="102">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="108">
+        <li class="never" data-hits="" data-linenumber="103">
           
           
           <code class="ruby">end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="109">
+        <li class="never" data-hits="" data-linenumber="104">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="110">
+        <li class="covered" data-hits="1" data-linenumber="105">
           <span class="hits">1</span>
           
           <code class="ruby">Toolchain::PreProcessManager.instance.register(Toolchain::Pre::CreateTOC.new)</code>

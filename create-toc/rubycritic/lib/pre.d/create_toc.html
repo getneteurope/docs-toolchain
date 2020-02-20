@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-20 10:56:28 +0100'>2020-02-20 10:56:28 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-20 11:01:11 +0100'>2020-02-20 11:01:11 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">110</span><small> lines of codes</small></div>
+              <div><span class="metric">105</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">43.7</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">37.8</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">87.43</span><small> complexity</small></div>
+              <div><span class="metric">75.65</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -118,7 +118,7 @@ module Toolchain
       # Default JSON path is taken from +ConfigManager+.
       #
       # Returns toc as json tree +toc_json+
-      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#run has a flog score of 79</span>          </div>  </li></ol>
+      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#run has a flog score of 67</span>          </div>  </li></ol>
         adoc = nil, # Toolchain::Adoc.load_doc(CM.get(&#39;index.default.file&#39;)),
         json_filepath = CM.get(&#39;toc.file&#39;)
       )
@@ -145,21 +145,16 @@ module Toolchain
 
         doc.catalog[:refs].keys.each do |r|
           ref = doc.catalog[:refs][r]
-          puts ref
+
           level = ref.level
           title = ref.title
           id = ref.id
+
           attribs = ref.instance_variable_get(:@attributes)
-          puts attribs
           is_discrete = (attribs&amp;.fetch(1) == &#39;discrete&#39;)
-          if is_discrete
-            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is discrete&#39;, :grey)
-            next
-          end
-          if title.nil?
-            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is invalid&#39;, :red)
-            next
-          end
+
+          next if is_discrete || title.nil?
+
           current = OpenStruct.new(
             id: id,
             level: level,
