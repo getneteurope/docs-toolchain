@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'ostruct'
+require 'asciidoctor'
+require_relative '../utils/paths.rb'
 
 module Toolchain
   # Module containing Asciidoctor related Toolchain manipulations.
@@ -13,7 +15,7 @@ module Toolchain
     #
     # Returns a pair of converted adoc +adoc+, original adoc +original+
     #
-    def self.load_doc(filename, attribs = {})
+    def self.load_doc(filename, attribs = {'root': Toolchain.document_root})
       original = ::Asciidoctor.load_file(
         filename,
         catalog_assets: true,
