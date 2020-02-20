@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-20T10:03:33+00:00">2020-02-20T10:03:33+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-20T12:43:08+00:00">2020-02-20T12:43:08+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,7 +25,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.38
+         3.39
        </span>
     </span> hits/line)
   </h2>
@@ -187,7 +187,7 @@
         <td>51</td>
         <td>50</td>
         <td>1</td>
-        <td>4.6</td>
+        <td>4.8</td>
       </tr>
       
       <tr>
@@ -7843,8 +7843,8 @@
           <code class="ruby">        doc.catalog[:refs].keys.each do |r|</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="48">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="48">
+          <span class="hits">10</span>
           
           <code class="ruby">          ref = doc.catalog[:refs][r]</code>
         </li>
@@ -7855,20 +7855,20 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="50">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="50">
+          <span class="hits">10</span>
           
           <code class="ruby">          level = ref.level</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="51">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="51">
+          <span class="hits">10</span>
           
           <code class="ruby">          title = ref.title</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="52">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="52">
+          <span class="hits">10</span>
           
           <code class="ruby">          id = ref.id</code>
         </li>
@@ -7879,16 +7879,16 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="54">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="54">
+          <span class="hits">10</span>
           
           <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="55">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="55">
+          <span class="hits">10</span>
           
-          <code class="ruby">          is_discrete = (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
+          <code class="ruby">          is_discrete = attribs&amp;.key?(1) &amp;&amp; (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="56">
@@ -7897,8 +7897,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="57">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="57">
+          <span class="hits">10</span>
           
           <code class="ruby">          next if is_discrete || title.nil?</code>
         </li>
