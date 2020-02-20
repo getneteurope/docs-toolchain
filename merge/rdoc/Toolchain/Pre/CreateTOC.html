@@ -162,21 +162,16 @@
 
   <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:refs</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">ref</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:refs</span>][<span class="ruby-identifier">r</span>]
-    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">ref</span>
+
     <span class="ruby-identifier">level</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">level</span>
     <span class="ruby-identifier">title</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">title</span>
     <span class="ruby-identifier">id</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">id</span>
+
     <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value">:@attributes</span>)
-    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">attribs</span>
     <span class="ruby-identifier">is_discrete</span> = (<span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;discrete&#39;</span>)
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_discrete</span>
-      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;TOC&#39;</span>, <span class="ruby-string">&#39;ID &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; is discrete&#39;</span>, <span class="ruby-value">:grey</span>)
-      <span class="ruby-keyword">next</span>
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">nil?</span>
-      <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;TOC&#39;</span>, <span class="ruby-string">&#39;ID &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; is invalid&#39;</span>, <span class="ruby-value">:red</span>)
-      <span class="ruby-keyword">next</span>
-    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_discrete</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">nil?</span>
+
     <span class="ruby-identifier">current</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
       <span class="ruby-value">id:</span> <span class="ruby-identifier">id</span>,
       <span class="ruby-value">level:</span> <span class="ruby-identifier">level</span>,
@@ -242,7 +237,7 @@
 
           
           <div class="method-source-code" id="openstruct_to_hash-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 96</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">openstruct_to_hash</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>
