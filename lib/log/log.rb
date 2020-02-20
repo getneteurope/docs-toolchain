@@ -9,7 +9,7 @@ require_relative '../utils/string.rb'
 #
 # Returns nothing.
 def log(tag, msg, color = :blue, bold = false, length: 14)
-  return if ENV.key?('UNITTEST')
+  return if ENV.key?('UNITTEST') && !ENV.key?('DEBUG')
 
   length = tag.length if length.zero?
   tag = "[#{colorize(tag.center(length), color)}]".bold
