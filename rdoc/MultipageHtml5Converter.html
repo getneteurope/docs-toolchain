@@ -849,7 +849,7 @@
     <span class="ruby-comment"># This node is from the original document and has not yet been processed.</span>
 
     <span class="ruby-comment"># Create a new page for this section</span>
-    <span class="ruby-identifier">page</span> = <span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>([],
+    <span class="ruby-identifier">page</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Asciidoctor</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>([],
       <span class="ruby-value">attributes:</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">clone</span>,
       <span class="ruby-value">doctype:</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">doctype</span>,
       <span class="ruby-value">header_footer:</span> <span class="ruby-operator">!</span><span class="ruby-identifier">doc</span>.<span class="ruby-identifier">attr?</span>(<span class="ruby-value">:embedded</span>),
