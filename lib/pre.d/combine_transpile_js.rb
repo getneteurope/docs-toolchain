@@ -42,8 +42,8 @@ module Toolchain
               raise e if ENV.key?('DEBUG')
             end
           end
-          return results
         end
+        return results
       end
 
       ##
