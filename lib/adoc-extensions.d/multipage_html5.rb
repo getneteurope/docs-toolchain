@@ -495,7 +495,7 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
       # This node is from the original document and has not yet been processed.
 
       # Create a new page for this section
-      page = Asciidoctor::Document.new([],
+      page = ::Asciidoctor::Document.new([],
         attributes: doc.attributes.clone,
         doctype: doc.doctype,
         header_footer: !doc.attr?(:embedded),

@@ -35,11 +35,7 @@ module Toolchain
     # Run all registered processes as separate threads.
     #
     def run
-      threads = []
-      @processes.each do |proc|
-        threads << Thread.new { proc.run }
-      end
-      threads.map(&:join)
+      @processes.each(&:run)
     end
 
     ##

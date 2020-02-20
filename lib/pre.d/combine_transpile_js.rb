@@ -12,7 +12,8 @@ module Toolchain
     class CombineAndTranspileJS < BaseProcess
       SCRIPT_TAG_REGEX = %r{<script\ .*\ *src=['"](?<source>[a-zA-Z0-9_\.\-/]+)['"]>}.freeze
 
-      def initialize
+      def initialize(priority = 0)
+        super(priority)
         @header_name_default = 'docinfo-header.html'
         @footer_name_default = 'docinfo-footer.html'
       end
@@ -41,8 +42,8 @@ module Toolchain
               raise e if ENV.key?('DEBUG')
             end
           end
-          return results
         end
+        return results
       end
 
       ##

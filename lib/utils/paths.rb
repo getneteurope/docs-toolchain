@@ -19,6 +19,14 @@ module Toolchain
   end
 
   ##
+  # document_root
+  # Returns the root of content structure, i.e. where +index.adoc+ is located.
+  #
+  def self.document_root
+    return File.join(content_path, 'content')
+  end
+
+  ##
   # toolchain_path
   # Returns path to toolchain root.
   #

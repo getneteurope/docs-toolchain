@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../cli.rb'
+require_relative '../config_manager.rb'
 require_relative '../extension_manager.rb'
 require_relative '../log/log.rb'
 require_relative '../utils/adoc.rb'
@@ -11,7 +12,7 @@ Dir[File.join(__dir__, '../', 'extensions.d', '*.rb')].each { |file| require fil
 ADOC_MAP = Hash.new(nil)
 ##
 # default index file
-DEFAULT_INDEX = 'content/index.adoc'
+DEFAULT_INDEX = Toolchain::ConfigManager.instance.get('index.default.file')
 
 ##
 # represents a pair of parsed, resolved adoc and original adoc

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'ostruct'
+require 'asciidoctor'
+require_relative '../utils/paths.rb'
 
 module Toolchain
   # Module containing Asciidoctor related Toolchain manipulations.
@@ -13,7 +15,7 @@ module Toolchain
     #
     # Returns a pair of converted adoc +adoc+, original adoc +original+
     #
-    def self.load_doc(filename, attribs = {})
+    def self.load_doc(filename, attribs = {'root' => Toolchain.document_root})
       original = ::Asciidoctor.load_file(
         filename,
         catalog_assets: true,
@@ -30,7 +32,7 @@ module Toolchain
         parse: true,
         attributes: attribs
       )
-      attributes = collect_attributes parsed, attribs
+      attributes = collect_attributes(parsed, attribs)
 
       adoc = ::OpenStruct.new(
         original: original,
@@ -43,11 +45,15 @@ module Toolchain
 
     ##
     # Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
+    # Adds +additional_attribs+ to the attribute hash if they are passed.
     # Returns collection of attributes +attribs+.
     #
-    def self.collect_attributes(doc, attribs = {})
+    def self.collect_attributes(doc, additional_attribs = {})
       # get initial attribs set in index
-      attribs = get_mod_attrs_from_doc(doc) if attribs == {}
+      attribs = get_mod_attrs_from_doc(doc)
+      additional_attribs.each do |key,value|
+        attribs[key] = value
+      end
       incs = doc.catalog[:includes].keys.to_set
       return attribs if incs.empty?
 
