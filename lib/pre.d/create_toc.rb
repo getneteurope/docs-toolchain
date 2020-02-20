@@ -46,21 +46,16 @@ module Toolchain
 
         doc.catalog[:refs].keys.each do |r|
           ref = doc.catalog[:refs][r]
-          puts ref
+
           level = ref.level
           title = ref.title
           id = ref.id
+
           attribs = ref.instance_variable_get(:@attributes)
-          puts attribs
           is_discrete = (attribs&.fetch(1) == 'discrete')
-          if is_discrete
-            log('TOC', 'ID ' + id + ' is discrete', :grey)
-            next
-          end
-          if title.nil?
-            log('TOC', 'ID ' + id + ' is invalid', :red)
-            next
-          end
+
+          next if is_discrete || title.nil?
+
           current = OpenStruct.new(
             id: id,
             level: level,
