@@ -43,7 +43,7 @@ module Toolchain
           next unless line.match? pattern
 
           msg = "Illegal pattern in line #{index + 1}: #{pattern.inspect}"
-          log('PATTERN', msg, :magenta)
+          # log('PATTERN', msg, :magenta)
           errors << create_error(
             msg: msg,
             location: Location.new(parsed.attr('docfile'), nil)
