@@ -14,14 +14,14 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-20T09:54:13+00:00">2020-02-20T09:54:13+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-20T09:58:46+00:00">2020-02-20T09:58:46+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">92.81%</span></span>
+    (<span class="covered_percent"><span class="green">92.89%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
@@ -32,8 +32,8 @@
   <a name="AllFiles"></a>
   <div>
     <b>19</b> files in total.
-    <b>640</b> relevant lines. 
-    <span class="green"><b>594</b> lines covered</span> and
+    <b>647</b> relevant lines. 
+    <span class="green"><b>601</b> lines covered</span> and
     <span class="red"><b>46</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -147,7 +147,7 @@
         <td>10</td>
         <td>10</td>
         <td>0</td>
-        <td>12.1</td>
+        <td>12.4</td>
       </tr>
       
       <tr>
@@ -182,12 +182,12 @@
       
       <tr>
         <td class="strong"><a href="#f101f187cc59b34671665ad89d33c13c9e9a6d9a" class="src_link" title="lib/pre.d/create_toc.rb">lib/pre.d/create_toc.rb</a></td>
-        <td class="green strong">98.04 %</td>
-        <td>96</td>
-        <td>51</td>
-        <td>50</td>
+        <td class="green strong">98.28 %</td>
+        <td>110</td>
+        <td>58</td>
+        <td>57</td>
         <td>1</td>
-        <td>4.8</td>
+        <td>4.6</td>
       </tr>
       
       <tr>
@@ -4671,8 +4671,8 @@
           <code class="ruby">def log(tag, msg, color = :blue, bold = false, length: 14)</code>
         </li>
       
-        <li class="covered" data-hits="64" data-linenumber="12">
-          <span class="hits">64</span>
+        <li class="covered" data-hits="65" data-linenumber="12">
+          <span class="hits">65</span>
           
           <code class="ruby">  return if ENV.key?(&#39;UNITTEST&#39;) &amp;&amp; !ENV.key?(&#39;DEBUG&#39;)</code>
         </li>
@@ -4773,14 +4773,14 @@
           <code class="ruby">def stage_log(stage, msg, color = :green)</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="29">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="29">
+          <span class="hits">10</span>
           
           <code class="ruby">  stage = stage.to_s.upcase</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="30">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="30">
+          <span class="hits">10</span>
           
           <code class="ruby">  log(stage, msg, color, true)</code>
         </li>
@@ -7550,10 +7550,10 @@
         <div class="source_table" id="f101f187cc59b34671665ad89d33c13c9e9a6d9a">
   <div class="header">
     <h3>lib/pre.d/create_toc.rb</h3>
-    <h4><span class="green">98.04 %</span> covered</h4>
+    <h4><span class="green">98.28 %</span> covered</h4>
     <div>
-      <b>51</b> relevant lines. 
-      <span class="green"><b>50</b> lines covered</span> and
+      <b>58</b> relevant lines. 
+      <span class="green"><b>57</b> lines covered</span> and
       <span class="red"><b>1</b> lines missed.</span>
     </div>
   </div>
@@ -7588,427 +7588,427 @@
         <li class="covered" data-hits="1" data-linenumber="5">
           <span class="hits">1</span>
           
-          <code class="ruby">require &#39;json&#39;</code>
+          <code class="ruby">require_relative &#39;../config_manager.rb&#39;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="6">
+        <li class="covered" data-hits="1" data-linenumber="6">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">require_relative &#39;../utils/adoc.rb&#39;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">module Toolchain</code>
+          <code class="ruby">require_relative &#39;../log/log.rb&#39;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="8">
           <span class="hits">1</span>
           
-          <code class="ruby">  module Pre</code>
+          <code class="ruby">require &#39;json&#39;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="9">
           
           
-          <code class="ruby">    ##</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="10">
-          
-          
-          <code class="ruby">    # Adds modules for preprocessing files.</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="11">
+        <li class="covered" data-hits="1" data-linenumber="10">
           <span class="hits">1</span>
           
-          <code class="ruby">    class CreateTOC &lt; BaseProcess</code>
+          <code class="ruby">CM = Toolchain::ConfigManager.instance</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="12">
+        <li class="never" data-hits="" data-linenumber="11">
           
           
-          <code class="ruby">      ##</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="13">
+        <li class="covered" data-hits="1" data-linenumber="12">
+          <span class="hits">1</span>
           
+          <code class="ruby">module Toolchain</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="13">
+          <span class="hits">1</span>
           
-          <code class="ruby">      # Creates a TOC json file from an +adoc+ object</code>
+          <code class="ruby">  module Pre</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="14">
           
           
-          <code class="ruby">      # Default json path is taken from config</code>
+          <code class="ruby">    ##</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="15">
           
           
+          <code class="ruby">    # Adds modules for preprocessing files.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="16">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    class CreateTOC &lt; BaseProcess</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="17">
+          
+          
+          <code class="ruby">      ##</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="18">
+          
+          
+          <code class="ruby">      # Creates a TOC JSON file from an +adoc+ object</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="19">
+          
+          
+          <code class="ruby">      # Default JSON path is taken from +ConfigManager+.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="20">
+          
+          
           <code class="ruby">      #</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="16">
+        <li class="never" data-hits="" data-linenumber="21">
           
           
           <code class="ruby">      # Returns toc as json tree +toc_json+</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="17">
-          <span class="hits">1</span>
-          
-          <code class="ruby">      def run(adoc, json_filepath = Toolchain::ConfigManager.instance.get(&#39;toc.file&#39;))</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="18">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        parsed = adoc.parsed</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="19">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        attributes = adoc.attributes</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="20">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        lines = parsed.reader.source_lines</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="21">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        reader = ::Asciidoctor::PreprocessorReader.new parsed, lines</code>
-        </li>
-      
         <li class="covered" data-hits="1" data-linenumber="22">
           <span class="hits">1</span>
           
-          <code class="ruby">        combined_source = reader.read_lines</code>
+          <code class="ruby">      def run(</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="23">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="23">
           
-          <code class="ruby">        doc = ::Asciidoctor::Document.new combined_source, </code>
+          
+          <code class="ruby">        adoc = nil, # Toolchain::Adoc.load_doc(CM.get(&#39;index.default.file&#39;)),</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="24">
           
           
-          <code class="ruby">          catalog_assets: true,</code>
+          <code class="ruby">        json_filepath = CM.get(&#39;toc.file&#39;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="25">
           
           
-          <code class="ruby">          sourcemap: true,</code>
+          <code class="ruby">      )</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="26">
           
           
-          <code class="ruby">          safe: :unsafe,</code>
+          <code class="ruby">        # TODO document this bit since it&#39;s quite confusing</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="27">
-          
-          
-          <code class="ruby">          attributes: attributes</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="28">
+        <li class="covered" data-hits="1" data-linenumber="27">
           <span class="hits">1</span>
           
-          <code class="ruby">        doc.parse</code>
+          <code class="ruby">        stage_log(:pre, &#39;[Create TOC] Starting&#39;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="28">
+          
+          
+          <code class="ruby">        adoc = Toolchain::Adoc.load_doc(</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="29">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">          CM.get(&#39;index.default.file&#39;)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="30">
           <span class="hits">1</span>
           
-          <code class="ruby">        stack = [OpenStruct.new(id: &#39;root&#39;, level: -1, children: [])]</code>
+          <code class="ruby">        ) if adoc.nil?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="31">
+        <li class="covered" data-hits="1" data-linenumber="31">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">        parsed = adoc.parsed</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="32">
           <span class="hits">1</span>
           
-          <code class="ruby">        doc.catalog[:refs].keys.each do |r|</code>
+          <code class="ruby">        attributes = adoc.attributes</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="33">
-          <span class="hits">9</span>
-          
-          <code class="ruby">          ref = doc.catalog[:refs][r]</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="34">
-          <span class="hits">9</span>
-          
-          <code class="ruby">          level = ref.level</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="35">
-          <span class="hits">9</span>
-          
-          <code class="ruby">          title = ref.title</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="36">
-          <span class="hits">9</span>
-          
-          <code class="ruby">          id = ref.id</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="37">
-          <span class="hits">9</span>
-          
-          <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="38">
-          <span class="hits">9</span>
-          
-          <code class="ruby">          isDiscrete = (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="39">
-          <span class="hits">9</span>
-          
-          <code class="ruby">          if isDiscrete</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="40">
+        <li class="covered" data-hits="1" data-linenumber="33">
           <span class="hits">1</span>
           
-          <code class="ruby">            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is discrete&#39;, :grey)</code>
+          <code class="ruby">        lines = parsed.reader.source_lines</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="41">
+        <li class="covered" data-hits="1" data-linenumber="34">
           <span class="hits">1</span>
           
-          <code class="ruby">            next</code>
+          <code class="ruby">        reader = ::Asciidoctor::PreprocessorReader.new(parsed, lines)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="35">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        combined_source = reader.read_lines</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="36">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        doc = ::Asciidoctor::Document.new(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="37">
+          
+          
+          <code class="ruby">          combined_source,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="38">
+          
+          
+          <code class="ruby">          catalog_assets: true,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="39">
+          
+          
+          <code class="ruby">          sourcemap: true,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="40">
+          
+          
+          <code class="ruby">          safe: :unsafe,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          
+          <code class="ruby">          attributes: attributes</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="42">
           
           
-          <code class="ruby">          end</code>
+          <code class="ruby">        )</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="43">
-          <span class="hits">8</span>
-          
-          <code class="ruby">          if title.nil?</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="44">
+        <li class="covered" data-hits="1" data-linenumber="43">
           <span class="hits">1</span>
           
-          <code class="ruby">            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is invalid&#39;, :red)</code>
+          <code class="ruby">        doc.parse</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="44">
+          
+          
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="45">
           <span class="hits">1</span>
           
-          <code class="ruby">            next</code>
+          <code class="ruby">        stack = [OpenStruct.new(id: &#39;root&#39;, level: -1, children: [])]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="46">
           
           
-          <code class="ruby">          end</code>
-        </li>
-      
-        <li class="covered" data-hits="7" data-linenumber="47">
-          <span class="hits">7</span>
-          
-          <code class="ruby">          current = OpenStruct.new(</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="48">
-          
-          
-          <code class="ruby">            id: id,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="49">
-          
-          
-          <code class="ruby">            level: level,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="50">
-          
-          
-          <code class="ruby">            title: title,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="51">
-          
-          
-          <code class="ruby">            parent: nil,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="52">
-          
-          
-          <code class="ruby">            children: []</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="53">
-          
-          
-          <code class="ruby">          )</code>
-        </li>
-      
-        <li class="covered" data-hits="7" data-linenumber="54">
-          <span class="hits">7</span>
-          
-          <code class="ruby">          stack.pop while level &lt;= stack.last.level</code>
-        </li>
-      
-        <li class="covered" data-hits="7" data-linenumber="55">
-          <span class="hits">7</span>
-          
-          <code class="ruby">          current.parent = stack.last</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="56">
-          
-          
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="57">
+        <li class="covered" data-hits="1" data-linenumber="47">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">          # add current element to it&#39;s parent&#39;s children list</code>
+          <code class="ruby">        doc.catalog[:refs].keys.each do |r|</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="58">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="9" data-linenumber="48">
+          <span class="hits">9</span>
           
-          <code class="ruby">          current.parent.children &lt;&lt; current</code>
+          <code class="ruby">          ref = doc.catalog[:refs][r]</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="49">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          puts ref</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="50">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          level = ref.level</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="51">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          title = ref.title</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="52">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          id = ref.id</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="53">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="54">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          puts attribs</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="55">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          is_discrete = (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="56">
+          <span class="hits">9</span>
+          
+          <code class="ruby">          if is_discrete</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="57">
+          <span class="hits">1</span>
+          
+          <code class="ruby">            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is discrete&#39;, :grey)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="58">
+          <span class="hits">1</span>
+          
+          <code class="ruby">            next</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="59">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">          end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="60">
+        <li class="covered" data-hits="8" data-linenumber="60">
+          <span class="hits">8</span>
           
-          
-          <code class="ruby">          # replace parent object now with it&#39;s id to avoid loops</code>
+          <code class="ruby">          if title.nil?</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="61">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="1" data-linenumber="61">
+          <span class="hits">1</span>
           
-          <code class="ruby">          current.parent = current.parent.id</code>
+          <code class="ruby">            log(&#39;TOC&#39;, &#39;ID &#39; + id + &#39; is invalid&#39;, :red)</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="62">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="1" data-linenumber="62">
+          <span class="hits">1</span>
           
-          <code class="ruby">          stack.push current</code>
+          <code class="ruby">            next</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="63">
           
           
-          <code class="ruby">        end</code>
+          <code class="ruby">          end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="64">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="7" data-linenumber="64">
+          <span class="hits">7</span>
           
-          <code class="ruby">        toc_openstruct = stack.first</code>
+          <code class="ruby">          current = OpenStruct.new(</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="65">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="65">
           
-          <code class="ruby">        toc_hash = openstruct_to_hash(toc_openstruct)</code>
+          
+          <code class="ruby">            id: id,</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="66">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="66">
           
-          <code class="ruby">        toc_json = JSON.pretty_generate(toc_hash)</code>
+          
+          <code class="ruby">            level: level,</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="67">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="67">
           
-          <code class="ruby">        json_file = File.open(json_filepath, &#39;w+&#39;)</code>
+          
+          <code class="ruby">            title: title,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="68">
           
           
-          <code class="ruby">        begin</code>
+          <code class="ruby">            parent: nil,</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="69">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="69">
           
-          <code class="ruby">          json_file.write(toc_json)</code>
+          
+          <code class="ruby">            children: []</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="70">
           
           
-          <code class="ruby">        ensure</code>
+          <code class="ruby">          )</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="71">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="7" data-linenumber="71">
+          <span class="hits">7</span>
           
-          <code class="ruby">          json_file.close</code>
+          <code class="ruby">          stack.pop while level &lt;= stack.last.level</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="72">
+        <li class="covered" data-hits="7" data-linenumber="72">
+          <span class="hits">7</span>
           
-          
-          <code class="ruby">        end</code>
+          <code class="ruby">          current.parent = stack.last</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="73">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="73">
           
-          <code class="ruby">        log(&#39;TOC&#39;, &#39;File written to; &#39; + json_filepath, :gray)</code>
+          
+          <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="74">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="74">
           
-          <code class="ruby">        return json_filepath</code>
+          
+          <code class="ruby">          # add current element to it&#39;s parent&#39;s children list</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="75">
+        <li class="covered" data-hits="7" data-linenumber="75">
+          <span class="hits">7</span>
           
-          
-          <code class="ruby">      end</code>
+          <code class="ruby">          current.parent.children &lt;&lt; current</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="76">
@@ -8017,76 +8017,76 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="77">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="77">
           
-          <code class="ruby">      private</code>
+          
+          <code class="ruby">          # replace parent object now with it&#39;s id to avoid loops</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="78">
+        <li class="covered" data-hits="7" data-linenumber="78">
+          <span class="hits">7</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">          current.parent = current.parent.id</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="79">
+        <li class="covered" data-hits="7" data-linenumber="79">
+          <span class="hits">7</span>
           
-          
-          <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
+          <code class="ruby">          stack.push current</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="80">
           
           
-          <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON </code>
+          <code class="ruby">        end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="81">
+        <li class="covered" data-hits="1" data-linenumber="81">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      #</code>
+          <code class="ruby">        toc_openstruct = stack.first</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="82">
           <span class="hits">1</span>
           
-          <code class="ruby">      def openstruct_to_hash(object, hash = {})</code>
+          <code class="ruby">        toc_hash = openstruct_to_hash(toc_openstruct)</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="83">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="1" data-linenumber="83">
+          <span class="hits">1</span>
           
-          <code class="ruby">      object.each_pair do |key, value|</code>
+          <code class="ruby">        toc_json = JSON.pretty_generate(toc_hash)</code>
         </li>
       
-        <li class="covered" data-hits="38" data-linenumber="84">
-          <span class="hits">38</span>
+        <li class="covered" data-hits="1" data-linenumber="84">
+          <span class="hits">1</span>
           
-          <code class="ruby">        hash[key] = case value</code>
+          <code class="ruby">        File.open(json_filepath, &#39;w+&#39;) do |json_file|</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="85">
+        <li class="covered" data-hits="1" data-linenumber="85">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">                      when OpenStruct then openstruct_to_hash(value)</code>
+          <code class="ruby">          json_file.write(toc_json)</code>
         </li>
       
-        <li class="covered" data-hits="15" data-linenumber="86">
-          <span class="hits">15</span>
+        <li class="never" data-hits="" data-linenumber="86">
           
-          <code class="ruby">                      when Array then value.map { |v| openstruct_to_hash(v) }</code>
+          
+          <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="30" data-linenumber="87">
-          <span class="hits">30</span>
+        <li class="covered" data-hits="1" data-linenumber="87">
+          <span class="hits">1</span>
           
-          <code class="ruby">                      else value</code>
+          <code class="ruby">        log(&#39;TOC&#39;, &#39;File written to: &#39; + json_filepath, :gray)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="88">
+        <li class="covered" data-hits="1" data-linenumber="88">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">                    end</code>
+          <code class="ruby">        return json_filepath</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="89">
@@ -8095,43 +8095,127 @@
           <code class="ruby">      end</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="90">
-          <span class="hits">8</span>
-          
-          <code class="ruby">      hash</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="91">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="92">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="93">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="94">
-          
-          
-          <code class="ruby">end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="95">
+        <li class="never" data-hits="" data-linenumber="90">
           
           
           <code class="ruby"></code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="91">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      private</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="92">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="93">
+          
+          
+          <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="94">
+          
+          
+          <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="95">
+          
+          
+          <code class="ruby">      #</code>
+        </li>
+      
         <li class="covered" data-hits="1" data-linenumber="96">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      def openstruct_to_hash(object, hash = {})</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="97">
+          <span class="hits">8</span>
+          
+          <code class="ruby">        object.each_pair do |key, value|</code>
+        </li>
+      
+        <li class="covered" data-hits="38" data-linenumber="98">
+          <span class="hits">38</span>
+          
+          <code class="ruby">          hash[key] = case value</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="99">
+          
+          
+          <code class="ruby">                      when OpenStruct then openstruct_to_hash(value)</code>
+        </li>
+      
+        <li class="covered" data-hits="15" data-linenumber="100">
+          <span class="hits">15</span>
+          
+          <code class="ruby">                      when Array then value.map { |v| openstruct_to_hash(v) }</code>
+        </li>
+      
+        <li class="covered" data-hits="30" data-linenumber="101">
+          <span class="hits">30</span>
+          
+          <code class="ruby">                      else value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="102">
+          
+          
+          <code class="ruby">                      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="103">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="104">
+          <span class="hits">8</span>
+          
+          <code class="ruby">        return hash</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="105">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="106">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="107">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="108">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="109">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="110">
           <span class="hits">1</span>
           
           <code class="ruby">Toolchain::PreProcessManager.instance.register(Toolchain::Pre::CreateTOC.new)</code>
