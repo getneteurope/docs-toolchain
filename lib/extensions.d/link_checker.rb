@@ -54,7 +54,7 @@ module Toolchain
     #
     # Return nil if success, or +msg+ if an error occured.
     def test_link(link)
-      log('LINK', link, :magenta)
+      # log('LINK', link, :magenta)
       msg = nil
       resp = nil
       begin

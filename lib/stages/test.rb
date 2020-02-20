@@ -49,7 +49,8 @@ end
 # Returns +nil+.
 #
 def print_errors(errors_map)
-  errors_map.each do |_file, errors|
+  errors_map.each do |file, errors|
+    log('ERRORS', "for file #{file}", :red) unless errors.empty?
     errors.each do |err|
       puts "#{err[:id]}\t#{err[:msg]}".bold.red
     end
@@ -100,7 +101,7 @@ def run_tests(filename)
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
-    log('EXTENSION', ext.class.name, :cyan)
+    # log('EXTENSION', ext.class.name, :cyan)
     errors += ext.run(adoc)
   end
   return errors

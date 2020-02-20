@@ -56,7 +56,7 @@ module Toolchain
       end.reject(&:nil?).to_set
 
       (adoc_ids | parsed_ids).to_a.each do |id|
-        log('ID', "checking #{id}", :magenta)
+        # log('ID', "checking #{id}", :magenta)
         msg = "Illegal character: '#{id}' does not match ID criteria (#{ID_PATTERN_REGEX.inspect})"
         next if ID_PATTERN_REGEX.match?(id)
 
