@@ -151,7 +151,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 53</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@processes</span> = []
 <span class="ruby-keyword">end</span></pre>
@@ -192,7 +192,7 @@
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 47</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">clear</span>
 <span class="ruby-keyword">end</span></pre>
@@ -297,11 +297,7 @@
           <div class="method-source-code" id="run-source">
             <pre><span class="ruby-comment"># File lib/process_manager.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
-  <span class="ruby-identifier">threads</span> = []
-  <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">threads</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">run</span> }
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">threads</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:join</span>)
+  <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:run</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

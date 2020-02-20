@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-14 15:58:55 +0100'>2020-02-14 15:58:55 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-20 09:11:08 +0100'>2020-02-20 09:11:08 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">67</span><small> lines of codes</small></div>
+              <div><span class="metric">63</span><small> lines of codes</small></div>
               <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">3.6</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">2.5</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">18.01</span><small> complexity</small></div>
+              <div><span class="metric">12.4</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -134,11 +134,7 @@ module Toolchain
     # Run all registered processes as separate threads.
     #
     def run
-      threads = []
-      @processes.each do |proc|
-        threads &lt;&lt; Thread.new { proc.run }
-      end
-      threads.map(&amp;:join)
+      @processes.each(&amp;:run)
     end
 
     ##

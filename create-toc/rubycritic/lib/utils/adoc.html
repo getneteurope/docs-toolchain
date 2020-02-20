@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-14 15:58:55 +0100'>2020-02-14 15:58:55 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-20 10:12:52 +0100'>2020-02-20 10:12:52 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">91</span><small> lines of codes</small></div>
+              <div><span class="metric">97</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">11.9</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">12.2</span><small> complexity/method</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">35.62</span><small> complexity</small></div>
+              <div><span class="metric">36.72</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -100,6 +100,8 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require &#39;ostruct&#39;
+require &#39;asciidoctor&#39;
+require_relative &#39;../utils/paths.rb&#39;
 
 module Toolchain
   # Module containing Asciidoctor related Toolchain manipulations.
@@ -112,7 +114,7 @@ module Toolchain
     #
     # Returns a pair of converted adoc +adoc+, original adoc +original+
     #
-    def self.load_doc(filename, attribs = {})
+    def self.load_doc(filename, attribs = {&#39;root&#39; =&gt; Toolchain.document_root})
       original = ::Asciidoctor.load_file(
         filename,
         catalog_assets: true,
@@ -129,7 +131,7 @@ module Toolchain
         parse: true,
         attributes: attribs
       )
-      attributes = collect_attributes parsed, attribs
+      attributes = collect_attributes(parsed, attribs)
 
       adoc = ::OpenStruct.new(
         original: original,
@@ -142,11 +144,15 @@ module Toolchain
 
     ##
     # Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
+    # Adds +additional_attribs+ to the attribute hash if they are passed.
     # Returns collection of attributes +attribs+.
     #
-    def self.collect_attributes(doc, attribs = {})
+    def self.collect_attributes(doc, additional_attribs = {})
       # get initial attribs set in index
-      attribs = get_mod_attrs_from_doc(doc) if attribs == {}
+      attribs = get_mod_attrs_from_doc(doc)
+      additional_attribs.each do |key,value|
+        attribs[key] = value
+      end
       incs = doc.catalog[:includes].keys.to_set
       return attribs if incs.empty?
 
