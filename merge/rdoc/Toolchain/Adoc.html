@@ -112,7 +112,7 @@
         
         <div class="method-heading">
           <span class="method-name">collect_attributes</span><span
-            class="method-args">(doc, attribs = {})</span>
+            class="method-args">(doc, additional_attribs = {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -121,16 +121,19 @@
 
         <div class="method-description">
           
-          <p>Recursively loops thourgh asdciidoc includes and collects their newly set attributes. Returns collection of attributes <code>attribs</code>.</p>
+          <p>Recursively loops thourgh asdciidoc includes and collects their newly set attributes. Adds <code>additional_attribs</code> to the attribute hash if they are passed. Returns collection of attributes <code>attribs</code>.</p>
           
           
 
           
           <div class="method-source-code" id="collect_attributes-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 48</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">collect_attributes</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attribs</span> = {})
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">collect_attributes</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">additional_attribs</span> = {})
   <span class="ruby-comment"># get initial attribs set in index</span>
-  <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">attribs</span> <span class="ruby-operator">==</span> {}
+  <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>)
+  <span class="ruby-identifier">additional_attribs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">attribs</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">incs</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:includes</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">to_set</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">attribs</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">incs</span>.<span class="ruby-identifier">empty?</span>
 
@@ -185,7 +188,7 @@
 
           
           <div class="method-source-code" id="get_mod_attrs_from_doc-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 80</span>
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>)
   <span class="ruby-identifier">attribs</span> = {}
   <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">convert</span>
@@ -209,7 +212,7 @@
         
         <div class="method-heading">
           <span class="method-name">load_doc</span><span
-            class="method-args">(filename, attribs = {})</span>
+            class="method-args">(filename, attribs = {&#39;root&#39; =&gt; Toolchain.document_root})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -228,8 +231,8 @@
 
           
           <div class="method-source-code" id="load_doc-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 16</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_doc</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">attribs</span> = {})
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_doc</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">attribs</span> = {<span class="ruby-string">&#39;root&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">document_root</span>})
   <span class="ruby-identifier">original</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">load_file</span>(
     <span class="ruby-identifier">filename</span>,
     <span class="ruby-value">catalog_assets:</span> <span class="ruby-keyword">true</span>,
@@ -246,7 +249,7 @@
     <span class="ruby-value">parse:</span> <span class="ruby-keyword">true</span>,
     <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attribs</span>
   )
-  <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">collect_attributes</span> <span class="ruby-identifier">parsed</span>, <span class="ruby-identifier">attribs</span>
+  <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">collect_attributes</span>(<span class="ruby-identifier">parsed</span>, <span class="ruby-identifier">attribs</span>)
 
   <span class="ruby-identifier">adoc</span> = <span class="ruby-operator">::</span><span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
     <span class="ruby-value">original:</span> <span class="ruby-identifier">original</span>,
