@@ -84,7 +84,8 @@ module Toolchain
           'toc' => 'left',
           'systemtimestamp' => %x(date +%s),
           'backend' => 'multipage_html5',
-          'docinfo' => 'shared'
+          'docinfo' => 'shared',
+          'root' => Toolchain.build_path
         },
         safe: :safe,
         failure_level: 'WARN'
