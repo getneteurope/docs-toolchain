@@ -5,16 +5,24 @@ require_relative '../utils/string.rb'
 ##
 # Create a log entry in the format:
 #     [tag] msg
-# using the given color and font weight
+# using the given color and font weight.
+#
+# Params:
+# +tag+: The tag to display at the beginning
+# +msg+: The message to log
+# +color+: Define color as symbol (default: +:blue+)
+# +bold+: Whether +msg+ should be bold (default: false)
+# +length+: Width of the +tag+ inside the brackets (default: 14)
+# +stream+: Which output stream to use (default: +STDOUT+)
 #
 # Returns nothing.
-def log(tag, msg, color = :blue, bold = false, length: 14)
+def log(tag, msg, color = :blue, bold = false, length: 14, stream: STDOUT)
   return if ENV.key?('UNITTEST') && !ENV.key?('DEBUG')
 
   length = tag.length if length.zero?
   tag = "[#{colorize(tag.center(length), color)}]".bold
-  msg = msg.bold if bold
-  puts "#{tag} #{msg}"
+  msg = msg.bold if bold && msg.respond_to?(:bold)
+  stream.puts "#{tag} #{msg}"
 end
 
 ##
@@ -28,4 +36,12 @@ end
 def stage_log(stage, msg, color = :green)
   stage = stage.to_s.upcase
   log(stage, msg, color, true)
+end
+
+
+##
+# Log error to STDOUT.
+#
+def error(msg)
+  log('ERROR', msg, :red, stream: STDERR)
 end

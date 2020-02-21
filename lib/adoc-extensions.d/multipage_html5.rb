@@ -26,7 +26,7 @@
 #
 # Notes and limitations:
 #
-# - Tested with Asciidoctor 1.5.7.1; inline anchors in unordered list items
+# - Tested with Asciidoctor 2.0.0; inline anchors in unordered list items
 #   require the fix for asciidoctor issue #2812.
 # - This extension is tightly coupled with Asciidoctor internals, and future
 #   changes in Asciidoctor may require updates here. Hopefully this extension
@@ -177,7 +177,18 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
   #
   def convert(node, transform = nil, opts = {})
     transform ||= node.node_name
-    opts.empty? ? (send transform, node) : (send transform, node, opts)
+    begin
+      opts.empty? ? (send transform, node) : (send transform, node, opts)
+    rescue StandardError => e
+      error("#{e.class}: #{e.message}")
+      error("#{node}.#{transform}".bold.red)
+      error('No conversion for node:'.bold.red)
+      error(node)
+      error('Exception:'.bold.red)
+      error("\n" + e.backtrace.join("\n"))
+      error('Exiting.'.bold.red)
+      exit(-1)
+    end
   end
 
   # Process Document (either the original full document or a processed page)
