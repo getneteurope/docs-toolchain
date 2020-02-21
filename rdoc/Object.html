@@ -79,6 +79,8 @@
     
     <li ><a href="#method-i-colorize">#colorize</a>
     
+    <li ><a href="#method-i-error">#error</a>
+    
     <li ><a href="#method-i-get_recursively">#get_recursively</a>
     
     <li ><a href="#method-i-log">#log</a>
@@ -265,6 +267,39 @@
       </div>
 
     
+      <div id="method-i-error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">error</span><span
+            class="method-args">(msg)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Log error to STDOUT.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="error-source">
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">error</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">:red</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stderr</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-get_recursively" class="method-detail ">
         
         <div class="method-heading">
@@ -311,7 +346,7 @@
         
         <div class="method-heading">
           <span class="method-name">log</span><span
-            class="method-args">(tag, msg, color = :blue, bold = false, length: 14)</span>
+            class="method-args">(tag, msg, color = :blue, bold = false, length: 14, stream: $stdout)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -324,7 +359,9 @@
 
 <pre>[tag] msg</pre>
 
-<p>using the given color and font weight</p>
+<p>using the given color and font weight.</p>
+
+<p>Params: <code>tag</code>: The tag to display at the beginning <code>msg</code>: The message to log <code>color</code>: Define color as symbol (default: <code>:blue</code>) <code>bold</code>: Whether <code>msg</code> should be bold (default: false) <code>length</code>: Width of the <code>tag</code> inside the brackets (default: 14) <code>stream</code>: Which output stream to use (default: <code>STDOUT</code>)</p>
 
 <p>Returns nothing.</p>
           
@@ -332,14 +369,14 @@
 
           
           <div class="method-source-code" id="log-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>, <span class="ruby-value">length:</span> <span class="ruby-value">14</span>)
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>, <span class="ruby-value">length:</span> <span class="ruby-value">14</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stdout</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;DEBUG&#39;</span>)
 
   <span class="ruby-identifier">length</span> = <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">length</span>.<span class="ruby-identifier">zero?</span>
   <span class="ruby-identifier">tag</span> = <span class="ruby-node">&quot;[#{colorize(tag.center(length), color)}]&quot;</span>.<span class="ruby-identifier">bold</span>
-  <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">bold</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bold</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{tag} #{msg}&quot;</span>
+  <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">bold</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bold</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:bold</span>)
+  <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{tag} #{msg}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -668,7 +705,7 @@
 
           
           <div class="method-source-code" id="stage_log-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 28</span>
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:green</span>)
   <span class="ruby-identifier">stage</span> = <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>
   <span class="ruby-identifier">log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span>, <span class="ruby-keyword">true</span>)

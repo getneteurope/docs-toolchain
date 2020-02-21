@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-04 16:24:54 +0100'>2020-02-04 16:24:54 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-21 16:28:19 +0100'>2020-02-21 16:28:19 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">47</span><small> lines of codes</small></div>
-              <div><span class="metric">4</span><small> methods</small></div>
+              <div><span class="metric">57</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.4</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">9.3</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">37.52</span><small> complexity</small></div>
+              <div><span class="metric">46.65</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -142,6 +142,16 @@ class TestLog &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>  
         output[0..output.index(&#39;!&#39;)].end_with?(&#39;This is a test!&#39;)
       )
     end
+  end
+
+
+  def test_log_error
+    output = with_captured_stderr { error(&#39;Found error!&#39;) }
+
+    assert_match(/ERROR/, output)
+    assert_true(
+      output[0..output.index(&#39;!&#39;)].end_with?(&#39;Found error!&#39;)
+    )
   end
 end
 </code>
