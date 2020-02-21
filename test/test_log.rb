@@ -44,4 +44,14 @@ class TestLog < Test::Unit::TestCase
       )
     end
   end
+
+
+  def test_log_error
+    output = with_captured_stderr { error('Found error!') }
+
+    assert_match(/ERROR/, output)
+    assert_true(
+      output[0..output.index('!')].end_with?('Found error!')
+    )
+  end
 end

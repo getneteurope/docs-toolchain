@@ -16,7 +16,7 @@ require_relative '../utils/string.rb'
 # +stream+: Which output stream to use (default: +STDOUT+)
 #
 # Returns nothing.
-def log(tag, msg, color = :blue, bold = false, length: 14, stream: STDOUT)
+def log(tag, msg, color = :blue, bold = false, length: 14, stream: $stdout)
   return if ENV.key?('UNITTEST') && !ENV.key?('DEBUG')
 
   length = tag.length if length.zero?
@@ -43,5 +43,5 @@ end
 # Log error to STDOUT.
 #
 def error(msg)
-  log('ERROR', msg, :red, stream: STDERR)
+  log('ERROR', msg, :red, stream: $stderr)
 end
