@@ -6,6 +6,7 @@ require_relative '../config_manager.rb'
 require_relative '../utils/adoc.rb'
 require_relative '../log/log.rb'
 require 'json'
+require 'nokogiri'
 
 CM = Toolchain::ConfigManager.instance
 
@@ -14,11 +15,15 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CreateTOC < BaseProcess
+      @multipage_level = 2 #TODO: get from adoc
       ##
       # Creates a TOC JSON file from an +adoc+ object
       # Default JSON path is taken from +ConfigManager+.
       #
-      # Returns toc as json tree +toc_json+
+      # Saves toc as json tree +toc_json+
+      # Saves toc as html code +html_fragment+
+      # Returns toc Hash +toc_hash+
+      #
       def run(
         adoc = nil, # Toolchain::Adoc.load_doc(CM.get('index.default.file')),
         json_filepath = CM.get('toc.file')
@@ -80,10 +85,44 @@ module Toolchain
           json_file.write(toc_json)
         end
         log('TOC', 'File written to: ' + json_filepath, :gray)
-        return json_filepath
+
+        toc_html_dom = Nokogiri::HTML::fragment('<div id="toc_wrapper"><div id="toc"></div></div>')
+        #toc_html_dom.css('#toc') << generate_html_from_toc(toc_openstruct.children)
+
+        pp toc_openstruct.children
+
+        exit 1
+
+        pp toc_html_dom.to_html
+        return toc_hash
       end
 
       private
+
+      ## Generates a HTML fragment for the Table Of Content
+      # Takes OpenStruct of toc_elements as input
+      # Returns html code as string +html_fragment+
+      #
+      def generate_html_from_toc(toc_elements)
+        fragment = Nokogiri::HTML::fragment('')
+        pp toc_elements
+        toc_elements.each do |e|
+          pp 'ELEMENT'
+          pp e
+          fragment_string = '<li id="toc_' + e.id + '">'\
+            '  <a href="'
+          fragment_string += (level > @multipage_level) ? (e.parent_id + '.html#' + e.id) : ('#' + e.id)
+          fragment_string += '</a>'
+          '</li>'
+          fragment << Nokogiri::HTML::fragment(fragment_string)
+          if toc_elements.children.length > 0
+            child_list = Nokogiri::HTML::Node.new('ul')
+            child_list << generate_html_from_toc(toc_elements)
+            fragment << child_list
+          end
+        end
+        return fragment
+      end
 
       ## Takes OpenStruct +object+ and returns +hash+
       # Useful for converting OpenStruct Hash for later conversion to JSON
