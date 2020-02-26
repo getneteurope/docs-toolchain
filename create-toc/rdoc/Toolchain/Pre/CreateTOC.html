@@ -119,7 +119,7 @@
         
         <div class="method-heading">
           <span class="method-name">run</span><span
-            class="method-args">( adoc = nil, json_filepath = CM.get(&#39;toc.json_file&#39;), html_filepath = CM.get(&#39;toc.html_file&#39;) )</span>
+            class="method-args">( adoc = nil, json_filepath = @@default_json_filepath, html_filepath = @@default_html_filepath )</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -136,11 +136,11 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 27</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(
   <span class="ruby-identifier">adoc</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-comment"># Toolchain::Adoc.load_doc(CM.get(&#39;asciidoc.index.file&#39;)),</span>
-  <span class="ruby-identifier">json_filepath</span> = <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;toc.json_file&#39;</span>),
-  <span class="ruby-identifier">html_filepath</span> = <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;toc.html_file&#39;</span>)
+  <span class="ruby-identifier">json_filepath</span> = <span class="ruby-identifier">@@default_json_filepath</span>,
+  <span class="ruby-identifier">html_filepath</span> = <span class="ruby-identifier">@@default_html_filepath</span>
 )
   <span class="ruby-comment"># TODO: document this bit since it&#39;s quite confusing</span>
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:pre</span>, <span class="ruby-string">&#39;[Create TOC] Starting&#39;</span>)
@@ -248,7 +248,7 @@
 
           
           <div class="method-source-code" id="generate_html_from_toc-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_html_from_toc</span>(<span class="ruby-identifier">toc_elements</span>)
   <span class="ruby-identifier">fragment</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;ul&gt;&lt;/ul&gt;&#39;</span>)
   <span class="ruby-identifier">toc_elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -295,7 +295,7 @@
 
           
           <div class="method-source-code" id="openstruct_to_hash-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 125</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">openstruct_to_hash</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>
