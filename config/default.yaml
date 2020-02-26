@@ -23,4 +23,5 @@ notify:
       file: /tmp/slack.json
 
 toc:
-  file: /tmp/toc.json
+  json_file: /tmp/toc.json
+  html_file: /tmp/toc.html
