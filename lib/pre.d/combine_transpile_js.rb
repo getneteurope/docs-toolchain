@@ -38,8 +38,10 @@ module Toolchain
             begin
               results << combine_and_replace_js(docpath)
             rescue StandardError => e
-              log('ERROR', "JS Combine and Transpile: #{e.message}", :red)
-              raise e if ENV.key?('DEBUG')
+              log('ERROR', 'JS Combine and Transpile', :red)
+              log('ERROR', e.message, :red)
+              log('ERROR', "docpath: #{docpath}", :red)
+              raise e
             end
           end
         end
@@ -81,17 +83,17 @@ module Toolchain
         html_content_lines = File.read(path).lines
 
         # get lines where there are script tags with src attribute
-        scripts_line_numbers = []
+        script_tags_idx = []
         html_content_lines.each_with_index do |l, i|
-          scripts_line_numbers << i if l.match?(SCRIPT_TAG_REGEX)
+          script_tags_idx << i if l.match?(SCRIPT_TAG_REGEX)
         end
 
         # replace last script tag with blob script tag
-        html_content_lines[scripts_line_numbers.pop] =
-          "<script src=\"#{js_blob_path_relative}\"></script>\n"
+        blob_script_tag = "<script src=\"#{js_blob_path_relative}\"></script>\n"
+        html_content_lines[script_tags_idx.pop] = blob_script_tag unless script_tags_idx.empty?
 
         # remove all other script tags that use src attribute
-        scripts_line_numbers.each { |i| html_content_lines[i] = nil }.reject(&:nil?)
+        script_tags_idx.each { |i| html_content_lines[i] = nil }.reject(&:nil?)
 
         html_string = html_content_lines.join
         return html_string
