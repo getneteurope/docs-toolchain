@@ -54,14 +54,16 @@ module Toolchain
 
         stack = [OpenStruct.new(id: 'root', level: -1, children: [])]
 
+        # for all headings in the adoc document do
         doc.catalog[:refs].keys.each do |r|
           ref = doc.catalog[:refs][r]
           level = ref.level
           title = ref.title
           id = ref.id
           attribs = ref.instance_variable_get(:@attributes)
-          is_discrete = attribs&.key?(1) && (attribs&.fetch(1) == 'discrete')
 
+          # skip discrete headings and headings with a level too high
+          is_discrete = attribs&.key?(1) && (attribs&.fetch(1) == 'discrete')
           next if is_discrete || title.nil?
 
           current = OpenStruct.new(
@@ -81,7 +83,11 @@ module Toolchain
           current.parent = current.parent.id
           stack.push current
         end
+
+        # first element of the stack contains the final TOC tree
         toc_openstruct = stack.first
+
+        # create JSON from TOC tree
         toc_hash = openstruct_to_hash(toc_openstruct)
         toc_json = JSON.pretty_generate(toc_hash)
         File.open(json_filepath, 'w+') do |json_file|
@@ -89,8 +95,11 @@ module Toolchain
         end
         log('TOC', 'JSON written to: ' + json_filepath, :gray)
 
+        # create Nokogiri HTML document Object from TOC tree
         toc_html_dom = Nokogiri::HTML.fragment('<div id="toc_wrapper"><div id="toc"></div>' + "\n" + '</div>')
         toc_html_dom.at_css('#toc') << generate_html_from_toc(toc_openstruct.children)
+
+        # convert Nokogiri HTML Object to string
         toc_html_string = toc_html_dom.to_xhtml(indent: 3) 
         File.open(html_filepath, 'w+') do |html_file|
           html_file.write(toc_html_string)
@@ -101,9 +110,9 @@ module Toolchain
 
       private
 
-      ## Generates a HTML fragment for the Table Of Content
-      # Takes OpenStruct of toc_elements as input
-      # Returns html code as string +html_fragment+
+      ## Recursivelz generates a HTML fragment for the Table Of Content
+      # Takes OpenStruct of +toc_elements+ as input
+      # Returns HTML code fragment as string Nokogiri Object +fragment+
       #
       def generate_html_from_toc(toc_elements)
         fragment = Nokogiri::HTML.fragment('<ul></ul>')
@@ -115,6 +124,7 @@ module Toolchain
             "\n" + '  <a href="' + e.parent + '.html#' + e.id + '">' + e.title + '</a>' + "\n"
           end
 
+          # if element has child elements, add them to current list item
           fragment_string.at('li') << generate_html_from_toc(e.children) unless e.children.empty?
           fragment.at('ul') << fragment_string
         end
