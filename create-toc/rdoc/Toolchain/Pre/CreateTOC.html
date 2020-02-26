@@ -165,14 +165,16 @@
 
   <span class="ruby-identifier">stack</span> = [<span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">id:</span> <span class="ruby-string">&#39;root&#39;</span>, <span class="ruby-value">level:</span> <span class="ruby-value">-1</span>, <span class="ruby-value">children:</span> [])]
 
+  <span class="ruby-comment"># for all headings in the adoc document do</span>
   <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:refs</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">ref</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">catalog</span>[<span class="ruby-value">:refs</span>][<span class="ruby-identifier">r</span>]
     <span class="ruby-identifier">level</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">level</span>
     <span class="ruby-identifier">title</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">title</span>
     <span class="ruby-identifier">id</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">id</span>
     <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value">:@attributes</span>)
-    <span class="ruby-identifier">is_discrete</span> = <span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">key?</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;discrete&#39;</span>)
 
+    <span class="ruby-comment"># skip discrete headings and headings with a level too high</span>
+    <span class="ruby-identifier">is_discrete</span> = <span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">key?</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">attribs</span>&amp;.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;discrete&#39;</span>)
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_discrete</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">nil?</span>
 
     <span class="ruby-identifier">current</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
@@ -192,7 +194,11 @@
     <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">id</span>
     <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">current</span>
   <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># first element of the stack contains the final TOC tree</span>
   <span class="ruby-identifier">toc_openstruct</span> = <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">first</span>
+
+  <span class="ruby-comment"># create JSON from TOC tree</span>
   <span class="ruby-identifier">toc_hash</span> = <span class="ruby-identifier">openstruct_to_hash</span>(<span class="ruby-identifier">toc_openstruct</span>)
   <span class="ruby-identifier">toc_json</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">pretty_generate</span>(<span class="ruby-identifier">toc_hash</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">json_filepath</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">json_file</span><span class="ruby-operator">|</span>
@@ -200,8 +206,11 @@
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;TOC&#39;</span>, <span class="ruby-string">&#39;JSON written to: &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">json_filepath</span>, <span class="ruby-value">:gray</span>)
 
+  <span class="ruby-comment"># create Nokogiri HTML document Object from TOC tree</span>
   <span class="ruby-identifier">toc_html_dom</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;div id=&quot;toc_wrapper&quot;&gt;&lt;div id=&quot;toc&quot;&gt;&lt;/div&gt;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&lt;/div&gt;&#39;</span>)
   <span class="ruby-identifier">toc_html_dom</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;#toc&#39;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">generate_html_from_toc</span>(<span class="ruby-identifier">toc_openstruct</span>.<span class="ruby-identifier">children</span>)
+
+  <span class="ruby-comment"># convert Nokogiri HTML Object to string</span>
   <span class="ruby-identifier">toc_html_string</span> = <span class="ruby-identifier">toc_html_dom</span>.<span class="ruby-identifier">to_xhtml</span>(<span class="ruby-value">indent:</span> <span class="ruby-value">3</span>) 
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">html_filepath</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">html_file</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">html_file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">toc_html_string</span>)
@@ -240,15 +249,15 @@
 
         <div class="method-description">
           
-          <pre>Generates a HTML fragment for the Table Of Content</pre>
+          <pre>Recursivelz generates a HTML fragment for the Table Of Content</pre>
 
-<p>Takes OpenStruct of toc_elements as input Returns html code as string <code>html_fragment</code></p>
+<p>Takes OpenStruct of <code>toc_elements</code> as input Returns HTML code fragment as string Nokogiri <a href="../../Object.html"><code>Object</code></a> <code>fragment</code></p>
           
           
 
           
           <div class="method-source-code" id="generate_html_from_toc-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 108</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_html_from_toc</span>(<span class="ruby-identifier">toc_elements</span>)
   <span class="ruby-identifier">fragment</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;ul&gt;&lt;/ul&gt;&#39;</span>)
   <span class="ruby-identifier">toc_elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -259,6 +268,7 @@
       <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;  &lt;a href=&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">parent</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.html#&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&gt;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">title</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&lt;/a&gt;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
     <span class="ruby-keyword">end</span>
 
+    <span class="ruby-comment"># if element has child elements, add them to current list item</span>
     <span class="ruby-identifier">fragment_string</span>.<span class="ruby-identifier">at</span>(<span class="ruby-string">&#39;li&#39;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">generate_html_from_toc</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">children</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>
     <span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">at</span>(<span class="ruby-string">&#39;ul&#39;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">fragment_string</span>
   <span class="ruby-keyword">end</span>
@@ -295,7 +305,7 @@
 
           
           <div class="method-source-code" id="openstruct_to_hash-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 127</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/create_toc.rb, line 137</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">openstruct_to_hash</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>

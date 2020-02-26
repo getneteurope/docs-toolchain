@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-26T15:39:11+00:00">2020-02-26T15:39:11+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-02-26T15:56:45+00:00">2020-02-26T15:56:45+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -183,7 +183,7 @@
       <tr>
         <td class="strong"><a href="#f101f187cc59b34671665ad89d33c13c9e9a6d9a" class="src_link" title="lib/pre.d/create_toc.rb">lib/pre.d/create_toc.rb</a></td>
         <td class="green strong">97.22 %</td>
-        <td>141</td>
+        <td>151</td>
         <td>72</td>
         <td>70</td>
         <td>2</td>
@@ -7897,46 +7897,46 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="57">
+        <li class="never" data-hits="" data-linenumber="57">
+          
+          
+          <code class="ruby">        # for all headings in the adoc document do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="58">
           <span class="hits">1</span>
           
           <code class="ruby">        doc.catalog[:refs].keys.each do |r|</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="58">
+        <li class="covered" data-hits="10" data-linenumber="59">
           <span class="hits">10</span>
           
           <code class="ruby">          ref = doc.catalog[:refs][r]</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="59">
+        <li class="covered" data-hits="10" data-linenumber="60">
           <span class="hits">10</span>
           
           <code class="ruby">          level = ref.level</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="60">
+        <li class="covered" data-hits="10" data-linenumber="61">
           <span class="hits">10</span>
           
           <code class="ruby">          title = ref.title</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="61">
+        <li class="covered" data-hits="10" data-linenumber="62">
           <span class="hits">10</span>
           
           <code class="ruby">          id = ref.id</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="62">
-          <span class="hits">10</span>
-          
-          <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
-        </li>
-      
         <li class="covered" data-hits="10" data-linenumber="63">
           <span class="hits">10</span>
           
-          <code class="ruby">          is_discrete = attribs&amp;.key?(1) &amp;&amp; (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
+          <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="64">
@@ -7945,220 +7945,220 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="65">
+        <li class="never" data-hits="" data-linenumber="65">
+          
+          
+          <code class="ruby">          # skip discrete headings and headings with a level too high</code>
+        </li>
+      
+        <li class="covered" data-hits="10" data-linenumber="66">
+          <span class="hits">10</span>
+          
+          <code class="ruby">          is_discrete = attribs&amp;.key?(1) &amp;&amp; (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="10" data-linenumber="67">
           <span class="hits">10</span>
           
           <code class="ruby">          next if is_discrete || title.nil?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="66">
+        <li class="never" data-hits="" data-linenumber="68">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="67">
+        <li class="covered" data-hits="7" data-linenumber="69">
           <span class="hits">7</span>
           
           <code class="ruby">          current = OpenStruct.new(</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="68">
+        <li class="never" data-hits="" data-linenumber="70">
           
           
           <code class="ruby">            id: id,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="69">
+        <li class="never" data-hits="" data-linenumber="71">
           
           
           <code class="ruby">            level: level,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="70">
+        <li class="never" data-hits="" data-linenumber="72">
           
           
           <code class="ruby">            title: title,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="71">
+        <li class="never" data-hits="" data-linenumber="73">
           
           
           <code class="ruby">            parent: nil,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="72">
+        <li class="never" data-hits="" data-linenumber="74">
           
           
           <code class="ruby">            children: []</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="73">
+        <li class="never" data-hits="" data-linenumber="75">
           
           
           <code class="ruby">          )</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="74">
+        <li class="covered" data-hits="7" data-linenumber="76">
           <span class="hits">7</span>
           
           <code class="ruby">          stack.pop while level &lt;= stack.last.level</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="75">
+        <li class="covered" data-hits="7" data-linenumber="77">
           <span class="hits">7</span>
           
           <code class="ruby">          current.parent = stack.last</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="76">
+        <li class="never" data-hits="" data-linenumber="78">
           
           
           <code class="ruby"></code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="77">
-          
-          
-          <code class="ruby">          # add current element to it&#39;s parent&#39;s children list</code>
-        </li>
-      
-        <li class="covered" data-hits="7" data-linenumber="78">
-          <span class="hits">7</span>
-          
-          <code class="ruby">          current.parent.children &lt;&lt; current</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="79">
           
           
+          <code class="ruby">          # add current element to it&#39;s parent&#39;s children list</code>
+        </li>
+      
+        <li class="covered" data-hits="7" data-linenumber="80">
+          <span class="hits">7</span>
+          
+          <code class="ruby">          current.parent.children &lt;&lt; current</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="81">
+          
+          
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="80">
+        <li class="never" data-hits="" data-linenumber="82">
           
           
           <code class="ruby">          # replace parent object now with it&#39;s id to avoid loops</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="81">
+        <li class="covered" data-hits="7" data-linenumber="83">
           <span class="hits">7</span>
           
           <code class="ruby">          current.parent = current.parent.id</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="82">
+        <li class="covered" data-hits="7" data-linenumber="84">
           <span class="hits">7</span>
           
           <code class="ruby">          stack.push current</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="83">
+        <li class="never" data-hits="" data-linenumber="85">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="84">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        toc_openstruct = stack.first</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="85">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        toc_hash = openstruct_to_hash(toc_openstruct)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="86">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        toc_json = JSON.pretty_generate(toc_hash)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="87">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        File.open(json_filepath, &#39;w+&#39;) do |json_file|</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="88">
-          <span class="hits">1</span>
-          
-          <code class="ruby">          json_file.write(toc_json)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="89">
-          
-          
-          <code class="ruby">        end</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="90">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        log(&#39;TOC&#39;, &#39;JSON written to: &#39; + json_filepath, :gray)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="91">
+        <li class="never" data-hits="" data-linenumber="86">
           
           
           <code class="ruby"></code>
         </li>
       
+        <li class="never" data-hits="" data-linenumber="87">
+          
+          
+          <code class="ruby">        # first element of the stack contains the final TOC tree</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="88">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_openstruct = stack.first</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="89">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="90">
+          
+          
+          <code class="ruby">        # create JSON from TOC tree</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="91">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_hash = openstruct_to_hash(toc_openstruct)</code>
+        </li>
+      
         <li class="covered" data-hits="1" data-linenumber="92">
           <span class="hits">1</span>
           
-          <code class="ruby">        toc_html_dom = Nokogiri::HTML.fragment(&#39;&lt;div id=&quot;toc_wrapper&quot;&gt;&lt;div id=&quot;toc&quot;&gt;&lt;/div&gt;&#39; + &quot;\n&quot; + &#39;&lt;/div&gt;&#39;)</code>
+          <code class="ruby">        toc_json = JSON.pretty_generate(toc_hash)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="93">
           <span class="hits">1</span>
           
-          <code class="ruby">        toc_html_dom.at_css(&#39;#toc&#39;) &lt;&lt; generate_html_from_toc(toc_openstruct.children)</code>
+          <code class="ruby">        File.open(json_filepath, &#39;w+&#39;) do |json_file|</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="94">
           <span class="hits">1</span>
           
-          <code class="ruby">        toc_html_string = toc_html_dom.to_xhtml(indent: 3) </code>
+          <code class="ruby">          json_file.write(toc_json)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="95">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        File.open(html_filepath, &#39;w+&#39;) do |html_file|</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="96">
-          <span class="hits">1</span>
-          
-          <code class="ruby">          html_file.write(toc_html_string)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="97">
+        <li class="never" data-hits="" data-linenumber="95">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="98">
+        <li class="covered" data-hits="1" data-linenumber="96">
           <span class="hits">1</span>
           
-          <code class="ruby">        log(&#39;TOC&#39;, &#39;HTML fragment written to: &#39; + html_filepath, :gray)</code>
+          <code class="ruby">        log(&#39;TOC&#39;, &#39;JSON written to: &#39; + json_filepath, :gray)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="97">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="98">
+          
+          
+          <code class="ruby">        # create Nokogiri HTML document Object from TOC tree</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="99">
           <span class="hits">1</span>
           
-          <code class="ruby">        return json_filepath, html_filepath, toc_hash</code>
+          <code class="ruby">        toc_html_dom = Nokogiri::HTML.fragment(&#39;&lt;div id=&quot;toc_wrapper&quot;&gt;&lt;div id=&quot;toc&quot;&gt;&lt;/div&gt;&#39; + &quot;\n&quot; + &#39;&lt;/div&gt;&#39;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="100">
+        <li class="covered" data-hits="1" data-linenumber="100">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      end</code>
+          <code class="ruby">        toc_html_dom.at_css(&#39;#toc&#39;) &lt;&lt; generate_html_from_toc(toc_openstruct.children)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="101">
@@ -8167,241 +8167,301 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="102">
+        <li class="never" data-hits="" data-linenumber="102">
+          
+          
+          <code class="ruby">        # convert Nokogiri HTML Object to string</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="103">
           <span class="hits">1</span>
           
-          <code class="ruby">      private</code>
+          <code class="ruby">        toc_html_string = toc_html_dom.to_xhtml(indent: 3) </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="103">
+        <li class="covered" data-hits="1" data-linenumber="104">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">        File.open(html_filepath, &#39;w+&#39;) do |html_file|</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="104">
+        <li class="covered" data-hits="1" data-linenumber="105">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      ## Generates a HTML fragment for the Table Of Content</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="105">
-          
-          
-          <code class="ruby">      # Takes OpenStruct of toc_elements as input</code>
+          <code class="ruby">          html_file.write(toc_html_string)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="106">
           
           
-          <code class="ruby">      # Returns html code as string +html_fragment+</code>
+          <code class="ruby">        end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="107">
+        <li class="covered" data-hits="1" data-linenumber="107">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">      #</code>
+          <code class="ruby">        log(&#39;TOC&#39;, &#39;HTML fragment written to: &#39; + html_filepath, :gray)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="108">
           <span class="hits">1</span>
           
-          <code class="ruby">      def generate_html_from_toc(toc_elements)</code>
+          <code class="ruby">        return json_filepath, html_filepath, toc_hash</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="109">
-          <span class="hits">6</span>
+        <li class="never" data-hits="" data-linenumber="109">
           
-          <code class="ruby">        fragment = Nokogiri::HTML.fragment(&#39;&lt;ul&gt;&lt;/ul&gt;&#39;)</code>
+          
+          <code class="ruby">      end</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="110">
-          <span class="hits">6</span>
+        <li class="never" data-hits="" data-linenumber="110">
           
-          <code class="ruby">        toc_elements.each do |e|</code>
+          
+          <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="111">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="1" data-linenumber="111">
+          <span class="hits">1</span>
           
-          <code class="ruby">          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_&#39; + e.id + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)</code>
+          <code class="ruby">      private</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="112">
-          <span class="hits">7</span>
+        <li class="never" data-hits="" data-linenumber="112">
           
-          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; if e.level &lt; @@multipage_level</code>
+          
+          <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="113">
-          <span class="hits">2</span>
+        <li class="never" data-hits="" data-linenumber="113">
           
-          <code class="ruby">            &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.id + &#39;.html&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;</code>
+          
+          <code class="ruby">      ## Recursivelz generates a HTML fragment for the Table Of Content</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="114">
           
           
-          <code class="ruby">          else</code>
+          <code class="ruby">      # Takes OpenStruct of +toc_elements+ as input</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="115">
-          <span class="hits">5</span>
+        <li class="never" data-hits="" data-linenumber="115">
           
-          <code class="ruby">            &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.parent + &#39;.html#&#39; + e.id + &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;</code>
+          
+          <code class="ruby">      # Returns HTML code fragment as string Nokogiri Object +fragment+</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="116">
           
           
-          <code class="ruby">          end</code>
+          <code class="ruby">      #</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="117">
+        <li class="covered" data-hits="1" data-linenumber="117">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">      def generate_html_from_toc(toc_elements)</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="118">
-          <span class="hits">7</span>
-          
-          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; generate_html_from_toc(e.children) unless e.children.empty?</code>
-        </li>
-      
-        <li class="covered" data-hits="7" data-linenumber="119">
-          <span class="hits">7</span>
-          
-          <code class="ruby">          fragment.at(&#39;ul&#39;) &lt;&lt; fragment_string</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="120">
-          
-          
-          <code class="ruby">        end</code>
-        </li>
-      
-        <li class="covered" data-hits="6" data-linenumber="121">
+        <li class="covered" data-hits="6" data-linenumber="118">
           <span class="hits">6</span>
           
-          <code class="ruby">        return fragment</code>
+          <code class="ruby">        fragment = Nokogiri::HTML.fragment(&#39;&lt;ul&gt;&lt;/ul&gt;&#39;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="122">
+        <li class="covered" data-hits="6" data-linenumber="119">
+          <span class="hits">6</span>
           
+          <code class="ruby">        toc_elements.each do |e|</code>
+        </li>
+      
+        <li class="covered" data-hits="7" data-linenumber="120">
+          <span class="hits">7</span>
           
-          <code class="ruby">      end</code>
+          <code class="ruby">          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_&#39; + e.id + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)</code>
+        </li>
+      
+        <li class="covered" data-hits="7" data-linenumber="121">
+          <span class="hits">7</span>
+          
+          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; if e.level &lt; @@multipage_level</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="122">
+          <span class="hits">2</span>
+          
+          <code class="ruby">            &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.id + &#39;.html&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="123">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">          else</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="124">
+        <li class="covered" data-hits="5" data-linenumber="124">
+          <span class="hits">5</span>
           
-          
-          <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
+          <code class="ruby">            &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.parent + &#39;.html#&#39; + e.id + &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="125">
           
           
-          <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON</code>
+          <code class="ruby">          end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="126">
           
           
-          <code class="ruby">      #</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="127">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="127">
           
-          <code class="ruby">      def openstruct_to_hash(object, hash = {})</code>
+          
+          <code class="ruby">          # if element has child elements, add them to current list item</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="128">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="7" data-linenumber="128">
+          <span class="hits">7</span>
           
-          <code class="ruby">        object.each_pair do |key, value|</code>
+          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; generate_html_from_toc(e.children) unless e.children.empty?</code>
         </li>
       
-        <li class="covered" data-hits="38" data-linenumber="129">
-          <span class="hits">38</span>
+        <li class="covered" data-hits="7" data-linenumber="129">
+          <span class="hits">7</span>
           
-          <code class="ruby">          hash[key] = case value</code>
+          <code class="ruby">          fragment.at(&#39;ul&#39;) &lt;&lt; fragment_string</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="130">
-          
-          
-          <code class="ruby">                      when OpenStruct then openstruct_to_hash(value)</code>
-        </li>
-      
-        <li class="covered" data-hits="15" data-linenumber="131">
-          <span class="hits">15</span>
-          
-          <code class="ruby">                      when Array then value.map { |v| openstruct_to_hash(v) }</code>
-        </li>
-      
-        <li class="covered" data-hits="30" data-linenumber="132">
-          <span class="hits">30</span>
-          
-          <code class="ruby">                      else value</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="133">
-          
-          
-          <code class="ruby">                      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="134">
+        <li class="never" data-hits="" data-linenumber="130">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="135">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="6" data-linenumber="131">
+          <span class="hits">6</span>
           
-          <code class="ruby">        return hash</code>
+          <code class="ruby">        return fragment</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="136">
+        <li class="never" data-hits="" data-linenumber="132">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="137">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="138">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="139">
-          
-          
-          <code class="ruby">end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="140">
+        <li class="never" data-hits="" data-linenumber="133">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="141">
+        <li class="never" data-hits="" data-linenumber="134">
+          
+          
+          <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="135">
+          
+          
+          <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="136">
+          
+          
+          <code class="ruby">      #</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="137">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      def openstruct_to_hash(object, hash = {})</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="138">
+          <span class="hits">8</span>
+          
+          <code class="ruby">        object.each_pair do |key, value|</code>
+        </li>
+      
+        <li class="covered" data-hits="38" data-linenumber="139">
+          <span class="hits">38</span>
+          
+          <code class="ruby">          hash[key] = case value</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="140">
+          
+          
+          <code class="ruby">                      when OpenStruct then openstruct_to_hash(value)</code>
+        </li>
+      
+        <li class="covered" data-hits="15" data-linenumber="141">
+          <span class="hits">15</span>
+          
+          <code class="ruby">                      when Array then value.map { |v| openstruct_to_hash(v) }</code>
+        </li>
+      
+        <li class="covered" data-hits="30" data-linenumber="142">
+          <span class="hits">30</span>
+          
+          <code class="ruby">                      else value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="143">
+          
+          
+          <code class="ruby">                      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="144">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="145">
+          <span class="hits">8</span>
+          
+          <code class="ruby">        return hash</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="146">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="147">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="148">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="149">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="150">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="151">
           <span class="hits">1</span>
           
           <code class="ruby">Toolchain::PreProcessManager.instance.register(Toolchain::Pre::CreateTOC.new)</code>
