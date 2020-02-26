@@ -180,14 +180,19 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
     begin
       opts.empty? ? (send transform, node) : (send transform, node, opts)
     rescue StandardError => e
-      error("#{e.class}: #{e.message}")
-      error("#{node}.#{transform}".bold.red)
-      error('No conversion for node:'.bold.red)
-      error(node)
-      error('Exception:'.bold.red)
-      error("\n" + e.backtrace.join("\n"))
-      error('Exiting.'.bold.red)
-      exit(-1)
+      # HACK dirty hack for exception that gets raised when trying 'open',
+      # which should be 'convert_open' in the first place.
+      begin
+        transform = "convert_#{node.node_name}"
+        opts.empty? ? (send transform, node) : (send transform, node, opts)
+      rescue StandardError => e
+        error("#{e.class}: #{e.message}")
+        error("#{node}.#{transform}".bold.red)
+        error('No conversion for node:'.bold.red)
+        error(node)
+        error('Exiting.'.bold.red)
+        raise e
+      end
     end
   end
 

@@ -111,7 +111,7 @@ module Toolchain
       end
 
       # move assets to html/
-      assets = %w[css js fonts images]
+      assets = %w[css js fonts images icons]
       assets.each do |asset|
         stage_log(:build, "... Copying #{asset}")
         from_dir = File.join(build_dir, asset)
