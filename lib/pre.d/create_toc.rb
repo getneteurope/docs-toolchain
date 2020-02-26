@@ -28,11 +28,13 @@ module Toolchain
         adoc = nil, # Toolchain::Adoc.load_doc(CM.get('index.default.file')),
         json_filepath = CM.get('toc.file')
       )
-        # TODO document this bit since it's quite confusing
+        # TODO: document this bit since it's quite confusing
         stage_log(:pre, '[Create TOC] Starting')
-        adoc = Toolchain::Adoc.load_doc(
-          CM.get('index.default.file')
-        ) if adoc.nil?
+        if adoc.nil?
+          adoc = Toolchain::Adoc.load_doc(
+            CM.get('index.default.file')
+          )
+        end
         parsed = adoc.parsed
         attributes = adoc.attributes
         lines = parsed.reader.source_lines
@@ -86,14 +88,15 @@ module Toolchain
         end
         log('TOC', 'File written to: ' + json_filepath, :gray)
 
-        toc_html_dom = Nokogiri::HTML::fragment('<div id="toc_wrapper"><div id="toc"></div></div>')
-        #toc_html_dom.css('#toc') << generate_html_from_toc(toc_openstruct.children)
+        toc_html_dom = Nokogiri::HTML.fragment('<div id="toc_wrapper"><div id="toc"></div></div>')
+        
+        toc_html_dom.at_css('#toc') << generate_html_from_toc(toc_openstruct.children)
 
-        pp toc_openstruct.children
-
+        puts toc_html_dom.to_html(indent: 2)
+ 
         exit 1
 
-        pp toc_html_dom.to_html
+
         return toc_hash
       end
 
@@ -104,22 +107,25 @@ module Toolchain
       # Returns html code as string +html_fragment+
       #
       def generate_html_from_toc(toc_elements)
-        fragment = Nokogiri::HTML::fragment('')
-        pp toc_elements
+        fragment = Nokogiri::HTML.fragment('')
         toc_elements.each do |e|
-          pp 'ELEMENT'
-          pp e
-          fragment_string = '<li id="toc_' + e.id + '">'\
+          fragment_string = '<ul><li id="toc_' + e.id + '">' + "\n"\
             '  <a href="'
-          fragment_string += (level > @multipage_level) ? (e.parent_id + '.html#' + e.id) : ('#' + e.id)
-          fragment_string += '</a>'
-          '</li>'
-          fragment << Nokogiri::HTML::fragment(fragment_string)
-          if toc_elements.children.length > 0
-            child_list = Nokogiri::HTML::Node.new('ul')
-            child_list << generate_html_from_toc(toc_elements)
-            fragment << child_list
+
+          fragment_string << if e.level > 2
+            e.parent_id.to_s + '.html#'
+          else
+            '#' + e.id.to_s
           end
+
+          fragment_string << '">' + e.title + '</a>'
+          '</li>'
+          fragment << Nokogiri::HTML.fragment(fragment_string)
+          next if e.children.empty?
+          child_list = Nokogiri::HTML.fragment('<ul>' + "\n")
+          child_list.at('ul') << generate_html_from_toc(e.children)
+          child_list <<  '</ul>' + "\n"
+          fragment << child_list
         end
         return fragment
       end
