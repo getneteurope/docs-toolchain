@@ -16,6 +16,8 @@ module Toolchain
     # Adds modules for preprocessing files.
     class CreateTOC < BaseProcess
       @@multipage_level = CM.get('asciidoc.multipage_level')
+      @@default_json_filepath = CM.get('toc.json_file')
+      @@default_html_filepath = CM.get('toc.html_file')
       ##
       # Creates a TOC JSON file from an +adoc+ object
       # Default JSON path is taken from +ConfigManager+.
@@ -26,8 +28,8 @@ module Toolchain
       #
       def run(
         adoc = nil, # Toolchain::Adoc.load_doc(CM.get('asciidoc.index.file')),
-        json_filepath = CM.get('toc.json_file'),
-        html_filepath = CM.get('toc.html_file')
+        json_filepath = @@default_json_filepath,
+        html_filepath = @@default_html_filepath
       )
         # TODO: document this bit since it's quite confusing
         stage_log(:pre, '[Create TOC] Starting')
