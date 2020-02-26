@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-20 10:13:13 +0100'>2020-02-20 10:13:13 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-21 16:28:19 +0100'>2020-02-21 16:28:19 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">31</span><small> lines of codes</small></div>
-              <div><span class="metric">2</span><small> methods</small></div>
+              <div><span class="metric">47</span><small> lines of codes</small></div>
+              <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.3</span><small> complexity/method</small></div>
-              <div><span class="metric">10</span><small> churn</small></div>
+              <div><span class="metric">7.0</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">18.62</span><small> complexity</small></div>
+              <div><span class="metric">21.12</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
+                3
                 smells
               </a>
             </li>
@@ -104,16 +104,24 @@ require_relative &#39;../utils/string.rb&#39;
 ##
 # Create a log entry in the format:
 #     [tag] msg
-# using the given color and font weight
+# using the given color and font weight.
+#
+# Params:
+# +tag+: The tag to display at the beginning
+# +msg+: The message to log
+# +color+: Define color as symbol (default: +:blue+)
+# +bold+: Whether +msg+ should be bold (default: false)
+# +length+: Width of the +tag+ inside the brackets (default: 14)
+# +stream+: Which output stream to use (default: +STDOUT+)
 #
 # Returns nothing.
-def log(tag, msg, color = :blue, bold = false, length: 14)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>log has boolean parameter 'bold'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>log has 5 parameters</span>          </div>  </li></ol>
+def log(tag, msg, color = :blue, bold = false, length: 14, stream: $stdout)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>log has boolean parameter 'bold'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>log has 6 parameters</span>          </div>  </li></ol>
   return if ENV.key?(&#39;UNITTEST&#39;) &amp;&amp; !ENV.key?(&#39;DEBUG&#39;)
 
   length = tag.length if length.zero?
   tag = &quot;[#{colorize(tag.center(length), color)}]&quot;.bold
-  msg = msg.bold if bold
-  puts &quot;#{tag} #{msg}&quot;
+  msg = msg.bold if bold &amp;&amp; msg.respond_to?(:bold)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Manual-Dispatch.md" target="_blank"><b>ManualDispatch</b></a>        </span>      </div>      <span>log manually dispatches method call</span>          </div>  </li></ol>
+  stream.puts &quot;#{tag} #{msg}&quot;
 end
 
 ##
@@ -127,6 +135,14 @@ end
 def stage_log(stage, msg, color = :green)
   stage = stage.to_s.upcase
   log(stage, msg, color, true)
+end
+
+
+##
+# Log error to STDOUT.
+#
+def error(msg)
+  log(&#39;ERROR&#39;, msg, :red, stream: $stderr)
 end
 </code>
   </div>

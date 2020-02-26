@@ -79,6 +79,8 @@
     
     <li ><a href="#method-i-colorize">#colorize</a>
     
+    <li ><a href="#method-i-error">#error</a>
+    
     <li ><a href="#method-i-get_recursively">#get_recursively</a>
     
     <li ><a href="#method-i-log">#log</a>
@@ -192,7 +194,7 @@
 
           
           <div class="method-source-code" id="check_docs-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 116</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">check_docs</span>(<span class="ruby-identifier">included_files</span>, <span class="ruby-identifier">content_dir</span>)
   <span class="ruby-identifier">errors_map</span> = {}
   <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
@@ -265,6 +267,39 @@
       </div>
 
     
+      <div id="method-i-error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">error</span><span
+            class="method-args">(msg)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Log error to STDOUT.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="error-source">
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">error</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">:red</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stderr</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-get_recursively" class="method-detail ">
         
         <div class="method-heading">
@@ -311,7 +346,7 @@
         
         <div class="method-heading">
           <span class="method-name">log</span><span
-            class="method-args">(tag, msg, color = :blue, bold = false, length: 14)</span>
+            class="method-args">(tag, msg, color = :blue, bold = false, length: 14, stream: $stdout)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -324,7 +359,9 @@
 
 <pre>[tag] msg</pre>
 
-<p>using the given color and font weight</p>
+<p>using the given color and font weight.</p>
+
+<p>Params: <code>tag</code>: The tag to display at the beginning <code>msg</code>: The message to log <code>color</code>: Define color as symbol (default: <code>:blue</code>) <code>bold</code>: Whether <code>msg</code> should be bold (default: false) <code>length</code>: Width of the <code>tag</code> inside the brackets (default: 14) <code>stream</code>: Which output stream to use (default: <code>STDOUT</code>)</p>
 
 <p>Returns nothing.</p>
           
@@ -332,14 +369,14 @@
 
           
           <div class="method-source-code" id="log-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>, <span class="ruby-value">length:</span> <span class="ruby-value">14</span>)
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>, <span class="ruby-value">length:</span> <span class="ruby-value">14</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stdout</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;DEBUG&#39;</span>)
 
   <span class="ruby-identifier">length</span> = <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">length</span>.<span class="ruby-identifier">zero?</span>
   <span class="ruby-identifier">tag</span> = <span class="ruby-node">&quot;[#{colorize(tag.center(length), color)}]&quot;</span>.<span class="ruby-identifier">bold</span>
-  <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">bold</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bold</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{tag} #{msg}&quot;</span>
+  <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">bold</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bold</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:bold</span>)
+  <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{tag} #{msg}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -494,7 +531,7 @@
 
           
           <div class="method-source-code" id="post_process_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 134</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 135</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -530,7 +567,8 @@
           <div class="method-source-code" id="print_errors-source">
             <pre><span class="ruby-comment"># File lib/stages/test.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_errors</span>(<span class="ruby-identifier">errors_map</span>)
-  <span class="ruby-identifier">errors_map</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">_file</span>, <span class="ruby-identifier">errors</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">errors_map</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span>, <span class="ruby-identifier">errors</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERRORS&#39;</span>, <span class="ruby-node">&quot;for file #{file}&quot;</span>, <span class="ruby-value">:red</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
     <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">err</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{err[:id]}\t#{err[:msg]}&quot;</span>.<span class="ruby-identifier">bold</span>.<span class="ruby-identifier">red</span>
     <span class="ruby-keyword">end</span>
@@ -605,7 +643,7 @@
 
           
           <div class="method-source-code" id="run_tests-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 84</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_tests</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>].<span class="ruby-identifier">nil?</span>
 
@@ -625,7 +663,7 @@
 
   <span class="ruby-identifier">errors</span> = []
   <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;EXTENSION&#39;</span>, <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">:cyan</span>)
+    <span class="ruby-comment"># log(&#39;EXTENSION&#39;, ext.class.name, :cyan)</span>
     <span class="ruby-identifier">errors</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">adoc</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors</span>
@@ -667,7 +705,7 @@
 
           
           <div class="method-source-code" id="stage_log-source">
-            <pre><span class="ruby-comment"># File lib/log/log.rb, line 28</span>
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:green</span>)
   <span class="ruby-identifier">stage</span> = <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>
   <span class="ruby-identifier">log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span>, <span class="ruby-keyword">true</span>)
@@ -703,7 +741,7 @@
 
           
           <div class="method-source-code" id="test_files-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_files</span>(<span class="ruby-identifier">files</span>)
   <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)
