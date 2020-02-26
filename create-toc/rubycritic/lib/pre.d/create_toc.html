@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-26 15:50:38 +0100'>2020-02-26 15:50:38 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-26 16:30:04 +0100'>2020-02-26 16:30:04 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">55.7</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">55.5</span><small> complexity/method</small></div>
+              <div><span class="metric">9</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">166.95</span><small> complexity</small></div>
+              <div><span class="metric">166.52</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                4
                 smells
               </a>
             </li>
@@ -114,7 +114,7 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CreateTOC &lt; BaseProcess
-      @multipage_level = 2 #TODO: get from adoc
+      @@multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L110" class="js-smell-location">1</a>                  </div>  </li></ol>
       ##
       # Creates a TOC JSON file from an +adoc+ object
       # Default JSON path is taken from +ConfigManager+.
@@ -124,7 +124,7 @@ module Toolchain
       # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
       def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#run has a flog score of 85</span>          </div>  </li></ol>
-        adoc = nil, # Toolchain::Adoc.load_doc(CM.get(&#39;index.default.file&#39;)),
+        adoc = nil, # Toolchain::Adoc.load_doc(CM.get(&#39;asciidoc.index.file&#39;)),
         json_filepath = CM.get(&#39;toc.json_file&#39;),
         html_filepath = CM.get(&#39;toc.html_file&#39;)
       )
@@ -132,7 +132,7 @@ module Toolchain
         stage_log(:pre, &#39;[Create TOC] Starting&#39;)
         if adoc.nil?
           adoc = Toolchain::Adoc.load_doc(
-            CM.get(&#39;index.default.file&#39;)
+            CM.get(&#39;asciidoc.index.file&#39;)
           )
         end
         parsed = adoc.parsed
@@ -202,11 +202,11 @@ module Toolchain
       # Takes OpenStruct of toc_elements as input
       # Returns html code as string +html_fragment+
       #
-      def generate_html_from_toc(toc_elements)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#generate_html_from_toc has a flog score of 73</span>          </div>  </li></ol>
+      def generate_html_from_toc(toc_elements)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#generate_html_from_toc has a flog score of 72</span>          </div>  </li></ol>
         fragment = Nokogiri::HTML.fragment(&#39;&lt;ul&gt;&lt;/ul&gt;&#39;)
         toc_elements.each do |e|
           fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_&#39; + e.id + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)
-          fragment_string.at(&#39;li&#39;) &lt;&lt; if e.level &lt; 2
+          fragment_string.at(&#39;li&#39;) &lt;&lt; if e.level &lt; @@multipage_level<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L110" class="js-smell-location">1</a>                  </div>  </li></ol>
             &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.id + &#39;.html&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;
           else
             &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.parent + &#39;.html#&#39; + e.id + &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;
