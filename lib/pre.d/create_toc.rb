@@ -15,7 +15,7 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CreateTOC < BaseProcess
-      @multipage_level = 2 #TODO: get from adoc
+      @@multipage_level = CM.get('asciidoc.multipage_level')
       ##
       # Creates a TOC JSON file from an +adoc+ object
       # Default JSON path is taken from +ConfigManager+.
@@ -25,7 +25,7 @@ module Toolchain
       # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
       def run(
-        adoc = nil, # Toolchain::Adoc.load_doc(CM.get('index.default.file')),
+        adoc = nil, # Toolchain::Adoc.load_doc(CM.get('asciidoc.index.file')),
         json_filepath = CM.get('toc.json_file'),
         html_filepath = CM.get('toc.html_file')
       )
@@ -33,7 +33,7 @@ module Toolchain
         stage_log(:pre, '[Create TOC] Starting')
         if adoc.nil?
           adoc = Toolchain::Adoc.load_doc(
-            CM.get('index.default.file')
+            CM.get('asciidoc.index.file')
           )
         end
         parsed = adoc.parsed
@@ -107,7 +107,7 @@ module Toolchain
         fragment = Nokogiri::HTML.fragment('<ul></ul>')
         toc_elements.each do |e|
           fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '"></li>' + "\n")
-          fragment_string.at('li') << if e.level < 2
+          fragment_string.at('li') << if e.level < @@multipage_level
             "\n" + '  <a href="' + e.id + '.html">' + e.title + '</a>' + "\n"
           else
             "\n" + '  <a href="' + e.parent + '.html#' + e.id + '">' + e.title + '</a>' + "\n"

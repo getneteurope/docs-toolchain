@@ -1,6 +1,7 @@
-index:
-  default:
+asciidoc:
+  index:
     file: content/index.adoc
+  multipage_level: 2
 
 build:
   dir: /tmp/build
