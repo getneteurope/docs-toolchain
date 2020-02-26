@@ -204,7 +204,7 @@
 
           
           <div class="method-source-code" id="combine_and_replace_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 105</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 107</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace_js</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">js_blob</span> = <span class="ruby-identifier">combine_js</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">js_blob</span> = <span class="ruby-constant">Babel</span><span class="ruby-operator">::</span><span class="ruby-constant">Transpiler</span>.<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">js_blob</span>)[<span class="ruby-string">&#39;code&#39;</span>]
@@ -249,7 +249,7 @@
 
           
           <div class="method-source-code" id="combine_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 53</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_js</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">seperator</span> = <span class="ruby-string">&quot;\n\n&quot;</span>)
   <span class="ruby-identifier">get_script_src_from_html_file</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">s</span>)
@@ -288,7 +288,7 @@
 
           
           <div class="method-source-code" id="get_script_src_from_html_file-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 126</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_script_src_from_html_file</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path</span>)
     <span class="ruby-comment"># raise Exception.new(&quot;Could not read html file &quot; + path)</span>
@@ -346,7 +346,7 @@
 
           
           <div class="method-source-code" id="replace_js_tags_with_blob-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">replace_js_tags_with_blob</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">js_blob</span>)
   <span class="ruby-comment"># TODO: solve this with nokogiri fragment parser (which either</span>
   <span class="ruby-comment"># removes needed or adds unnecessary tags..)</span>
@@ -366,17 +366,17 @@
   <span class="ruby-identifier">html_content_lines</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">lines</span>
 
   <span class="ruby-comment"># get lines where there are script tags with src attribute</span>
-  <span class="ruby-identifier">scripts_line_numbers</span> = []
+  <span class="ruby-identifier">script_tags_idx</span> = []
   <span class="ruby-identifier">html_content_lines</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">l</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">scripts_line_numbers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-constant">SCRIPT_TAG_REGEX</span>)
+    <span class="ruby-identifier">script_tags_idx</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-constant">SCRIPT_TAG_REGEX</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># replace last script tag with blob script tag</span>
-  <span class="ruby-identifier">html_content_lines</span>[<span class="ruby-identifier">scripts_line_numbers</span>.<span class="ruby-identifier">pop</span>] =
-    <span class="ruby-node">&quot;&lt;script src=\&quot;#{js_blob_path_relative}\&quot;&gt;&lt;/script&gt;\n&quot;</span>
+  <span class="ruby-identifier">blob_script_tag</span> = <span class="ruby-node">&quot;&lt;script src=\&quot;#{js_blob_path_relative}\&quot;&gt;&lt;/script&gt;\n&quot;</span>
+  <span class="ruby-identifier">html_content_lines</span>[<span class="ruby-identifier">script_tags_idx</span>.<span class="ruby-identifier">pop</span>] = <span class="ruby-identifier">blob_script_tag</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">script_tags_idx</span>.<span class="ruby-identifier">empty?</span>
 
   <span class="ruby-comment"># remove all other script tags that use src attribute</span>
-  <span class="ruby-identifier">scripts_line_numbers</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">html_content_lines</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-keyword">nil</span> }.<span class="ruby-identifier">reject</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:nil?</span>)
+  <span class="ruby-identifier">script_tags_idx</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">html_content_lines</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-keyword">nil</span> }.<span class="ruby-identifier">reject</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:nil?</span>)
 
   <span class="ruby-identifier">html_string</span> = <span class="ruby-identifier">html_content_lines</span>.<span class="ruby-identifier">join</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">html_string</span>
@@ -426,8 +426,10 @@
       <span class="ruby-keyword">begin</span>
         <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">combine_and_replace_js</span>(<span class="ruby-identifier">docpath</span>)
       <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
-        <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-node">&quot;JS Combine and Transpile: #{e.message}&quot;</span>, <span class="ruby-value">:red</span>)
-        <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;DEBUG&#39;</span>)
+        <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-string">&#39;JS Combine and Transpile&#39;</span>, <span class="ruby-value">:red</span>)
+        <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-value">:red</span>)
+        <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-node">&quot;docpath: #{docpath}&quot;</span>, <span class="ruby-value">:red</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span>
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
