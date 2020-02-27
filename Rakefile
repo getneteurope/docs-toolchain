@@ -13,7 +13,12 @@ end
 namespace :docs do
   desc 'Run through all stages'
   task :all do
-    %w[test pre build post notify].each { |t| Rake::Task["docs:#{t}"].execute }
+    %w[clean test pre build post notify].each { |t| Rake::Task["docs:#{t}"].execute }
+  end
+
+  desc 'Clean build directory'
+  task :clean do
+    ruby "#{toolchain_path}/bin/clean.rb"
   end
 
   desc 'Run test stage'
