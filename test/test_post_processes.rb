@@ -3,8 +3,7 @@
 require_relative '../lib/post.d/compile_search_index.rb'
 require_relative './util.rb'
 require 'zlib'
-
-
+require 'test/unit'
 
 class TestCompileSearchIndex < Test::Unit::TestCase
   ##
