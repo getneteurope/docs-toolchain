@@ -2,6 +2,7 @@
 
 require_relative '../lib/notify/slack.rb'
 require_relative './util.rb'
+require 'test/unit'
 
 Slack = Toolchain::Notify::Slack
 

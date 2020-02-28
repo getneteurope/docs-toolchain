@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/utils/string.rb'
+require 'test/unit'
 
 class TestString < Test::Unit::TestCase
   def test_colors
