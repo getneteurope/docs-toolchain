@@ -21,11 +21,11 @@ module Toolchain
       attributes = adoc.attributes
       errors = []
       unless File.exist?(blacklist_file)
-        log(
-          'PATTERN',
-          "Blacklist file '#{blacklist_file}' not found. Skipping this test.",
-          :magenta
-        )
+        #   log(
+        #     'PATTERN',
+        #     "Blacklist file '#{blacklist_file}' not found. Skipping this test.",
+        #     :magenta
+        #   )
         return errors
       end
       blacklist_file = File.open(blacklist_file, 'r')

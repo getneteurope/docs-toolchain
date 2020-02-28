@@ -45,8 +45,14 @@ def main(argv = ARGV)
   included_files = parsed.catalog[:includes]
   # included_files = Toolchain::Adoc.load_doc(index_adoc)
   stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
-  log('INCLUDES', included_files)
-  log('ATTRIBUTES2', attributes)
+  log('INCLUDES', 'List of includes:')
+  included_files.each do |k, _|
+    puts "... #{k}"
+  end
+  log('ATTRIBUTES', '')
+  attributes.each do |k, v|
+    puts "#{k}\t->\t#{v}"
+  end
 
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)
