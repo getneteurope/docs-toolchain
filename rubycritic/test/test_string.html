@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 08:57:51 +0100'>2020-01-23 08:57:51 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-28 16:23:53 +0100'>2020-02-28 16:23:53 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">46</span><small> lines of codes</small></div>
+              <div><span class="metric">47</span><small> lines of codes</small></div>
               <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">6.7</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">26.99</span><small> complexity</small></div>
@@ -100,9 +100,10 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require_relative &#39;../lib/utils/string.rb&#39;
+require &#39;test/unit&#39;
 
 class TestString &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestString has no descriptive comment</span>          </div>  </li></ol>
-  def test_colors<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_string.html#L6" class="js-smell-location">0</a>                  <a href="test_string.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
+  def test_colors<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_string.html#L7" class="js-smell-location">0</a>                  <a href="test_string.html#L38" class="js-smell-location">1</a>                  </div>  </li></ol>
     colors = %i[black red green brown blue magenta cyan gray]
     text = &#39;Test&#39;
     colors.each do |color|
@@ -133,7 +134,7 @@ class TestString &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li
     end
   end
 
-  def test_colorize<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_string.html#L6" class="js-smell-location">0</a>                  <a href="test_string.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
+  def test_colorize<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_string.html#L7" class="js-smell-location">0</a>                  <a href="test_string.html#L38" class="js-smell-location">1</a>                  </div>  </li></ol>
     colors = %i[black red green brown blue magenta cyan gray]
     text = &#39;Test&#39;
     colors.each do |color|

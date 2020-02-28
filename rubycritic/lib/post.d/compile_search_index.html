@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-28 09:43:25 +0100'>2020-02-28 09:43:25 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-28 14:16:59 +0100'>2020-02-28 14:16:59 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">17.2</span><small> complexity/method</small></div>
-              <div><span class="metric">20</span><small> churn</small></div>
+              <div><span class="metric">21</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">103.24</span><small> complexity</small></div>
@@ -136,7 +136,7 @@ module Toolchain
                 else
                   (html.is_a?(Array) ? html : [html])
                 end
-        stage_log(:pre, &quot;Running #{self.class.name} on #{htmls.length} files&quot;)
+        stage_log(:post, &quot;Running #{self.class.name} on #{htmls.length} files&quot;)
         ConfigManager.instance.get(&#39;search.index.exclude&#39;).each do |pattern|
           htmls.delete_if do |f|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Post::CompileSearchIndex#run contains iterators nested 2 deep</span>          </div>  </li></ol>
             !!(File.basename(f) =~ _create_regex(pattern))
