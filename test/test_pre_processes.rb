@@ -4,6 +4,7 @@ require_relative '../lib/pre.d/combine_transpile_js.rb'
 require_relative '../lib/pre.d/create_toc.rb'
 require_relative './util.rb'
 require 'json'
+require 'test/unit'
 
 class TestJsCombineAndTranspile < Test::Unit::TestCase
   CONTENT = ['[1, 2, 3].map(n => n ** 2);', 'var [a,,b] = [1,2,3];']
