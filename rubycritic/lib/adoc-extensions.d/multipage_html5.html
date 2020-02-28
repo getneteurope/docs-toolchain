@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-26 14:49:24 +0100'>2020-02-26 14:49:24 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-28 08:57:00 +0100'>2020-02-28 08:57:00 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">640</span><small> lines of codes</small></div>
-              <div><span class="metric">19</span><small> methods</small></div>
+              <div><span class="metric">649</span><small> lines of codes</small></div>
+              <div><span class="metric">20</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">29.7</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">28.3</span><small> complexity/method</small></div>
+              <div><span class="metric">8</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">563.53</span><small> complexity</small></div>
+              <div><span class="metric">565.73</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                35
+                36
                 smells
               </a>
             </li>
@@ -140,9 +140,18 @@
 require &#39;asciidoctor/converter/html5&#39;
 
 # HTML5 Multipage Converter adapted Asciidoctor::AbstractBlock
-class Asciidoctor::AbstractBlock
+class Asciidoctor::AbstractBlock<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Asciidoctor::AbstractBlock assumes too much for instance variable '@next_section_index'</span>          </div>  </li></ol>
   # Allow navigation links HTML to be saved and retrieved
   attr_accessor :nav_links<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Attribute.md" target="_blank"><b>Attribute</b></a>        </span>      </div>      <span>Asciidoctor::AbstractBlock#nav_links is a writable attribute</span>          </div>  </li></ol>
+
+  # HACK this forces the renumbering of sections and therefore
+  # the correction of @next_section_index, which would be
+  # inaccurate otherwise and this leads to Nil errors in
+  # Asciidoctor core.
+  def sections?
+    reindex_sections
+    @next_section_index &gt; 0
+  end
 end
 
 # HTML5 Multipage Converter adapted Asciidoctor::AbstractNode
@@ -345,7 +354,7 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
       generate_nav_links(node)
 
       # Create and save a skeleton document for generating the TOC lists.
-      @@full_outline = new_outline_doc(node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L249" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L464" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L466" class="js-smell-location">2</a>                  </div>  </li></ol>
+      @@full_outline = new_outline_doc(node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L258" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L473" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L475" class="js-smell-location">2</a>                  </div>  </li></ol>
       # Save the document catalog to use for each part/chapter page.
       @catalog = node.catalog
 
@@ -477,10 +486,10 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
     if node.type == :xref
       # This is the same as super...
       if (path = node.attributes[&#39;path&#39;])
-        attrs = (append_link_constraint_attrs node, node.role ? [%( class=&quot;#{node.role}&quot;)] : []).join<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L381" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L384" class="js-smell-location">1</a>                  </div>  </li></ol>
+        attrs = (append_link_constraint_attrs node, node.role ? [%( class=&quot;#{node.role}&quot;)] : []).join<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L390" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L393" class="js-smell-location">1</a>                  </div>  </li></ol>
         text = node.text || path
       else
-        attrs = node.role ? %( class=&quot;#{node.role}&quot;) : &#39;&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L381" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L384" class="js-smell-location">1</a>                  </div>  </li></ol>
+        attrs = node.role ? %( class=&quot;#{node.role}&quot;) : &#39;&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>MultipageHtml5Converter#inline_anchor calls 'node.role' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L390" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L393" class="js-smell-location">1</a>                  </div>  </li></ol>
         unless (text = node.text)
           refid = node.attributes[&#39;refid&#39;]
           if AbstractNode === (ref = (@refs ||= node.document.catalog[:refs])[refid])
@@ -560,9 +569,9 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
   def outline(node, opts = {})
     doc = node.document
     # Find this node in the @@full_outline skeleton document
-    page_node = @@full_outline.find_by(id: node.id).first<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L249" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L464" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L466" class="js-smell-location">2</a>                  </div>  </li></ol>
+    page_node = @@full_outline.find_by(id: node.id).first<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L258" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L473" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L475" class="js-smell-location">2</a>                  </div>  </li></ol>
     # Create a skeleton document for this particular page
-    custom_outline_doc = new_outline_doc(@@full_outline, for_page: page_node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L249" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L464" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L466" class="js-smell-location">2</a>                  </div>  </li></ol>
+    custom_outline_doc = new_outline_doc(@@full_outline, for_page: page_node)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>MultipageHtml5Converter declares the class variable '@@full_outline'</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L258" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L473" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L475" class="js-smell-location">2</a>                  </div>  </li></ol>
     opts[:page_id] = node.id
     # Generate an extra TOC entry for the root page. Add additional styling if
     # the current page is the root page.
