@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-26 16:54:33 +0100'>2020-02-26 16:54:33 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-28 15:34:58 +0100'>2020-02-28 15:34:58 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">151</span><small> lines of codes</small></div>
-              <div><span class="metric">3</span><small> methods</small></div>
+              <div><span class="metric">163</span><small> lines of codes</small></div>
+              <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">54.8</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">39.3</span><small> complexity/method</small></div>
+              <div><span class="metric">14</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">164.48</span><small> complexity</small></div>
+              <div><span class="metric">157.18</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -114,9 +114,14 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CreateTOC &lt; BaseProcess
-      @@multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L121" class="js-smell-location">1</a>                  </div>  </li></ol>
-      @@default_json_filepath = CM.get(&#39;toc.json_file&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_json_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L19" class="js-smell-location">0</a>                  <a href="create_toc.html#L31" class="js-smell-location">1</a>                  </div>  </li></ol>
-      @@default_html_filepath = CM.get(&#39;toc.html_file&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_html_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L20" class="js-smell-location">0</a>                  <a href="create_toc.html#L32" class="js-smell-location">1</a>                  </div>  </li></ol>
+      @@multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L89" class="js-smell-location">1</a>                  </div>  </li></ol>
+      @@default_json_filepath = CM.get(&#39;toc.json_file&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_json_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L19" class="js-smell-location">0</a>                  <a href="create_toc.html#L36" class="js-smell-location">1</a>                  </div>  </li></ol>
+      @@default_html_filepath = CM.get(&#39;toc.html_file&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_html_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L20" class="js-smell-location">0</a>                  <a href="create_toc.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
+
+      def initialize(priority = 0)
+        super(priority)
+      end
+
       ##
       # Creates a TOC JSON file from an +adoc+ object
       # Default JSON path is taken from +ConfigManager+.
@@ -125,10 +130,10 @@ module Toolchain
       # Saves toc as html code +html_fragment+
       # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
-      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#run has a flog score of 83</span>          </div>  </li></ol>
+      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#run has a flog score of 92</span>          </div>  </li></ol>
         adoc = nil, # Toolchain::Adoc.load_doc(CM.get(&#39;asciidoc.index.file&#39;)),
-        json_filepath = @@default_json_filepath,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_json_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L19" class="js-smell-location">0</a>                  <a href="create_toc.html#L31" class="js-smell-location">1</a>                  </div>  </li></ol>
-        html_filepath = @@default_html_filepath<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_html_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L20" class="js-smell-location">0</a>                  <a href="create_toc.html#L32" class="js-smell-location">1</a>                  </div>  </li></ol>
+        json_filepath = @@default_json_filepath,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_json_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L19" class="js-smell-location">0</a>                  <a href="create_toc.html#L36" class="js-smell-location">1</a>                  </div>  </li></ol>
+        html_filepath = @@default_html_filepath<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_html_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L20" class="js-smell-location">0</a>                  <a href="create_toc.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
       )
         # TODO: document this bit since it&#39;s quite confusing
         stage_log(:pre, &#39;[Create TOC] Starting&#39;)
@@ -152,6 +157,7 @@ module Toolchain
         doc.parse
 
         stack = [OpenStruct.new(id: &#39;root&#39;, level: -1, children: [])]
+        ancestors = []
 
         # for all headings in the adoc document do
         doc.catalog[:refs].keys.each do |r|
@@ -172,14 +178,21 @@ module Toolchain
             parent: nil,
             children: []
           )
-          stack.pop while level &lt;= stack.last.level
+          while level &lt;= stack.last.level
+            stack.pop 
+            ancestors.pop
+          end
+
           current.parent = stack.last
+          ancestors &lt;&lt; current.parent.id
+          founder = ancestors[@@multipage_level] || current.id<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L89" class="js-smell-location">1</a>                  </div>  </li></ol>
 
           # add current element to it&#39;s parent&#39;s children list
           current.parent.children &lt;&lt; current
 
           # replace parent object now with it&#39;s id to avoid loops
           current.parent = current.parent.id
+          current.founder = founder
           stack.push current
         end
 
@@ -195,7 +208,8 @@ module Toolchain
         log(&#39;TOC&#39;, &#39;JSON written to: &#39; + json_filepath, :gray)
 
         # create Nokogiri HTML document Object from TOC tree
-        toc_html_dom = Nokogiri::HTML.fragment(&#39;&lt;div id=&quot;toc_wrapper&quot;&gt;&lt;div id=&quot;toc&quot;&gt;&lt;/div&gt;&#39; + &quot;\n&quot; + &#39;&lt;/div&gt;&#39;)
+        # class and id same as default asciidoctor html5 converter with enabled TOC for drop-in replacement
+        toc_html_dom = Nokogiri::HTML.fragment(&#39;&lt;div id=&quot;toc&quot; class=&quot;toc2&quot;&gt;&lt;/div&gt;&#39; + &quot;\n&quot;)
         toc_html_dom.at_css(&#39;#toc&#39;) &lt;&lt; generate_html_from_toc(toc_openstruct.children)
 
         # convert Nokogiri HTML Object to string
@@ -213,15 +227,12 @@ module Toolchain
       # Takes OpenStruct of +toc_elements+ as input
       # Returns HTML code fragment as string Nokogiri Object +fragment+
       #
-      def generate_html_from_toc(toc_elements)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#generate_html_from_toc has a flog score of 72</span>          </div>  </li></ol>
+      def generate_html_from_toc(toc_elements)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#generate_html_from_toc has a flog score of 54</span>          </div>  </li></ol>
         fragment = Nokogiri::HTML.fragment(&#39;&lt;ul&gt;&lt;/ul&gt;&#39;)
         toc_elements.each do |e|
+          root_file = e.founder == &#39;root&#39; ? &#39;&#39; : e.founder + &#39;.html&#39;
           fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_&#39; + e.id + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)
-          fragment_string.at(&#39;li&#39;) &lt;&lt; if e.level &lt; @@multipage_level<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L121" class="js-smell-location">1</a>                  </div>  </li></ol>
-            &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.id + &#39;.html&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;
-          else
-            &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + e.parent + &#39;.html#&#39; + e.id + &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;
-          end
+          fragment_string.at(&#39;li&#39;) &lt;&lt; &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + root_file + &#39;#&#39; + e.id + &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;
 
           # if element has child elements, add them to current list item
           fragment_string.at(&#39;li&#39;) &lt;&lt; generate_html_from_toc(e.children) unless e.children.empty?
@@ -234,6 +245,7 @@ module Toolchain
       # Useful for converting OpenStruct Hash for later conversion to JSON
       #
       def openstruct_to_hash(object, hash = {})
+      return object unless object.is_a? OpenStruct
         object.each_pair do |key, value|
           hash[key] = case value
                       when OpenStruct then openstruct_to_hash(value)

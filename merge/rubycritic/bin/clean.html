@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-28 16:33:27 +0100'>2020-02-28 16:33:27 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-27 09:09:05 +0100'>2020-02-27 09:09:05 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>test /</small> test_post_processes.rb</h3>
+      <h3><small>bin /</small> clean.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">47</span><small> lines of codes</small></div>
-              <div><span class="metric">1</span><small> methods</small></div>
+              <div><span class="metric">10</span><small> lines of codes</small></div>
+              <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">8.7</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">N/A</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">8.65</span><small> complexity</small></div>
+              <div><span class="metric">0.0</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -99,51 +99,14 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require_relative &#39;../lib/post.d/compile_search_index.rb&#39;
-require_relative &#39;./util.rb&#39;
-require &#39;test/unit&#39;
-require &#39;zlib&#39;
-require &#39;test/unit&#39;
+require &#39;fileutils&#39;
+require_relative &#39;../lib/config_manager.rb&#39;
+require_relative &#39;../lib/log/log.rb&#39;
+require_relative &#39;../lib/utils/paths.rb&#39;
 
-class TestCompileSearchIndex &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestCompileSearchIndex has no descriptive comment</span>          </div>  </li></ol>
-  ##
-  # Creates lunr index json from an adoc file with include(s)
-  #
-  def test_compile_search_index
-    content =
-      &#39;&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;title&gt;Unit test&lt;/title&gt;&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div id=&quot;content&quot;&gt;
-
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;ApplePay_Main&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#ApplePay_Main&quot;&gt;&lt;/a&gt;&lt;a class=&quot;link&quot; href=&quot;#ApplePay_Main&quot;&gt;Apple Pay&lt;/a&gt;&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;Test Apple Pay paragraph is here.&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h3 id=&quot;first-head&quot;&gt;My First Heading&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;My first paragraph.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;&#39;
-    outfile = &#39;/tmp/test_index.json&#39;
-    index = with_tempfile(content, &#39;_CompileSearchIndex&#39;) do |file|
-      Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile)
-    end
-    assert_equal(4202139800, Zlib.crc32(index.inspect))
-  end
-end
+build_dir = Toolchain.build_path
+stage_log(:clean, &quot;Running clean on #{build_dir}&quot;)
+FileUtils.rm_rf(build_dir)
 </code>
   </div>
 </div>

@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-28 09:43:25 +0100'>2020-02-28 09:43:25 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-28 15:34:58 +0100'>2020-02-28 15:34:58 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>lib/utils /</small> paths.rb</h3>
+      <h3><small>lib/post.d /</small> html_postprocessing.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">57</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">63</span><small> lines of codes</small></div>
+              <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">7.6</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">10.9</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">38.02</span><small> complexity</small></div>
+              <div><span class="metric">32.59</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
-                smell
+                2
+                smells
               </a>
             </li>
           </ul>
@@ -99,61 +99,67 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require_relative &#39;../config_manager.rb&#39;
+require_relative &#39;../process_manager.rb&#39;
+require_relative &#39;../base_process.rb&#39;
+require_relative &#39;../utils/paths.rb&#39;
+require_relative &#39;../utils/adoc.rb&#39;
+require_relative &#39;../log/log.rb&#39;
+require &#39;asciidoctor&#39;
+require &#39;nokogiri&#39;
 
-module Toolchain<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain has no descriptive comment</span>          </div>  </li></ol>
-  ##
-  # content_path
-  # Returns path to content directory root.
-  #
-  def self.content_path(path = nil)
-    content_dir_path = Dir.pwd
-    content_dir_path = File.join(Dir.pwd, &#39;..&#39;) if File.basename(Dir.pwd) == &#39;toolchain&#39;
-    content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
-      if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
-    content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)
-    # For Unit testing:
-    content_dir_path = path unless path.nil?
-    return content_dir_path
-  end
+CM = Toolchain::ConfigManager.instance
 
+module Toolchain
   ##
-  # document_root
-  # Returns the root of content structure, i.e. where +index.adoc+ is located.
-  #
-  def self.document_root
-    return File.join(content_path, &#39;content&#39;)
-  end
+  # Adds modules for postprocessing files.
+  module Post
+    ##
+    # Provides an interface to create a lunr search index
+    # from the generated HTML files.
+    class TableOfContent &lt; BaseProcess
+      def initialize(priority = 0)
+        super(priority)
+        @html_dir = CM.get(&#39;build.html_dir&#39;)
+        @toc_html_file = CM.get(&#39;toc.html_file&#39;)
+        @html_files_array = Dir.glob(&#39;*.html&#39;, base: Toolchain.html_path).delete_if do |file|
+          File.basename(file).start_with?(&#39;docinfo&#39;)
+        end.map do |file|
+          File.join(@html_dir, file)
+        end
+      end
 
-  ##
-  # toolchain_path
-  # Returns path to toolchain root.
-  #
-  def self.toolchain_path(path = nil)
-    toolchain_dir_path = File.join(Dir.pwd, &#39;toolchain&#39;)
-    toolchain_dir_path = Dir.pwd unless File.exist?(toolchain_dir_path)
-    toolchain_dir_path = ENV[&#39;TOOLCHAIN_PATH&#39;] if ENV.key?(&#39;TOOLCHAIN_PATH&#39;)
-    # For Unit testing:
-    toolchain_dir_path = path unless path.nil?
-    return toolchain_dir_path
-  end
+      ##
+      # Injects pre-built HTML table of content into all built HTML files
+      # Optionally specifiy which TOC html fragment file +toc_html_file+ to inject in which files +html_files_array+
+      #
+      # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
+      #
+      def run(toc_html_file = @toc_html_file, html_files_array = @html_files_array)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#run has unused parameter 'html_files_array'</span>          </div>  </li></ol>
+        stage_log(:post, &#39;[Inject TOC] Starting&#39;)
+        html_fragment = File.read(toc_html_file)
+        return @html_files_array.map do |html_file|
+          inject_fragment_into_html_file(html_fragment, html_file)
+        end
+      end
 
-  ##
-  # build_path
-  # Returns path to toolchain build directory.
-  #
-  def self.build_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.dir&#39;) : path)
-  end
+      private
 
-  ##
-  # html_path
-  # Returns path to generated html files.
-  #
-  def self.html_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.html_dir&#39;) : path)
+      ## Appends HTML fragment +html_fragment+ to top of body of an HTML file +html_file+
+      # Returns path of modified HTML file +html_filepath+
+      #
+      def inject_fragment_into_html_file(html_fragment, html_file)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#inject_fragment_into_html_file doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+        file_content = File.read(html_file)
+        document = Nokogiri::HTML(file_content)
+        document.css(&#39;div#toc&#39;).remove
+        document.css(&#39;div#header&#39;).children.first.add_previous_sibling(html_fragment)      
+        modified_html = document.to_html
+        return html_file if File.write(html_file, modified_html)
+      end
+    end
   end
 end
+
+Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)
 </code>
   </div>
 </div>
