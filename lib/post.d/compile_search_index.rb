@@ -21,7 +21,9 @@ module Toolchain
       SELECTOR_SECTIONS = '#content .sect1, #content .sect2, #content .sect3'
       SELECTOR_HEADINGS = 'h2, h3, h4'
       XPATH_PARAGRAPHS = './div/p'
-      def initialize; end
+      def initialize(priority = 0)
+        super(priority)
+      end
 
       ##
       # Takes a single HTML file or a list of HTML files (+html+).

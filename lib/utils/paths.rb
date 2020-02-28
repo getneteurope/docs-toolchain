@@ -46,4 +46,12 @@ module Toolchain
   def self.build_path(path = nil)
     return (path.nil? ? ConfigManager.instance.get('build.dir') : path)
   end
+
+  ##
+  # html_path
+  # Returns path to generated html files.
+  #
+  def self.html_path(path = nil)
+    return (path.nil? ? ConfigManager.instance.get('build.html_dir') : path)
+  end
 end

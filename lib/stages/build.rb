@@ -25,6 +25,7 @@ module Toolchain
   module Build
     # default build directory
     DEFAULT_BUILD_DIR = '/tmp/build'
+    DEFAULT_HTML_DIR = '/tmp/build/html'
 
     ##
     # Setup build directory.
@@ -95,7 +96,7 @@ module Toolchain
       # doc.convert
 
       # create HTML folder
-      html_dir = File.join(build_dir, 'html')
+      html_dir = ConfigManager.instance.get('build.html_dir', default: DEFAULT_HTML_DIR)
       mkdir(html_dir)
 
       # move web pages to html/

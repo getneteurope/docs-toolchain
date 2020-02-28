@@ -18,6 +18,11 @@ module Toolchain
       @@multipage_level = CM.get('asciidoc.multipage_level')
       @@default_json_filepath = CM.get('toc.json_file')
       @@default_html_filepath = CM.get('toc.html_file')
+
+      def initialize(priority = 0)
+        super(priority)
+      end
+
       ##
       # Creates a TOC JSON file from an +adoc+ object
       # Default JSON path is taken from +ConfigManager+.
@@ -53,6 +58,7 @@ module Toolchain
         doc.parse
 
         stack = [OpenStruct.new(id: 'root', level: -1, children: [])]
+        ancestors = []
 
         # for all headings in the adoc document do
         doc.catalog[:refs].keys.each do |r|
@@ -71,9 +77,13 @@ module Toolchain
             level: level,
             title: title,
             parent: nil,
+            ancestors: [],
             children: []
           )
-          stack.pop while level <= stack.last.level
+          while level <= stack.last.level
+            stack.pop 
+            ancestors.pop
+          end
           current.parent = stack.last
 
           # add current element to it's parent's children list
@@ -81,6 +91,14 @@ module Toolchain
 
           # replace parent object now with it's id to avoid loops
           current.parent = current.parent.id
+
+          ancestors.push current.parent
+          current.ancestors << ancestors
+
+          # while current.ancestors.length > CM.get('asciidoc.multipage_level')
+          #   current.ancestors.pop
+          # end
+
           stack.push current
         end
 
@@ -88,7 +106,8 @@ module Toolchain
         toc_openstruct = stack.first
 
         # create JSON from TOC tree
-        toc_hash = openstruct_to_hash(toc_openstruct)
+        #toc_hash = openstruct_to_hash(toc_openstruct)
+        toc_hash = toc_openstruct.to_h
         toc_json = JSON.pretty_generate(toc_hash)
         File.open(json_filepath, 'w+') do |json_file|
           json_file.write(toc_json)
@@ -105,6 +124,7 @@ module Toolchain
           html_file.write(toc_html_string)
         end
         log('TOC', 'HTML fragment written to: ' + html_filepath, :gray)
+        pp toc_hash
         return json_filepath, html_filepath, toc_hash
       end
 
@@ -117,6 +137,10 @@ module Toolchain
       def generate_html_from_toc(toc_elements)
         fragment = Nokogiri::HTML.fragment('<ul></ul>')
         toc_elements.each do |e|
+          ## TODO rewrite this and do it in object creation
+          # ancestors = e.ancestors.split(',')
+          # generations = ancestors.length
+          # founding_father_idx = 
           fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '"></li>' + "\n")
           fragment_string.at('li') << if e.level < @@multipage_level
             "\n" + '  <a href="' + e.id + '.html">' + e.title + '</a>' + "\n"

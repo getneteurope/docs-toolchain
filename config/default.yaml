@@ -1,10 +1,11 @@
 asciidoc:
   index:
     file: content/index.adoc
-  multipage_level: 2
+  multipage_level: 3
 
 build:
   dir: /tmp/build
+  html_dir: /tmp/build/html
 
 checkers:
   pattern:
