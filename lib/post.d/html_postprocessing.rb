@@ -51,7 +51,8 @@ module Toolchain
       def inject_fragment_into_html_file(html_fragment, html_file)
         file_content = File.read(html_file)
         document = Nokogiri::HTML(file_content)
-        document.at('body').children.first.add_previous_sibling(html_fragment)
+        document.css('div#toc').remove
+        document.css('div#header').children.first.add_previous_sibling(html_fragment)      
         modified_html = document.to_html
         return html_file if File.write(html_file, modified_html)
       end

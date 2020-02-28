@@ -85,25 +85,15 @@ module Toolchain
           end
 
           current.parent = stack.last
-
-
           ancestors << current.parent.id
-          founder = ancestors[@@multipage_level - 1] || current.id
-          pp '#####'
-          pp current.id
-          pp founder
+          founder = ancestors[@@multipage_level] || current.id
 
           # add current element to it's parent's children list
           current.parent.children << current
 
           # replace parent object now with it's id to avoid loops
           current.parent = current.parent.id
-
           current.founder = founder
-
-          # while current.ancestors.length > CM.get('asciidoc.multipage_level')
-          #   current.ancestors.pop
-          # end
           stack.push current
         end
 
@@ -119,7 +109,8 @@ module Toolchain
         log('TOC', 'JSON written to: ' + json_filepath, :gray)
 
         # create Nokogiri HTML document Object from TOC tree
-        toc_html_dom = Nokogiri::HTML.fragment('<div id="toc_wrapper"><div id="toc"></div>' + "\n" + '</div>')
+        # class and id same as default asciidoctor html5 converter with enabled TOC for drop-in replacement
+        toc_html_dom = Nokogiri::HTML.fragment('<div id="toc" class="toc2"></div>' + "\n")
         toc_html_dom.at_css('#toc') << generate_html_from_toc(toc_openstruct.children)
 
         # convert Nokogiri HTML Object to string
@@ -128,7 +119,6 @@ module Toolchain
           html_file.write(toc_html_string)
         end
         log('TOC', 'HTML fragment written to: ' + html_filepath, :gray)
-        pp toc_hash
         return json_filepath, html_filepath, toc_hash
       end
 
@@ -141,18 +131,9 @@ module Toolchain
       def generate_html_from_toc(toc_elements)
         fragment = Nokogiri::HTML.fragment('<ul></ul>')
         toc_elements.each do |e|
-          ## TODO rewrite this and do it in object creation
-          # ancestors = e.ancestors.split(',')
-          # generations = ancestors.length
-          # founding_father_idx = 
           root_file = e.founder == 'root' ? '' : e.founder + '.html'
           fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '"></li>' + "\n")
           fragment_string.at('li') << "\n" + '  <a href="' + root_file + '#' + e.id + '">' + e.title + '</a>' + "\n"
-          # fragment_string.at('li') << if e.level < 1
-          #   "\n" + '  <a href="' + e.id + '">' + e.title + '</a>' + "\n"
-          # else
-          #   "\n" + '  <a href="' + root_file + '#' + e.id + '">' + e.title + '</a>' + "\n"
-          # end
 
           # if element has child elements, add them to current list item
           fragment_string.at('li') << generate_html_from_toc(e.children) unless e.children.empty?
