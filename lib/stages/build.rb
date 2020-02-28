@@ -91,8 +91,6 @@ module Toolchain
         failure_level: 'WARN'
       }
       Asciidoctor.convert_file(index_path, options)
-      # doc = Asciidoctor.load_file(index_path, options)
-      # doc.convert
 
       # create HTML folder
       html_dir = File.join(build_dir, 'html')
