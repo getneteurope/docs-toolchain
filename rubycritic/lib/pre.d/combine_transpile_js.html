@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-26 17:19:25 +0100'>2020-02-26 17:19:25 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-28 10:25:09 +0100'>2020-02-28 10:25:09 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">158</span><small> lines of codes</small></div>
+              <div><span class="metric">159</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">17.9</span><small> complexity/method</small></div>
-              <div><span class="metric">9</span><small> churn</small></div>
+              <div><span class="metric">18.3</span><small> complexity/method</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">107.51</span><small> complexity</small></div>
+              <div><span class="metric">109.75</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                4
+                3
                 smells
               </a>
             </li>
@@ -163,7 +163,7 @@ module Toolchain
       #
       # Returns html string +html_string+
       #
-      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 33</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 36</span>          </div>  </li></ol>
         # TODO: solve this with nokogiri fragment parser (which either
         # removes needed or adds unnecessary tags..)
         #
@@ -172,6 +172,7 @@ module Toolchain
         js_blob_path = File.join(
           ::Toolchain.content_path, &#39;js&#39;, File.basename(path, &#39;.*&#39;) + &#39;_blob.js&#39;
         )
+        log(&#39;JS&#39;, &#39;blob is at &#39; + js_blob_path, :yellow)
         js_blob_path_relative = js_blob_path
           .delete_prefix(::Toolchain.content_path + &#39;/&#39;)
           .delete_prefix(&#39;content/&#39;)
@@ -199,21 +200,21 @@ module Toolchain
       end
 
       ##
-      # Replaces all js tags in an html file +path+ with a tag that includes one big blob js.
+      # Replaces all js tags in an html file +html_path+ with a tag that includes one big blob js.
       #
       # Returns an OpenStruct +{ path, js_blob, html }+.
       #
-      def combine_and_replace_js(path)
-        js_blob = combine_js(path)
+      def combine_and_replace_js(html_path)
+        js_blob = combine_js(html_path)
         js_blob = Babel::Transpiler.transform(js_blob)[&#39;code&#39;]
         # TODO: minify js blob. may be unnecessary using transport stream compression anyway
-        html_string = replace_js_tags_with_blob(path, js_blob)
-        File.open(path, &#39;w+&#39;) do |file|
-          log(&#39;JS&#39;, &#39;insert js tag for blob into &#39; + path, :yellow)
+        html_string = replace_js_tags_with_blob(html_path, js_blob)
+        File.open(html_path, &#39;w+&#39;) do |file|
+          log(&#39;JS&#39;, &#39;insert JS blob into &#39; + html_path, :yellow)
           file.puts(html_string)
         end
         return OpenStruct.new(
-          path: path,
+          path: html_path,
           js_blob: js_blob,
           html: html_string
         )

@@ -141,11 +141,11 @@
   <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>
   <span class="ruby-identifier">errors</span> = []
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">blacklist_file</span>)
-    <span class="ruby-identifier">log</span>(
-      <span class="ruby-string">&#39;PATTERN&#39;</span>,
-      <span class="ruby-node">&quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;</span>,
-      <span class="ruby-value">:magenta</span>
-    )
+    <span class="ruby-comment">#   log(</span>
+    <span class="ruby-comment">#     &#39;PATTERN&#39;,</span>
+    <span class="ruby-comment">#     &quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;,</span>
+    <span class="ruby-comment">#     :magenta</span>
+    <span class="ruby-comment">#   )</span>
     <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">blacklist_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">blacklist_file</span>, <span class="ruby-string">&#39;r&#39;</span>)

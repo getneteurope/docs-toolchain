@@ -187,7 +187,7 @@
         
         <div class="method-heading">
           <span class="method-name">combine_and_replace_js</span><span
-            class="method-args">(path)</span>
+            class="method-args">(html_path)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -196,7 +196,7 @@
 
         <div class="method-description">
           
-          <p>Replaces all js tags in an html file <code>path</code> with a tag that includes one big blob js.</p>
+          <p>Replaces all js tags in an html file <code>html_path</code> with a tag that includes one big blob js.</p>
 
 <p>Returns an OpenStruct +{ path, js_blob, html }+.</p>
           
@@ -204,18 +204,18 @@
 
           
           <div class="method-source-code" id="combine_and_replace_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 107</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace_js</span>(<span class="ruby-identifier">path</span>)
-  <span class="ruby-identifier">js_blob</span> = <span class="ruby-identifier">combine_js</span>(<span class="ruby-identifier">path</span>)
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace_js</span>(<span class="ruby-identifier">html_path</span>)
+  <span class="ruby-identifier">js_blob</span> = <span class="ruby-identifier">combine_js</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-identifier">js_blob</span> = <span class="ruby-constant">Babel</span><span class="ruby-operator">::</span><span class="ruby-constant">Transpiler</span>.<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">js_blob</span>)[<span class="ruby-string">&#39;code&#39;</span>]
   <span class="ruby-comment"># TODO: minify js blob. may be unnecessary using transport stream compression anyway</span>
-  <span class="ruby-identifier">html_string</span> = <span class="ruby-identifier">replace_js_tags_with_blob</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">js_blob</span>)
-  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-string">&#39;insert js tag for blob into &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>, <span class="ruby-value">:yellow</span>)
+  <span class="ruby-identifier">html_string</span> = <span class="ruby-identifier">replace_js_tags_with_blob</span>(<span class="ruby-identifier">html_path</span>, <span class="ruby-identifier">js_blob</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">html_path</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-string">&#39;insert JS blob into &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">html_path</span>, <span class="ruby-value">:yellow</span>)
     <span class="ruby-identifier">file</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">html_string</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
-    <span class="ruby-value">path:</span> <span class="ruby-identifier">path</span>,
+    <span class="ruby-value">path:</span> <span class="ruby-identifier">html_path</span>,
     <span class="ruby-value">js_blob:</span> <span class="ruby-identifier">js_blob</span>,
     <span class="ruby-value">html:</span> <span class="ruby-identifier">html_string</span>
   )
@@ -288,7 +288,7 @@
 
           
           <div class="method-source-code" id="get_script_src_from_html_file-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 128</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_script_src_from_html_file</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path</span>)
     <span class="ruby-comment"># raise Exception.new(&quot;Could not read html file &quot; + path)</span>
@@ -356,6 +356,7 @@
   <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(
     <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>, <span class="ruby-string">&#39;js&#39;</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;.*&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;_blob.js&#39;</span>
   )
+  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-string">&#39;blob is at &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">js_blob_path</span>, <span class="ruby-value">:yellow</span>)
   <span class="ruby-identifier">js_blob_path_relative</span> = <span class="ruby-identifier">js_blob_path</span>
     .<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>)
     .<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-string">&#39;content/&#39;</span>)
