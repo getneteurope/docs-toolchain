@@ -71,7 +71,9 @@ module Toolchain
         # derive .js path from html filename
         # e.g. docinfo-footer.html => content/js/docinfo-footer.js
         js_blob_path = File.join(
-          ::Toolchain.content_path, 'js', File.basename(path, '.*') + '_blob.js'
+          ::Toolchain.content_path,
+          'js',
+          'blob' + File.basename(path.split('-').last, '.*') + '.js'
         )
         log('JS', 'blob is at ' + js_blob_path, :yellow)
         js_blob_path_relative = js_blob_path
