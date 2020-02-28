@@ -95,8 +95,6 @@ module Toolchain
         failure_level: 'WARN'
       }
       Asciidoctor.convert_file(index_path, options)
-      # doc = Asciidoctor.load_file(index_path, options)
-      # doc.convert
 
       # create HTML folder
       html_dir = ConfigManager.instance.get('build.html_dir', default: DEFAULT_HTML_DIR)
