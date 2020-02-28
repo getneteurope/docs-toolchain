@@ -44,6 +44,15 @@ require 'asciidoctor/converter/html5'
 class Asciidoctor::AbstractBlock
   # Allow navigation links HTML to be saved and retrieved
   attr_accessor :nav_links
+
+  # HACK this forces the renumbering of sections and therefore
+  # the correction of @next_section_index, which would be
+  # inaccurate otherwise and this leads to Nil errors in
+  # Asciidoctor core.
+  def sections?
+    reindex_sections
+    @next_section_index > 0
+  end
 end
 
 # HTML5 Multipage Converter adapted Asciidoctor::AbstractNode
