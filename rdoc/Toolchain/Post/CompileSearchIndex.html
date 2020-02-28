@@ -75,7 +75,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-new">::new</a>
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
     
     <li ><a href="#method-i-_create_regex">#_create_regex</a>
     
@@ -149,7 +149,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">()</span>
+            class="method-args">(priority = 0)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -161,11 +161,18 @@
           
           
           
+            <div class="method-calls-super">
+              Calls superclass method
+              <a href="../BaseProcess.html#method-c-new"><code>Toolchain::BaseProcess::new</code></a>
+            </div>
+          
 
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 24</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>; <span class="ruby-keyword">end</span></pre>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
+  <span class="ruby-keyword">super</span>(<span class="ruby-identifier">priority</span>)
+<span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -207,7 +214,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 34</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">html</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-value">outfile:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">htmls</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">html</span>.<span class="ruby-identifier">nil?</span>
             <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>, <span class="ruby-string">&#39;html&#39;</span>, <span class="ruby-string">&#39;*.html&#39;</span>)]
@@ -271,7 +278,7 @@
 
           
           <div class="method-source-code" id="_create_regex-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 66</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_create_regex</span>(<span class="ruby-identifier">pattern</span>)
   <span class="ruby-identifier">escaped</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">pattern</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&#39;\*&#39;</span>,<span class="ruby-string">&#39;.*?&#39;</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;^#{escaped}$&quot;</span>, <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">IGNORECASE</span>)
@@ -305,7 +312,7 @@
 
           
           <div class="method-source-code" id="_parse_html-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_parse_html</span>(<span class="ruby-identifier">html_file</span>)
   <span class="ruby-identifier">html</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">html_file</span>, <span class="ruby-string">&#39;r&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-operator">::</span><span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>)
@@ -344,7 +351,7 @@
 
           
           <div class="method-source-code" id="_parse_section-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 95</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_parse_section</span>(<span class="ruby-identifier">sect</span>)
   <span class="ruby-identifier">header</span> = <span class="ruby-identifier">sect</span>.<span class="ruby-identifier">search</span>(<span class="ruby-constant">SELECTOR_HEADINGS</span>).<span class="ruby-identifier">first</span>
   <span class="ruby-identifier">ps</span> = <span class="ruby-identifier">sect</span>.<span class="ruby-identifier">search</span>(<span class="ruby-constant">XPATH_PARAGRAPHS</span>)
@@ -384,7 +391,7 @@
 
           
           <div class="method-source-code" id="generate_index-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 111</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 113</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_index</span>(<span class="ruby-identifier">htmls</span>)
   <span class="ruby-identifier">docs</span> = []
   <span class="ruby-identifier">lookup</span> = {}

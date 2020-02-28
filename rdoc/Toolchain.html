@@ -76,6 +76,8 @@
     
     <li ><a href="#method-c-format_net_exception">::format_net_exception</a>
     
+    <li ><a href="#method-c-html_path">::html_path</a>
+    
     <li ><a href="#method-c-toolchain_path">::toolchain_path</a>
     
   </ul>
@@ -272,6 +274,39 @@
   <span class="ruby-keyword">else</span>
     <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;Unknown Exception: #{msg}&quot;</span>
   <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-html_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">html_path</span><span
+            class="method-args">(path = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="Toolchain.html#method-c-html_path"><code>html_path</code></a> Returns path to generated html files.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="html_path-source">
+            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">html_path</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">return</span> (<span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.html_dir&#39;</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">path</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

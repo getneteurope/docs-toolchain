@@ -109,6 +109,11 @@
         <dd><p>default build directory</p>
         
       
+        <dt id="DEFAULT_HTML_DIR">DEFAULT_HTML_DIR
+        
+        <dd>
+        
+      
       </dl>
     </section>
     
@@ -154,7 +159,7 @@
 
           
           <div class="method-source-code" id="build-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">index:</span> <span class="ruby-string">&#39;index.adoc&#39;</span>)
   <span class="ruby-identifier">index_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">index</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-node">&quot;File #{index_path} does not exist&quot;</span> <span class="ruby-keyword">unless</span>
@@ -171,6 +176,7 @@
   <span class="ruby-identifier">options</span> = {
     <span class="ruby-value">attributes:</span> {
       <span class="ruby-string">&#39;linkcss&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>,
+      <span class="ruby-string">&#39;multipage-level&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;asciidoc.multipage_level&#39;</span>),
       <span class="ruby-string">&#39;stylesdir&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;css&#39;</span>,
       <span class="ruby-string">&#39;stylesheet&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;main.css&#39;</span>,
       <span class="ruby-string">&#39;icons&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;font&#39;</span>,
@@ -186,7 +192,7 @@
   <span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">convert_file</span>(<span class="ruby-identifier">index_path</span>, <span class="ruby-identifier">options</span>)
 
   <span class="ruby-comment"># create HTML folder</span>
-  <span class="ruby-identifier">html_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-string">&#39;html&#39;</span>)
+  <span class="ruby-identifier">html_dir</span> = <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.html_dir&#39;</span>, <span class="ruby-value">default:</span> <span class="ruby-constant">DEFAULT_HTML_DIR</span>)
   <span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">html_dir</span>)
 
   <span class="ruby-comment"># move web pages to html/</span>
@@ -255,7 +261,7 @@
 
           
           <div class="method-source-code" id="setup-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">setup</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">content:</span> <span class="ruby-string">&#39;content&#39;</span>)
   <span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.dir&#39;</span>, <span class="ruby-value">default:</span> <span class="ruby-identifier">build_dir</span>)
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;setting up build dir @ #{build_dir}&quot;</span>)
