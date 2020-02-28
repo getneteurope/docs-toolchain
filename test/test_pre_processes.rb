@@ -114,6 +114,6 @@ Sensing a pattern here?
 
     # Test HTML file
     toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
-    assert_equal(toc_html.css('#toc_wrapper > #toc > ul > li#toc_level_two > a + ul > li > a').attribute('href').value, 'level_two.html#level_three')
+    assert_equal(toc_html.css('#toc > ul > li#toc_level_two > a + ul > li > a').attribute('href').value, 'level_two.html#level_three')
   end
 end
