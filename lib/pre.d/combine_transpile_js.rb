@@ -73,6 +73,7 @@ module Toolchain
         js_blob_path = File.join(
           ::Toolchain.content_path, 'js', File.basename(path, '.*') + '_blob.js'
         )
+        log('JS', 'blob is at ' + js_blob_path, :yellow)
         js_blob_path_relative = js_blob_path
           .delete_prefix(::Toolchain.content_path + '/')
           .delete_prefix('content/')
@@ -100,21 +101,21 @@ module Toolchain
       end
 
       ##
-      # Replaces all js tags in an html file +path+ with a tag that includes one big blob js.
+      # Replaces all js tags in an html file +html_path+ with a tag that includes one big blob js.
       #
       # Returns an OpenStruct +{ path, js_blob, html }+.
       #
-      def combine_and_replace_js(path)
-        js_blob = combine_js(path)
+      def combine_and_replace_js(html_path)
+        js_blob = combine_js(html_path)
         js_blob = Babel::Transpiler.transform(js_blob)['code']
         # TODO: minify js blob. may be unnecessary using transport stream compression anyway
-        html_string = replace_js_tags_with_blob(path, js_blob)
-        File.open(path, 'w+') do |file|
-          log('JS', 'insert js tag for blob into ' + path, :yellow)
+        html_string = replace_js_tags_with_blob(html_path, js_blob)
+        File.open(html_path, 'w+') do |file|
+          log('JS', 'insert JS blob into ' + html_path, :yellow)
           file.puts(html_string)
         end
         return OpenStruct.new(
-          path: path,
+          path: html_path,
           js_blob: js_blob,
           html: html_string
         )
