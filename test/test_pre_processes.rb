@@ -6,6 +6,7 @@ require_relative './util.rb'
 require 'json'
 
 class TestJsCombineAndTranspile < Test::Unit::TestCase
+  CONTENT = ['[1, 2, 3].map(n => n ** 2);', 'var [a,,b] = [1,2,3];']
   ##
   # Creates two samples js files each for a test docinfo.html and test docinfo-footer.html
   # Adds invalid script tags
@@ -13,38 +14,43 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
   #
   def test_combine_and_transpile_js
     # TODO: outsource writing stuff to its own method
-    js_header_files_contents = ['[1, 2, 3].map(n => n ** 2);', 'var [a,,b] = [1,2,3];']
+    # HEADER
     js_header_files_paths = []
-    js_header_files_contents.each_with_index do |script, i|
-      js_header_files_paths << write_tempfile('js_header_' + i.to_s + '.js', script)
+    CONTENT.each_with_index do |script, i|
+      js_header_files_paths << write_tempfile('js_header_' + i.to_s + '.js', script).delete_prefix('/tmp/')
     end
-    html_header = "<html><head>\n"
-    html_header += '<script src="invalid-file.js"></script>' + "\n"
+    html_header = '<script src="invalid-file.js"></script>' + "\n"
     js_header_files_paths.each do |path|
       html_header += '<script src="' + path + '"></script>' + "\n"
     end
-    html_header += '</head>' + "\n"
-    html_header_filepath = write_tempfile('docinfo_head.html', html_header)
+    html_header_filepath = write_tempfile('docinfo_header.html', html_header)
 
-    js_footer_files_contents = js_header_files_contents.reverse
+    # FOOTER
+    js_footer_files_contents = CONTENT.reverse
     js_footer_files_paths = []
     js_footer_files_contents.each_with_index do |script, i|
-      js_footer_files_paths << write_tempfile('js_footer_' + i.to_s + '.js', script)
+      js_footer_files_paths << write_tempfile('js_footer_' + i.to_s + '.js', script).delete_prefix('/tmp/')
     end
     html_footer = ''
     js_footer_files_paths.each do |path|
       html_footer += '<script src="' + path + '"></script>' + "\n"
     end
     html_footer += '<script src="invalid-footer-file.js"></script>' + "\n"
-    html_footer += '</body></html>'
     html_footer_filepath = write_tempfile('docinfo_footer.html', html_footer)
 
-    docinfo_files_paths = OpenStruct.new('header' => html_header_filepath, 'footer' => html_footer_filepath)
+    # TESTS
+    docinfo_files_paths = OpenStruct.new(
+      'header' => html_header_filepath, 'footer' => html_footer_filepath
+    )
     results = ::Toolchain::Pre::CombineAndTranspileJS.new.run(docinfo_files_paths)
-    assert_equal(2_284_332_409, Zlib.crc32(results[0].js_blob))
-    assert_equal(1_293_230_988, Zlib.crc32(results[0].html))
-    assert_equal(1_211_914_232, Zlib.crc32(results[1].js_blob))
-    assert_equal(2_246_984_566, Zlib.crc32(results[1].html))
+    assert_equal(CONTENT.join("\n\n") + "\n",
+      File.read(results[0].js_blob_path))
+    assert_equal('<script src="js/blob_header.js"></script>',
+      results[0].html.chomp)
+    assert_equal(CONTENT.reverse.join("\n\n") + "\n",
+      File.read(results[1].js_blob_path))
+    assert_equal('<script src="js/blob_footer.js"></script>',
+      results[1].html.chomp)
   end
 end
 
