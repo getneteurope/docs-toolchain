@@ -6,6 +6,8 @@ require_relative '../config_manager.rb'
 require_relative '../log/log.rb'
 require_relative '../utils/paths.rb'
 
+CM = Toolchain::ConfigManager.instance
+
 ##
 # mkdir
 #
@@ -79,6 +81,7 @@ module Toolchain
       options = {
         attributes: {
           'linkcss' => true,
+          'multipage-level' => CM.get('asciidoc.multipage_level'),
           'stylesdir' => 'css',
           'stylesheet' => 'main.css',
           'icons' => 'font',

@@ -77,14 +77,21 @@ module Toolchain
             level: level,
             title: title,
             parent: nil,
-            ancestors: [],
             children: []
           )
           while level <= stack.last.level
             stack.pop 
             ancestors.pop
           end
+
           current.parent = stack.last
+
+
+          ancestors << current.parent.id
+          founder = ancestors[@@multipage_level - 1] || current.id
+          pp '#####'
+          pp current.id
+          pp founder
 
           # add current element to it's parent's children list
           current.parent.children << current
@@ -92,13 +99,11 @@ module Toolchain
           # replace parent object now with it's id to avoid loops
           current.parent = current.parent.id
 
-          ancestors.push current.parent
-          current.ancestors << ancestors
+          current.founder = founder
 
           # while current.ancestors.length > CM.get('asciidoc.multipage_level')
           #   current.ancestors.pop
           # end
-
           stack.push current
         end
 
@@ -106,8 +111,7 @@ module Toolchain
         toc_openstruct = stack.first
 
         # create JSON from TOC tree
-        #toc_hash = openstruct_to_hash(toc_openstruct)
-        toc_hash = toc_openstruct.to_h
+        toc_hash = openstruct_to_hash(toc_openstruct)
         toc_json = JSON.pretty_generate(toc_hash)
         File.open(json_filepath, 'w+') do |json_file|
           json_file.write(toc_json)
@@ -141,12 +145,14 @@ module Toolchain
           # ancestors = e.ancestors.split(',')
           # generations = ancestors.length
           # founding_father_idx = 
+          root_file = e.founder == 'root' ? '' : e.founder + '.html'
           fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '"></li>' + "\n")
-          fragment_string.at('li') << if e.level < @@multipage_level
-            "\n" + '  <a href="' + e.id + '.html">' + e.title + '</a>' + "\n"
-          else
-            "\n" + '  <a href="' + e.parent + '.html#' + e.id + '">' + e.title + '</a>' + "\n"
-          end
+          fragment_string.at('li') << "\n" + '  <a href="' + root_file + '#' + e.id + '">' + e.title + '</a>' + "\n"
+          # fragment_string.at('li') << if e.level < 1
+          #   "\n" + '  <a href="' + e.id + '">' + e.title + '</a>' + "\n"
+          # else
+          #   "\n" + '  <a href="' + root_file + '#' + e.id + '">' + e.title + '</a>' + "\n"
+          # end
 
           # if element has child elements, add them to current list item
           fragment_string.at('li') << generate_html_from_toc(e.children) unless e.children.empty?
@@ -159,6 +165,7 @@ module Toolchain
       # Useful for converting OpenStruct Hash for later conversion to JSON
       #
       def openstruct_to_hash(object, hash = {})
+      return object unless object.is_a? OpenStruct
         object.each_pair do |key, value|
           hash[key] = case value
                       when OpenStruct then openstruct_to_hash(value)
