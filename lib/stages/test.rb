@@ -12,7 +12,7 @@ Dir[File.join(__dir__, '../', 'extensions.d', '*.rb')].each { |file| require fil
 ADOC_MAP = Hash.new(nil)
 ##
 # default index file
-DEFAULT_INDEX = Toolchain::ConfigManager.instance.get('index.default.file')
+DEFAULT_INDEX = Toolchain::ConfigManager.instance.get('asciidoc.index.file')
 
 ##
 # represents a pair of parsed, resolved adoc and original adoc

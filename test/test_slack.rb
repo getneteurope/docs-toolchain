@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'test/unit'
 require_relative '../lib/notify/slack.rb'
 require_relative './util.rb'
 require 'test/unit'

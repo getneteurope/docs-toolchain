@@ -1,9 +1,11 @@
-index:
-  default:
+asciidoc:
+  index:
     file: content/index.adoc
+  multipage_level: 2
 
 build:
   dir: /tmp/build
+  html_dir: /tmp/build/html
 
 checkers:
   pattern:
@@ -23,4 +25,5 @@ notify:
       file: /tmp/slack.json
 
 toc:
-  file: /tmp/toc.json
+  json_file: /tmp/toc.json
+  html_file: /tmp/toc.html

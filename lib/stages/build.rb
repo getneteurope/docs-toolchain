@@ -6,6 +6,8 @@ require_relative '../config_manager.rb'
 require_relative '../log/log.rb'
 require_relative '../utils/paths.rb'
 
+CM = Toolchain::ConfigManager.instance
+
 ##
 # mkdir
 #
@@ -25,6 +27,7 @@ module Toolchain
   module Build
     # default build directory
     DEFAULT_BUILD_DIR = '/tmp/build'
+    DEFAULT_HTML_DIR = '/tmp/build/html'
 
     ##
     # Setup build directory.
@@ -78,6 +81,7 @@ module Toolchain
       options = {
         attributes: {
           'linkcss' => true,
+          'multipage-level' => CM.get('asciidoc.multipage_level'),
           'stylesdir' => 'css',
           'stylesheet' => 'main.css',
           'icons' => 'font',
@@ -93,7 +97,7 @@ module Toolchain
       Asciidoctor.convert_file(index_path, options)
 
       # create HTML folder
-      html_dir = File.join(build_dir, 'html')
+      html_dir = ConfigManager.instance.get('build.html_dir', default: DEFAULT_HTML_DIR)
       mkdir(html_dir)
 
       # move web pages to html/

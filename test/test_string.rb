@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'test/unit'
 require_relative '../lib/utils/string.rb'
 require 'test/unit'
 

@@ -56,6 +56,7 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
 end
 
 class TestCreateTOC < Test::Unit::TestCase
+  require 'nokogiri'
   ##
   # Tests TOC creation with sample document
   #
@@ -112,8 +113,14 @@ Sensing a pattern here?
     '
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
     ::Toolchain::ConfigManager.instance.load
-    json_filepath = ::Toolchain::Pre::CreateTOC.new.run(adoc)
+    json_filepath, html_filepath, toc_hash = ::Toolchain::Pre::CreateTOC.new.run(adoc)
+
+    # Test JSON file
     toc_object = JSON.parse(File.read(json_filepath))
     assert_equal(toc_object['children'][1]['children'][0]['children'][0]['children'][0]['title'], 'Getting sectioned at 5')
+
+    # Test HTML file
+    toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
+    assert_equal(toc_html.css('#toc > ul > li#toc_level_two > a + ul > li > a').attribute('href').value, 'level_three.html#level_three')
   end
 end
