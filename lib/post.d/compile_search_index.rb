@@ -37,7 +37,7 @@ module Toolchain
                 else
                   (html.is_a?(Array) ? html : [html])
                 end
-        stage_log(:pre, "Running #{self.class.name} on #{htmls.length} files")
+        stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
         ConfigManager.instance.get('search.index.exclude').each do |pattern|
           htmls.delete_if do |f|
             !!(File.basename(f) =~ _create_regex(pattern))

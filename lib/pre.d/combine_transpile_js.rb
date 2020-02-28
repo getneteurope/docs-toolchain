@@ -27,22 +27,20 @@ module Toolchain
       # Returns the results of the substitution.
       def run(filepaths = nil)
         # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
-        content_path = File.join(::Toolchain.content_path, 'content')
-        header_path = filepaths.nil? ? File.join(content_path, @header_name_default) : filepaths.header
-        footer_path = filepaths.nil? ? File.join(content_path, @footer_name_default) : filepaths.footer
+        root = ::Toolchain.document_root
+        header_path = filepaths.nil? ? File.join(root, @header_name_default) : filepaths.header
+        footer_path = filepaths.nil? ? File.join(root, @footer_name_default) : filepaths.footer
         # js_header_files = Dir[content_path + '/js/header.js.d/*.js']
         results = []
-        Dir.chdir File.dirname(header_path) do
-          [header_path, footer_path].each do |docpath|
-            stage_log('pre', "[JS Combine and Transpile] -> #{docpath}")
-            begin
-              results << combine_and_replace_js(docpath)
-            rescue StandardError => e
-              log('ERROR', 'JS Combine and Transpile', :red)
-              log('ERROR', e.message, :red)
-              log('ERROR', "docpath: #{docpath}", :red)
-              raise e
-            end
+        [header_path, footer_path].each do |docpath|
+          stage_log('pre', "[JS Combine and Transpile] -> #{docpath}")
+          begin
+            results << combine_and_replace_js(docpath)
+          rescue StandardError => e
+            log('ERROR', 'JS Combine and Transpile', :red)
+            log('ERROR', e.message, :red)
+            log('ERROR', "docpath: #{docpath}", :red)
+            raise e
           end
         end
         return results
@@ -52,9 +50,9 @@ module Toolchain
       # Combines JS files found in html file
       # Returns string of combined js files
       #
-      def combine_js(path, seperator = "\n\n")
-        get_script_src_from_html_file(path).map do |s|
-          File.read(s)
+      def combine_js(html_path, seperator = "\n\n")
+        get_script_src_from_html_file(html_path).map do |js|
+          File.read(js)
         end.join(seperator)
       end
 
@@ -71,14 +69,13 @@ module Toolchain
         # derive .js path from html filename
         # e.g. docinfo-footer.html => content/js/docinfo-footer.js
         js_blob_path = File.join(
-          ::Toolchain.content_path,
+          ::Toolchain.document_root,
           'js',
           'blob' + File.basename(path.split('-').last, '.*') + '.js'
         )
         log('JS', 'blob is at ' + js_blob_path, :yellow)
         js_blob_path_relative = js_blob_path
-          .delete_prefix(::Toolchain.content_path + '/')
-          .delete_prefix('content/')
+          .delete_prefix(::Toolchain.document_root + '/')
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
@@ -108,17 +105,17 @@ module Toolchain
       # Returns an OpenStruct +{ path, js_blob, html }+.
       #
       def combine_and_replace_js(html_path)
-        js_blob = combine_js(html_path)
-        js_blob = Babel::Transpiler.transform(js_blob)['code']
+        js_blob_str = combine_js(html_path)
+        js_blob_str = Babel::Transpiler.transform(js_blob_str)['code']
         # TODO: minify js blob. may be unnecessary using transport stream compression anyway
-        html_string = replace_js_tags_with_blob(html_path, js_blob)
+        html_string = replace_js_tags_with_blob(html_path, js_blob_str)
         File.open(html_path, 'w+') do |file|
           log('JS', 'insert JS blob into ' + html_path, :yellow)
           file.puts(html_string)
         end
         return OpenStruct.new(
           path: html_path,
-          js_blob: js_blob,
+          js_blob: js_blob_str,
           html: html_string
         )
       end
@@ -128,28 +125,41 @@ module Toolchain
       #
       # Returns +script_source_files+ array containing "src" attribute values of script
       #   e.g. <script src="js/1.js"> --> ['js/1.js']
-      def get_script_src_from_html_file(path)
-        unless File.file?(path)
-          # raise Exception.new("Could not read html file " + path)
+      def get_script_src_from_html_file(html_path)
+        unless File.file?(html_path)
+          # raise Exception.new("Could not read html file " + html_path)
         end
-        doc = File.open(path) { |f| Nokogiri::HTML(f) }
-        file = File.basename(path)
+        doc = File.open(html_path) { |f| Nokogiri::HTML(f) }
+        dir = File.dirname(html_path)
+        html_file = File.basename(html_path)
         # change dir to content/ so we can find js/*.js
-        script_source_files = doc.xpath('//script').map do |s|
-          line_nr = s.line.to_s
-          unless s.key?('src')
-            log('JS', "[#{file}:#{line_nr}] skipping script tag without \"src\" attribute.", :yellow)
+        script_source_files = doc.xpath('//script').map do |stag|
+          line_nr = stag.line.to_s
+          unless stag.key?('src')
+            # log(
+            #   'JS',
+            #   "[#{html_file}:#{line_nr}] skipping script tag without \"src\" attribute.",
+            #   :yellow
+            # )
             next
           end
-          unless File.exist?(s.attribute('src'))
-            log('JS', "[#{file}:#{line_nr}] skipping tag, src not found: #{s.attribute('src')}", :yellow)
+          unless File.exist?(File.join(dir, stag.attribute('src')))
+            log(
+              'JS',
+              "[#{html_file}:#{line_nr}] skipping tag, src not found: #{stag.attribute('src')}",
+              :yellow
+            )
             next
           end
-          unless s.children.empty?
-            log('JS', "[#{file}:#{line_nr}] skipping invalid script tag.", :yellow)
+          unless stag.children.empty?
+            log(
+              'JS',
+              "[#{html_file}:#{line_nr}] skipping invalid script tag.",
+              :yellow
+            )
             next
           end
-          s.attribute('src')
+          ::File.join(dir, stag.attribute('src'))
         end
         script_source_files = script_source_files.compact # remove nil
         return script_source_files
