@@ -68,7 +68,7 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">126</span><small> lines of codes</small></div>
+              <div><span class="metric">124</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
@@ -190,8 +190,6 @@ module Toolchain
         failure_level: &#39;WARN&#39;
       }
       Asciidoctor.convert_file(index_path, options)
-      # doc = Asciidoctor.load_file(index_path, options)
-      # doc.convert
 
       # create HTML folder
       html_dir = File.join(build_dir, &#39;html&#39;)
