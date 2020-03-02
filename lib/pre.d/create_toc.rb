@@ -42,9 +42,11 @@ module Toolchain
       )
         # TODO: document this bit since it's quite confusing
         stage_log(:pre, '[Create TOC] Starting')
-        adoc = Toolchain::Adoc.load_doc(
-          File.basename(CM.get('asciidoc.index.file'))
-        ) if adoc.nil?
+        if adoc.nil?
+          adoc = Toolchain::Adoc.load_doc(
+            File.basename(CM.get('asciidoc.index.file'))
+          )
+        end
         parsed = adoc.parsed
         attributes = adoc.attributes
         lines = parsed.reader.source_lines
