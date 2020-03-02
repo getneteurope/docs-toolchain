@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-20 10:12:52 +0100'>2020-02-20 10:12:52 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-02 16:40:49 +0100'>2020-03-02 16:40:49 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">97</span><small> lines of codes</small></div>
+              <div><span class="metric">103</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">12.2</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">15.2</span><small> complexity/method</small></div>
+              <div><span class="metric">8</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">36.72</span><small> complexity</small></div>
+              <div><span class="metric">45.61</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -114,9 +114,15 @@ module Toolchain
     #
     # Returns a pair of converted adoc +adoc+, original adoc +original+
     #
-    def self.load_doc(filename, attribs = {&#39;root&#39; =&gt; Toolchain.document_root})
+    def self.load_doc(filename, attribs = {&#39;root&#39; =&gt; Toolchain.build_path})
+      root = attribs[&#39;root&#39;]
+      if filename.start_with?(&#39;/&#39;)
+        root = File.dirname(filename)
+        attribs[&#39;root&#39;] = root
+        filename = File.basename(filename)
+      end
       original = ::Asciidoctor.load_file(
-        filename,
+        File.join(root, filename),
         catalog_assets: true,
         sourcemap: true,
         safe: :unsafe,
@@ -124,7 +130,7 @@ module Toolchain
         attributes: attribs
       )
       parsed = ::Asciidoctor.load_file(
-        filename,
+        File.join(root, filename),
         catalog_assets: true,
         sourcemap: true,
         safe: :unsafe,
