@@ -86,7 +86,7 @@ def run_tests(filename)
   if ADOC_MAP[filename].nil?
 
     adoc = Toolchain::Adoc.load_doc(filename,
-      'root' => ::Toolchain.content_path
+      'root' => ::Toolchain.document_root
     )
     original = adoc.original
     parsed = adoc.parsed
