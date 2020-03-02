@@ -17,6 +17,11 @@ module Toolchain
     #
     def self.load_doc(filename, attribs = {'root' => Toolchain.build_path})
       root = attribs['root']
+      if filename.start_with?('/')
+        root = File.dirname(filename)
+        attribs['root'] = root
+        filename = File.basename(filename)
+      end
       original = ::Asciidoctor.load_file(
         File.join(root, filename),
         catalog_assets: true,
