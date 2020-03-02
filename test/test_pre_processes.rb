@@ -112,10 +112,8 @@ Sensing a pattern here?
 
     '
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
-    puts "\n#{adoc.filename}"
     ::Toolchain::ConfigManager.instance.load
     json_filepath, html_filepath, toc_hash = ::Toolchain::Pre::CreateTOC.new.run(adoc)
-    puts "\n#{json_filepath}\n#{html_filepath}\n#{toc_hash}"
 
     # Test JSON file
     toc_object = JSON.parse(File.read(json_filepath))
