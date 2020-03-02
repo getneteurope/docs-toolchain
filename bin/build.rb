@@ -12,8 +12,6 @@ def main(argv = ARGV)
   end
 
   stage_log(:build, 'Starting build stage')
-  stage_log(:build, "running build setup on content folder: #{args.content}")
-  Toolchain::Build.setup(content: args.content)
   stage_log(:build, "running build with index: #{args.index}")
   Toolchain::Build.build(index: args.index)
   stage_log(:build, 'Build done')

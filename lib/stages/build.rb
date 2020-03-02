@@ -25,32 +25,6 @@ module Toolchain
   # Build module
   # Relevant modlues/classes/functions for the Build stage
   module Build
-    # default build directory
-    DEFAULT_BUILD_DIR = '/tmp/build'
-    DEFAULT_HTML_DIR = '/tmp/build/html'
-
-    ##
-    # Setup build directory.
-    #
-    # Params:
-    # * +build_dir+ Build directory
-    #               (default: ConfigManager[:build_dir] || +DEFAULT_BUILD_DIR+)
-    # * +content+   Content directory (default: _content_)
-    #
-    # Raises error if directory does not exist.
-    #
-    # Returns nothing.
-    #
-    def self.setup(build_dir = DEFAULT_BUILD_DIR, content: 'content')
-      build_dir = ConfigManager.instance.get('build.dir', default: build_dir)
-      stage_log(:build, "setting up build dir @ #{build_dir}")
-      raise "Directory '#{content}' does not exist" unless Dir.exist?(content)
-
-      mkdir(build_dir)
-      status = system("cp -r #{content}/* #{build_dir}")
-      raise "Could not cp #{content}/* to #{build_dir}" unless status
-    end
-
     ##
     # Build phase
     #
@@ -65,7 +39,7 @@ module Toolchain
     #
     # Returns nil.
     #
-    def self.build(build_dir = DEFAULT_BUILD_DIR, index: 'index.adoc')
+    def self.build(build_dir = ::Toolchain.build_path, index: 'index.adoc')
       index_path = File.join(build_dir, index)
       raise IOError, "File #{index_path} does not exist" unless
         File.exist?(index_path)
@@ -97,12 +71,12 @@ module Toolchain
       Asciidoctor.convert_file(index_path, options)
 
       # create HTML folder
-      html_dir = ConfigManager.instance.get('build.html_dir', default: DEFAULT_HTML_DIR)
+      html_dir = ::Toolchain.html_path
       mkdir(html_dir)
 
       # move web pages to html/
       htmls = Dir[File.join(build_dir, '*.html')].delete_if do |file|
-        File.basename(file).start_with?('docinfo')
+        %w[docinfo toc].any? { |term| File.basename(file).start_with?(term) }
       end
       htmls.each do |html|
         FileUtils.mv(html, html_dir, force: true)
