@@ -7,6 +7,7 @@ require_relative '../utils/adoc.rb'
 require_relative '../log/log.rb'
 require 'json'
 require 'nokogiri'
+require 'fileutils'
 
 CM = Toolchain::ConfigManager.instance
 
@@ -40,6 +41,8 @@ module Toolchain
         json_filepath = @default_json_filepath,
         html_filepath = @default_html_filepath
       )
+        FileUtils.mkdir_p(File.dirname(@default_json_filepath))
+        FileUtils.mkdir_p(File.dirname(@default_html_filepath))
         # TODO: document this bit since it's quite confusing
         stage_log(:pre, '[Create TOC] Starting')
         if adoc.nil?
