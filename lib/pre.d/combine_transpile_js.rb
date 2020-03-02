@@ -14,7 +14,7 @@ module Toolchain
 
       def initialize(priority = 0)
         super(priority)
-        @header_name_default = 'docinfo.html'
+        @header_name_default = 'docinfo-header.html'
         @footer_name_default = 'docinfo-footer.html'
       end
 
