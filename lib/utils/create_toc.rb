@@ -12,7 +12,7 @@ require 'fileutils'
 CM = Toolchain::ConfigManager.instance
 
 module Toolchain
-  module Pre
+  module Adoc
     ##
     # Adds modules for preprocessing files.
     class CreateTOC < BaseProcess
@@ -29,7 +29,7 @@ module Toolchain
       end
 
       ##
-      # Creates a TOC JSON file from an +adoc+ object
+      # Creates a TOC JSON file from an Asciidoctor +catalog+ object
       # Default JSON path is taken from +ConfigManager+.
       #
       # Saves toc as json tree +toc_json+
@@ -37,39 +37,20 @@ module Toolchain
       # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
       def run(
-        adoc = nil, # Toolchain::Adoc.load_doc(CM.get('asciidoc.index.file')),
+        catalog,
         json_filepath = @default_json_filepath,
         html_filepath = @default_html_filepath
       )
         FileUtils.mkdir_p(File.dirname(@default_json_filepath))
         FileUtils.mkdir_p(File.dirname(@default_html_filepath))
-        # TODO: document this bit since it's quite confusing
         stage_log(:pre, '[Create TOC] Starting')
-        if adoc.nil?
-          adoc = Toolchain::Adoc.load_doc(
-            File.basename(CM.get('asciidoc.index.file'))
-          )
-        end
-        parsed = adoc.parsed
-        attributes = adoc.attributes
-        lines = parsed.reader.source_lines
-        reader = ::Asciidoctor::PreprocessorReader.new(parsed, lines)
-        combined_source = reader.read_lines
-        doc = ::Asciidoctor::Document.new(
-          combined_source,
-          catalog_assets: true,
-          sourcemap: true,
-          safe: :unsafe,
-          attributes: attributes
-        )
-        doc.parse
-
         stack = [OpenStruct.new(id: 'root', level: -1, children: [])]
         ancestors = []
 
         # for all headings in the adoc document do
-        doc.catalog[:refs].keys.each do |r|
-          ref = doc.catalog[:refs][r]
+        catalog[:refs].keys.each do |r|
+          ref = catalog[:refs][r]
+          next unless ref.is_a? Asciidoctor::Section
           level = ref.level
           title = ref.title
           id = ref.id
@@ -78,7 +59,6 @@ module Toolchain
           # skip discrete headings and headings with a level too high
           is_discrete = attribs&.key?(1) && (attribs&.fetch(1) == 'discrete')
           next if is_discrete || title.nil?
-
           current = OpenStruct.new(
             id: id,
             level: level,
@@ -90,7 +70,6 @@ module Toolchain
             stack.pop
             ancestors.pop
           end
-
           current.parent = stack.last
           ancestors << current.parent.id
           founder = ancestors[@multipage_level] || current.id
@@ -166,5 +145,3 @@ module Toolchain
     end
   end
 end
-
-Toolchain::PreProcessManager.instance.register(Toolchain::Pre::CreateTOC.new)

@@ -39,6 +39,7 @@
 #   asciidoctor -r ./multipage-html5-converter.rb -b multipage_html5 book.adoc
 
 require 'asciidoctor/converter/html5'
+require_relative '../utils/create_toc.rb'
 
 # HTML5 Multipage Converter adapted Asciidoctor::AbstractBlock
 class Asciidoctor::AbstractBlock
@@ -256,6 +257,10 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
 
       # Create and save a skeleton document for generating the TOC lists.
       @@full_outline = new_outline_doc(node)
+
+      # Create TOC html and JSON file
+      toc_json_filepath, toc_html_filepath, toc_hash = ::Toolchain::Adoc::CreateTOC.new.run(node.catalog)
+      
       # Save the document catalog to use for each part/chapter page.
       @catalog = node.catalog
 
