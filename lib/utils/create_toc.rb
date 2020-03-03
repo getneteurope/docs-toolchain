@@ -118,7 +118,8 @@ module Toolchain
         fragment = Nokogiri::HTML.fragment('<ul></ul>')
         toc_elements.each do |e|
           root_file = e.founder == 'root' ? '' : e.founder + '.html'
-          fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '"></li>' + "\n")
+          level = e.level || 0
+          fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '" data-level="' + level.to_s + '"></li>' + "\n")
           fragment_string.at('li') << "\n" + '  <a href="' + root_file + '#' + e.id + '">' + e.title + '</a>' + "\n"
 
           # if element has child elements, add them to current list item
