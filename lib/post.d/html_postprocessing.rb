@@ -8,8 +8,6 @@ require_relative '../log/log.rb'
 require 'asciidoctor'
 require 'nokogiri'
 
-CM = Toolchain::ConfigManager.instance
-
 module Toolchain
   ##
   # Adds modules for postprocessing files.
