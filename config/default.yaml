@@ -1,6 +1,6 @@
 asciidoc:
   index:
-    file: content/index.adoc
+    file: index.adoc
   multipage_level: 2
 
 build:
@@ -25,5 +25,5 @@ notify:
       file: /tmp/slack.json
 
 toc:
-  json_file: /tmp/toc.json
-  html_file: /tmp/toc.html
+  json_file: toc.json
+  html_file: toc.html

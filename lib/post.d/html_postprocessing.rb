@@ -21,11 +21,11 @@ module Toolchain
       def initialize(priority = 0)
         super(priority)
         @html_dir = CM.get('build.html_dir')
-        @toc_html_file = CM.get('toc.html_file')
-        @html_files_array = Dir.glob('*.html', base: Toolchain.html_path).delete_if do |file|
-          File.basename(file).start_with?('docinfo')
-        end.map do |file|
-          File.join(@html_dir, file)
+        @toc_html_file = File.join(
+          ::Toolchain.build_path,
+          CM.get('toc.html_file'))
+        @html_files_array = Dir.glob('*.html', base: ::Toolchain.html_path).map do |file|
+          File.join(::Toolchain.html_path, file)
         end
       end
 
@@ -52,7 +52,7 @@ module Toolchain
         file_content = File.read(html_file)
         document = Nokogiri::HTML(file_content)
         document.css('div#toc').remove
-        document.css('div#header').children.first.add_previous_sibling(html_fragment)      
+        document.css('div#header').children.first.add_previous_sibling(html_fragment)
         modified_html = document.to_html
         return html_file if File.write(html_file, modified_html)
       end

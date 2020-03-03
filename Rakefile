@@ -3,6 +3,7 @@ require 'rubycritic/rake_task'
 require 'rdoc/task'
 require 'inch/rake'
 require 'rake/testtask'
+require_relative 'lib/utils/setup.rb'
 
 task default: %w[toolchain:test toolchain:lint]
 
@@ -11,6 +12,8 @@ def toolchain_path
 end
 
 namespace :docs do
+  @setup_done = false
+
   desc 'Run through all stages'
   task :all do
     %w[clean test pre build post notify].each { |t| Rake::Task["docs:#{t}"].execute }
@@ -29,12 +32,15 @@ namespace :docs do
 
   desc 'Run pre-processing stage'
   task :pre do
+    Toolchain::Setup.setup()
+    @setup_done = true
     debug = '--debug' if ENV.key?('DEBUG')
     ruby "#{toolchain_path}/bin/pre.rb #{debug}"
   end
 
   desc 'Run build stage'
   task :build do
+    Toolchain::Setup.setup() unless @setup_done
     debug = '--debug' if ENV.key?('DEBUG')
     ruby "#{toolchain_path}/bin/build.rb #{debug}"
   end

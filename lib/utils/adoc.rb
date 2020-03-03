@@ -15,9 +15,15 @@ module Toolchain
     #
     # Returns a pair of converted adoc +adoc+, original adoc +original+
     #
-    def self.load_doc(filename, attribs = {'root' => Toolchain.document_root})
+    def self.load_doc(filename, attribs = {'root' => Toolchain.build_path})
+      root = attribs['root']
+      if filename.start_with?('/')
+        root = File.dirname(filename)
+        attribs['root'] = root
+        filename = File.basename(filename)
+      end
       original = ::Asciidoctor.load_file(
-        filename,
+        File.join(root, filename),
         catalog_assets: true,
         sourcemap: true,
         safe: :unsafe,
@@ -25,7 +31,7 @@ module Toolchain
         attributes: attribs
       )
       parsed = ::Asciidoctor.load_file(
-        filename,
+        File.join(root, filename),
         catalog_assets: true,
         sourcemap: true,
         safe: :unsafe,

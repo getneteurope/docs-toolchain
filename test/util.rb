@@ -16,7 +16,8 @@ def write_tempfile(name, content, prefix: 'test_toolchain_', suffix: nil)
 end
 
 def with_tempfile(content, suffix = '')
-  file = write_tempfile('tmpfile', content, prefix: 'unittest_', suffix: suffix) # write tempfile with content
+  # write tempfile with content
+  file = write_tempfile('tmpfile', content, prefix: 'unittest_', suffix: suffix)
   yield(file) # call block with file as argument
 end
 

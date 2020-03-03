@@ -37,7 +37,9 @@ def main(argv = ARGV)
   log('ARGS', args)
   log('INDEX', index_adoc)
 
-  adoc = Toolchain::Adoc.load_doc(index_adoc)
+  adoc = Toolchain::Adoc.load_doc(index_adoc,
+    'root' => ::Toolchain.document_root
+  )
   original = adoc.original
   parsed = adoc.parsed
   attributes = adoc.attributes

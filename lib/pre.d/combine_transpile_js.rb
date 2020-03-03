@@ -27,7 +27,7 @@ module Toolchain
       # Returns the results of the substitution.
       def run(filepaths = nil)
         # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
-        root = ::Toolchain.document_root
+        root = ::Toolchain.build_path
         header_path = filepaths.nil? ? File.join(root, @header_name_default) : filepaths.header
         footer_path = filepaths.nil? ? File.join(root, @footer_name_default) : filepaths.footer
         # js_header_files = Dir[content_path + '/js/header.js.d/*.js']

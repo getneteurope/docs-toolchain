@@ -7,6 +7,7 @@ require_relative '../utils/adoc.rb'
 require_relative '../log/log.rb'
 require 'json'
 require 'nokogiri'
+require 'fileutils'
 
 CM = Toolchain::ConfigManager.instance
 
@@ -15,12 +16,16 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CreateTOC < BaseProcess
-      @@multipage_level = CM.get('asciidoc.multipage_level')
-      @@default_json_filepath = CM.get('toc.json_file')
-      @@default_html_filepath = CM.get('toc.html_file')
 
       def initialize(priority = 0)
         super(priority)
+        @multipage_level = CM.get('asciidoc.multipage_level')
+        @default_json_filepath = File.join(
+          ::Toolchain.build_path,
+          CM.get('toc.json_file'))
+        @default_html_filepath = File.join(
+          ::Toolchain.build_path,
+          CM.get('toc.html_file'))
       end
 
       ##
@@ -33,14 +38,16 @@ module Toolchain
       #
       def run(
         adoc = nil, # Toolchain::Adoc.load_doc(CM.get('asciidoc.index.file')),
-        json_filepath = @@default_json_filepath,
-        html_filepath = @@default_html_filepath
+        json_filepath = @default_json_filepath,
+        html_filepath = @default_html_filepath
       )
+        FileUtils.mkdir_p(File.dirname(@default_json_filepath))
+        FileUtils.mkdir_p(File.dirname(@default_html_filepath))
         # TODO: document this bit since it's quite confusing
         stage_log(:pre, '[Create TOC] Starting')
         if adoc.nil?
           adoc = Toolchain::Adoc.load_doc(
-            CM.get('asciidoc.index.file')
+            File.basename(CM.get('asciidoc.index.file'))
           )
         end
         parsed = adoc.parsed
@@ -80,13 +87,13 @@ module Toolchain
             children: []
           )
           while level <= stack.last.level
-            stack.pop 
+            stack.pop
             ancestors.pop
           end
 
           current.parent = stack.last
           ancestors << current.parent.id
-          founder = ancestors[@@multipage_level] || current.id
+          founder = ancestors[@multipage_level] || current.id
 
           # add current element to it's parent's children list
           current.parent.children << current
@@ -114,7 +121,7 @@ module Toolchain
         toc_html_dom.at_css('#toc') << generate_html_from_toc(toc_openstruct.children)
 
         # convert Nokogiri HTML Object to string
-        toc_html_string = toc_html_dom.to_xhtml(indent: 3) 
+        toc_html_string = toc_html_dom.to_xhtml(indent: 3)
         File.open(html_filepath, 'w+') do |html_file|
           html_file.write(toc_html_string)
         end
@@ -146,7 +153,7 @@ module Toolchain
       # Useful for converting OpenStruct Hash for later conversion to JSON
       #
       def openstruct_to_hash(object, hash = {})
-      return object unless object.is_a? OpenStruct
+        return object unless object.is_a? OpenStruct
         object.each_pair do |key, value|
           hash[key] = case value
                       when OpenStruct then openstruct_to_hash(value)
