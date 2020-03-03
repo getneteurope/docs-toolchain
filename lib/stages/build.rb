@@ -6,8 +6,6 @@ require_relative '../config_manager.rb'
 require_relative '../log/log.rb'
 require_relative '../utils/paths.rb'
 
-CM = Toolchain::ConfigManager.instance
-
 ##
 # mkdir
 #

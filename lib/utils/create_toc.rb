@@ -9,8 +9,6 @@ require 'json'
 require 'nokogiri'
 require 'fileutils'
 
-CM = Toolchain::ConfigManager.instance
-
 module Toolchain
   module Adoc
     ##
