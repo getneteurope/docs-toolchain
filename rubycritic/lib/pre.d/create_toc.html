@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-28 15:34:58 +0100'>2020-02-28 15:34:58 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-02 17:42:59 +0100'>2020-03-02 17:42:59 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">163</span><small> lines of codes</small></div>
+              <div><span class="metric">170</span><small> lines of codes</small></div>
               <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">39.3</span><small> complexity/method</small></div>
-              <div><span class="metric">14</span><small> churn</small></div>
+              <div><span class="metric">43.0</span><small> complexity/method</small></div>
+              <div><span class="metric">17</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">157.18</span><small> complexity</small></div>
+              <div><span class="metric">172.13</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                6
+                3
                 smells
               </a>
             </li>
@@ -106,6 +106,7 @@ require_relative &#39;../utils/adoc.rb&#39;
 require_relative &#39;../log/log.rb&#39;
 require &#39;json&#39;
 require &#39;nokogiri&#39;
+require &#39;fileutils&#39;
 
 CM = Toolchain::ConfigManager.instance
 
@@ -114,12 +115,16 @@ module Toolchain
     ##
     # Adds modules for preprocessing files.
     class CreateTOC &lt; BaseProcess
-      @@multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L89" class="js-smell-location">1</a>                  </div>  </li></ol>
-      @@default_json_filepath = CM.get(&#39;toc.json_file&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_json_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L19" class="js-smell-location">0</a>                  <a href="create_toc.html#L36" class="js-smell-location">1</a>                  </div>  </li></ol>
-      @@default_html_filepath = CM.get(&#39;toc.html_file&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_html_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L20" class="js-smell-location">0</a>                  <a href="create_toc.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
 
       def initialize(priority = 0)
         super(priority)
+        @multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)
+        @default_json_filepath = File.join(
+          ::Toolchain.build_path,
+          CM.get(&#39;toc.json_file&#39;))
+        @default_html_filepath = File.join(
+          ::Toolchain.build_path,
+          CM.get(&#39;toc.html_file&#39;))
       end
 
       ##
@@ -130,16 +135,18 @@ module Toolchain
       # Saves toc as html code +html_fragment+
       # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
-      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#run has a flog score of 92</span>          </div>  </li></ol>
+      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC#run has a flog score of 98</span>          </div>  </li></ol>
         adoc = nil, # Toolchain::Adoc.load_doc(CM.get(&#39;asciidoc.index.file&#39;)),
-        json_filepath = @@default_json_filepath,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_json_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L19" class="js-smell-location">0</a>                  <a href="create_toc.html#L36" class="js-smell-location">1</a>                  </div>  </li></ol>
-        html_filepath = @@default_html_filepath<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@default_html_filepath'</span>              <span>Locations:</span>                  <a href="create_toc.html#L20" class="js-smell-location">0</a>                  <a href="create_toc.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
+        json_filepath = @default_json_filepath,
+        html_filepath = @default_html_filepath
       )
+        FileUtils.mkdir_p(File.dirname(@default_json_filepath))
+        FileUtils.mkdir_p(File.dirname(@default_html_filepath))
         # TODO: document this bit since it&#39;s quite confusing
         stage_log(:pre, &#39;[Create TOC] Starting&#39;)
         if adoc.nil?
           adoc = Toolchain::Adoc.load_doc(
-            CM.get(&#39;asciidoc.index.file&#39;)
+            File.basename(CM.get(&#39;asciidoc.index.file&#39;))
           )
         end
         parsed = adoc.parsed
@@ -179,13 +186,13 @@ module Toolchain
             children: []
           )
           while level &lt;= stack.last.level
-            stack.pop 
+            stack.pop
             ancestors.pop
           end
 
           current.parent = stack.last
           ancestors &lt;&lt; current.parent.id
-          founder = ancestors[@@multipage_level] || current.id<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Class-Variable.md" target="_blank"><b>ClassVariable</b></a>        </span>      </div>      <span>Toolchain::Pre::CreateTOC declares the class variable '@@multipage_level'</span>              <span>Locations:</span>                  <a href="create_toc.html#L18" class="js-smell-location">0</a>                  <a href="create_toc.html#L89" class="js-smell-location">1</a>                  </div>  </li></ol>
+          founder = ancestors[@multipage_level] || current.id
 
           # add current element to it&#39;s parent&#39;s children list
           current.parent.children &lt;&lt; current
@@ -213,7 +220,7 @@ module Toolchain
         toc_html_dom.at_css(&#39;#toc&#39;) &lt;&lt; generate_html_from_toc(toc_openstruct.children)
 
         # convert Nokogiri HTML Object to string
-        toc_html_string = toc_html_dom.to_xhtml(indent: 3) 
+        toc_html_string = toc_html_dom.to_xhtml(indent: 3)
         File.open(html_filepath, &#39;w+&#39;) do |html_file|
           html_file.write(toc_html_string)
         end
@@ -245,7 +252,7 @@ module Toolchain
       # Useful for converting OpenStruct Hash for later conversion to JSON
       #
       def openstruct_to_hash(object, hash = {})
-      return object unless object.is_a? OpenStruct
+        return object unless object.is_a? OpenStruct
         object.each_pair do |key, value|
           hash[key] = case value
                       when OpenStruct then openstruct_to_hash(value)

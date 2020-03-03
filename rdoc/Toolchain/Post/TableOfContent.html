@@ -143,11 +143,11 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">priority</span>)
   <span class="ruby-ivar">@html_dir</span> = <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.html_dir&#39;</span>)
-  <span class="ruby-ivar">@toc_html_file</span> = <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;toc.html_file&#39;</span>)
-  <span class="ruby-ivar">@html_files_array</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-string">&#39;*.html&#39;</span>, <span class="ruby-value">base:</span> <span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>).<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;docinfo&#39;</span>)
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@html_dir</span>, <span class="ruby-identifier">file</span>)
+  <span class="ruby-ivar">@toc_html_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(
+    <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>,
+    <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;toc.html_file&#39;</span>))
+  <span class="ruby-ivar">@html_files_array</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-string">&#39;*.html&#39;</span>, <span class="ruby-value">base:</span> <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>, <span class="ruby-identifier">file</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -241,7 +241,7 @@
   <span class="ruby-identifier">file_content</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">html_file</span>)
   <span class="ruby-identifier">document</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">file_content</span>)
   <span class="ruby-identifier">document</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">remove</span>
-  <span class="ruby-identifier">document</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#header&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(<span class="ruby-identifier">html_fragment</span>)      
+  <span class="ruby-identifier">document</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#header&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(<span class="ruby-identifier">html_fragment</span>)
   <span class="ruby-identifier">modified_html</span> = <span class="ruby-identifier">document</span>.<span class="ruby-identifier">to_html</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">html_file</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">html_file</span>, <span class="ruby-identifier">modified_html</span>)
 <span class="ruby-keyword">end</span></pre>

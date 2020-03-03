@@ -70,8 +70,6 @@
     
     <li ><a href="#method-c-build">::build</a>
     
-    <li ><a href="#method-c-setup">::setup</a>
-    
   </ul>
 </div>
 
@@ -98,25 +96,6 @@
     
 
     
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="DEFAULT_BUILD_DIR">DEFAULT_BUILD_DIR
-        
-        <dd><p>default build directory</p>
-        
-      
-        <dt id="DEFAULT_HTML_DIR">DEFAULT_HTML_DIR
-        
-        <dd>
-        
-      
-      </dl>
-    </section>
-    
 
     
 
@@ -131,7 +110,7 @@
         
         <div class="method-heading">
           <span class="method-name">build</span><span
-            class="method-args">(build_dir = DEFAULT_BUILD_DIR, index: &#39;index.adoc&#39;)</span>
+            class="method-args">(build_dir = ::Toolchain.build_path, index: &#39;index.adoc&#39;)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -159,8 +138,8 @@
 
           
           <div class="method-source-code" id="build-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 68</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">index:</span> <span class="ruby-string">&#39;index.adoc&#39;</span>)
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>, <span class="ruby-value">index:</span> <span class="ruby-string">&#39;index.adoc&#39;</span>)
   <span class="ruby-identifier">index_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">index</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-node">&quot;File #{index_path} does not exist&quot;</span> <span class="ruby-keyword">unless</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">index_path</span>)
@@ -192,12 +171,12 @@
   <span class="ruby-constant">Asciidoctor</span>.<span class="ruby-identifier">convert_file</span>(<span class="ruby-identifier">index_path</span>, <span class="ruby-identifier">options</span>)
 
   <span class="ruby-comment"># create HTML folder</span>
-  <span class="ruby-identifier">html_dir</span> = <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.html_dir&#39;</span>, <span class="ruby-value">default:</span> <span class="ruby-constant">DEFAULT_HTML_DIR</span>)
+  <span class="ruby-identifier">html_dir</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>
   <span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">html_dir</span>)
 
   <span class="ruby-comment"># move web pages to html/</span>
   <span class="ruby-identifier">htmls</span> = <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-string">&#39;*.html&#39;</span>)].<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;docinfo&#39;</span>)
+    <span class="ruby-node">%w[docinfo toc]</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">start_with?</span>(<span class="ruby-identifier">term</span>) }
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">htmls</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">html</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">html</span>, <span class="ruby-identifier">html_dir</span>, <span class="ruby-value">force:</span> <span class="ruby-keyword">true</span>)
@@ -218,58 +197,6 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;Files are in #{html_dir}&quot;</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-c-setup" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">setup</span><span
-            class="method-args">(build_dir = DEFAULT_BUILD_DIR, content: &#39;content&#39;)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Setup build directory.</p>
-
-<p>Params:</p>
-<ul><li>
-<p><code>build_dir</code> <a href="Build.html"><code>Build</code></a> directory</p>
-
-<pre>(default: ConfigManager[:build_dir] || +DEFAULT_BUILD_DIR+)</pre>
-</li><li>
-<p><code>content</code>   Content directory (default: <em>content</em>)</p>
-</li></ul>
-
-<p>Raises error if directory does not exist.</p>
-
-<p>Returns nothing.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="setup-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 44</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">setup</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">DEFAULT_BUILD_DIR</span>, <span class="ruby-value">content:</span> <span class="ruby-string">&#39;content&#39;</span>)
-  <span class="ruby-identifier">build_dir</span> = <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.dir&#39;</span>, <span class="ruby-value">default:</span> <span class="ruby-identifier">build_dir</span>)
-  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;setting up build dir @ #{build_dir}&quot;</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Directory &#39;#{content}&#39; does not exist&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">content</span>)
-
-  <span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">build_dir</span>)
-  <span class="ruby-identifier">status</span> = <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;cp -r #{content}/* #{build_dir}&quot;</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Could not cp #{content}/* to #{build_dir}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">status</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

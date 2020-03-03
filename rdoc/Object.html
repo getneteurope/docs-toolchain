@@ -194,7 +194,7 @@
 
           
           <div class="method-source-code" id="check_docs-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">check_docs</span>(<span class="ruby-identifier">included_files</span>, <span class="ruby-identifier">content_dir</span>)
   <span class="ruby-identifier">errors_map</span> = {}
   <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
@@ -416,8 +416,6 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-string">&#39;Starting build stage&#39;</span>)
-  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;running build setup on content folder: #{args.content}&quot;</span>)
-  <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Build</span>.<span class="ruby-identifier">setup</span>(<span class="ruby-value">content:</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">content</span>)
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;running build with index: #{args.index}&quot;</span>)
   <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Build</span>.<span class="ruby-identifier">build</span>(<span class="ruby-value">index:</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">index</span>)
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-string">&#39;Build done&#39;</span>)
@@ -531,7 +529,7 @@
 
           
           <div class="method-source-code" id="post_process_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 135</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 137</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -647,7 +645,9 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_tests</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>].<span class="ruby-identifier">nil?</span>
 
-    <span class="ruby-identifier">adoc</span> = <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Adoc</span>.<span class="ruby-identifier">load_doc</span>(<span class="ruby-identifier">filename</span>)
+    <span class="ruby-identifier">adoc</span> = <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Adoc</span>.<span class="ruby-identifier">load_doc</span>(<span class="ruby-identifier">filename</span>,
+      <span class="ruby-string">&#39;root&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">document_root</span>
+    )
     <span class="ruby-identifier">original</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">original</span>
     <span class="ruby-identifier">parsed</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">parsed</span>
     <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>

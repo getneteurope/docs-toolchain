@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-20 15:27:10 +0100'>2020-02-20 15:27:10 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-02 16:58:52 +0100'>2020-03-02 16:58:52 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">136</span><small> lines of codes</small></div>
+              <div><span class="metric">138</span><small> lines of codes</small></div>
               <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">8.6</span><small> complexity/method</small></div>
-              <div><span class="metric">28</span><small> churn</small></div>
+              <div><span class="metric">8.7</span><small> complexity/method</small></div>
+              <div><span class="metric">30</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">76.97</span><small> complexity</small></div>
+              <div><span class="metric">78.18</span><small> complexity</small></div>
               <div><span class="metric">34</span><small> duplications</small></div>
             </div>
           </div>
@@ -181,10 +181,12 @@ end
 # in +ADOC_MAP+.
 #
 # Returns +errors+ for the given file.
-def run_tests(filename)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#run_tests has a flog score of 26</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>run_tests doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+def run_tests(filename)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#run_tests has a flog score of 27</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>run_tests doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
   if ADOC_MAP[filename].nil?
 
-    adoc = Toolchain::Adoc.load_doc(filename)
+    adoc = Toolchain::Adoc.load_doc(filename,
+      &#39;root&#39; =&gt; ::Toolchain.document_root
+    )
     original = adoc.original
     parsed = adoc.parsed
     attributes = adoc.attributes
