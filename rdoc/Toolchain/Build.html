@@ -138,7 +138,7 @@
 
           
           <div class="method-source-code" id="build-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 42</span>
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build</span>(<span class="ruby-identifier">build_dir</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>, <span class="ruby-value">index:</span> <span class="ruby-string">&#39;index.adoc&#39;</span>)
   <span class="ruby-identifier">index_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">index</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-node">&quot;File #{index_path} does not exist&quot;</span> <span class="ruby-keyword">unless</span>

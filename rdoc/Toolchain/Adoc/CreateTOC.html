@@ -141,7 +141,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 20</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">priority</span>)
   <span class="ruby-ivar">@multipage_level</span> = <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;asciidoc.multipage_level&#39;</span>)
@@ -191,7 +191,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(
   <span class="ruby-identifier">catalog</span>,
   <span class="ruby-identifier">json_filepath</span> = <span class="ruby-ivar">@default_json_filepath</span>,
@@ -302,7 +302,7 @@
 
           
           <div class="method-source-code" id="generate_html_from_toc-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_html_from_toc</span>(<span class="ruby-identifier">toc_elements</span>)
   <span class="ruby-identifier">fragment</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;ul&gt;&lt;/ul&gt;&#39;</span>)
   <span class="ruby-identifier">toc_elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -348,7 +348,7 @@
 
           
           <div class="method-source-code" id="openstruct_to_hash-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 135</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">openstruct_to_hash</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">hash</span> = {})
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">object</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">OpenStruct</span>
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
