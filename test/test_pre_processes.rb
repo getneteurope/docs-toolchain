@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../lib/pre.d/combine_transpile_js.rb'
-require_relative '../lib/pre.d/create_toc.rb'
 require_relative './util.rb'
 require 'json'
 require 'test/unit'
