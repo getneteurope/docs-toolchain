@@ -139,7 +139,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/post.d/html_postprocessing.rb, line 21</span>
+            <pre><span class="ruby-comment"># File lib/post.d/html_postprocessing.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">priority</span>)
   <span class="ruby-ivar">@html_dir</span> = <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.html_dir&#39;</span>)
@@ -189,7 +189,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/post.d/html_postprocessing.rb, line 38</span>
+            <pre><span class="ruby-comment"># File lib/post.d/html_postprocessing.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">toc_html_file</span> = <span class="ruby-ivar">@toc_html_file</span>, <span class="ruby-identifier">html_files_array</span> = <span class="ruby-ivar">@html_files_array</span>)
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:post</span>, <span class="ruby-string">&#39;[Inject TOC] Starting&#39;</span>)
   <span class="ruby-identifier">html_fragment</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">toc_html_file</span>)
@@ -236,7 +236,7 @@
 
           
           <div class="method-source-code" id="inject_fragment_into_html_file-source">
-            <pre><span class="ruby-comment"># File lib/post.d/html_postprocessing.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/post.d/html_postprocessing.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inject_fragment_into_html_file</span>(<span class="ruby-identifier">html_fragment</span>, <span class="ruby-identifier">html_file</span>)
   <span class="ruby-identifier">file_content</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">html_file</span>)
   <span class="ruby-identifier">document</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">file_content</span>)
