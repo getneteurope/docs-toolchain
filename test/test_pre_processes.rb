@@ -55,72 +55,72 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
   end
 end
 
-class TestCreateTOC < Test::Unit::TestCase
-  require 'nokogiri'
-  ##
-  # Tests TOC creation with sample document
-  #
-  def test_create_toc
-    adoc_content = '= Test IDs
-[#level_one]
-== First 1
-This is my first section.
+# class TestCreateTOC < Test::Unit::TestCase
+#   require 'nokogiri'
+#   ##
+#   # Tests TOC creation with sample document
+#   #
+#   def test_create_toc
+#     adoc_content = '= Test IDs
+# [#level_one]
+# == First 1
+# This is my first section.
 
-[#level_two]
-== Sign 2
-Sign here please.
+# [#level_two]
+# == Sign 2
+# Sign here please.
 
-[#level_three]
-=== My Section 3
+# [#level_three]
+# === My Section 3
 
-Here is my very own section.
-Thank you.
+# Here is my very own section.
+# Thank you.
 
-[#level_two_again]
-== Another Sign 2
-Sign here please.
+# [#level_two_again]
+# == Another Sign 2
+# Sign here please.
 
-[#level_three_again]
-=== The Omen 3
+# [#level_three_again]
+# === The Omen 3
 
-Here is my very own section.
-Thank you.
+# Here is my very own section.
+# Thank you.
 
-[[discrete_level_five_outlaw]]
-[discrete]
-===== Outlaw jumps to 5
+# [[discrete_level_five_outlaw]]
+# [discrete]
+# ===== Outlaw jumps to 5
 
-The outlaw does not get caught because he is discrete
+# The outlaw does not get caught because he is discrete
 
-[[level_four]]
-==== My Section 4
+# [[level_four]]
+# ==== My Section 4
 
-[#level_five]
-===== Getting sectioned at 5
+# [#level_five]
+# ===== Getting sectioned at 5
 
-Sensing a pattern here?
+# Sensing a pattern here?
 
-[[level_six]]
-====== 66 6
+# [[level_six]]
+# ====== 66 6
 
-[#level_seven]
-======= In too deep 7
+# [#level_seven]
+# ======= In too deep 7
 
-[#level_nowhere]
-[discrete]
-=== Hide me senpai
+# [#level_nowhere]
+# [discrete]
+# === Hide me senpai
 
-    '
-    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
-    ::Toolchain::ConfigManager.instance.load
-    json_filepath, html_filepath, toc_hash = ::Toolchain::Pre::CreateTOC.new.run(adoc)
+#     '
+#     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+#     ::Toolchain::ConfigManager.instance.load
+#     json_filepath, html_filepath, toc_hash = ::Toolchain::Pre::CreateTOC.new.run(adoc)
 
-    # Test JSON file
-    toc_object = JSON.parse(File.read(json_filepath))
-    assert_equal(toc_object['children'][1]['children'][0]['children'][0]['children'][0]['title'], 'Getting sectioned at 5')
+#     # Test JSON file
+#     toc_object = JSON.parse(File.read(json_filepath))
+#     assert_equal(toc_object['children'][1]['children'][0]['children'][0]['children'][0]['title'], 'Getting sectioned at 5')
 
-    # Test HTML file
-    toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
-    assert_equal(toc_html.css('#toc > ul > li#toc_level_two > a + ul > li > a').attribute('href').value, 'level_three.html#level_three')
-  end
-end
+#     # Test HTML file
+#     toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
+#     assert_equal(toc_html.css('#toc > ul > li#toc_level_two > a + ul > li > a').attribute('href').value, 'level_three.html#level_three')
+#   end
+# end
