@@ -14,27 +14,27 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-04T12:15:13+00:00">2020-03-04T12:15:13+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-04T13:31:13+00:00">2020-03-04T13:31:13+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">91.72%</span></span>
+    (<span class="covered_percent"><span class="green">92.46%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.21
+         3.63
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
-    <b>18</b> files in total.
-    <b>604</b> relevant lines. 
-    <span class="green"><b>554</b> lines covered</span> and
-    <span class="red"><b>50</b> lines missed </span>
+    <b>19</b> files in total.
+    <b>676</b> relevant lines. 
+    <span class="green"><b>625</b> lines covered</span> and
+    <span class="red"><b>51</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -67,7 +67,7 @@
         <td>8</td>
         <td>7</td>
         <td>1</td>
-        <td>2.0</td>
+        <td>2.1</td>
       </tr>
       
       <tr>
@@ -87,7 +87,7 @@
         <td>30</td>
         <td>30</td>
         <td>0</td>
-        <td>7.4</td>
+        <td>10.4</td>
       </tr>
       
       <tr>
@@ -147,7 +147,7 @@
         <td>12</td>
         <td>12</td>
         <td>0</td>
-        <td>9.1</td>
+        <td>9.4</td>
       </tr>
       
       <tr>
@@ -197,7 +197,17 @@
         <td>37</td>
         <td>37</td>
         <td>0</td>
-        <td>8.5</td>
+        <td>9.1</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#7d3420068b1d291cf4ae3964d34866543b99a7bf" class="src_link" title="lib/utils/create_toc.rb">lib/utils/create_toc.rb</a></td>
+        <td class="green strong">98.61 %</td>
+        <td>144</td>
+        <td>72</td>
+        <td>71</td>
+        <td>1</td>
+        <td>5.4</td>
       </tr>
       
       <tr>
@@ -217,7 +227,7 @@
         <td>21</td>
         <td>19</td>
         <td>2</td>
-        <td>2.0</td>
+        <td>2.4</td>
       </tr>
       
       <tr>
@@ -795,8 +805,8 @@
           <code class="ruby">    def initialize(priority = 0)</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="27">
-          <span class="hits">10</span>
+        <li class="covered" data-hits="11" data-linenumber="27">
+          <span class="hits">11</span>
           
           <code class="ruby">      @priority = priority</code>
         </li>
@@ -1901,8 +1911,8 @@
           <code class="ruby">def get_recursively(map, keys)</code>
         </li>
       
-        <li class="covered" data-hits="39" data-linenumber="30">
-          <span class="hits">39</span>
+        <li class="covered" data-hits="51" data-linenumber="30">
+          <span class="hits">51</span>
           
           <code class="ruby">  return nil if map.nil?</code>
         </li>
@@ -1913,14 +1923,14 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="26" data-linenumber="32">
-          <span class="hits">26</span>
+        <li class="covered" data-hits="49" data-linenumber="32">
+          <span class="hits">49</span>
           
           <code class="ruby">  key = keys.shift</code>
         </li>
       
-        <li class="covered" data-hits="26" data-linenumber="33">
-          <span class="hits">26</span>
+        <li class="covered" data-hits="49" data-linenumber="33">
+          <span class="hits">49</span>
           
           <code class="ruby">  return map[key] if keys.empty?</code>
         </li>
@@ -1931,8 +1941,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="35">
-          <span class="hits">21</span>
+        <li class="covered" data-hits="27" data-linenumber="35">
+          <span class="hits">27</span>
           
           <code class="ruby">  return get_recursively(map[key], keys)</code>
         </li>
@@ -2051,14 +2061,14 @@
           <code class="ruby">    )</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="55">
-          <span class="hits">5</span>
+        <li class="covered" data-hits="6" data-linenumber="55">
+          <span class="hits">6</span>
           
           <code class="ruby">      @config = YAML.load_file(file)</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="56">
-          <span class="hits">5</span>
+        <li class="covered" data-hits="6" data-linenumber="56">
+          <span class="hits">6</span>
           
           <code class="ruby">      @loaded = true</code>
         </li>
@@ -2219,14 +2229,14 @@
           <code class="ruby">    def get(identifier = nil, default: nil)</code>
         </li>
       
-        <li class="covered" data-hits="20" data-linenumber="83">
-          <span class="hits">20</span>
+        <li class="covered" data-hits="26" data-linenumber="83">
+          <span class="hits">26</span>
           
           <code class="ruby">      load unless @loaded</code>
         </li>
       
-        <li class="covered" data-hits="20" data-linenumber="84">
-          <span class="hits">20</span>
+        <li class="covered" data-hits="26" data-linenumber="84">
+          <span class="hits">26</span>
           
           <code class="ruby">      return @config if identifier.nil?</code>
         </li>
@@ -2237,14 +2247,14 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="18" data-linenumber="86">
-          <span class="hits">18</span>
+        <li class="covered" data-hits="24" data-linenumber="86">
+          <span class="hits">24</span>
           
           <code class="ruby">      keys = identifier.split(&#39;.&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="18" data-linenumber="87">
-          <span class="hits">18</span>
+        <li class="covered" data-hits="24" data-linenumber="87">
+          <span class="hits">24</span>
           
           <code class="ruby">      return get_recursively(@config, keys) || default</code>
         </li>
@@ -4721,8 +4731,8 @@
           <code class="ruby">def log(tag, msg, color = :blue, bold = false, length: 14, stream: $stdout)</code>
         </li>
       
-        <li class="covered" data-hits="46" data-linenumber="20">
-          <span class="hits">46</span>
+        <li class="covered" data-hits="48" data-linenumber="20">
+          <span class="hits">48</span>
           
           <code class="ruby">  return if ENV.key?(&#39;UNITTEST&#39;) &amp;&amp; !ENV.key?(&#39;DEBUG&#39;)</code>
         </li>
@@ -4823,14 +4833,14 @@
           <code class="ruby">def stage_log(stage, msg, color = :green)</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="37">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="37">
+          <span class="hits">10</span>
           
           <code class="ruby">  stage = stage.to_s.upcase</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="38">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="10" data-linenumber="38">
+          <span class="hits">10</span>
           
           <code class="ruby">  log(stage, msg, color, true)</code>
         </li>
@@ -8278,32 +8288,32 @@
           <code class="ruby">    def self.load_doc(filename, attribs = {&#39;root&#39; =&gt; Toolchain.build_path})</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="19">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="19">
+          <span class="hits">12</span>
           
           <code class="ruby">      root = attribs[&#39;root&#39;]</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="20">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="20">
+          <span class="hits">12</span>
           
           <code class="ruby">      if filename.start_with?(&#39;/&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="21">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="21">
+          <span class="hits">12</span>
           
           <code class="ruby">        root = File.dirname(filename)</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="22">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="22">
+          <span class="hits">12</span>
           
           <code class="ruby">        attribs[&#39;root&#39;] = root</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="23">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="23">
+          <span class="hits">12</span>
           
           <code class="ruby">        filename = File.basename(filename)</code>
         </li>
@@ -8314,8 +8324,8 @@
           <code class="ruby">      end</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="25">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="25">
+          <span class="hits">12</span>
           
           <code class="ruby">      original = ::Asciidoctor.load_file(</code>
         </li>
@@ -8362,8 +8372,8 @@
           <code class="ruby">      )</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="33">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="33">
+          <span class="hits">12</span>
           
           <code class="ruby">      parsed = ::Asciidoctor.load_file(</code>
         </li>
@@ -8410,8 +8420,8 @@
           <code class="ruby">      )</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="41">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="41">
+          <span class="hits">12</span>
           
           <code class="ruby">      attributes = collect_attributes(parsed, attribs)</code>
         </li>
@@ -8422,8 +8432,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="43">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="43">
+          <span class="hits">12</span>
           
           <code class="ruby">      adoc = ::OpenStruct.new(</code>
         </li>
@@ -8458,8 +8468,8 @@
           <code class="ruby">      )</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="49">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="12" data-linenumber="49">
+          <span class="hits">12</span>
           
           <code class="ruby">      return adoc</code>
         </li>
@@ -8518,20 +8528,20 @@
           <code class="ruby">      # get initial attribs set in index</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="59">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="15" data-linenumber="59">
+          <span class="hits">15</span>
           
           <code class="ruby">      attribs = get_mod_attrs_from_doc(doc)</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="60">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="15" data-linenumber="60">
+          <span class="hits">15</span>
           
           <code class="ruby">      additional_attribs.each do |key,value|</code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="61">
-          <span class="hits">21</span>
+        <li class="covered" data-hits="22" data-linenumber="61">
+          <span class="hits">22</span>
           
           <code class="ruby">        attribs[key] = value</code>
         </li>
@@ -8542,14 +8552,14 @@
           <code class="ruby">      end</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="63">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="15" data-linenumber="63">
+          <span class="hits">15</span>
           
           <code class="ruby">      incs = doc.catalog[:includes].keys.to_set</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="64">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="15" data-linenumber="64">
+          <span class="hits">15</span>
           
           <code class="ruby">      return attribs if incs.empty?</code>
         </li>
@@ -8722,26 +8732,26 @@
           <code class="ruby">    def self.get_mod_attrs_from_doc(doc)</code>
         </li>
       
-        <li class="covered" data-hits="17" data-linenumber="93">
-          <span class="hits">17</span>
+        <li class="covered" data-hits="18" data-linenumber="93">
+          <span class="hits">18</span>
           
           <code class="ruby">      attribs = {}</code>
         </li>
       
-        <li class="covered" data-hits="17" data-linenumber="94">
-          <span class="hits">17</span>
+        <li class="covered" data-hits="18" data-linenumber="94">
+          <span class="hits">18</span>
           
           <code class="ruby">      doc.convert</code>
         </li>
       
-        <li class="covered" data-hits="17" data-linenumber="95">
-          <span class="hits">17</span>
+        <li class="covered" data-hits="18" data-linenumber="95">
+          <span class="hits">18</span>
           
           <code class="ruby">      attrs_mod = doc.instance_variable_get :@attributes_modified</code>
         </li>
       
-        <li class="covered" data-hits="17" data-linenumber="96">
-          <span class="hits">17</span>
+        <li class="covered" data-hits="18" data-linenumber="96">
+          <span class="hits">18</span>
           
           <code class="ruby">      attrs_mod.each do |k, _v|</code>
         </li>
@@ -8758,8 +8768,8 @@
           <code class="ruby">      end</code>
         </li>
       
-        <li class="covered" data-hits="17" data-linenumber="99">
-          <span class="hits">17</span>
+        <li class="covered" data-hits="18" data-linenumber="99">
+          <span class="hits">18</span>
           
           <code class="ruby">      attribs</code>
         </li>
@@ -8783,6 +8793,889 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="103">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+
+      
+        <div class="source_table" id="7d3420068b1d291cf4ae3964d34866543b99a7bf">
+  <div class="header">
+    <h3>lib/utils/create_toc.rb</h3>
+    <h4><span class="green">98.61 %</span> covered</h4>
+    <div>
+      <b>72</b> relevant lines. 
+      <span class="green"><b>71</b> lines covered</span> and
+      <span class="red"><b>1</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        <li class="never" data-hits="" data-linenumber="1">
+          
+          
+          <code class="ruby"># frozen_string_literal: true</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="2">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="3">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../process_manager.rb&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="4">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../base_process.rb&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="5">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../config_manager.rb&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="6">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../utils/adoc.rb&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="7">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../log/log.rb&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="8">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require &#39;json&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="9">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require &#39;nokogiri&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="10">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require &#39;fileutils&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="11">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="12">
+          <span class="hits">1</span>
+          
+          <code class="ruby">module Toolchain</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="13">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  module Adoc</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="14">
+          
+          
+          <code class="ruby">    ##</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="15">
+          
+          
+          <code class="ruby">    # Adds modules for preprocessing files.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="16">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    class CreateTOC &lt; BaseProcess</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="17">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="18">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      def initialize(priority = 0)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="19">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        super(priority)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="20">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        @multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="21">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        @default_json_filepath = File.join(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="22">
+          
+          
+          <code class="ruby">          ::Toolchain.build_path,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="23">
+          
+          
+          <code class="ruby">          CM.get(&#39;toc.json_file&#39;))</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="24">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        @default_html_filepath = File.join(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="25">
+          
+          
+          <code class="ruby">          ::Toolchain.build_path,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="26">
+          
+          
+          <code class="ruby">          CM.get(&#39;toc.html_file&#39;))</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="27">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="28">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="29">
+          
+          
+          <code class="ruby">      ##</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="30">
+          
+          
+          <code class="ruby">      # Creates a TOC JSON file from an Asciidoctor +catalog+ object</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="31">
+          
+          
+          <code class="ruby">      # Default JSON path is taken from +ConfigManager+.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="32">
+          
+          
+          <code class="ruby">      #</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="33">
+          
+          
+          <code class="ruby">      # Saves toc as json tree +toc_json+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="34">
+          
+          
+          <code class="ruby">      # Saves toc as html code +html_fragment+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="35">
+          
+          
+          <code class="ruby">      # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="36">
+          
+          
+          <code class="ruby">      #</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="37">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      def run(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="38">
+          
+          
+          <code class="ruby">        catalog,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="39">
+          
+          
+          <code class="ruby">        json_filepath = @default_json_filepath,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="40">
+          
+          
+          <code class="ruby">        html_filepath = @default_html_filepath</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          
+          <code class="ruby">      )</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="42">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        FileUtils.mkdir_p(File.dirname(@default_json_filepath))</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="43">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        FileUtils.mkdir_p(File.dirname(@default_html_filepath))</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="44">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        stage_log(:pre, &#39;Create TOC&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="45">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        stack = [OpenStruct.new(id: &#39;root&#39;, level: -1, children: [])]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="46">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        ancestors = []</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="47">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="48">
+          
+          
+          <code class="ruby">        # for all headings in the adoc document do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="49">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        catalog[:refs].keys.each do |r|</code>
+        </li>
+      
+        <li class="covered" data-hits="11" data-linenumber="50">
+          <span class="hits">11</span>
+          
+          <code class="ruby">          ref = catalog[:refs][r]</code>
+        </li>
+      
+        <li class="covered" data-hits="11" data-linenumber="51">
+          <span class="hits">11</span>
+          
+          <code class="ruby">          next unless ref.is_a? Asciidoctor::Section</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="52">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          level = ref.level</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="53">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          title = ref.title</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="54">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          id = ref.id</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="55">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          attribs = ref.instance_variable_get(:@attributes)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="56">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="57">
+          
+          
+          <code class="ruby">          # skip discrete headings and headings with a level too high</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="58">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          is_discrete = attribs&amp;.key?(1) &amp;&amp; (attribs&amp;.fetch(1) == &#39;discrete&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="59">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          next if is_discrete || title.nil?</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="60">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          current = OpenStruct.new(</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="61">
+          
+          
+          <code class="ruby">            id: id,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="62">
+          
+          
+          <code class="ruby">            level: level,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="63">
+          
+          
+          <code class="ruby">            title: title,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="64">
+          
+          
+          <code class="ruby">            parent: nil,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="65">
+          
+          
+          <code class="ruby">            children: []</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="66">
+          
+          
+          <code class="ruby">          )</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="67">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          while level &lt;= stack.last.level</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="68">
+          <span class="hits">3</span>
+          
+          <code class="ruby">            stack.pop</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="69">
+          <span class="hits">3</span>
+          
+          <code class="ruby">            ancestors.pop</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="70">
+          
+          
+          <code class="ruby">          end</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="71">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          current.parent = stack.last</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="72">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          ancestors &lt;&lt; current.parent.id</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="73">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          founder = ancestors[@multipage_level] || current.id</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="74">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="75">
+          
+          
+          <code class="ruby">          # add current element to it&#39;s parent&#39;s children list</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="76">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          current.parent.children &lt;&lt; current</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="77">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="78">
+          
+          
+          <code class="ruby">          # replace parent object now with it&#39;s id to avoid loops</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="79">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          current.parent = current.parent.id</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="80">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          current.founder = founder</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="81">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          stack.push current</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="82">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="83">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="84">
+          
+          
+          <code class="ruby">        # first element of the stack contains the final TOC tree</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="85">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_openstruct = stack.first</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="86">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="87">
+          
+          
+          <code class="ruby">        # create JSON from TOC tree</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="88">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_hash = openstruct_to_hash(toc_openstruct)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="89">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_json = JSON.pretty_generate(toc_hash)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="90">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        File.open(json_filepath, &#39;w+&#39;) do |json_file|</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="91">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          json_file.write(toc_json)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="92">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="93">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="94">
+          
+          
+          <code class="ruby">        # create Nokogiri HTML document Object from TOC tree</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="95">
+          
+          
+          <code class="ruby">        # class and id same as default asciidoctor html5 converter with enabled TOC for drop-in replacement</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="96">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_html_dom = Nokogiri::HTML.fragment(&#39;&lt;div id=&quot;toc&quot; class=&quot;toc2&quot;&gt;&lt;/div&gt;&#39; + &quot;\n&quot;)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="97">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_html_dom.at_css(&#39;#toc&#39;) &lt;&lt; generate_html_from_toc(toc_openstruct.children)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="98">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="99">
+          
+          
+          <code class="ruby">        # convert Nokogiri HTML Object to string</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="100">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        toc_html_string = toc_html_dom.to_xhtml(indent: 3)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="101">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        File.open(html_filepath, &#39;w+&#39;) do |html_file|</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="102">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          html_file.write(toc_html_string)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="103">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="104">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        return json_filepath, html_filepath, toc_hash</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="105">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="106">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="107">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      private</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="108">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="109">
+          
+          
+          <code class="ruby">      ## Recursivelz generates a HTML fragment for the Table Of Content</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="110">
+          
+          
+          <code class="ruby">      # Takes OpenStruct of +toc_elements+ as input</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="111">
+          
+          
+          <code class="ruby">      # Returns HTML code fragment as string Nokogiri Object +fragment+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="112">
+          
+          
+          <code class="ruby">      #</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="113">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      def generate_html_from_toc(toc_elements)</code>
+        </li>
+      
+        <li class="covered" data-hits="6" data-linenumber="114">
+          <span class="hits">6</span>
+          
+          <code class="ruby">        fragment = Nokogiri::HTML.fragment(&#39;&lt;ul&gt;&lt;/ul&gt;&#39;)</code>
+        </li>
+      
+        <li class="covered" data-hits="6" data-linenumber="115">
+          <span class="hits">6</span>
+          
+          <code class="ruby">        toc_elements.each do |e|</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="116">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          root_file = e.founder == &#39;root&#39; ? &#39;&#39; : e.founder + &#39;.html&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="117">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          level = e.level || 0</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="118">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_&#39; + e.id + &#39;&quot; data-level=&quot;&#39; + level.to_s + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="119">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; &quot;\n&quot; + &#39;  &lt;a href=&quot;&#39; + root_file.to_s + (e.founder == e.id ? &#39;&#39; : &#39;#&#39; + e.id)+ &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&#39; + &quot;\n&quot;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="120">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="121">
+          
+          
+          <code class="ruby">          # if element has child elements, add them to current list item</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="122">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; generate_html_from_toc(e.children) unless e.children.empty?</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="123">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          fragment.at(&#39;ul&#39;) &lt;&lt; fragment_string</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="124">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="6" data-linenumber="125">
+          <span class="hits">6</span>
+          
+          <code class="ruby">        return fragment</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="126">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="127">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="128">
+          
+          
+          <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="129">
+          
+          
+          <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="130">
+          
+          
+          <code class="ruby">      #</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="131">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      def openstruct_to_hash(object, hash = {})</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="132">
+          <span class="hits">9</span>
+          
+          <code class="ruby">        return object unless object.is_a? OpenStruct</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="133">
+          <span class="hits">9</span>
+          
+          <code class="ruby">        object.each_pair do |key, value|</code>
+        </li>
+      
+        <li class="covered" data-hits="51" data-linenumber="134">
+          <span class="hits">51</span>
+          
+          <code class="ruby">          hash[key] = case value</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="135">
+          
+          
+          <code class="ruby">                      when OpenStruct then openstruct_to_hash(value)</code>
+        </li>
+      
+        <li class="covered" data-hits="17" data-linenumber="136">
+          <span class="hits">17</span>
+          
+          <code class="ruby">                      when Array then value.map { |v| openstruct_to_hash(v) }</code>
+        </li>
+      
+        <li class="covered" data-hits="42" data-linenumber="137">
+          <span class="hits">42</span>
+          
+          <code class="ruby">                      else value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="138">
+          
+          
+          <code class="ruby">                      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="139">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="140">
+          <span class="hits">9</span>
+          
+          <code class="ruby">        return hash</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="141">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="142">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="143">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="144">
           
           
           <code class="ruby">end</code>
@@ -9462,20 +10355,20 @@
           <code class="ruby">  def self.toolchain_path(path = nil)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="34">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="34">
+          <span class="hits">2</span>
           
           <code class="ruby">    toolchain_dir_path = File.join(Dir.pwd, &#39;toolchain&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="35">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="35">
+          <span class="hits">2</span>
           
           <code class="ruby">    toolchain_dir_path = Dir.pwd unless File.exist?(toolchain_dir_path)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="36">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="36">
+          <span class="hits">2</span>
           
           <code class="ruby">    toolchain_dir_path = ENV[&#39;TOOLCHAIN_PATH&#39;] if ENV.key?(&#39;TOOLCHAIN_PATH&#39;)</code>
         </li>
@@ -9486,14 +10379,14 @@
           <code class="ruby">    # For Unit testing:</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="38">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="38">
+          <span class="hits">2</span>
           
           <code class="ruby">    toolchain_dir_path = path unless path.nil?</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="39">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="39">
+          <span class="hits">2</span>
           
           <code class="ruby">    return toolchain_dir_path</code>
         </li>
@@ -9540,8 +10433,8 @@
           <code class="ruby">  def self.build_path(path = nil)</code>
         </li>
       
-        <li class="covered" data-hits="13" data-linenumber="47">
-          <span class="hits">13</span>
+        <li class="covered" data-hits="16" data-linenumber="47">
+          <span class="hits">16</span>
           
           <code class="ruby">    return (path.nil? ? ConfigManager.instance.get(&#39;build.dir&#39;) : path)</code>
         </li>
