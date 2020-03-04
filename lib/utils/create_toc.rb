@@ -41,7 +41,7 @@ module Toolchain
       )
         FileUtils.mkdir_p(File.dirname(@default_json_filepath))
         FileUtils.mkdir_p(File.dirname(@default_html_filepath))
-        stage_log(:pre, '[Create TOC] Starting')
+        stage_log(:pre, 'Create TOC')
         stack = [OpenStruct.new(id: 'root', level: -1, children: [])]
         ancestors = []
 
@@ -90,7 +90,6 @@ module Toolchain
         File.open(json_filepath, 'w+') do |json_file|
           json_file.write(toc_json)
         end
-        log('TOC', 'JSON written to: ' + json_filepath, :gray)
 
         # create Nokogiri HTML document Object from TOC tree
         # class and id same as default asciidoctor html5 converter with enabled TOC for drop-in replacement
@@ -102,7 +101,6 @@ module Toolchain
         File.open(html_filepath, 'w+') do |html_file|
           html_file.write(toc_html_string)
         end
-        log('TOC', 'HTML fragment written to: ' + html_filepath, :gray)
         return json_filepath, html_filepath, toc_hash
       end
 
