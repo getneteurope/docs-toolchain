@@ -134,7 +134,16 @@
   <span class="ruby-identifier">toc</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">toc_html_filepath</span>)
   <span class="ruby-identifier">html</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">remove</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>)
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#header&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(<span class="ruby-identifier">toc</span>)
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;body&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(<span class="ruby-identifier">toc</span>)
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(
+    <span class="ruby-string">&#39;&lt;div id=&quot;search&quot; class=&quot;inputfield&quot;&gt;&lt;input type=&quot;text&quot; placeholder=&quot;Search...&quot;/&gt;&lt;/div&gt;&#39;</span>
+  )
+  <span class="ruby-comment"># html.css(&#39;div#toc&#39;).children.first.add_previous_sibling(</span>
+  <span class="ruby-comment">#   &#39;&lt;div id=&quot;logo&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;&lt;/a&gt;&lt;/div&gt;&#39;</span>
+  <span class="ruby-comment"># )</span>
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(
+    <span class="ruby-string">&#39;&lt;a id=&quot;logo&quot; href=&quot;index.html&quot;&gt;&lt;img src=&quot;/images/logo.png&quot; alt=&quot;Logo&quot;&gt;&lt;/a&gt;&#39;</span>
+  )
   <span class="ruby-identifier">html</span>.<span class="ruby-identifier">to_html</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
