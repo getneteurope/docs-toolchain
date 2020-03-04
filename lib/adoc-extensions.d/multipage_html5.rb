@@ -628,7 +628,16 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
     toc = File.read(toc_html_filepath)
     html = Nokogiri::HTML(output)
     html.css('div#toc').remove if html.css('div#toc')
-    html.css('div#header').children.first.add_previous_sibling(toc)
+    html.css('body').children.first.add_previous_sibling(toc)
+    html.css('div#toc').children.first.add_previous_sibling(
+      '<div id="search" class="inputfield"><input type="text" placeholder="Search..."/></div>'
+    )
+    # html.css('div#toc').children.first.add_previous_sibling(
+    #   '<div id="logo"><a href="index.html"></a></div>'
+    # )
+    html.css('div#toc').children.first.add_previous_sibling(
+      '<a id="logo" href="index.html"><img src="/images/logo.png" alt="Logo"></a>'
+    )
     html.to_html
   end
 end
