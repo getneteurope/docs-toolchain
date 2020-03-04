@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-03 15:56:05 +0100'>2020-03-03 15:56:05 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-04 14:24:04 +0100'>2020-03-04 14:24:04 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">125</span><small> lines of codes</small></div>
+              <div><span class="metric">55</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">79.0</span><small> complexity/method</small></div>
-              <div><span class="metric">17</span><small> churn</small></div>
+              <div><span class="metric">18</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">79.02</span><small> complexity</small></div>
@@ -152,76 +152,6 @@ class TestJsCombineAndTranspile &lt; Test::Unit::TestCase<ol class="nocode error
       results[1].html.chomp)
   end
 end
-
-# class TestCreateTOC &lt; Test::Unit::TestCase
-#   require &#39;nokogiri&#39;
-#   ##
-#   # Tests TOC creation with sample document
-#   #
-#   def test_create_toc
-#     adoc_content = &#39;= Test IDs
-# [#level_one]
-# == First 1
-# This is my first section.
-
-# [#level_two]
-# == Sign 2
-# Sign here please.
-
-# [#level_three]
-# === My Section 3
-
-# Here is my very own section.
-# Thank you.
-
-# [#level_two_again]
-# == Another Sign 2
-# Sign here please.
-
-# [#level_three_again]
-# === The Omen 3
-
-# Here is my very own section.
-# Thank you.
-
-# [[discrete_level_five_outlaw]]
-# [discrete]
-# ===== Outlaw jumps to 5
-
-# The outlaw does not get caught because he is discrete
-
-# [[level_four]]
-# ==== My Section 4
-
-# [#level_five]
-# ===== Getting sectioned at 5
-
-# Sensing a pattern here?
-
-# [[level_six]]
-# ====== 66 6
-
-# [#level_seven]
-# ======= In too deep 7
-
-# [#level_nowhere]
-# [discrete]
-# === Hide me senpai
-
-#     &#39;
-#     adoc = init(adoc_content, &quot;#{self.class.name}_#{__method__}&quot;)
-#     ::Toolchain::ConfigManager.instance.load
-#     json_filepath, html_filepath, toc_hash = ::Toolchain::Pre::CreateTOC.new.run(adoc)
-
-#     # Test JSON file
-#     toc_object = JSON.parse(File.read(json_filepath))
-#     assert_equal(toc_object[&#39;children&#39;][1][&#39;children&#39;][0][&#39;children&#39;][0][&#39;children&#39;][0][&#39;title&#39;], &#39;Getting sectioned at 5&#39;)
-
-#     # Test HTML file
-#     toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
-#     assert_equal(toc_html.css(&#39;#toc &gt; ul &gt; li#toc_level_two &gt; a + ul &gt; li &gt; a&#39;).attribute(&#39;href&#39;).value, &#39;level_three.html#level_three&#39;)
-#   end
-# end
 </code>
   </div>
 </div>
