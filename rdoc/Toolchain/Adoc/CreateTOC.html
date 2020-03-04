@@ -199,7 +199,7 @@
 )
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-ivar">@default_json_filepath</span>))
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-ivar">@default_html_filepath</span>))
-  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:pre</span>, <span class="ruby-string">&#39;[Create TOC] Starting&#39;</span>)
+  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:pre</span>, <span class="ruby-string">&#39;Create TOC&#39;</span>)
   <span class="ruby-identifier">stack</span> = [<span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">id:</span> <span class="ruby-string">&#39;root&#39;</span>, <span class="ruby-value">level:</span> <span class="ruby-value">-1</span>, <span class="ruby-value">children:</span> [])]
   <span class="ruby-identifier">ancestors</span> = []
 
@@ -248,7 +248,6 @@
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">json_filepath</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">json_file</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">json_file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">toc_json</span>)
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;TOC&#39;</span>, <span class="ruby-string">&#39;JSON written to: &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">json_filepath</span>, <span class="ruby-value">:gray</span>)
 
   <span class="ruby-comment"># create Nokogiri HTML document Object from TOC tree</span>
   <span class="ruby-comment"># class and id same as default asciidoctor html5 converter with enabled TOC for drop-in replacement</span>
@@ -260,7 +259,6 @@
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">html_filepath</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">html_file</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">html_file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">toc_html_string</span>)
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;TOC&#39;</span>, <span class="ruby-string">&#39;HTML fragment written to: &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">html_filepath</span>, <span class="ruby-value">:gray</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">json_filepath</span>, <span class="ruby-identifier">html_filepath</span>, <span class="ruby-identifier">toc_hash</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -302,7 +300,7 @@
 
           
           <div class="method-source-code" id="generate_html_from_toc-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 115</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 113</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_html_from_toc</span>(<span class="ruby-identifier">toc_elements</span>)
   <span class="ruby-identifier">fragment</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;ul&gt;&lt;/ul&gt;&#39;</span>)
   <span class="ruby-identifier">toc_elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -348,7 +346,7 @@
 
           
           <div class="method-source-code" id="openstruct_to_hash-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 133</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">openstruct_to_hash</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">hash</span> = {})
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">object</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">OpenStruct</span>
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
