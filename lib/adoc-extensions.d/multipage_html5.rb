@@ -636,7 +636,7 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
     #   '<div id="logo"><a href="index.html"></a></div>'
     # )
     html.css('div#toc').children.first.add_previous_sibling(
-      '<a id="logo" href="index.html"><img src="/images/logo.png" alt="Logo"></a>'
+      '<a id="logo" href="index.html"><img src="images/logo.png" alt="Logo"></a>'
     )
     html.to_html
   end
