@@ -116,7 +116,7 @@ module Toolchain
           root_file = e.founder == 'root' ? '' : e.founder + '.html'
           level = e.level || 0
           fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '" data-level="' + level.to_s + '"></li>' + "\n")
-          fragment_string.at('li') << "\n" + '  <a href="' + root_file + '#' + e.id + '">' + e.title + '</a>' + "\n"
+          fragment_string.at('li') << "\n" + '  <a href="' + root_file.to_s + (e.founder == e.id ? '' : '#' + e.id)+ '">' + e.title + '</a>' + "\n"
 
           # if element has child elements, add them to current list item
           fragment_string.at('li') << generate_html_from_toc(e.children) unless e.children.empty?
