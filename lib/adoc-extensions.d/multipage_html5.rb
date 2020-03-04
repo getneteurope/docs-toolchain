@@ -39,6 +39,7 @@
 #   asciidoctor -r ./multipage-html5-converter.rb -b multipage_html5 book.adoc
 
 require 'asciidoctor/converter/html5'
+require 'nokogiri'
 require_relative '../utils/create_toc.rb'
 
 # HTML5 Multipage Converter adapted Asciidoctor::AbstractBlock
@@ -258,9 +259,6 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
       # Create and save a skeleton document for generating the TOC lists.
       @@full_outline = new_outline_doc(node)
 
-      # Create TOC html and JSON file
-      toc_json_filepath, toc_html_filepath, toc_hash = ::Toolchain::Adoc::CreateTOC.new.run(node.catalog)
-      
       # Save the document catalog to use for each part/chapter page.
       @catalog = node.catalog
 
@@ -624,31 +622,19 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
   end
 end
 
-# HTML5 Multipage Converter CSS Preprocessor
-class MultipageHtml5CSS < Asciidoctor::Extensions::DocinfoProcessor
-  use_dsl
-  at_location :head
-
-  ##
-  # Process CSS for document +_doc+.
-  # +_doc+ is unused at the moment.
-  #
-  # Returns the CSS inside HTML style tags
-  def process(_doc)
-    css = []
-    # Style Table Of Contents entry for current page
-    css << %(.toc-current{font-weight: bold;})
-    # Style Table Of Contents entry for root page
-    css << %(.toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
-                       font-size: 0.9em;})
-    # Style navigation bar at bottom of each page
-    css << %(#content{display: flex; flex-direction: column; flex: 1 1 auto;}
-             .nav-footer{text-align: center; margin-top: auto;}
-             .nav-footer > p > a {white-space: nowrap;})
-    %(<style>#{css.join(' ')}</style>)
+class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
+  def process(document, output)
+    _, toc_html_filepath, _ = ::Toolchain::Adoc::CreateTOC.new.run(document.catalog)
+    toc = File.read(toc_html_filepath)
+    html = Nokogiri::HTML(output)
+    html.css('div#toc').remove if html.css('div#toc')
+    html.css('div#header').children.first.add_previous_sibling(toc)
+    html.to_html
   end
 end
 
 Asciidoctor::Extensions.register do
-  docinfo_processor MultipageHtml5CSS
+  if %w[html html5 multipage_html5].any? { |be| @document.basebackend? be }
+    postprocessor TableOfContentInjector
+  end
 end
