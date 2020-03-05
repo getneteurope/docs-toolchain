@@ -84,6 +84,7 @@ module Toolchain
           .delete_prefix(root + '/')
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
+        log('JS', "Writing BLOB to #{js_blob_path}")
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
 
         html_content_lines = File.read(path).lines
@@ -142,25 +143,13 @@ module Toolchain
         # change dir to content/ so we can find js/*.js
         script_source_files = doc.search('script').map do |stag|
           line_nr = stag.line
-          unless stag.key?('src')
-            next
-          end
-          unless File.exist?(File.join(dir, stag.attribute('src')))
-            log(
-              'JS',
-              "[#{html_file}:#{line_nr}] skipping tag, src not found: #{stag.attribute('src')}",
-              :yellow
-            )
-            next
-          end
-          unless stag.children.empty?
-            log(
-              'JS',
-              "[#{html_file}:#{line_nr}] skipping invalid script tag.",
-              :yellow
-            )
-            next
-          end
+          next unless stag.key?('src')
+
+          next unless File.exist?(File.join(dir, stag.attribute('src')))
+
+          next unless stag.children.empty?
+
+          log('JS', "Found src: #{stag.attribute('src')}")
           ::File.join(dir, stag.attribute('src'))
         end
         script_source_files = script_source_files.compact # remove nil

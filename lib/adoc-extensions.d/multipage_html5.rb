@@ -627,16 +627,28 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
     _, toc_html_filepath, _ = ::Toolchain::Adoc::CreateTOC.new.run(document.catalog)
     toc = File.read(toc_html_filepath)
     html = Nokogiri::HTML(output)
-    html.css('div#toc').remove if html.css('div#toc')
-    html.css('body').children.first.add_previous_sibling(toc)
-    html.css('div#toc').children.first.add_previous_sibling(
-      '<div id="search" class="inputfield"><input type="text" placeholder="Search..."/></div>'
+    # table of content
+    html.at_css('div#toc').remove if html.at_css('div#toc')
+    html.at_css('body').children.first.add_previous_sibling(toc)
+    # search field
+    html.at_css('div#toc').children.first.add_previous_sibling(
+      '<div id="search-toc" class="inputfield">' +
+        '<input id="search" type="text" placeholder="Search..."/>' +
+        '</div>'
     )
-    # html.css('div#toc').children.first.add_previous_sibling(
-    #   '<div id="logo"><a href="index.html"></a></div>'
-    # )
-    html.css('div#toc').children.first.add_previous_sibling(
+    # logo
+    html.at_css('div#toc').children.first.add_previous_sibling(
       '<a id="logo" href="index.html"><img src="images/logo.png" alt="Logo"></a>'
+    )
+    # overlay
+    html.at_css('body').add_child(
+      '<div id="search-overlay"></div>'
+    )
+    search_overlay = html.at_css('div#search-overlay')
+    search_overlay.add_child('<button type="button" class="close">X</button>')
+    search_overlay.add_child('<form id="search-overlay-form"></form>')
+    html.at_css('form#search-overlay-form').add_child(
+      '<input type="search" value="" placeholder="Search..."/>'
     )
     html.to_html
   end
