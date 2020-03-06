@@ -115,8 +115,8 @@ module Toolchain
         toc_elements.each do |e|
           root_file = e.founder == 'root' ? '' : e.founder + '.html'
           level = e.level || 0
-          fragment_string = Nokogiri::HTML.fragment('<li id="toc_' + e.id + '" data-level="' + level.to_s + '"></li>' + "\n")
-          fragment_string.at('li') << "\n" + '  <a href="' + root_file.to_s + (e.founder == e.id ? '' : '#' + e.id)+ '">' + e.title + '</a>' + "\n"
+          fragment_string = Nokogiri::HTML.fragment('<li id="toc_li_' + e.id + '" data-level="' + level.to_s + '"></li>' + "\n")
+          fragment_string.at('li') << "\n" + '  <input id="toc_cb_' + e.id + '" type="checkbox"><label for="toc_cb_' + e.id + '"><a href="' + root_file.to_s + (e.founder == e.id ? '' : '#' + e.id)+ '">' + e.title + '</a></label>' + "\n"
 
           # if element has child elements, add them to current list item
           fragment_string.at('li') << generate_html_from_toc(e.children) unless e.children.empty?
