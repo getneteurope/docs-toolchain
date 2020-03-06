@@ -42,6 +42,6 @@ class TestCompileSearchIndex < Test::Unit::TestCase
     index = with_tempfile(content, '_CompileSearchIndex') do |file|
       Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile)
     end
-    assert_equal(4202139800, Zlib.crc32(index.inspect))
+    assert_equal(%w[title body file], index['fields'])
   end
 end
