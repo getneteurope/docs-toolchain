@@ -44,6 +44,11 @@ module Toolchain
 
       private
 
+      ## 
+      # Tick all chackboxes of ancestors of current page
+      # Requires +page_id+ and Nokogiri Table of Content +toc_document+
+      # Returns modified TOC +toc_document+
+      #
       def tick_toc_checkboxes(page_id, toc_document)
         selector = '#toc_li_' + page_id
         while toc_document.at_css selector
