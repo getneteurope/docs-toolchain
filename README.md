@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://undraw.co/"><img src="logo/landing_page.svg" alt="Docs Toolchain Logo"></a>
+<a href="https://undraw.co/"><img src="logo/landing_page.svg" alt="Docs Toolchain Logo"></a>
 </h1>
 
 # docs-toolchain [![Github workflow](https://github.com/wirecard/docs-toolchain/workflows/Main/badge.svg)](https://github.com/wirecard/docs-toolchain/actions)   [![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain)](https://github.com/wirecard/docs-toolchain/issues)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)   [![Inline docs](http://inch-ci.org/github/wirecard/docs-toolchain.svg?branch=master)](http://inch-ci.org/github/wirecard/docs-toolchain)
@@ -28,48 +28,44 @@ Under heavy development, everything is subject to change and most likely will no
 The toolchain is designed to run through different stages, that have specific responsibilities:
 1. **setup**: install required dependencies
 2. **test**:
-    * create info files (like git information, e.g. branch, commit author, last edited by, etc.)
-    * validate all configuration files
-    * test the current commit with:
-        * predefined tests by the toolchain (`lib/extensions.d/`)
-        * custom tests (`${CONTENT_REPO}/extensions.d/`)
-        * abort the build if necessary
-    * keep a log of all events which will be used in the notify stage
-3. **build**:
-    * invoke asciidoctor (with multipage converter)
-    * create Table of Content
-    * create search index (Lunr)
-    * `DEBUG` build for local testing:
-        * **DO NOT** minify and combine Javascript files
-        * **DO NOT** minify CSS
-        * passthrough as `:debug:` to asciidoctor
-    * frontend functionality:
-        * `header.js.d/`: scripts that need to be loaded at the beginning, will be combined to `header.js` and minified
-        * `footer.js.d/`: scripts that need to be loaded at the end, will be combined to `footer.js` and minified
-    * run custom build scripts `build.d/*.sh`
-4. **post**:
-    * post processing for additional features like
-        * lunr.js
-        * table of content changes
-        * trigger translation
-5. **deploy**:
-    * [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
-    * [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
-    * required variables, see [Configuration/Secret/AWS](#Secret)
-6. **notify**:
-    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
+* validate all configuration files
+* test the current commit with:
+* predefined tests by the toolchain (`lib/extensions.d/`)
+* [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
+* abort the build if necessary
+* keep a log of all events which will be used in the notify stage
+3. **test**:
+* combine Javascript files to BLOB file and transpile (cross-browser compatibility and loading speed)
+4. **build**:
+* invoke asciidoctor (with multipage converter)
+* `DEBUG` build for local testing:
+* passthrough as `:debug:` to asciidoctor
+* [*future*] run custom build scripts `build.d/*.sh`
+5. **post**:
+* create Table of Content
+* create search index (Lunr)
+* [*future*] trigger translation
+6. **deploy**:
+* [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
+* [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
+* required variables, see [Configuration/Secret/AWS](#Secret)
+7. **notify**:
+* send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
 
 ## Development
-Quality assurance:
+**Quality assurance:**
 * `rake toolchain:lint` calls rubocop
 * `rake toolchain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
 * `rake toolchain:quality` runs `rubycritic` and generates an overview in `/tmp/rubycritic/overview.html`
 * `rake toolchain:rdoc` generates rdoc documentation in `/tmp/rdoc`
-* `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch** on the code base
+* `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch` on the code base
 
 ## Configuration
 There are some variables that need to be secret, while others can be public.
 Configuration files are public.
+
+## Environment Variables
+* `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
 
 ### Secrets
 #### AWS
@@ -110,4 +106,3 @@ In order to install dependencies, run the following at the root of the project:
 export TOOLCHAIN_PATH="$(pwd)"
 bash stages/setup/setup_main.sh
 ```
-
