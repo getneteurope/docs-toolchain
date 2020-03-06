@@ -630,26 +630,26 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
     # table of content
     html.at_css('div#toc').remove if html.at_css('div#toc')
     html.at_css('body').children.first.add_previous_sibling(toc)
-    # search field
-    html.at_css('div#toc').children.first.add_previous_sibling(
-      '<div id="search-toc" class="inputfield">' +
-        '<input id="search" type="text" placeholder="Search..."/>' +
-        '</div>'
-    )
     # logo
     html.at_css('div#toc').children.first.add_previous_sibling(
       '<a id="logo" href="index.html"><img src="images/logo.png" alt="Logo"></a>'
     )
-    # overlay
-    html.at_css('body').add_child(
-      '<div id="search-overlay"></div>'
+    # search and search overlay
+    html.at_css('div#toc').children.first.add_next_sibling(
+      '<div id="search-overlay-wrapper"><div id="search-overlay"></div></div>'
     )
     search_overlay = html.at_css('div#search-overlay')
-    search_overlay.add_child('<button type="button" class="close">X</button>')
-    search_overlay.add_child('<form id="search-overlay-form"></form>')
+    search_overlay.add_child('<div id="search-wrapper"></div>')
+    search_wrapper = html.at_css('div#search-wrapper')
+    search_wrapper.add_child('<button type="button" class="close">X</button>')
+    search_wrapper.add_child('<form id="search-overlay-form"></form>')
     html.at_css('form#search-overlay-form').add_child(
-      '<input type="search" value="" placeholder="Search..."/>'
+      '<input id="search" type="search" value="" placeholder="Search..."/>'
     )
+    html.at_css('form#search-overlay-form').add_next_sibling(
+      '<ul id="search-results-list"></ul>'
+    )
+
     html.to_html
   end
 end

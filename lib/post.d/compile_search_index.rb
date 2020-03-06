@@ -83,18 +83,20 @@ module Toolchain
         end
 
         sections = html.search(SELECTOR_SECTIONS)
-        docs = sections.map { |s| _parse_section(s) }
+        docs = sections.map { |s| _parse_section(s, html_file) }
         return docs
       end
 
       ##
       # Parse a Nokogiri section +sect+ and return relevant information
       # for lunr.
+      # This function needs the +filename+ in order to create valid links
+      # later on, when the lunr search is implemented.
       # Included information is +ref+, the reference or id,
       # +title+, the header of the section and
       # +body+, the text of all p tags below the section div.
       # Returns Hash +{ id, title, body }+
-      def _parse_section(sect)
+      def _parse_section(sect, filename)
         header = sect.search(SELECTOR_HEADINGS).first
         ps = sect.search(XPATH_PARAGRAPHS)
 
@@ -102,7 +104,12 @@ module Toolchain
         title = header.content
         body = ps.map(&:content).join
 
-        return {id: ref, title: title, body: body}
+        return {
+          id: ref,
+          title: title.delete("\n"),
+          body: body,
+          file: File.basename(filename)
+        }
       end
 
       ##
@@ -122,7 +129,8 @@ module Toolchain
         ctx = V8::Context.new
         ctx.load(File.join(__dir__, '..', 'utils', 'lunr.js'))
         ctx.eval(
-          'lunr.Index.prototype.dumpIndex = function() {
+          '
+           lunr.Index.prototype.dumpIndex = function() {
                return JSON.stringify(this.toJSON());
            }'
         )
@@ -132,6 +140,7 @@ module Toolchain
           this.ref('id')
           this.field('title')
           this.field('body')
+          this.field('file')
 
           this.k1(1.3)
           this.b(0)
