@@ -60,7 +60,7 @@ module Toolchain
           current = OpenStruct.new(
             id: id,
             level: level,
-            title: title,
+            title: title.gsub(/<\/?[^>]*>/, ''), # remove style tags that asciidoctor leaves in titles
             parent: nil,
             children: []
           )
