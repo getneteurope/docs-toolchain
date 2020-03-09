@@ -24,18 +24,8 @@ module Toolchain
       XPATH_PARAGRAPHS = './div/p'
       def initialize(priority = 0)
         super(priority)
-        toc_orig = ::JSON.parse(File.read(File.join(
-          ::Toolchain.build_path,
-          CM.get('toc.json_file')
-        )))
+        @toc_file = File.join(::Toolchain.build_path, CM.get('toc.json_file'))
         @nodes = {}
-        def add_to_toc(entry)
-          @nodes[entry['id']] = entry.only(%w[parents label]) unless entry['level'] == -1
-          entry['children'].each do |e|
-            add_to_toc(e)
-          end
-        end
-        add_to_toc(toc_orig)
       end
 
       ##
@@ -53,6 +43,18 @@ module Toolchain
                   (html.is_a?(Array) ? html : [html])
                 end
         stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
+
+        stage_log(:post, "Parse #{@toc_file} as Table of Content")
+        toc_orig = ::JSON.parse(File.read(@toc_file))
+        def add_to_toc(entry)
+          return if entry.nil? || entry.size.zero?
+          @nodes[entry['id']] = entry.only(%w[parents label]) unless entry['level'] == -1
+          entry['children'].each do |e|
+            add_to_toc(e)
+          end
+        end
+        add_to_toc(toc_orig)
+
         ConfigManager.instance.get('search.exclude').each do |pattern|
           htmls.delete_if do |f|
             !!(File.basename(f) =~ _create_regex(pattern))
