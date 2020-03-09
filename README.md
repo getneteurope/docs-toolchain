@@ -65,7 +65,9 @@ There are some variables that need to be secret, while others can be public.
 Configuration files are public.
 
 ## Environment Variables
-* `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
+* `FAST` includes contains the following variables:
+    * `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
+    * `SKIP_HTMLCHECK`: skips the HTML Check Post process.
 
 ### Secrets
 #### AWS
