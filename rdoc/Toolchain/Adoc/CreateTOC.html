@@ -218,7 +218,7 @@
     <span class="ruby-identifier">current</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
       <span class="ruby-value">id:</span> <span class="ruby-identifier">id</span>,
       <span class="ruby-value">level:</span> <span class="ruby-identifier">level</span>,
-      <span class="ruby-value">title:</span> <span class="ruby-identifier">title</span>,
+      <span class="ruby-value">title:</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/&lt;\/?[^&gt;]*&gt;/</span>, <span class="ruby-string">&#39;&#39;</span>), <span class="ruby-comment"># remove style tags that asciidoctor leaves in titles</span>
       <span class="ruby-value">parent:</span> <span class="ruby-keyword">nil</span>,
       <span class="ruby-value">children:</span> []
     )

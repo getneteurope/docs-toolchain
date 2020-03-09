@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-06 17:06:04 +0100'>2020-03-06 17:06:04 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-09 10:46:54 +0100'>2020-03-09 10:46:54 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">47.0</span><small> complexity/method</small></div>
-              <div><span class="metric">23</span><small> churn</small></div>
+              <div><span class="metric">47.3</span><small> complexity/method</small></div>
+              <div><span class="metric">24</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">187.88</span><small> complexity</small></div>
+              <div><span class="metric">189.28</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -133,7 +133,7 @@ module Toolchain
       # Saves toc as html code +html_fragment+
       # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
-      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#run has a flog score of 75</span>          </div>  </li></ol>
+      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#run has a flog score of 76</span>          </div>  </li></ol>
         catalog,
         json_filepath = @default_json_filepath,
         html_filepath = @default_html_filepath
@@ -159,7 +159,7 @@ module Toolchain
           current = OpenStruct.new(
             id: id,
             level: level,
-            title: title,
+            title: title.gsub(/&lt;\/?[^&gt;]*&gt;/, &#39;&#39;), # remove style tags that asciidoctor leaves in titles
             parent: nil,
             children: []
           )

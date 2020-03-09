@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-09T08:32:52+00:00">2020-03-09T08:32:52+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-09T09:49:34+00:00">2020-03-09T09:49:34+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -9180,7 +9180,7 @@
         <li class="never" data-hits="" data-linenumber="63">
           
           
-          <code class="ruby">            title: title,</code>
+          <code class="ruby">            title: title.gsub(/&lt;\/?[^&gt;]*&gt;/, &#39;&#39;), # remove style tags that asciidoctor leaves in titles</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="64">
