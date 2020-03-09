@@ -353,7 +353,7 @@
   <span class="ruby-identifier">root</span> = <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>)
            <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)
          <span class="ruby-keyword">else</span>
-           <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">document_root</span>
+           <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>
          <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">blob_name</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;footer&#39;</span>) <span class="ruby-operator">?</span> <span class="ruby-string">&#39;footer&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;header&#39;</span>
   <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(
