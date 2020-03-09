@@ -61,7 +61,9 @@ module Toolchain
             id: id,
             level: level,
             title: title,
+            label: nil,
             parent: nil,
+            parents: [],
             children: []
           )
           while level <= stack.last.level
@@ -75,6 +77,14 @@ module Toolchain
           # add current element to it's parent's children list
           current.parent.children << current
 
+          stack.each do |sect|
+            title = sect.title
+            next if title.nil?
+            current.parents << title
+            current.label = title if ['REST', 'WPP v1', 'WPP v2'].any? do |keyword|
+              title.include?(keyword)
+            end
+          end
           # replace parent object now with it's id to avoid loops
           current.parent = current.parent.id
           current.founder = founder

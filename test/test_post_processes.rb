@@ -39,9 +39,11 @@ class TestCompileSearchIndex < Test::Unit::TestCase
 </body>
 </html>'
     outfile = '/tmp/test_index.json'
-    index = with_tempfile(content, '_CompileSearchIndex') do |file|
-      Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile)
+    dbfile = '/tmp/test_db.json'
+    index, lookup = with_tempfile(content, '_CompileSearchIndex') do |file|
+      Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile, dbfile: dbfile)
     end
     assert_equal(%w[title body file], index['fields'])
+    assert_true(lookup.size.positive?)
   end
 end

@@ -644,7 +644,7 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
     search_wrapper.add_child('<button type="button" class="close">X</button>')
     search_wrapper.add_child('<form id="search-overlay-form"></form>')
     html.at_css('form#search-overlay-form').add_child(
-      '<input id="search" type="search" value="" placeholder="Search..."/>'
+      '<input id="search" type="search" value="" autocomplete="off" placeholder="Search..."/>'
     )
     html.at_css('form#search-overlay-form').add_next_sibling(
       '<ul id="search-results-list"></ul>'
