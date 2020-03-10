@@ -148,11 +148,11 @@
   <span class="ruby-identifier">search_overlay</span>.<span class="ruby-identifier">add_child</span>(<span class="ruby-string">&#39;&lt;div id=&quot;search-wrapper&quot;&gt;&lt;/div&gt;&#39;</span>)
   <span class="ruby-identifier">search_wrapper</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#search-wrapper&#39;</span>)
   <span class="ruby-identifier">search_wrapper</span>.<span class="ruby-identifier">add_child</span>(<span class="ruby-string">&#39;&lt;button type=&quot;button&quot; class=&quot;close&quot;&gt;X&lt;/button&gt;&#39;</span>)
-  <span class="ruby-identifier">search_wrapper</span>.<span class="ruby-identifier">add_child</span>(<span class="ruby-string">&#39;&lt;form id=&quot;search-overlay-form&quot;&gt;&lt;/form&gt;&#39;</span>)
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;form#search-overlay-form&#39;</span>).<span class="ruby-identifier">add_child</span>(
+  <span class="ruby-identifier">search_wrapper</span>.<span class="ruby-identifier">add_child</span>(<span class="ruby-string">&#39;&lt;div id=&quot;search-results-wrapper&quot;&gt;&lt;/div&gt;&#39;</span>)
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#search-results-wrapper&#39;</span>).<span class="ruby-identifier">add_child</span>(
     <span class="ruby-string">&#39;&lt;input id=&quot;search&quot; type=&quot;search&quot; value=&quot;&quot; autocomplete=&quot;off&quot; placeholder=&quot;Search...&quot;/&gt;&#39;</span>
   )
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;form#search-overlay-form&#39;</span>).<span class="ruby-identifier">add_next_sibling</span>(
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#search-results-wrapper&#39;</span>).<span class="ruby-identifier">add_next_sibling</span>(
     <span class="ruby-string">&#39;&lt;ul id=&quot;search-results-list&quot;&gt;&lt;/ul&gt;&#39;</span>
   )
 

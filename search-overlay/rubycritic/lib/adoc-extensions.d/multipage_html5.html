@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-09 13:22:50 +0100'>2020-03-09 13:22:50 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-10 10:33:40 +0100'>2020-03-10 10:33:40 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">30.0</span><small> complexity/method</small></div>
-              <div><span class="metric">18</span><small> churn</small></div>
+              <div><span class="metric">19</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">600.02</span><small> complexity</small></div>
@@ -741,11 +741,11 @@ class TableOfContentInjector &lt; Asciidoctor::Extensions::Postprocessor<ol clas
     search_overlay.add_child(&#39;&lt;div id=&quot;search-wrapper&quot;&gt;&lt;/div&gt;&#39;)
     search_wrapper = html.at_css(&#39;div#search-wrapper&#39;)
     search_wrapper.add_child(&#39;&lt;button type=&quot;button&quot; class=&quot;close&quot;&gt;X&lt;/button&gt;&#39;)
-    search_wrapper.add_child(&#39;&lt;form id=&quot;search-overlay-form&quot;&gt;&lt;/form&gt;&#39;)
-    html.at_css(&#39;form#search-overlay-form&#39;).add_child(
+    search_wrapper.add_child(&#39;&lt;div id=&quot;search-results-wrapper&quot;&gt;&lt;/div&gt;&#39;)
+    html.at_css(&#39;div#search-results-wrapper&#39;).add_child(
       &#39;&lt;input id=&quot;search&quot; type=&quot;search&quot; value=&quot;&quot; autocomplete=&quot;off&quot; placeholder=&quot;Search...&quot;/&gt;&#39;
     )
-    html.at_css(&#39;form#search-overlay-form&#39;).add_next_sibling(
+    html.at_css(&#39;div#search-results-wrapper&#39;).add_next_sibling(
       &#39;&lt;ul id=&quot;search-results-list&quot;&gt;&lt;/ul&gt;&#39;
     )
 
