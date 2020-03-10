@@ -68,7 +68,7 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">100</span><small> lines of codes</small></div>
+              <div><span class="metric">96</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
@@ -187,10 +187,6 @@ module Toolchain
         next unless Dir.exist?(from_dir)
         to_dir = File.join(html_dir, asset)
         FileUtils.mv(from_dir, to_dir, force: true)
-        # mkdir(to_dir)
-        # Dir[File.join(from_dir, &#39;*&#39;)].each do |file|
-        #   FileUtils.mv(file, to_dir)
-        # end
       end
 
       stage_log(:build, &quot;Files are in #{html_dir}&quot;)

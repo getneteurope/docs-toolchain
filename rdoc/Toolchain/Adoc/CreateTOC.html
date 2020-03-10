@@ -218,8 +218,10 @@
     <span class="ruby-identifier">current</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
       <span class="ruby-value">id:</span> <span class="ruby-identifier">id</span>,
       <span class="ruby-value">level:</span> <span class="ruby-identifier">level</span>,
+      <span class="ruby-value">label:</span> <span class="ruby-keyword">nil</span>,
       <span class="ruby-value">title:</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/&lt;\/?[^&gt;]*&gt;/</span>, <span class="ruby-string">&#39;&#39;</span>), <span class="ruby-comment"># remove style tags that asciidoctor leaves in titles</span>
       <span class="ruby-value">parent:</span> <span class="ruby-keyword">nil</span>,
+      <span class="ruby-value">parents:</span> [],
       <span class="ruby-value">children:</span> []
     )
     <span class="ruby-keyword">while</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">level</span>
@@ -233,6 +235,14 @@
     <span class="ruby-comment"># add current element to it&#39;s parent&#39;s children list</span>
     <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">children</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">current</span>
 
+    <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sect</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">title</span> = <span class="ruby-identifier">sect</span>.<span class="ruby-identifier">title</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parents</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">title</span>
+      <span class="ruby-identifier">current</span>.<span class="ruby-identifier">label</span> = <span class="ruby-identifier">title</span> <span class="ruby-keyword">if</span> [<span class="ruby-string">&#39;REST&#39;</span>, <span class="ruby-string">&#39;WPP v1&#39;</span>, <span class="ruby-string">&#39;WPP v2&#39;</span>].<span class="ruby-identifier">any?</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">keyword</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">title</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">keyword</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
     <span class="ruby-comment"># replace parent object now with it&#39;s id to avoid loops</span>
     <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">current</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">id</span>
     <span class="ruby-identifier">current</span>.<span class="ruby-identifier">founder</span> = <span class="ruby-identifier">founder</span>
@@ -300,13 +310,15 @@
 
           
           <div class="method-source-code" id="generate_html_from_toc-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 113</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_html_from_toc</span>(<span class="ruby-identifier">toc_elements</span>)
   <span class="ruby-identifier">fragment</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;ul&gt;&lt;/ul&gt;&#39;</span>)
   <span class="ruby-identifier">toc_elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">root_file</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">founder</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;root&#39;</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">founder</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.html&#39;</span>
     <span class="ruby-identifier">level</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">level</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
+
     <span class="ruby-identifier">fragment_string</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;li id=&quot;toc_li_&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot; data-level=&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">level</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&gt;&lt;/li&gt;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>)
+    <span class="ruby-comment"># FIXME fix this mess of string formatting</span>
     <span class="ruby-identifier">fragment_string</span>.<span class="ruby-identifier">at</span>(<span class="ruby-string">&#39;li&#39;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;  &lt;input id=&quot;toc_cb_&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot; type=&quot;checkbox&quot;&#39;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">e</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39; disabled&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&gt;&lt;label for=&quot;toc_cb_&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&gt;&lt;a href=&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">root_file</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">e</span>.<span class="ruby-identifier">founder</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;#&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">id</span>)<span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&gt;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">title</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&lt;/a&gt;&lt;/label&gt;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
 
     <span class="ruby-comment"># if element has child elements, add them to current list item</span>
@@ -340,13 +352,13 @@
           
           <pre>Takes OpenStruct +object+ and returns +hash+</pre>
 
-<p>Useful for converting OpenStruct Hash for later conversion to JSON</p>
+<p>Useful for converting OpenStruct <a href="../../Hash.html"><code>Hash</code></a> for later conversion to JSON</p>
           
           
 
           
           <div class="method-source-code" id="openstruct_to_hash-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 131</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 143</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">openstruct_to_hash</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">hash</span> = {})
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">object</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">OpenStruct</span>
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
