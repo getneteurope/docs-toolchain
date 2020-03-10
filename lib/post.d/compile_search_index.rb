@@ -4,6 +4,7 @@ require_relative '../process_manager.rb'
 require_relative '../base_process.rb'
 require_relative '../utils/paths.rb'
 require_relative '../utils/adoc.rb'
+require_relative '../utils/hash.rb'
 require_relative '../log/log.rb'
 require 'asciidoctor'
 require 'nokogiri'
@@ -23,6 +24,8 @@ module Toolchain
       XPATH_PARAGRAPHS = './div/p'
       def initialize(priority = 0)
         super(priority)
+        @toc_file = File.join(::Toolchain.build_path, CM.get('toc.json_file'))
+        @nodes = {}
       end
 
       ##
@@ -33,29 +36,54 @@ module Toolchain
       #
       # Returns JSON search index for lunr
       #
-      def run(html = nil, outfile: nil)
+      def run(html = nil, outfile: nil, dbfile: nil)
         htmls = if html.nil?
                   Dir[File.join(Toolchain.build_path, 'html', '*.html')]
                 else
                   (html.is_a?(Array) ? html : [html])
                 end
         stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
-        ConfigManager.instance.get('search.index.exclude').each do |pattern|
+
+        stage_log(:post, "Parse #{@toc_file} as Table of Content")
+        toc_orig = ::JSON.parse(File.read(@toc_file))
+        def add_to_toc(entry)
+          return if entry.nil? || entry.size.zero?
+          @nodes[entry['id']] = entry.only(%w[parents label]) unless entry['level'] == -1
+          entry['children'].each do |e|
+            add_to_toc(e)
+          end
+        end
+        add_to_toc(toc_orig)
+
+        ConfigManager.instance.get('search.exclude').each do |pattern|
           htmls.delete_if do |f|
             !!(File.basename(f) =~ _create_regex(pattern))
           end
         end
 
-        index = generate_index(htmls)
+        index, lookup = generate_index(htmls)
+
         index_file = ConfigManager.instance.get(
           'search.index.file', default: 'lunrindex.json'
         )
+        db_file = ConfigManager.instance.get(
+          'search.db.file', default: 'lunrdb.json'
+        )
+
         index_file = File.join(Toolchain.build_path, 'html', index_file)
+        db_file = File.join(Toolchain.build_path, 'html', db_file)
+
         index_file = outfile unless outfile.nil?
+        db_file = dbfile unless dbfile.nil?
+
         File.open(index_file, 'w') do |f|
           f.write(JSON.generate(index))
         end
-        return index
+        File.open(db_file, 'w') do |f|
+          f.write(JSON.generate(lookup))
+        end
+
+        return index, lookup
       end
 
       private
@@ -70,6 +98,24 @@ module Toolchain
         return Regexp.new("^#{escaped}$", Regexp::IGNORECASE)
       end
 
+      ##
+      # Get the parents sections of a section given the section id +id+.
+      # Returns a descending array of parent sections,
+      # starting with the highest level.
+      def _get_parent_sections(id)
+        entry = @nodes[id]
+        return nil if entry.nil?
+        return entry['parents']
+      end
+
+      ##
+      # Get the label for this section given the section id +id+.
+      # Returns the label, if there is one, +nil+ otherwise.
+      def _get_label(id)
+        entry = @nodes[id]
+        return nil if entry.nil?
+        return entry['label']
+      end
 
       ##
       # Parse a single HTML file +html_file+.
@@ -102,27 +148,33 @@ module Toolchain
 
         ref = header['id']
         title = header.content
-        body = ps.map(&:content).join
+        body = ps.map(&:content).join.gsub(/\R+/, ' ') # sub newline for space
+        file = File.basename(filename)
+
+        parents = _get_parent_sections(ref)
+        label = _get_label(ref)
 
         return {
           id: ref,
           title: title.delete("\n"),
+          parents: parents,
+          label: label,
           body: body,
-          file: File.basename(filename)
+          file: file
         }
       end
 
       ##
-      # Generates lunr index .json file from HTMLs.
+      # Generates lunr index JSON and lunr DB JSON file from HTMLs.
       # +htmls+ is a list of strings, representing the HTML file names.
-      # Returns the index JSON for lunr.
+      # Returns the index JSON and DB JSON for lunr.
       #
       def generate_index(htmls)
         docs = []
         lookup = {}
         htmls.each do |html|
           curr = _parse_html(html)
-          curr.each { |e| lookup[e[:id]] = html}
+          curr.each { |e| lookup[e[:id]] = e.reject { |k,_| k == :id } }
           docs += curr
         end
 
@@ -130,9 +182,9 @@ module Toolchain
         ctx.load(File.join(__dir__, '..', 'utils', 'lunr.js'))
         ctx.eval(
           '
-           lunr.Index.prototype.dumpIndex = function() {
-               return JSON.stringify(this.toJSON());
-           }'
+            lunr.Index.prototype.dumpIndex = function() {
+              return JSON.stringify(this.toJSON());
+            }'
         )
 
         lunrjs = ctx.eval('lunr')
@@ -154,9 +206,12 @@ module Toolchain
         if ENV.key?('DEBUG')
           puts '=== DATA ==='
           pp index
+          puts '=== LOOKUP ==='
+          pp lookup
         end
-        return index
+        return index, lookup
       end
+
     end
   end
 end

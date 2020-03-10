@@ -60,8 +60,10 @@ module Toolchain
           current = OpenStruct.new(
             id: id,
             level: level,
+            label: nil,
             title: title.gsub(/<\/?[^>]*>/, ''), # remove style tags that asciidoctor leaves in titles
             parent: nil,
+            parents: [],
             children: []
           )
           while level <= stack.last.level
@@ -75,6 +77,14 @@ module Toolchain
           # add current element to it's parent's children list
           current.parent.children << current
 
+          stack.each do |sect|
+            title = sect.title
+            next if title.nil?
+            current.parents << title
+            current.label = title if ['REST', 'WPP v1', 'WPP v2'].any? do |keyword|
+              title.include?(keyword)
+            end
+          end
           # replace parent object now with it's id to avoid loops
           current.parent = current.parent.id
           current.founder = founder
@@ -115,7 +125,9 @@ module Toolchain
         toc_elements.each do |e|
           root_file = e.founder == 'root' ? '' : e.founder + '.html'
           level = e.level || 0
+
           fragment_string = Nokogiri::HTML.fragment('<li id="toc_li_' + e.id + '" data-level="' + level.to_s + '"></li>' + "\n")
+          # FIXME fix this mess of string formatting
           fragment_string.at('li') << "\n" + '  <input id="toc_cb_' + e.id + '" type="checkbox"' + (e.children.empty? ? ' disabled' : '') + '><label for="toc_cb_' + e.id + '"><a href="' + root_file.to_s + (e.founder == e.id ? '' : '#' + e.id)+ '">' + e.title + '</a></label>' + "\n"
 
           # if element has child elements, add them to current list item

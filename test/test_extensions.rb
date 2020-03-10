@@ -347,19 +347,19 @@ Sensing a pattern here?
 
 [discrete]
 === Hide me senpai
-'
+    '
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
     ::Toolchain::ConfigManager.instance.load
     json_filepath, html_filepath, = ::Toolchain::Adoc::CreateTOC.new.run(adoc.parsed.catalog)
-    
+
     # Test JSON file
     toc_object = JSON.parse(File.read(json_filepath))
     assert_equal('Getting sectioned at 5', toc_object['children'][2]['children'][0]['children'][0]['children'][0]['title'])
-    
+
     # Test HTML file
     toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
     assert_equal('level_two.html', toc_html.css('div#toc > ul > li#toc_li_level_two > input + label > a').attribute('href').value)
-    
+
     # Test hierarchy level attribute
     assert_equal('5', toc_html.css('li#toc_li_level_six').attribute('data-level').value)
   end

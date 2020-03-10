@@ -14,8 +14,10 @@ checkers:
 search:
   index:
     file: lunrindex.json
-    exclude:
-      - docinfo*.html
+  db:
+    file: lunrdb.json
+  exclude:
+    - docinfo*.html
 
 log:
   file: /tmp/log.json

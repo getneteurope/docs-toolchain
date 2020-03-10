@@ -88,10 +88,6 @@ module Toolchain
         next unless Dir.exist?(from_dir)
         to_dir = File.join(html_dir, asset)
         FileUtils.mv(from_dir, to_dir, force: true)
-        # mkdir(to_dir)
-        # Dir[File.join(from_dir, '*')].each do |file|
-        #   FileUtils.mv(file, to_dir)
-        # end
       end
 
       stage_log(:build, "Files are in #{html_dir}")

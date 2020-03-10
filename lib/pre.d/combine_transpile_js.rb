@@ -159,4 +159,7 @@ module Toolchain
   end
 end
 
-Toolchain::PreProcessManager.instance.register(Toolchain::Pre::CombineAndTranspileJS.new) unless ENV.key?('SKIP_COMBINE')
+unless ENV.key?('FAST') || ENV.key?('SKIP_COMBINE')
+  Toolchain::PreProcessManager
+    .instance.register(Toolchain::Pre::CombineAndTranspileJS.new)
+end
