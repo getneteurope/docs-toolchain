@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-10T13:07:46+00:00">2020-03-10T13:07:46+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-10T15:27:08+00:00">2020-03-10T15:27:08+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -203,7 +203,7 @@
       <tr>
         <td class="strong"><a href="#7d3420068b1d291cf4ae3964d34866543b99a7bf" class="src_link" title="lib/utils/create_toc.rb">lib/utils/create_toc.rb</a></td>
         <td class="green strong">98.72 %</td>
-        <td>154</td>
+        <td>156</td>
         <td>78</td>
         <td>77</td>
         <td>1</td>
@@ -7561,7 +7561,7 @@
         <li class="missed" data-hits="0" data-linenumber="74">
           
           
-          <code class="ruby">                 ::Toolchain.document_root</code>
+          <code class="ruby">                 ::Toolchain.build_path</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="75">
@@ -9538,13 +9538,13 @@
         <li class="never" data-hits="" data-linenumber="63">
           
           
-          <code class="ruby">            title: title,</code>
+          <code class="ruby">            label: nil,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="64">
           
           
-          <code class="ruby">            label: nil,</code>
+          <code class="ruby">            title: title.gsub(/&lt;\/?[^&gt;]*&gt;/, &#39;&#39;), # remove style tags that asciidoctor leaves in titles</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
@@ -9925,163 +9925,175 @@
           <code class="ruby">          level = e.level || 0</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="128">
-          <span class="hits">8</span>
+        <li class="never" data-hits="" data-linenumber="128">
           
-          <code class="ruby">          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_&#39; + e.id + &#39;&quot; data-level=&quot;&#39; + level.to_s + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)</code>
+          
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="8" data-linenumber="129">
           <span class="hits">8</span>
           
-          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; &quot;\n  &lt;a href=\&quot;#{root_file}&quot; + (e.founder == e.id ? &#39;&#39; : &#39;#&#39; + e.id) + &quot;\&quot;&gt;#{e.title}&lt;/a&gt;\n&quot;</code>
+          <code class="ruby">          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_li_&#39; + e.id + &#39;&quot; data-level=&quot;&#39; + level.to_s + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="130">
           
           
+          <code class="ruby">          # FIXME fix this mess of string formatting</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="131">
+          <span class="hits">8</span>
+          
+          <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; &quot;\n&quot; + &#39;  &lt;input id=&quot;toc_cb_&#39; + e.id + &#39;&quot; type=&quot;checkbox&quot;&#39; + (e.children.empty? ? &#39; disabled&#39; : &#39;&#39;) + &#39;&gt;&lt;label for=&quot;toc_cb_&#39; + e.id + &#39;&quot;&gt;&lt;a href=&quot;&#39; + root_file.to_s + (e.founder == e.id ? &#39;&#39; : &#39;#&#39; + e.id)+ &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&lt;/label&gt;&#39; + &quot;\n&quot;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="132">
+          
+          
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="131">
+        <li class="never" data-hits="" data-linenumber="133">
           
           
           <code class="ruby">          # if element has child elements, add them to current list item</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="132">
+        <li class="covered" data-hits="8" data-linenumber="134">
           <span class="hits">8</span>
           
           <code class="ruby">          fragment_string.at(&#39;li&#39;) &lt;&lt; generate_html_from_toc(e.children) unless e.children.empty?</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="133">
+        <li class="covered" data-hits="8" data-linenumber="135">
           <span class="hits">8</span>
           
           <code class="ruby">          fragment.at(&#39;ul&#39;) &lt;&lt; fragment_string</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="134">
+        <li class="never" data-hits="" data-linenumber="136">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="135">
+        <li class="covered" data-hits="6" data-linenumber="137">
           <span class="hits">6</span>
           
           <code class="ruby">        return fragment</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="136">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="137">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="138">
           
           
-          <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="139">
           
           
-          <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="140">
           
           
+          <code class="ruby">      ## Takes OpenStruct +object+ and returns +hash+</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="141">
+          
+          
+          <code class="ruby">      # Useful for converting OpenStruct Hash for later conversion to JSON</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="142">
+          
+          
           <code class="ruby">      #</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="141">
+        <li class="covered" data-hits="1" data-linenumber="143">
           <span class="hits">1</span>
           
           <code class="ruby">      def openstruct_to_hash(object, hash = {})</code>
         </li>
       
-        <li class="covered" data-hits="20" data-linenumber="142">
+        <li class="covered" data-hits="20" data-linenumber="144">
           <span class="hits">20</span>
           
           <code class="ruby">        return object unless object.is_a? OpenStruct</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="143">
+        <li class="covered" data-hits="9" data-linenumber="145">
           <span class="hits">9</span>
           
           <code class="ruby">        object.each_pair do |key, value|</code>
         </li>
       
-        <li class="covered" data-hits="67" data-linenumber="144">
+        <li class="covered" data-hits="67" data-linenumber="146">
           <span class="hits">67</span>
           
           <code class="ruby">          hash[key] = case value</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="145">
+        <li class="missed" data-hits="0" data-linenumber="147">
           
           
           <code class="ruby">                      when OpenStruct then openstruct_to_hash(value)</code>
         </li>
       
-        <li class="covered" data-hits="36" data-linenumber="146">
+        <li class="covered" data-hits="36" data-linenumber="148">
           <span class="hits">36</span>
           
           <code class="ruby">                      when Array then value.map { |v| openstruct_to_hash(v) }</code>
         </li>
       
-        <li class="covered" data-hits="50" data-linenumber="147">
+        <li class="covered" data-hits="50" data-linenumber="149">
           <span class="hits">50</span>
           
           <code class="ruby">                      else value</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="148">
+        <li class="never" data-hits="" data-linenumber="150">
           
           
           <code class="ruby">                      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="149">
+        <li class="never" data-hits="" data-linenumber="151">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="150">
+        <li class="covered" data-hits="9" data-linenumber="152">
           <span class="hits">9</span>
           
           <code class="ruby">        return hash</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="151">
+        <li class="never" data-hits="" data-linenumber="153">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="152">
+        <li class="never" data-hits="" data-linenumber="154">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="153">
+        <li class="never" data-hits="" data-linenumber="155">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="154">
+        <li class="never" data-hits="" data-linenumber="156">
           
           
           <code class="ruby">end</code>
