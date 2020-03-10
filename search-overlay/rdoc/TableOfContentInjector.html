@@ -141,20 +141,9 @@
     <span class="ruby-string">&#39;&lt;a id=&quot;logo&quot; href=&quot;index.html&quot;&gt;&lt;img src=&quot;images/logo.png&quot; alt=&quot;Logo&quot;&gt;&lt;/a&gt;&#39;</span>
   )
   <span class="ruby-comment"># search and search overlay</span>
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_next_sibling</span>(
-    <span class="ruby-string">&#39;&lt;div id=&quot;search-overlay-wrapper&quot;&gt;&lt;div id=&quot;search-overlay&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>
-  )
-  <span class="ruby-identifier">search_overlay</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#search-overlay&#39;</span>)
-  <span class="ruby-identifier">search_overlay</span>.<span class="ruby-identifier">add_child</span>(<span class="ruby-string">&#39;&lt;div id=&quot;search-wrapper&quot;&gt;&lt;/div&gt;&#39;</span>)
-  <span class="ruby-identifier">search_wrapper</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#search-wrapper&#39;</span>)
-  <span class="ruby-identifier">search_wrapper</span>.<span class="ruby-identifier">add_child</span>(<span class="ruby-string">&#39;&lt;button type=&quot;button&quot; class=&quot;close&quot;&gt;X&lt;/button&gt;&#39;</span>)
-  <span class="ruby-identifier">search_wrapper</span>.<span class="ruby-identifier">add_child</span>(<span class="ruby-string">&#39;&lt;div id=&quot;search-results-wrapper&quot;&gt;&lt;/div&gt;&#39;</span>)
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#search-results-wrapper&#39;</span>).<span class="ruby-identifier">add_child</span>(
-    <span class="ruby-string">&#39;&lt;input id=&quot;search&quot; type=&quot;search&quot; value=&quot;&quot; autocomplete=&quot;off&quot; placeholder=&quot;Search...&quot;/&gt;&#39;</span>
-  )
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#search-results-wrapper&#39;</span>).<span class="ruby-identifier">add_next_sibling</span>(
-    <span class="ruby-string">&#39;&lt;ul id=&quot;search-results-list&quot;&gt;&lt;/ul&gt;&#39;</span>
-  )
+  <span class="ruby-identifier">search_overlay</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>, <span class="ruby-string">&#39;docinfo-search.html&#39;</span>))
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_next_sibling</span>(<span class="ruby-identifier">search_overlay</span>)
 
   <span class="ruby-identifier">html</span>.<span class="ruby-identifier">to_html</span>
 <span class="ruby-keyword">end</span></pre>
