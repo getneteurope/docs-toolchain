@@ -91,20 +91,20 @@ The **test** and **build** stages produce `/tmp/slack.json`, a central file cont
 
 #### Files
 Configuration files:
-* `config/settings.json`: general settings
-* `config/log.json`: logging specific settings
-* `config/invalid-patterns.json`
-* `config/error-types.json`: lists all warning/error types with a unique string ID, a unique error code (grouped like HTTP codes), and a format string like error message.
-* `static/privacy-policy.(txt|adoc)`
+* `config/default.yaml`: default settings
+* `config/invalid-patterns.json`: WIP
+* `static/privacy-policy.(txt|adoc)`: WIP
+* `content/docinfo-search.html`: search overlay for the frontend
 
 ## Run
 
 To run the toolchain locally, or run the unit tests, the following requirements must be met:
 * Ruby 2.x
-** installed dependencies (Gemfile)
+    * installed dependencies (Gemfile)
 
 In order to install dependencies, run the following at the root of the project:
 ```bash
 export TOOLCHAIN_PATH="$(pwd)"
 bash stages/setup/setup_main.sh
 ```
+
