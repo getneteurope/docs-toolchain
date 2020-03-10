@@ -635,20 +635,9 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
       '<a id="logo" href="index.html"><img src="images/logo.png" alt="Logo"></a>'
     )
     # search and search overlay
-    html.at_css('div#toc').children.first.add_next_sibling(
-      '<div id="search-overlay-wrapper"><div id="search-overlay"></div></div>'
-    )
-    search_overlay = html.at_css('div#search-overlay')
-    search_overlay.add_child('<div id="search-wrapper"></div>')
-    search_wrapper = html.at_css('div#search-wrapper')
-    search_wrapper.add_child('<button type="button" class="close">X</button>')
-    search_wrapper.add_child('<div id="search-results-wrapper"></div>')
-    html.at_css('div#search-results-wrapper').add_child(
-      '<input id="search" type="search" value="" autocomplete="off" placeholder="Search..."/>'
-    )
-    html.at_css('div#search-results-wrapper').add_next_sibling(
-      '<ul id="search-results-list"></ul>'
-    )
+    search_overlay = File.read(
+      File.join(::Toolchain.build_path, 'docinfo-search.html'))
+    html.at_css('div#toc').children.first.add_next_sibling(search_overlay)
 
     html.to_html
   end
