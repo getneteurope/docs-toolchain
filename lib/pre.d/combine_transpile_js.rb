@@ -71,7 +71,7 @@ module Toolchain
         root = if ENV.key?('UNITTEST')
                  File.dirname(path)
                else
-                 ::Toolchain.document_root
+                 ::Toolchain.build_path
                end
         blob_name = path.include?('footer') ? 'footer' : 'header'
         js_blob_path = File.join(

@@ -21,7 +21,8 @@ module Toolchain
         @html_dir = CM.get('build.html_dir')
         @toc_html_file = File.join(
           ::Toolchain.build_path,
-          CM.get('toc.html_file'))
+          CM.get('toc.html_file')
+        )
         @html_files_array = Dir.glob('*.html', base: ::Toolchain.html_path).map do |file|
           File.join(::Toolchain.html_path, file)
         end
@@ -43,14 +44,38 @@ module Toolchain
 
       private
 
+      ## 
+      # Tick all chackboxes of ancestors of current page
+      # Requires +page_id+ and Nokogiri Table of Content +toc_document+
+      # Returns modified TOC +toc_document+
+      #
+      def tick_toc_checkboxes(page_id, toc_document)
+        selector = '#toc_li_' + page_id
+        while toc_document.at_css selector
+          break unless toc_document.at_css(selector).name == 'li'
+          begin
+            cb = toc_document.at_css(selector).at_css('> input')
+            cb.set_attribute('checked','')
+            selector = '#' + toc_document.at_css(selector).parent.parent.attr('id')
+          rescue
+            break
+          end
+        end
+        return toc_document
+      end
+
       ## Appends HTML fragment +html_fragment+ to top of body of an HTML file +html_file+
       # Returns path of modified HTML file +html_filepath+
       #
       def inject_fragment_into_html_file(html_fragment, html_file)
         file_content = File.read(html_file)
         document = Nokogiri::HTML(file_content)
+        page_id = File.basename(html_file, '.html') # TODO find better way to get page_id
+        toc_document = Nokogiri::HTML.fragment(html_fragment)
+        stage_log(:post, '[Inject TOC] Starting')
+        toc_document = tick_toc_checkboxes(page_id, toc_document)
         document.css('div#toc').remove
-        document.css('div#header').children.first.add_previous_sibling(html_fragment)
+        document.css('div#header').children.first.add_previous_sibling(toc_document.to_html)
         modified_html = document.to_html
         return html_file if File.write(html_file, modified_html)
       end
@@ -58,4 +83,4 @@ module Toolchain
   end
 end
 
-# Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)
+Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)

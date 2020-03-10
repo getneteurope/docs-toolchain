@@ -358,9 +358,9 @@ Sensing a pattern here?
 
     # Test HTML file
     toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
-    assert_equal('level_three.html', toc_html.css('div#toc > ul > li#toc_level_two > a + ul > li#toc_level_three > a').attribute('href').value)
+    assert_equal('level_two.html', toc_html.css('div#toc > ul > li#toc_li_level_two > input + label > a').attribute('href').value)
 
     # Test hierarchy level attribute
-    assert_equal('5', toc_html.css('li#toc_level_six').attribute('data-level').value)
+    assert_equal('5', toc_html.css('li#toc_li_level_six').attribute('data-level').value)
   end
 end
