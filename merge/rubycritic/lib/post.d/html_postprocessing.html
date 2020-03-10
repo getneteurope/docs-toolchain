@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-04 13:11:31 +0100'>2020-03-04 13:11:31 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-06 17:43:40 +0100'>2020-03-06 17:43:40 +0100</time>
         
       </span>
     </div>
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">61</span><small> lines of codes</small></div>
-              <div><span class="metric">3</span><small> methods</small></div>
+              <div><span class="metric">86</span><small> lines of codes</small></div>
+              <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">10.6</span><small> complexity/method</small></div>
-              <div><span class="metric">5</span><small> churn</small></div>
+              <div><span class="metric">15.0</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">31.77</span><small> complexity</small></div>
+              <div><span class="metric">59.9</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
+                3
                 smells
               </a>
             </li>
@@ -120,7 +120,8 @@ module Toolchain
         @html_dir = CM.get(&#39;build.html_dir&#39;)
         @toc_html_file = File.join(
           ::Toolchain.build_path,
-          CM.get(&#39;toc.html_file&#39;))
+          CM.get(&#39;toc.html_file&#39;)
+        )
         @html_files_array = Dir.glob(&#39;*.html&#39;, base: ::Toolchain.html_path).map do |file|
           File.join(::Toolchain.html_path, file)
         end
@@ -142,14 +143,38 @@ module Toolchain
 
       private
 
+      ## 
+      # Tick all chackboxes of ancestors of current page
+      # Requires +page_id+ and Nokogiri Table of Content +toc_document+
+      # Returns modified TOC +toc_document+
+      #
+      def tick_toc_checkboxes(page_id, toc_document)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#tick_toc_checkboxes doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+        selector = &#39;#toc_li_&#39; + page_id
+        while toc_document.at_css selector<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="html_postprocessing.html#L54" class="js-smell-location">0</a>                  <a href="html_postprocessing.html#L55" class="js-smell-location">1</a>                  <a href="html_postprocessing.html#L57" class="js-smell-location">2</a>                  <a href="html_postprocessing.html#L59" class="js-smell-location">3</a>                  </div>  </li></ol>
+          break unless toc_document.at_css(selector).name == &#39;li&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="html_postprocessing.html#L54" class="js-smell-location">0</a>                  <a href="html_postprocessing.html#L55" class="js-smell-location">1</a>                  <a href="html_postprocessing.html#L57" class="js-smell-location">2</a>                  <a href="html_postprocessing.html#L59" class="js-smell-location">3</a>                  </div>  </li></ol>
+          begin
+            cb = toc_document.at_css(selector).at_css(&#39;&gt; input&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="html_postprocessing.html#L54" class="js-smell-location">0</a>                  <a href="html_postprocessing.html#L55" class="js-smell-location">1</a>                  <a href="html_postprocessing.html#L57" class="js-smell-location">2</a>                  <a href="html_postprocessing.html#L59" class="js-smell-location">3</a>                  </div>  </li></ol>
+            cb.set_attribute(&#39;checked&#39;,&#39;&#39;)
+            selector = &#39;#&#39; + toc_document.at_css(selector).parent.parent.attr(&#39;id&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="html_postprocessing.html#L54" class="js-smell-location">0</a>                  <a href="html_postprocessing.html#L55" class="js-smell-location">1</a>                  <a href="html_postprocessing.html#L57" class="js-smell-location">2</a>                  <a href="html_postprocessing.html#L59" class="js-smell-location">3</a>                  </div>  </li></ol>
+          rescue
+            break
+          end
+        end
+        return toc_document
+      end
+
       ## Appends HTML fragment +html_fragment+ to top of body of an HTML file +html_file+
       # Returns path of modified HTML file +html_filepath+
       #
-      def inject_fragment_into_html_file(html_fragment, html_file)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#inject_fragment_into_html_file doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+      def inject_fragment_into_html_file(html_fragment, html_file)
         file_content = File.read(html_file)
         document = Nokogiri::HTML(file_content)
+        page_id = File.basename(html_file, &#39;.html&#39;) # TODO find better way to get page_id
+        toc_document = Nokogiri::HTML.fragment(html_fragment)
+        stage_log(:post, &#39;[Inject TOC] Starting&#39;)
+        toc_document = tick_toc_checkboxes(page_id, toc_document)
         document.css(&#39;div#toc&#39;).remove
-        document.css(&#39;div#header&#39;).children.first.add_previous_sibling(html_fragment)
+        document.css(&#39;div#header&#39;).children.first.add_previous_sibling(toc_document.to_html)
         modified_html = document.to_html
         return html_file if File.write(html_file, modified_html)
       end
@@ -157,7 +182,7 @@ module Toolchain
   end
 end
 
-# Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)
+Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)
 </code>
   </div>
 </div>

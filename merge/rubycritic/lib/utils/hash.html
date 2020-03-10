@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-28 09:43:25 +0100'>2020-02-28 09:43:25 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-09 13:22:50 +0100'>2020-03-09 13:22:50 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>lib/utils /</small> paths.rb</h3>
+      <h3><small>lib/utils /</small> hash.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">57</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">36</span><small> lines of codes</small></div>
+              <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">7.6</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">3.2</span><small> complexity/method</small></div>
+              <div><span class="metric">1</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">38.02</span><small> complexity</small></div>
+              <div><span class="metric">12.83</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -99,59 +99,38 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require_relative &#39;../config_manager.rb&#39;
-
-module Toolchain<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain has no descriptive comment</span>          </div>  </li></ol>
-  ##
-  # content_path
-  # Returns path to content directory root.
+# https://stackoverflow.com/a/11105831
+class Hash<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Hash has no descriptive comment</span>          </div>  </li></ol>
+  # Returns a hash that includes everything but the given keys.
+  #   hash = { a: true, b: false, c: nil}
+  #   hash.except(:c) # =&gt; { a: true, b: false}
+  #   hash # =&gt; { a: true, b: false, c: nil}
   #
-  def self.content_path(path = nil)
-    content_dir_path = Dir.pwd
-    content_dir_path = File.join(Dir.pwd, &#39;..&#39;) if File.basename(Dir.pwd) == &#39;toolchain&#39;
-    content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
-      if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
-    content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)
-    # For Unit testing:
-    content_dir_path = path unless path.nil?
-    return content_dir_path
+  # This is useful for limiting a set of parameters to everything but a few known toggles:
+  #   @person.update(params[:person].except(:admin))
+  def except(keys)
+    dup.except!(keys)
   end
 
-  ##
-  # document_root
-  # Returns the root of content structure, i.e. where +index.adoc+ is located.
-  #
-  def self.document_root
-    return File.join(content_path, &#39;content&#39;)
+  # Replaces the hash without the given keys.
+  #   hash = { a: true, b: false, c: nil}
+  #   hash.except!(:c) # =&gt; { a: true, b: false}
+  #   hash # =&gt; { a: true, b: false }
+  def except!(keys)
+    keys.each { |key| delete(key) }
+    self
   end
 
-  ##
-  # toolchain_path
-  # Returns path to toolchain root.
-  #
-  def self.toolchain_path(path = nil)
-    toolchain_dir_path = File.join(Dir.pwd, &#39;toolchain&#39;)
-    toolchain_dir_path = Dir.pwd unless File.exist?(toolchain_dir_path)
-    toolchain_dir_path = ENV[&#39;TOOLCHAIN_PATH&#39;] if ENV.key?(&#39;TOOLCHAIN_PATH&#39;)
-    # For Unit testing:
-    toolchain_dir_path = path unless path.nil?
-    return toolchain_dir_path
+  # Returns a Hash with all keys in +keys+ and deletes all other keys.
+  def only(keys)
+    dup.only!(keys)
   end
 
-  ##
-  # build_path
-  # Returns path to toolchain build directory.
-  #
-  def self.build_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.dir&#39;) : path)
-  end
-
-  ##
-  # html_path
-  # Returns path to generated html files.
-  #
-  def self.html_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.html_dir&#39;) : path)
+  # Returns the Hash with all keys in +keys+ and deletes all other keys.
+  def only!(keys)
+    del_keys = self.keys
+    del_keys.delete_if { |k| keys.include?(k) }.each { |k| delete(k)}
+    self
   end
 end
 </code>

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-04 13:11:31 +0100'>2020-03-04 13:11:31 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-10 14:04:56 +0100'>2020-03-10 14:04:56 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">640</span><small> lines of codes</small></div>
+              <div><span class="metric">650</span><small> lines of codes</small></div>
               <div><span class="metric">20</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">28.9</span><small> complexity/method</small></div>
-              <div><span class="metric">13</span><small> churn</small></div>
+              <div><span class="metric">29.7</span><small> complexity/method</small></div>
+              <div><span class="metric">20</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">578.81</span><small> complexity</small></div>
+              <div><span class="metric">593.54</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                37
+                39
                 smells
               </a>
             </li>
@@ -722,12 +722,22 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
 end
 
 class TableOfContentInjector &lt; Asciidoctor::Extensions::Postprocessor<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TableOfContentInjector has no descriptive comment</span>          </div>  </li></ol>
-  def process(document, output)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>TableOfContentInjector#process doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+  def process(document, output)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>TableOfContentInjector#process has a flog score of 32</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>TableOfContentInjector#process doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
     _, toc_html_filepath, _ = ::Toolchain::Adoc::CreateTOC.new.run(document.catalog)
     toc = File.read(toc_html_filepath)
     html = Nokogiri::HTML(output)
-    html.css(&#39;div#toc&#39;).remove if html.css(&#39;div#toc&#39;)
-    html.css(&#39;div#header&#39;).children.first.add_previous_sibling(toc)
+    # table of content
+    html.at_css(&#39;div#toc&#39;).remove if html.at_css(&#39;div#toc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>TableOfContentInjector#process calls 'html.at_css('div#toc')' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L631" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L634" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L640" class="js-smell-location">2</a>                  </div>  </li></ol>
+    html.at_css(&#39;body&#39;).children.first.add_previous_sibling(toc)
+    # logo
+    html.at_css(&#39;div#toc&#39;).children.first.add_previous_sibling(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>TableOfContentInjector#process calls 'html.at_css('div#toc')' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L631" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L634" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L640" class="js-smell-location">2</a>                  </div>  </li></ol>
+      &#39;&lt;a id=&quot;logo&quot; href=&quot;index.html&quot;&gt;&lt;img src=&quot;images/logo.png&quot; alt=&quot;Logo&quot;&gt;&lt;/a&gt;&#39;
+    )
+    # search and search overlay
+    search_overlay = File.read(
+      File.join(::Toolchain.build_path, &#39;docinfo-search.html&#39;))
+    html.at_css(&#39;div#toc&#39;).children.first.add_next_sibling(search_overlay)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>TableOfContentInjector#process calls 'html.at_css('div#toc')' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L631" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L634" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L640" class="js-smell-location">2</a>                  </div>  </li></ol>
+
     html.to_html
   end
 end

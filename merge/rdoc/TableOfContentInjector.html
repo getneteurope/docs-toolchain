@@ -133,8 +133,18 @@
   <span class="ruby-identifier">_</span>, <span class="ruby-identifier">toc_html_filepath</span>, <span class="ruby-identifier">_</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Adoc</span><span class="ruby-operator">::</span><span class="ruby-constant">CreateTOC</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">document</span>.<span class="ruby-identifier">catalog</span>)
   <span class="ruby-identifier">toc</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">toc_html_filepath</span>)
   <span class="ruby-identifier">html</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">output</span>)
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">remove</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>)
-  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;div#header&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(<span class="ruby-identifier">toc</span>)
+  <span class="ruby-comment"># table of content</span>
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">remove</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>)
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;body&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(<span class="ruby-identifier">toc</span>)
+  <span class="ruby-comment"># logo</span>
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_previous_sibling</span>(
+    <span class="ruby-string">&#39;&lt;a id=&quot;logo&quot; href=&quot;index.html&quot;&gt;&lt;img src=&quot;images/logo.png&quot; alt=&quot;Logo&quot;&gt;&lt;/a&gt;&#39;</span>
+  )
+  <span class="ruby-comment"># search and search overlay</span>
+  <span class="ruby-identifier">search_overlay</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>, <span class="ruby-string">&#39;docinfo-search.html&#39;</span>))
+  <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;div#toc&#39;</span>).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">add_next_sibling</span>(<span class="ruby-identifier">search_overlay</span>)
+
   <span class="ruby-identifier">html</span>.<span class="ruby-identifier">to_html</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

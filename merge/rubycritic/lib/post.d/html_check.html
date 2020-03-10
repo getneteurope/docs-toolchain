@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-03 10:12:41 +0100'>2020-03-03 10:12:41 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-09 14:03:56 +0100'>2020-03-09 14:03:56 +0100</time>
         
       </span>
     </div>
@@ -68,16 +68,16 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">30</span><small> lines of codes</small></div>
+              <div><span class="metric">33</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">6.3</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">12.57</span><small> complexity</small></div>
-              <div><span class="metric">0</span><small> duplications</small></div>
+              <div><span class="metric">16</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
+                1
                 smell
               </a>
             </li>
@@ -126,7 +126,10 @@ module Toolchain
   end
 end
 
-Toolchain::PostProcessManager.instance.register(Toolchain::Post::HTMLCheck.new)
+unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_HTMLCHECK&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="html_check.html#L30" class="js-smell-location">0</a>                  <a href="../pre.d/combine_transpile_js.html#L162" class="js-smell-location">1</a>                  </div>  </li></ol>
+  Toolchain::PostProcessManager
+    .instance.register(Toolchain::Post::HTMLCheck.new)
+end
 </code>
   </div>
 </div>
