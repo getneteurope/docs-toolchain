@@ -604,7 +604,6 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
 
   # Convert each page and write it to file. Use filenames based on IDs.
   def write(output, target)
-    puts "WRITE #{target}"
     # Write primary (book) landing page
     ::File.open(target, 'w') do |f|
       f.write(output)
