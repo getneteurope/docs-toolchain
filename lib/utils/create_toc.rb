@@ -12,7 +12,7 @@ require 'fileutils'
 module Toolchain
   module Adoc
     ##
-    # Adds modules for preprocessing files.
+    # Create a Table of Contents, inherts BaseProcess
     class CreateTOC < BaseProcess
 
       def initialize(priority = 0)
@@ -152,5 +152,27 @@ module Toolchain
         return hash
       end
     end
+
+
   end
+end
+
+##
+# Tick all checkboxes of ancestors of current page
+# Requires +page_id+ and Nokogiri Table of Content +toc_document+
+# Returns modified TOC +toc_document+
+#
+def tick_toc_checkboxes(page_id, toc_document)
+  selector = '#toc_li_' + page_id
+  while toc_document.at_css selector
+    break unless toc_document.at_css(selector).name == 'li'
+    begin
+      cb = toc_document.at_css(selector).at_css('> input')
+      cb.set_attribute('checked','')
+      selector = '#' + toc_document.at_css(selector).parent.parent.attr('id')
+    rescue StandardError => _e
+      break
+    end
+  end
+  return toc_document
 end

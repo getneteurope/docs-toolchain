@@ -44,26 +44,6 @@ module Toolchain
 
       private
 
-      ## 
-      # Tick all chackboxes of ancestors of current page
-      # Requires +page_id+ and Nokogiri Table of Content +toc_document+
-      # Returns modified TOC +toc_document+
-      #
-      def tick_toc_checkboxes(page_id, toc_document)
-        selector = '#toc_li_' + page_id
-        while toc_document.at_css selector
-          break unless toc_document.at_css(selector).name == 'li'
-          begin
-            cb = toc_document.at_css(selector).at_css('> input')
-            cb.set_attribute('checked','')
-            selector = '#' + toc_document.at_css(selector).parent.parent.attr('id')
-          rescue
-            break
-          end
-        end
-        return toc_document
-      end
-
       ## Appends HTML fragment +html_fragment+ to top of body of an HTML file +html_file+
       # Returns path of modified HTML file +html_filepath+
       #
@@ -83,4 +63,4 @@ module Toolchain
   end
 end
 
-Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)
+# Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)

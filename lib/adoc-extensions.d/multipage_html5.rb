@@ -604,6 +604,7 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
 
   # Convert each page and write it to file. Use filenames based on IDs.
   def write(output, target)
+    puts "WRITE #{target}"
     # Write primary (book) landing page
     ::File.open(target, 'w') do |f|
       f.write(output)
@@ -627,9 +628,14 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
     _, toc_html_filepath, _ = ::Toolchain::Adoc::CreateTOC.new.run(document.catalog)
     toc = File.read(toc_html_filepath)
     html = Nokogiri::HTML(output)
+
+    # filename is based on ID, see `write` method above
+    filename = document.id + '.html'
+    toc_document = Nokogiri::HTML.fragment(toc)
+    toc_document = tick_toc_checkboxes(filename, toc_document)
     # table of content
     html.at_css('div#toc').remove if html.at_css('div#toc')
-    html.at_css('body').children.first.add_previous_sibling(toc)
+    html.at_css('body').children.first.add_previous_sibling(toc_document)
     # logo
     html.at_css('div#toc').children.first.add_previous_sibling(
       '<a id="logo" href="index.html"><img src="images/logo.png" alt="Logo"></a>'
