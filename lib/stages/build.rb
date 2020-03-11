@@ -61,6 +61,8 @@ module Toolchain
           'systemtimestamp' => %x(date +%s),
           'backend' => 'multipage_html5',
           'docinfo' => 'shared',
+          'source-highlighter' => 'coderay',
+          'coderay-css' => 'style',
           'root' => Toolchain.build_path
         },
         safe: :safe,
