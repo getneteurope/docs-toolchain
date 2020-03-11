@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-11 10:20:49 +0100'>2020-03-11 10:20:49 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-11 13:45:56 +0100'>2020-03-11 13:45:56 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">96</span><small> lines of codes</small></div>
+              <div><span class="metric">98</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">20.0</span><small> complexity/method</small></div>
-              <div><span class="metric">26</span><small> churn</small></div>
+              <div><span class="metric">28</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">39.96</span><small> complexity</small></div>
@@ -160,6 +160,8 @@ module Toolchain
           &#39;systemtimestamp&#39; =&gt; %x(date +%s),
           &#39;backend&#39; =&gt; &#39;multipage_html5&#39;,
           &#39;docinfo&#39; =&gt; &#39;shared&#39;,
+          &#39;source-highlighter&#39; =&gt; &#39;coderay&#39;,
+          &#39;coderay-css&#39; =&gt; &#39;style&#39;,
           &#39;root&#39; =&gt; Toolchain.build_path
         },
         safe: :safe,
