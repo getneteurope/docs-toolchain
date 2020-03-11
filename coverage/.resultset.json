@@ -898,6 +898,28 @@
         null,
         null,
         null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        0,
+        0,
+        0,
+        null,
+        0,
+        0,
+        0,
+        null,
+        0,
+        null,
+        null,
+        0,
         null
       ],
       "/home/runner/work/docs-toolchain/docs-toolchain/lib/cli.rb": [
@@ -1854,6 +1876,6 @@
         null
       ]
     },
-    "timestamp": 1583909670
+    "timestamp": 1583929277
   }
 }
