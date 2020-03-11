@@ -28,29 +28,29 @@ Under heavy development, everything is subject to change and most likely will no
 The toolchain is designed to run through different stages, that have specific responsibilities:
 1. **setup**: install required dependencies
 2. **test**:
-* validate all configuration files
-* test the current commit with:
-* predefined tests by the toolchain (`lib/extensions.d/`)
-* [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
-* abort the build if necessary
-* keep a log of all events which will be used in the notify stage
+    * validate all configuration files
+    * test the current commit with:
+    * predefined tests by the toolchain (`lib/extensions.d/`)
+    * [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
+    * abort the build if necessary
+    * keep a log of all events which will be used in the notify stage
 3. **test**:
-* combine Javascript files to BLOB file and transpile (cross-browser compatibility and loading speed)
+    * combine Javascript files to BLOB file and transpile (cross-browser compatibility and loading speed)
 4. **build**:
-* invoke asciidoctor (with multipage converter)
-* `DEBUG` build for local testing:
-* passthrough as `:debug:` to asciidoctor
-* [*future*] run custom build scripts `build.d/*.sh`
+    * invoke asciidoctor (with multipage converter)
+    * `DEBUG` build for local testing:
+    * passthrough as `:debug:` to asciidoctor
+    * [*future*] run custom build scripts `build.d/*.sh`
 5. **post**:
-* create Table of Content
-* create search index (Lunr)
-* [*future*] trigger translation
+    * create Table of Content
+    * create search index (Lunr)
+    * [*future*] trigger translation
 6. **deploy**:
-* [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
-* [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
-* required variables, see [Configuration/Secret/AWS](#Secret)
+    * [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
+    * [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
+    * required variables, see [Configuration/Secret/AWS](#Secret)
 7. **notify**:
-* send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
+    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
 
 ## Development
 **Quality assurance:**
