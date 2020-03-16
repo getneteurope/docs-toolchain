@@ -68,6 +68,8 @@ Configuration files are public.
 * `FAST` includes contains the following variables:
     * `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
     * `SKIP_HTMLCHECK`: skips the HTML Check Post process.
+    * `SKIP_RAKE_{stage}`
+        * `SKIP_RAKE_TEST`: skips test stage (i.e. `rake docs:test`)
 
 ### Secrets
 #### AWS

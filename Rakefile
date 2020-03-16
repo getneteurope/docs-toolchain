@@ -27,7 +27,7 @@ namespace :docs do
   desc 'Run test stage'
   task :test do
     debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/bin/test.rb #{debug}"
+    ruby "#{toolchain_path}/bin/test.rb #{debug}" unless ENV.key?('SKIP_RAKE_TEST')
   end
 
   desc 'Run pre-processing stage'
