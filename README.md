@@ -64,7 +64,21 @@ The toolchain is designed to run through different stages, that have specific re
 There are some variables that need to be secret, while others can be public.
 Configuration files are public.
 
-## Environment Variables
+### Frontend Configuration
+#### CDN
+By default, Font Awesome is loaded via CDN.
+To disable the loading via CDN:
+1. add `font-awesome.css` to the `css/` folder 
+2. the Font Awesome font files to `fonts/`
+3. add the following to your `index.adoc` below `:icons: font`:
+```
+:!iconfont-remote:
+:iconfont-cdn:
+:!webfonts:
+```
+
+
+### Environment Variables
 * `FAST` includes contains the following variables:
     * `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
     * `SKIP_HTMLCHECK`: skips the HTML Check Post process.
