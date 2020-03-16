@@ -52,18 +52,25 @@ module Toolchain
         'lib/adoc-extensions.d/multipage_html5.rb')
       options = {
         attributes: {
-          'linkcss' => true,
+          # General
+          'root' => Toolchain.build_path,
+          # Multipage
           'multipage-level' => CM.get('asciidoc.multipage_level'),
+          'backend' => 'multipage_html5',
+          # CSS
+          'linkcss' => true,
           'stylesdir' => 'css',
           'stylesheet' => 'main.css',
+          ## Font Awesome
           'icons' => 'font',
+          # TOC
           'toc' => 'left',
-          'systemtimestamp' => %x(date +%s),
-          'backend' => 'multipage_html5',
-          'docinfo' => 'shared',
+          # Source Code
           'source-highlighter' => 'coderay',
           'coderay-css' => 'style',
-          'root' => Toolchain.build_path
+          # Other
+          'systemtimestamp' => %x(date +%s),
+          'docinfo' => 'shared',
         },
         safe: :safe,
         failure_level: 'WARN'
