@@ -26,6 +26,7 @@ module Toolchain
         super(priority)
         @toc_file = File.join(::Toolchain.build_path, CM.get('toc.json_file'))
         @nodes = {}
+        @paragraph_max_length = 140
       end
 
       ##
@@ -153,6 +154,16 @@ module Toolchain
 
         parents = _get_parent_sections(ref)
         label = _get_label(ref)
+
+        # format body
+        if body.size > @paragraph_max_length
+          last_idx = body.index(' ', @paragraph_max_length)
+          # only format if there is a whitespace after the specified length
+          unless last_idx.nil?
+            tmp_body = body[0..last_idx]
+            body = tmp_body.concat(tmp_body[-1] == '.' ? '..' : '...')
+          end
+        end
 
         return {
           id: ref,
