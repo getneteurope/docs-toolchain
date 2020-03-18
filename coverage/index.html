@@ -14,14 +14,14 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-18T09:17:09+00:00">2020-03-18T09:17:09+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-18T13:19:12+00:00">2020-03-18T13:19:12+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="yellow">89.96%</span></span>
+    (<span class="covered_percent"><span class="yellow">89.97%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
@@ -32,8 +32,8 @@
   <a name="AllFiles"></a>
   <div>
     <b>20</b> files in total.
-    <b>737</b> relevant lines. 
-    <span class="green"><b>663</b> lines covered</span> and
+    <b>738</b> relevant lines. 
+    <span class="green"><b>664</b> lines covered</span> and
     <span class="red"><b>74</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -172,10 +172,10 @@
       
       <tr>
         <td class="strong"><a href="#edeef763e37ee930adb02cbb07c6473664652abd" class="src_link" title="lib/pre.d/combine_transpile_js.rb">lib/pre.d/combine_transpile_js.rb</a></td>
-        <td class="green strong">91.89 %</td>
-        <td>165</td>
-        <td>74</td>
-        <td>68</td>
+        <td class="green strong">92.0 %</td>
+        <td>164</td>
+        <td>75</td>
+        <td>69</td>
         <td>6</td>
         <td>2.0</td>
       </tr>
@@ -7175,10 +7175,10 @@
         <div class="source_table" id="edeef763e37ee930adb02cbb07c6473664652abd">
   <div class="header">
     <h3>lib/pre.d/combine_transpile_js.rb</h3>
-    <h4><span class="green">91.89 %</span> covered</h4>
+    <h4><span class="green">92.0 %</span> covered</h4>
     <div>
-      <b>74</b> relevant lines. 
-      <span class="green"><b>68</b> lines covered</span> and
+      <b>75</b> relevant lines. 
+      <span class="green"><b>69</b> lines covered</span> and
       <span class="red"><b>6</b> lines missed.</span>
     </div>
   </div>
@@ -8053,19 +8053,19 @@
         <li class="covered" data-hits="6" data-linenumber="145">
           <span class="hits">6</span>
           
-          <code class="ruby">          line_nr = stag.line</code>
+          <code class="ruby">          next if stag.key?(&#39;noblob&#39;)</code>
         </li>
       
         <li class="covered" data-hits="6" data-linenumber="146">
           <span class="hits">6</span>
           
-          <code class="ruby">          next unless stag.key?(&#39;src&#39;)</code>
+          <code class="ruby">          line_nr = stag.line</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="147">
+        <li class="covered" data-hits="6" data-linenumber="147">
+          <span class="hits">6</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">          next unless stag.key?(&#39;src&#39;)</code>
         </li>
       
         <li class="covered" data-hits="6" data-linenumber="148">
@@ -8074,103 +8074,97 @@
           <code class="ruby">          next unless File.exist?(File.join(dir, stag.attribute(&#39;src&#39;)))</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="149">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="150">
+        <li class="covered" data-hits="4" data-linenumber="149">
           <span class="hits">4</span>
           
           <code class="ruby">          next unless stag.children.empty?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="151">
+        <li class="never" data-hits="" data-linenumber="150">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="152">
+        <li class="covered" data-hits="4" data-linenumber="151">
           <span class="hits">4</span>
           
           <code class="ruby">          log(&#39;JS&#39;, &quot;Found src: #{stag.attribute(&#39;src&#39;)}&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="153">
+        <li class="covered" data-hits="4" data-linenumber="152">
           <span class="hits">4</span>
           
           <code class="ruby">          ::File.join(dir, stag.attribute(&#39;src&#39;))</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="154">
+        <li class="never" data-hits="" data-linenumber="153">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="155">
+        <li class="covered" data-hits="2" data-linenumber="154">
           <span class="hits">2</span>
           
           <code class="ruby">        script_source_files = script_source_files.compact # remove nil</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="156">
+        <li class="covered" data-hits="2" data-linenumber="155">
           <span class="hits">2</span>
           
           <code class="ruby">        return script_source_files</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="157">
+        <li class="never" data-hits="" data-linenumber="156">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="158">
+        <li class="never" data-hits="" data-linenumber="157">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="159">
+        <li class="never" data-hits="" data-linenumber="158">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="160">
+        <li class="never" data-hits="" data-linenumber="159">
           
           
           <code class="ruby">end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="161">
+        <li class="never" data-hits="" data-linenumber="160">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="162">
+        <li class="covered" data-hits="1" data-linenumber="161">
           <span class="hits">1</span>
           
           <code class="ruby">unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_COMBINE&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="163">
+        <li class="covered" data-hits="1" data-linenumber="162">
           <span class="hits">1</span>
           
           <code class="ruby">  Toolchain::PreProcessManager</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="164">
+        <li class="never" data-hits="" data-linenumber="163">
           
           
           <code class="ruby">    .instance.register(Toolchain::Pre::CombineAndTranspileJS.new)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="165">
+        <li class="never" data-hits="" data-linenumber="164">
           
           
           <code class="ruby">end</code>
