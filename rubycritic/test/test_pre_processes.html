@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-04 14:24:04 +0100'>2020-03-04 14:24:04 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-18 14:58:39 +0100'>2020-03-18 14:58:39 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">55</span><small> lines of codes</small></div>
+              <div><span class="metric">56</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">79.0</span><small> complexity/method</small></div>
-              <div><span class="metric">17</span><small> churn</small></div>
+              <div><span class="metric">18</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">79.02</span><small> complexity</small></div>
@@ -138,6 +138,7 @@ class TestJsCombineAndTranspile &lt; Test::Unit::TestCase<ol class="nocode error
     html_footer_filepath = write_tempfile(&#39;docinfo_footer.html&#39;, html_footer)
 
     # TESTS
+    # TODO: add test for noblob js tags
     docinfo_files_paths = OpenStruct.new(
       &#39;header&#39; =&gt; html_header_filepath, &#39;footer&#39; =&gt; html_footer_filepath
     )
