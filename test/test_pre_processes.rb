@@ -39,6 +39,7 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
     html_footer_filepath = write_tempfile('docinfo_footer.html', html_footer)
 
     # TESTS
+    # TODO: add test for noblob js tags
     docinfo_files_paths = OpenStruct.new(
       'header' => html_header_filepath, 'footer' => html_footer_filepath
     )
