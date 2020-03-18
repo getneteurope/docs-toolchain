@@ -67,7 +67,7 @@ module Toolchain
           'toc' => 'left',
           # Source Code
           'source-highlighter' => 'coderay',
-          'coderay-css' => 'style',
+          'coderay-css' => 'class',
           # Other
           'systemtimestamp' => %x(date +%s),
           'docinfo' => 'shared',
