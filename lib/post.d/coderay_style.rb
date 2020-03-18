@@ -19,7 +19,7 @@ module Toolchain
     #
     class CodeRayStyleCopy < BaseProcess
       def run
-        coderay_css = 'coderay-asciidoctor.css'
+        coderay_css = 'asciidoctor-coderay.css'
         stage_log(:post, "Copying CodeRay stylesheet to HTML directory: #{coderay_css}")
         ::FileUtils.cp(
           ::File.join(::Toolchain.document_root, 'css', coderay_css),
