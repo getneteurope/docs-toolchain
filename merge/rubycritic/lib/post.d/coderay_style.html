@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-11 13:18:21 +0100'>2020-03-11 13:18:21 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-18 14:40:29 +0100'>2020-03-18 14:40:29 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>lib/post.d /</small> html_postprocessing.rb</h3>
+      <h3><small>lib/post.d /</small> coderay_style.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">66</span><small> lines of codes</small></div>
-              <div><span class="metric">3</span><small> methods</small></div>
+              <div><span class="metric">33</span><small> lines of codes</small></div>
+              <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">12.7</span><small> complexity/method</small></div>
-              <div><span class="metric">9</span><small> churn</small></div>
+              <div><span class="metric">7.9</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">38.19</span><small> complexity</small></div>
+              <div><span class="metric">7.88</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -99,70 +99,37 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require_relative &#39;../process_manager.rb&#39;
 require_relative &#39;../base_process.rb&#39;
+require_relative &#39;../process_manager.rb&#39;
 require_relative &#39;../utils/paths.rb&#39;
-require_relative &#39;../utils/adoc.rb&#39;
 require_relative &#39;../log/log.rb&#39;
-require &#39;asciidoctor&#39;
-require &#39;nokogiri&#39;
 
 module Toolchain
   ##
   # Adds modules for postprocessing files.
   module Post
     ##
-    # Provides an interface to create a lunr search index
-    # from the generated HTML files.
-    class TableOfContent &lt; BaseProcess
-      def initialize(priority = 0)
-        super(priority)
-        @html_dir = CM.get(&#39;build.html_dir&#39;)
-        @toc_html_file = File.join(
-          ::Toolchain.build_path,
-          CM.get(&#39;toc.html_file&#39;)
+    # Copies the CodeRay style defined in `content/css/asciidoctor-coderay.css`
+    # to the build dir.
+    #
+    # NOTE This is a fix to mitigate an issue with asciidoctor and coderay,
+    # where the coderay style file is always written to disk,
+    # even if one already exists (i.e. overwriting the style).
+    #
+    class CodeRayStyleCopy &lt; BaseProcess
+      def run
+        coderay_css = &#39;asciidoctor-coderay.css&#39;
+        stage_log(:post, &quot;Copying CodeRay stylesheet to HTML directory: #{coderay_css}&quot;)
+        ::FileUtils.cp(
+          ::File.join(::Toolchain.document_root, &#39;css&#39;, coderay_css),
+          ::File.join(::Toolchain.html_path, &#39;css&#39;, coderay_css)
         )
-        @html_files_array = Dir.glob(&#39;*.html&#39;, base: ::Toolchain.html_path).map do |file|
-          File.join(::Toolchain.html_path, file)
-        end
-      end
-
-      ##
-      # Injects pre-built HTML table of content into all built HTML files
-      # Optionally specifiy which TOC html fragment file +toc_html_file+ to inject in which files +html_files_array+
-      #
-      # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
-      #
-      def run(toc_html_file = @toc_html_file, html_files_array = @html_files_array)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>Toolchain::Post::TableOfContent#run has unused parameter 'html_files_array'</span>          </div>  </li></ol>
-        stage_log(:post, &#39;[Inject TOC] Starting&#39;)
-        html_fragment = File.read(toc_html_file)
-        return @html_files_array.map do |html_file|
-          inject_fragment_into_html_file(html_fragment, html_file)
-        end
-      end
-
-      private
-
-      ## Appends HTML fragment +html_fragment+ to top of body of an HTML file +html_file+
-      # Returns path of modified HTML file +html_filepath+
-      #
-      def inject_fragment_into_html_file(html_fragment, html_file)
-        file_content = File.read(html_file)
-        document = Nokogiri::HTML(file_content)
-        page_id = File.basename(html_file, &#39;.html&#39;) # TODO find better way to get page_id
-        toc_document = Nokogiri::HTML.fragment(html_fragment)
-        stage_log(:post, &#39;[Inject TOC] Starting&#39;)
-        toc_document = tick_toc_checkboxes(page_id, toc_document)
-        document.css(&#39;div#toc&#39;).remove
-        document.css(&#39;div#header&#39;).children.first.add_previous_sibling(toc_document.to_html)
-        modified_html = document.to_html
-        return html_file if File.write(html_file, modified_html)
       end
     end
   end
 end
 
-# Toolchain::PostProcessManager.instance.register(Toolchain::Post::TableOfContent.new)
+Toolchain::PostProcessManager.instance.register(Toolchain::Post::CodeRayStyleCopy.new)
 </code>
   </div>
 </div>

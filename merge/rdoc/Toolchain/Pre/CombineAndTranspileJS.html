@@ -299,11 +299,10 @@
   <span class="ruby-identifier">html_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-comment"># change dir to content/ so we can find js/*.js</span>
   <span class="ruby-identifier">script_source_files</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">search</span>(<span class="ruby-string">&#39;script&#39;</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">stag</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;noblob&#39;</span>)
     <span class="ruby-identifier">line_nr</span> = <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">line</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;src&#39;</span>)
-
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">&#39;src&#39;</span>)))
-
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>
 
     <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;Found src: #{stag.attribute(&#39;src&#39;)}&quot;</span>)

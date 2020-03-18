@@ -103,6 +103,8 @@
     
     <li ><a href="#method-i-test_files">#test_files</a>
     
+    <li ><a href="#method-i-tick_toc_checkboxes">#tick_toc_checkboxes</a>
+    
   </ul>
 </div>
 
@@ -753,6 +755,50 @@
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">exit</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-tick_toc_checkboxes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tick_toc_checkboxes</span><span
+            class="method-args">(page_id, toc_document)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Tick all checkboxes of ancestors of current page Requires <code>page_id</code> and Nokogiri Table of Content <code>toc_document</code> Returns modified TOC <code>toc_document</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="tick_toc_checkboxes-source">
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 165</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tick_toc_checkboxes</span>(<span class="ruby-identifier">page_id</span>, <span class="ruby-identifier">toc_document</span>)
+  <span class="ruby-identifier">selector</span> = <span class="ruby-string">&#39;#toc_li_&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">page_id</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">toc_document</span>.<span class="ruby-identifier">at_css</span> <span class="ruby-identifier">selector</span>
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">toc_document</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-identifier">selector</span>).<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;li&#39;</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">cb</span> = <span class="ruby-identifier">toc_document</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-identifier">selector</span>).<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;&gt; input&#39;</span>)
+      <span class="ruby-identifier">cb</span>.<span class="ruby-identifier">set_attribute</span>(<span class="ruby-string">&#39;checked&#39;</span>,<span class="ruby-string">&#39;&#39;</span>)
+      <span class="ruby-identifier">selector</span> = <span class="ruby-string">&#39;#&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">toc_document</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-identifier">selector</span>).<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;id&#39;</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">_e</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">toc_document</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

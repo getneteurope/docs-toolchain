@@ -180,6 +180,7 @@
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">priority</span>)
   <span class="ruby-ivar">@toc_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>, <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;toc.json_file&#39;</span>))
   <span class="ruby-ivar">@nodes</span> = {}
+  <span class="ruby-ivar">@paragraph_max_length</span> = <span class="ruby-value">140</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -218,7 +219,7 @@
 
           
           <div class="method-source-code" id="add_to_toc-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_to_toc</span>(<span class="ruby-identifier">entry</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">zero?</span>
   <span class="ruby-ivar">@nodes</span>[<span class="ruby-identifier">entry</span>[<span class="ruby-string">&#39;id&#39;</span>]] = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">only</span>(<span class="ruby-node">%w[parents label]</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">entry</span>[<span class="ruby-string">&#39;level&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
@@ -259,7 +260,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">html</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-value">outfile:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">dbfile:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">htmls</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">html</span>.<span class="ruby-identifier">nil?</span>
             <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>, <span class="ruby-string">&#39;html&#39;</span>, <span class="ruby-string">&#39;*.html&#39;</span>)]
@@ -348,7 +349,7 @@
 
           
           <div class="method-source-code" id="_create_regex-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 96</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_create_regex</span>(<span class="ruby-identifier">pattern</span>)
   <span class="ruby-identifier">escaped</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">pattern</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&#39;\*&#39;</span>,<span class="ruby-string">&#39;.*?&#39;</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;^#{escaped}$&quot;</span>, <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">IGNORECASE</span>)
@@ -382,7 +383,7 @@
 
           
           <div class="method-source-code" id="_get_label-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 114</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_get_label</span>(<span class="ruby-identifier">id</span>)
   <span class="ruby-identifier">entry</span> = <span class="ruby-ivar">@nodes</span>[<span class="ruby-identifier">id</span>]
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">nil?</span>
@@ -417,7 +418,7 @@
 
           
           <div class="method-source-code" id="_get_parent_sections-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 105</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_get_parent_sections</span>(<span class="ruby-identifier">id</span>)
   <span class="ruby-identifier">entry</span> = <span class="ruby-ivar">@nodes</span>[<span class="ruby-identifier">id</span>]
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">nil?</span>
@@ -452,7 +453,7 @@
 
           
           <div class="method-source-code" id="_parse_html-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 126</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_parse_html</span>(<span class="ruby-identifier">html_file</span>)
   <span class="ruby-identifier">html</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">html_file</span>, <span class="ruby-string">&#39;r&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-operator">::</span><span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>)
@@ -491,7 +492,7 @@
 
           
           <div class="method-source-code" id="_parse_section-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 145</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_parse_section</span>(<span class="ruby-identifier">sect</span>, <span class="ruby-identifier">filename</span>)
   <span class="ruby-identifier">header</span> = <span class="ruby-identifier">sect</span>.<span class="ruby-identifier">search</span>(<span class="ruby-constant">SELECTOR_HEADINGS</span>).<span class="ruby-identifier">first</span>
   <span class="ruby-identifier">ps</span> = <span class="ruby-identifier">sect</span>.<span class="ruby-identifier">search</span>(<span class="ruby-constant">XPATH_PARAGRAPHS</span>)
@@ -503,6 +504,16 @@
 
   <span class="ruby-identifier">parents</span> = <span class="ruby-identifier">_get_parent_sections</span>(<span class="ruby-identifier">ref</span>)
   <span class="ruby-identifier">label</span> = <span class="ruby-identifier">_get_label</span>(<span class="ruby-identifier">ref</span>)
+
+  <span class="ruby-comment"># format body</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@paragraph_max_length</span>
+    <span class="ruby-identifier">last_idx</span> = <span class="ruby-identifier">body</span>.<span class="ruby-identifier">index</span>(<span class="ruby-string">&#39; &#39;</span>, <span class="ruby-ivar">@paragraph_max_length</span>)
+    <span class="ruby-comment"># only format if there is a whitespace after the specified length</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">last_idx</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">tmp_body</span> = <span class="ruby-identifier">body</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">last_idx</span>]
+      <span class="ruby-identifier">body</span> = <span class="ruby-identifier">tmp_body</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">tmp_body</span>[<span class="ruby-value">-1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;.&#39;</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39;..&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;...&#39;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">return</span> {
     <span class="ruby-value">id:</span> <span class="ruby-identifier">ref</span>,
@@ -542,7 +553,7 @@
 
           
           <div class="method-source-code" id="generate_index-source">
-            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 172</span>
+            <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 183</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_index</span>(<span class="ruby-identifier">htmls</span>)
   <span class="ruby-identifier">docs</span> = []
   <span class="ruby-identifier">lookup</span> = {}
