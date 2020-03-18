@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-11 13:22:29 +0100'>2020-03-11 13:22:29 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-12 10:59:46 +0100'>2020-03-12 10:59:46 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">20</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">29.9</span><small> complexity/method</small></div>
-              <div><span class="metric">22</span><small> churn</small></div>
+              <div><span class="metric">30.0</span><small> complexity/method</small></div>
+              <div><span class="metric">23</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">598.85</span><small> complexity</small></div>
+              <div><span class="metric">600.1</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -722,7 +722,7 @@ class MultipageHtml5Converter &lt; Asciidoctor::Converter::Html5Converter<ol cla
 end
 
 class TableOfContentInjector &lt; Asciidoctor::Extensions::Postprocessor<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TableOfContentInjector has no descriptive comment</span>          </div>  </li></ol>
-  def process(document, output)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>TableOfContentInjector#process has a flog score of 38</span>          </div>  </li></ol>
+  def process(document, output)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>TableOfContentInjector#process has a flog score of 39</span>          </div>  </li></ol>
     _, toc_html_filepath, _ = ::Toolchain::Adoc::CreateTOC.new.run(document.catalog)
     toc = File.read(toc_html_filepath)
     html = Nokogiri::HTML(output)
@@ -730,7 +730,7 @@ class TableOfContentInjector &lt; Asciidoctor::Extensions::Postprocessor<ol clas
     # filename is based on ID, see `write` method above
     filename = document.id + &#39;.html&#39;
     toc_document = Nokogiri::HTML.fragment(toc)
-    toc_document = tick_toc_checkboxes(filename, toc_document)
+    toc_document = tick_toc_checkboxes(document.id, toc_document)
     # table of content
     html.at_css(&#39;div#toc&#39;).remove if html.at_css(&#39;div#toc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>TableOfContentInjector#process calls 'html.at_css('div#toc')' 4 times</span>              <span>Locations:</span>                  <a href="multipage_html5.html#L636" class="js-smell-location">0</a>                  <a href="multipage_html5.html#L639" class="js-smell-location">1</a>                  <a href="multipage_html5.html#L645" class="js-smell-location">2</a>                  </div>  </li></ol>
     html.at_css(&#39;body&#39;).children.first.add_previous_sibling(toc_document)

@@ -154,18 +154,25 @@
     <span class="ruby-string">&#39;lib/adoc-extensions.d/multipage_html5.rb&#39;</span>)
   <span class="ruby-identifier">options</span> = {
     <span class="ruby-value">attributes:</span> {
-      <span class="ruby-string">&#39;linkcss&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>,
+      <span class="ruby-comment"># General</span>
+      <span class="ruby-string">&#39;root&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>,
+      <span class="ruby-comment"># Multipage</span>
       <span class="ruby-string">&#39;multipage-level&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;asciidoc.multipage_level&#39;</span>),
+      <span class="ruby-string">&#39;backend&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;multipage_html5&#39;</span>,
+      <span class="ruby-comment"># CSS</span>
+      <span class="ruby-string">&#39;linkcss&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>,
       <span class="ruby-string">&#39;stylesdir&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;css&#39;</span>,
       <span class="ruby-string">&#39;stylesheet&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;main.css&#39;</span>,
+      <span class="ruby-comment">## Font Awesome</span>
       <span class="ruby-string">&#39;icons&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;font&#39;</span>,
+      <span class="ruby-comment"># TOC</span>
       <span class="ruby-string">&#39;toc&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;left&#39;</span>,
-      <span class="ruby-string">&#39;systemtimestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">%x(date +%s)</span>,
-      <span class="ruby-string">&#39;backend&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;multipage_html5&#39;</span>,
-      <span class="ruby-string">&#39;docinfo&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;shared&#39;</span>,
+      <span class="ruby-comment"># Source Code</span>
       <span class="ruby-string">&#39;source-highlighter&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;coderay&#39;</span>,
-      <span class="ruby-string">&#39;coderay-css&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;style&#39;</span>,
-      <span class="ruby-string">&#39;root&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>
+      <span class="ruby-string">&#39;coderay-css&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;class&#39;</span>,
+      <span class="ruby-comment"># Other</span>
+      <span class="ruby-string">&#39;systemtimestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">%x(date +%s)</span>,
+      <span class="ruby-string">&#39;docinfo&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;shared&#39;</span>,
     },
     <span class="ruby-value">safe:</span> <span class="ruby-value">:safe</span>,
     <span class="ruby-value">failure_level:</span> <span class="ruby-string">&#39;WARN&#39;</span>

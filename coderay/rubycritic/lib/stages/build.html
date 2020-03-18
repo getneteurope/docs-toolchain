@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-11 13:44:11 +0100'>2020-03-11 13:44:11 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-18 10:14:24 +0100'>2020-03-18 10:14:24 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">98</span><small> lines of codes</small></div>
+              <div><span class="metric">105</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">20.0</span><small> complexity/method</small></div>
-              <div><span class="metric">27</span><small> churn</small></div>
+              <div><span class="metric">30</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">39.96</span><small> complexity</small></div>
@@ -151,18 +151,25 @@ module Toolchain
         &#39;lib/adoc-extensions.d/multipage_html5.rb&#39;)
       options = {
         attributes: {
-          &#39;linkcss&#39; =&gt; true,
+          # General
+          &#39;root&#39; =&gt; Toolchain.build_path,
+          # Multipage
           &#39;multipage-level&#39; =&gt; CM.get(&#39;asciidoc.multipage_level&#39;),
+          &#39;backend&#39; =&gt; &#39;multipage_html5&#39;,
+          # CSS
+          &#39;linkcss&#39; =&gt; true,
           &#39;stylesdir&#39; =&gt; &#39;css&#39;,
           &#39;stylesheet&#39; =&gt; &#39;main.css&#39;,
+          ## Font Awesome
           &#39;icons&#39; =&gt; &#39;font&#39;,
+          # TOC
           &#39;toc&#39; =&gt; &#39;left&#39;,
-          &#39;systemtimestamp&#39; =&gt; %x(date +%s),
-          &#39;backend&#39; =&gt; &#39;multipage_html5&#39;,
-          &#39;docinfo&#39; =&gt; &#39;shared&#39;,
+          # Source Code
           &#39;source-highlighter&#39; =&gt; &#39;coderay&#39;,
-          &#39;coderay-css&#39; =&gt; &#39;style&#39;,
-          &#39;root&#39; =&gt; Toolchain.build_path
+          &#39;coderay-css&#39; =&gt; &#39;class&#39;,
+          # Other
+          &#39;systemtimestamp&#39; =&gt; %x(date +%s),
+          &#39;docinfo&#39; =&gt; &#39;shared&#39;,
         },
         safe: :safe,
         failure_level: &#39;WARN&#39;
