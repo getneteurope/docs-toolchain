@@ -134,7 +134,7 @@
           <div class="method-source-code" id="run-source">
             <pre><span class="ruby-comment"># File lib/post.d/coderay_style.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
-  <span class="ruby-identifier">coderay_css</span> = <span class="ruby-string">&#39;asciidoctor-coderay.css&#39;</span>
+  <span class="ruby-identifier">coderay_css</span> = <span class="ruby-string">&#39;coderay-asciidoctor.css&#39;</span>
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:post</span>, <span class="ruby-node">&quot;Copying CodeRay stylesheet to HTML directory: #{coderay_css}&quot;</span>)
   <span class="ruby-operator">::</span><span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp</span>(
     <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">document_root</span>, <span class="ruby-string">&#39;css&#39;</span>, <span class="ruby-identifier">coderay_css</span>),
