@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../base_process.rb'
 require_relative '../process_manager.rb'
 require_relative '../utils/paths.rb'
 require_relative '../log/log.rb'
