@@ -142,11 +142,10 @@ module Toolchain
         html_file = File.basename(html_path)
         # change dir to content/ so we can find js/*.js
         script_source_files = doc.search('script').map do |stag|
+          next if stag.key?('noblob')
           line_nr = stag.line
           next unless stag.key?('src')
-
           next unless File.exist?(File.join(dir, stag.attribute('src')))
-
           next unless stag.children.empty?
 
           log('JS', "Found src: #{stag.attribute('src')}")

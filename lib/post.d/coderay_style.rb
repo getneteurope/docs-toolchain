@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../base_process.rb'
 require_relative '../process_manager.rb'
 require_relative '../utils/paths.rb'
 require_relative '../log/log.rb'
@@ -11,6 +12,11 @@ module Toolchain
     ##
     # Copies the CodeRay style defined in `content/css/asciidoctor-coderay.css`
     # to the build dir.
+    #
+    # NOTE This is a fix to mitigate an issue with asciidoctor and coderay,
+    # where the coderay style file is always written to disk,
+    # even if one already exists (i.e. overwriting the style).
+    #
     class CodeRayStyleCopy < BaseProcess
       def run
         coderay_css = 'asciidoctor-coderay.css'
