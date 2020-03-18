@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-18 15:28:05 +0100'>2020-03-18 15:28:05 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-18 15:38:07 +0100'>2020-03-18 15:38:07 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">7.9</span><small> complexity/method</small></div>
-              <div><span class="metric">5</span><small> churn</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">7.88</span><small> complexity</small></div>
@@ -118,7 +118,7 @@ module Toolchain
     #
     class CodeRayStyleCopy &lt; BaseProcess
       def run
-        coderay_css = &#39;coderay-asciidoctor.css&#39;
+        coderay_css = &#39;asciidoctor-coderay.css&#39;
         stage_log(:post, &quot;Copying CodeRay stylesheet to HTML directory: #{coderay_css}&quot;)
         ::FileUtils.cp(
           ::File.join(::Toolchain.document_root, &#39;css&#39;, coderay_css),
