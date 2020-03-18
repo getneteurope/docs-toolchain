@@ -15,7 +15,7 @@ module Toolchain
     #
     # NOTE This is a fix to mitigate an issue with asciidoctor and coderay,
     # where the coderay style file is always written to disk,
-    # even if one already exsits (i.e. overwriting the style).
+    # even if one already exists (i.e. overwriting the style).
     #
     class CodeRayStyleCopy < BaseProcess
       def run
