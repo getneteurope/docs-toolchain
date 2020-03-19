@@ -18,6 +18,7 @@ search:
     file: lunrdb.json
   exclude:
     - docinfo*.html
+    - index.html
 
 log:
   file: /tmp/log.json
