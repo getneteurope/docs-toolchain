@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-17 12:41:49 +0100'>2020-03-17 12:41:49 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-19 14:19:19 +0100'>2020-03-19 14:19:19 +0100</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">230</span><small> lines of codes</small></div>
+              <div><span class="metric">235</span><small> lines of codes</small></div>
               <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">19.1</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">9</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">172.16</span><small> complexity</small></div>
@@ -142,10 +142,12 @@ module Toolchain
                 else
                   (html.is_a?(Array) ? html : [html])
                 end
-        stage_log(:post, &quot;Running #{self.class.name} on #{htmls.length} files&quot;)
 
+        stage_log(:post, &quot;Running #{self.class.name} on #{htmls.length} files&quot;)
         stage_log(:post, &quot;Parse #{@toc_file} as Table of Content&quot;)
         toc_orig = ::JSON.parse(File.read(@toc_file))
+
+        # build toc entry tree
         def add_to_toc(entry)
           return if entry.nil? || entry.size.zero?
           @nodes[entry[&#39;id&#39;]] = entry.only(%w[parents label]) unless entry[&#39;level&#39;] == -1
@@ -155,12 +157,15 @@ module Toolchain
         end
         add_to_toc(toc_orig)
 
+        # exclude certain files, defined in the yaml config
         ConfigManager.instance.get(&#39;search.exclude&#39;).each do |pattern|
           htmls.delete_if do |f|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Post::CompileSearchIndex#run contains iterators nested 2 deep</span>          </div>  </li></ol>
             !!(File.basename(f) =~ _create_regex(pattern))
           end
         end
 
+        ###
+        # generate index and lookup and write to file
         index, lookup = generate_index(htmls)
 
         index_file = ConfigManager.instance.get(
