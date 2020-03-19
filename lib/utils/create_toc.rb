@@ -41,7 +41,7 @@ module Toolchain
       )
         FileUtils.mkdir_p(File.dirname(@default_json_filepath))
         FileUtils.mkdir_p(File.dirname(@default_html_filepath))
-        stage_log(:pre, 'Create TOC')
+        stage_log(:build, 'Create TOC')
         stack = [OpenStruct.new(id: 'root', level: -1, children: [])]
         ancestors = []
 

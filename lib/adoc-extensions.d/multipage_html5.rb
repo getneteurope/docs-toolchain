@@ -672,16 +672,20 @@ class CodeRayCSSInjector < Asciidoctor::Extensions::Postprocessor
   # remove it from the body.
   def process(document, output)
     html = Nokogiri::HTML(output)
+    coderay_css = 'css/coderay-asciidoctor.css'
 
     # get the coderay CSS if it exists and remove it
-    coderay_css = html.at_xpath('html/body/link')
-    coderay_css.remove if coderay_css
+    coderay_css_tag = html.at_xpath('html/body/link')
+    coderay_css_tag.remove if coderay_css_tag
 
     css_links = html.xpath('html/head/link')
+    last_css_link = css_links.last
     # only add the link if it's not already present (index file gets processed twice)
-    css_links.last.add_next_sibling(
-      '<link rel="stylesheet" href="css/coderay-asciidoctor.css">'
-    ) unless css_links.last.attr('href') == 'css/coderay-asciidoctor.css'
+    if (!last_css_link.nil?) && last_css_link.attr('href') == coderay_css
+      css_links.last.add_next_sibling(
+        '<link rel="stylesheet" href="css/coderay-asciidoctor.css">'
+      )
+    end
 
     return html.to_html
   end
