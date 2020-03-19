@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-19 11:17:57 +0100'>2020-03-19 11:17:57 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-19 13:49:13 +0100'>2020-03-19 13:49:13 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">695</span><small> lines of codes</small></div>
+              <div><span class="metric">699</span><small> lines of codes</small></div>
               <div><span class="metric">21</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">29.2</span><small> complexity/method</small></div>
-              <div><span class="metric">24</span><small> churn</small></div>
+              <div><span class="metric">29.3</span><small> complexity/method</small></div>
+              <div><span class="metric">25</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">612.83</span><small> complexity</small></div>
+              <div><span class="metric">615.95</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -771,16 +771,20 @@ class CodeRayCSSInjector &lt; Asciidoctor::Extensions::Postprocessor
   # remove it from the body.
   def process(document, output)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>CodeRayCSSInjector#process has unused parameter 'document'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>CodeRayCSSInjector#process doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
     html = Nokogiri::HTML(output)
+    coderay_css = &#39;css/coderay-asciidoctor.css&#39;
 
     # get the coderay CSS if it exists and remove it
-    coderay_css = html.at_xpath(&#39;html/body/link&#39;)
-    coderay_css.remove if coderay_css
+    coderay_css_tag = html.at_xpath(&#39;html/body/link&#39;)
+    coderay_css_tag.remove if coderay_css_tag
 
     css_links = html.xpath(&#39;html/head/link&#39;)
+    last_css_link = css_links.last
     # only add the link if it&#39;s not already present (index file gets processed twice)
-    css_links.last.add_next_sibling(
-      &#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/coderay-asciidoctor.css&quot;&gt;&#39;
-    ) unless css_links.last.attr(&#39;href&#39;) == &#39;css/coderay-asciidoctor.css&#39;
+    if (!last_css_link.nil?) &amp;&amp; last_css_link.attr(&#39;href&#39;) == coderay_css
+      css_links.last.add_next_sibling(
+        &#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/coderay-asciidoctor.css&quot;&gt;&#39;
+      )
+    end
 
     return html.to_html
   end

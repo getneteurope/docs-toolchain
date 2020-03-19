@@ -137,16 +137,20 @@
             <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 673</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">process</span>(<span class="ruby-identifier">document</span>, <span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">html</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-identifier">coderay_css</span> = <span class="ruby-string">&#39;css/coderay-asciidoctor.css&#39;</span>
 
   <span class="ruby-comment"># get the coderay CSS if it exists and remove it</span>
-  <span class="ruby-identifier">coderay_css</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_xpath</span>(<span class="ruby-string">&#39;html/body/link&#39;</span>)
-  <span class="ruby-identifier">coderay_css</span>.<span class="ruby-identifier">remove</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">coderay_css</span>
+  <span class="ruby-identifier">coderay_css_tag</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_xpath</span>(<span class="ruby-string">&#39;html/body/link&#39;</span>)
+  <span class="ruby-identifier">coderay_css_tag</span>.<span class="ruby-identifier">remove</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">coderay_css_tag</span>
 
   <span class="ruby-identifier">css_links</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;html/head/link&#39;</span>)
+  <span class="ruby-identifier">last_css_link</span> = <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>
   <span class="ruby-comment"># only add the link if it&#39;s not already present (index file gets processed twice)</span>
-  <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">add_next_sibling</span>(
-    <span class="ruby-string">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/coderay-asciidoctor.css&quot;&gt;&#39;</span>
-  ) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;href&#39;</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;css/coderay-asciidoctor.css&#39;</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;href&#39;</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">coderay_css</span>
+    <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">add_next_sibling</span>(
+      <span class="ruby-string">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/coderay-asciidoctor.css&quot;&gt;&#39;</span>
+    )
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">html</span>.<span class="ruby-identifier">to_html</span>
 <span class="ruby-keyword">end</span></pre>
