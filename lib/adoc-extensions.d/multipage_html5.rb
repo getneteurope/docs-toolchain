@@ -622,6 +622,11 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
   end
 end
 
+# Table Of Content Injector
+#
+# Inject the beforehand created Table Of Content into every page,
+# including the logo under `images/logo.png` and the search input field.
+#
 class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
   def process(document, output)
     _, toc_html_filepath, _ = ::Toolchain::Adoc::CreateTOC.new.run(document.catalog)
@@ -644,12 +649,47 @@ class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
       File.join(::Toolchain.build_path, 'docinfo-search.html'))
     html.at_css('div#toc').children.first.add_next_sibling(search_overlay)
 
-    html.to_html
+    return html.to_html
+  end
+end
+
+# CodeRay CSS Injector
+#
+# By default, Asciidoctor will put the CodeRay CSS file in the body
+# of the HTML as one of the very last tags.
+# In addition, this will only be injected if the page has actual source code on it.
+# Given, that we use the page switch functionality to only change the `div#content`
+# when clicking on a new subsection, this tag needs to be on every page.
+# Only then will every source code block show correctly, even if switching from a page
+# without source code.
+#
+# This class will add the coderay-asciidoctor.css to every document head and
+# remove the CSS link tag in the body, if it exists.
+#
+class CodeRayCSSInjector < Asciidoctor::Extensions::Postprocessor
+  # Always add the link tag in the head after the others.
+  # Check for the link tag loading coderay-asciidoctor.css and
+  # remove it from the body.
+  def process(document, output)
+    html = Nokogiri::HTML(output)
+
+    # get the coderay CSS if it exists and remove it
+    coderay_css = html.at_xpath('html/body/link')
+    coderay_css.remove if coderay_css
+
+    css_links = html.xpath('html/head/link')
+    # only add the link if it's not already present (index file gets processed twice)
+    css_links.last.add_next_sibling(
+      '<link rel="stylesheet" href="css/coderay-asciidoctor.css">'
+    ) unless css_links.last.attr('href') == 'css/coderay-asciidoctor.css'
+
+    return html.to_html
   end
 end
 
 Asciidoctor::Extensions.register do
-  if %w[html html5 multipage_html5].any? { |be| @document.basebackend? be }
+  if %w[html html5 multipage_html5].any? { |be| @document.basebackend?(be) }
     postprocessor TableOfContentInjector
+    postprocessor CodeRayCSSInjector
   end
 end
