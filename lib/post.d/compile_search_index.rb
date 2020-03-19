@@ -43,10 +43,12 @@ module Toolchain
                 else
                   (html.is_a?(Array) ? html : [html])
                 end
-        stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
 
+        stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
         stage_log(:post, "Parse #{@toc_file} as Table of Content")
         toc_orig = ::JSON.parse(File.read(@toc_file))
+
+        # build toc entry tree
         def add_to_toc(entry)
           return if entry.nil? || entry.size.zero?
           @nodes[entry['id']] = entry.only(%w[parents label]) unless entry['level'] == -1
@@ -56,12 +58,15 @@ module Toolchain
         end
         add_to_toc(toc_orig)
 
+        # exclude certain files, defined in the yaml config
         ConfigManager.instance.get('search.exclude').each do |pattern|
           htmls.delete_if do |f|
             !!(File.basename(f) =~ _create_regex(pattern))
           end
         end
 
+        ###
+        # generate index and lookup and write to file
         index, lookup = generate_index(htmls)
 
         index_file = ConfigManager.instance.get(
