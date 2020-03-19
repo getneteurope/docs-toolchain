@@ -9,7 +9,7 @@ build:
 
 checkers:
   pattern:
-      - blacklist: blacklist.txt
+    blacklist: blacklist.txt
 
 search:
   index:
