@@ -192,7 +192,7 @@
     <span class="ruby-node">&quot;htmltest_#{@version}_#{os}_#{@arch}&quot;</span>,
     (<span class="ruby-identifier">os</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;windows&#39;</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39;htmltest.exe&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;htmltest&#39;</span>)
   )
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">os</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">os</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-constant">OS</span>.<span class="ruby-identifier">bits</span> <span class="ruby-operator">!=</span> <span class="ruby-value">64</span>
     <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:post</span>, <span class="ruby-node">&quot;Running htmltest #{@version} as #{os}&quot;</span>)
     <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;#{bin} #{directory}&quot;</span>)
   <span class="ruby-keyword">end</span>
