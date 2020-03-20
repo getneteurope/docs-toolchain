@@ -164,7 +164,6 @@ module Toolchain
         return object unless object.is_a? OpenStruct
         object.each_pair do |key, value|
           hash[key] = case value
-                      when OpenStruct then openstruct_to_hash(value)
                       when Array then value.map { |v| openstruct_to_hash(v) }
                       else value
                       end
