@@ -114,7 +114,27 @@ module Toolchain
         return json_filepath, html_filepath, toc_hash
       end
 
-      private
+      ##
+      # Tick all checkboxes of ancestors of current page
+      # Requires +page_id+ and Nokogiri Table of Content +toc_document+
+      # Returns modified TOC +toc_document+
+      #
+      def tick_toc_checkboxes(page_id, toc_document)
+        selector = '#toc_li_' + page_id
+        list_element = toc_document.at_css selector
+        while list_element
+          break unless list_element.name == 'li'
+          begin
+            cb = list_element.at_css('> input')
+            cb.set_attribute('checked','')
+            selector = '#' + list_element.parent.parent.attr('id')
+            list_element = toc_document.at_css selector
+          rescue StandardError => _e
+            break
+          end
+        end
+        return toc_document
+      end
 
       ## Recursivelz generates a HTML fragment for the Table Of Content
       # Takes OpenStruct of +toc_elements+ as input
@@ -157,22 +177,3 @@ module Toolchain
   end
 end
 
-##
-# Tick all checkboxes of ancestors of current page
-# Requires +page_id+ and Nokogiri Table of Content +toc_document+
-# Returns modified TOC +toc_document+
-#
-def tick_toc_checkboxes(page_id, toc_document)
-  selector = '#toc_li_' + page_id
-  while toc_document.at_css selector
-    break unless toc_document.at_css(selector).name == 'li'
-    begin
-      cb = toc_document.at_css(selector).at_css('> input')
-      cb.set_attribute('checked','')
-      selector = '#' + toc_document.at_css(selector).parent.parent.attr('id')
-    rescue StandardError => _e
-      break
-    end
-  end
-  return toc_document
-end
