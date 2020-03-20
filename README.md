@@ -134,7 +134,7 @@ The **test** and **build** stages produce `/tmp/slack.json`, a central file cont
 Configuration files:
 * `config/default.yaml`: default settings
 * `content/docinfo-search.html`: search overlay for the frontend
-* `config/invalid-patterns.json**: **WIP**
+* `config/invalid-patterns.json`: **WIP**
 * `static/privacy-policy.(txt|adoc)`: **WIP**
 
 ## Run
