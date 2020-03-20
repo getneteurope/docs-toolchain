@@ -80,11 +80,24 @@ module Toolchain
     # Returns +@config+ if +identifier+ is nil.
     # Returns +default+ if result is nil and +identifier+ is not nil.
     def get(identifier = nil, default: nil)
-      load unless @loaded
       return @config if identifier.nil?
+      load unless @loaded
 
       keys = identifier.split('.')
       return get_recursively(@config, keys) || default
+    end
+
+    ##
+    # Delete the currently loaded configuration.
+    #
+    # Does NOT affect the files from which the config was loaded,
+    # only the current state of the +ConfigManager+.
+    #
+    # Returns nothing.
+    #
+    def clear
+      @config = nil
+      @loaded = false
     end
 
     private

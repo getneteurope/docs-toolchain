@@ -46,4 +46,14 @@ class TestConfigManager < Test::Unit::TestCase
     end
     assert_nil(Toolchain::ConfigManager.instance.get('x.y'))
   end
+
+  def test_clear
+    config = { 'a' => { 'b' => 'c' }, 'd' => 'e' }
+    # use tempfile to load config into ConfigManager
+    with_tempfile(config.to_yaml) do |tf|
+      Toolchain::ConfigManager.instance.load(tf)
+    end
+    Toolchain::ConfigManager.instance.clear
+    assert_nil(Toolchain::ConfigManager.instance.get)
+  end
 end
