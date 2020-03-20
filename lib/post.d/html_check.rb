@@ -45,7 +45,7 @@ module Toolchain
           "htmltest_#{@version}_#{os}_#{@arch}",
           (os == 'windows' ? 'htmltest.exe' : 'htmltest')
         )
-        unless os.nil?
+        unless os.nil? || OS.bits != 64
           stage_log(:post, "Running htmltest #{@version} as #{os}")
           system("#{bin} #{directory}")
         end
