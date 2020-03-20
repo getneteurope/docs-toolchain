@@ -55,6 +55,20 @@ namespace :docs do
   task :notify do
     ruby "#{toolchain_path}/bin/notify.rb"
   end
+
+  ###
+  # Utils
+  namespace :list do
+    desc 'List Pre processing actions that will be loaded'
+    task :pre do
+      ruby "#{toolchain_path}/bin/pre.rb --list"
+    end
+
+    desc 'List Post processing actions that will be loaded'
+    task :post do
+      ruby "#{toolchain_path}/bin/post.rb --list"
+    end
+  end
 end
 
 namespace :toolchain do
