@@ -50,10 +50,10 @@ The toolchain is designed to run through different stages, that have specific re
     * [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
     * required variables, see [Configuration/Secret/AWS](#Secret)
 7. **notify**:
-    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
+    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret**
 
 ## Development
-**Quality assurance:**
+**Rake targets:**
 * `rake toolchain:lint` calls rubocop
 * `rake toolchain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
 * `rake toolchain:quality` runs `rubycritic` and generates an overview in `/tmp/rubycritic/overview.html`
@@ -62,7 +62,7 @@ The toolchain is designed to run through different stages, that have specific re
 
 ## Configuration
 There are some variables that need to be secret, while others can be public.
-Configuration files are public.
+Configuration files are public and checked into the repository like regular content files.
 
 ### Frontend Configuration
 #### CDN
@@ -73,16 +73,16 @@ To disable the loading via CDN:
 3. add the following to your `index.adoc` below `:icons: font`:
 ```
 :!iconfont-remote:
-:iconfont-cdn:
+:iconfont-cdn: css/font-awesome.css
 :!webfonts:
 ```
 
 
 ### Environment Variables
-* `FAST` includes contains the following variables:
+* `FAST` sets the following variables (which may be set individually):
     * `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
     * `SKIP_HTMLCHECK`: skips the HTML Check Post process.
-    * `SKIP_RAKE_{stage}`
+    * Skip entire stages
         * `SKIP_RAKE_TEST`: skips test stage (i.e. `rake docs:test`)
 
 ### Secrets
@@ -94,10 +94,10 @@ To disable the loading via CDN:
 * `AWS_REGION`
 * `AWS_S3_BUCKET`
 
-#### Slack
+#### Slack (outdated)
 
 **Needed:**
-* `SLACK_TOKEN` (Optional)
+* `SLACK_TOKEN`
 
 The **test** and **build** stages produce `/tmp/slack.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
 `lib/notify/slack.rb` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN`.
@@ -108,9 +108,9 @@ The **test** and **build** stages produce `/tmp/slack.json`, a central file cont
 #### Files
 Configuration files:
 * `config/default.yaml`: default settings
-* `config/invalid-patterns.json`: WIP
-* `static/privacy-policy.(txt|adoc)`: WIP
 * `content/docinfo-search.html`: search overlay for the frontend
+* `config/invalid-patterns.json**: **WIP**
+* `static/privacy-policy.(txt|adoc)`: **WIP**
 
 ## Run
 
