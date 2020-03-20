@@ -23,3 +23,5 @@ gem "therubyracer"
 gem "html-proofer", "~> 3.15"
 
 gem "coderay", "~> 1.1"
+
+gem "os", "~> 1.0"
