@@ -14,14 +14,14 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-20T14:24:04+00:00">2020-03-20T14:24:04+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-20T14:45:17+00:00">2020-03-20T14:45:17+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">97.94%</span></span>
+    (<span class="covered_percent"><span class="green">97.93%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
@@ -32,8 +32,8 @@
   <a name="AllFiles"></a>
   <div>
     <b>19</b> files in total.
-    <b>679</b> relevant lines. 
-    <span class="green"><b>665</b> lines covered</span> and
+    <b>675</b> relevant lines. 
+    <span class="green"><b>661</b> lines covered</span> and
     <span class="red"><b>14</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -147,7 +147,7 @@
         <td>12</td>
         <td>12</td>
         <td>0</td>
-        <td>10.3</td>
+        <td>9.5</td>
       </tr>
       
       <tr>
@@ -162,10 +162,10 @@
       
       <tr>
         <td class="strong"><a href="#edeef763e37ee930adb02cbb07c6473664652abd" class="src_link" title="lib/pre.d/combine_transpile_js.rb">lib/pre.d/combine_transpile_js.rb</a></td>
-        <td class="green strong">92.0 %</td>
-        <td>164</td>
-        <td>75</td>
-        <td>69</td>
+        <td class="green strong">91.55 %</td>
+        <td>160</td>
+        <td>71</td>
+        <td>65</td>
         <td>6</td>
         <td>2.0</td>
       </tr>
@@ -4785,8 +4785,8 @@
           <code class="ruby">def log(tag, msg, color = :blue, bold = false, length: 14, stream: $stdout)</code>
         </li>
       
-        <li class="covered" data-hits="57" data-linenumber="20">
-          <span class="hits">57</span>
+        <li class="covered" data-hits="47" data-linenumber="20">
+          <span class="hits">47</span>
           
           <code class="ruby">  return if ENV.key?(&#39;UNITTEST&#39;) &amp;&amp; !ENV.key?(&#39;DEBUG&#39;)</code>
         </li>
@@ -6354,10 +6354,10 @@
         <div class="source_table" id="edeef763e37ee930adb02cbb07c6473664652abd">
   <div class="header">
     <h3>lib/pre.d/combine_transpile_js.rb</h3>
-    <h4><span class="green">92.0 %</span> covered</h4>
+    <h4><span class="green">91.55 %</span> covered</h4>
     <div>
-      <b>75</b> relevant lines. 
-      <span class="green"><b>69</b> lines covered</span> and
+      <b>71</b> relevant lines. 
+      <span class="green"><b>65</b> lines covered</span> and
       <span class="red"><b>6</b> lines missed.</span>
     </div>
   </div>
@@ -6854,43 +6854,43 @@
         <li class="covered" data-hits="2" data-linenumber="82">
           <span class="hits">2</span>
           
-          <code class="ruby">        log(&#39;JS&#39;, &#39;blob is at &#39; + js_blob_path, :yellow)</code>
-        </li>
-      
-        <li class="covered" data-hits="2" data-linenumber="83">
-          <span class="hits">2</span>
-          
           <code class="ruby">        js_blob_path_relative = js_blob_path</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="84">
+        <li class="never" data-hits="" data-linenumber="83">
           
           
           <code class="ruby">          .delete_prefix(root + &#39;/&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="85">
+        <li class="covered" data-hits="2" data-linenumber="84">
           <span class="hits">2</span>
           
           <code class="ruby">        js_dir = File.dirname(js_blob_path)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="86">
+        <li class="covered" data-hits="2" data-linenumber="85">
           <span class="hits">2</span>
           
           <code class="ruby">        FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="87">
-          <span class="hits">2</span>
-          
-          <code class="ruby">        log(&#39;JS&#39;, &quot;Writing BLOB to #{js_blob_path}&quot;)</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="88">
+        <li class="covered" data-hits="4" data-linenumber="86">
           <span class="hits">4</span>
           
           <code class="ruby">        File.open(js_blob_path, &#39;w+&#39;) { |file| file.puts(js_blob) }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="87">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="88">
+          <span class="hits">2</span>
+          
+          <code class="ruby">        html_content_lines = File.read(path).lines</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="89">
@@ -6899,130 +6899,130 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="90">
-          <span class="hits">2</span>
-          
-          <code class="ruby">        html_content_lines = File.read(path).lines</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="91">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="92">
+        <li class="never" data-hits="" data-linenumber="90">
           
           
           <code class="ruby">        # get lines where there are script tags with src attribute</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="93">
+        <li class="covered" data-hits="2" data-linenumber="91">
           <span class="hits">2</span>
           
           <code class="ruby">        script_tags_idx = []</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="94">
+        <li class="covered" data-hits="2" data-linenumber="92">
           <span class="hits">2</span>
           
           <code class="ruby">        html_content_lines.each_with_index do |l, i|</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="95">
+        <li class="covered" data-hits="6" data-linenumber="93">
           <span class="hits">6</span>
           
           <code class="ruby">          script_tags_idx &lt;&lt; i if l.match?(SCRIPT_TAG_REGEX)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="96">
+        <li class="never" data-hits="" data-linenumber="94">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="97">
+        <li class="never" data-hits="" data-linenumber="95">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="98">
+        <li class="never" data-hits="" data-linenumber="96">
           
           
           <code class="ruby">        # replace last script tag with blob script tag</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="99">
+        <li class="covered" data-hits="2" data-linenumber="97">
           <span class="hits">2</span>
           
           <code class="ruby">        blob_script_tag = &quot;&lt;script src=\&quot;#{js_blob_path_relative}\&quot;&gt;&lt;/script&gt;\n&quot;</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="100">
+        <li class="covered" data-hits="2" data-linenumber="98">
           <span class="hits">2</span>
           
           <code class="ruby">        html_content_lines[script_tags_idx.pop] = blob_script_tag unless script_tags_idx.empty?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="101">
+        <li class="never" data-hits="" data-linenumber="99">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="102">
+        <li class="never" data-hits="" data-linenumber="100">
           
           
           <code class="ruby">        # remove all other script tags that use src attribute</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="103">
+        <li class="covered" data-hits="6" data-linenumber="101">
           <span class="hits">6</span>
           
           <code class="ruby">        script_tags_idx.each { |i| html_content_lines[i] = nil }.reject(&amp;:nil?)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="104">
+        <li class="never" data-hits="" data-linenumber="102">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="105">
+        <li class="covered" data-hits="2" data-linenumber="103">
           <span class="hits">2</span>
           
           <code class="ruby">        html_string = html_content_lines.join</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="106">
+        <li class="covered" data-hits="2" data-linenumber="104">
           <span class="hits">2</span>
           
           <code class="ruby">        return html_string, js_blob_path</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="107">
+        <li class="never" data-hits="" data-linenumber="105">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="108">
+        <li class="never" data-hits="" data-linenumber="106">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="109">
+        <li class="never" data-hits="" data-linenumber="107">
           
           
           <code class="ruby">      ##</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="110">
+        <li class="never" data-hits="" data-linenumber="108">
           
           
           <code class="ruby">      # Replaces all js tags in an HTML file +html_path+ with a tag that includes one big blob JS.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="109">
+          
+          
+          <code class="ruby">      #</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="110">
+          
+          
+          <code class="ruby">      # Returns an OpenStruct +{ html_path, html, js_blob_str, js_blob_path }+.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="111">
@@ -7031,319 +7031,295 @@
           <code class="ruby">      #</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="112">
-          
-          
-          <code class="ruby">      # Returns an OpenStruct +{ html_path, html, js_blob_str, js_blob_path }+.</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="113">
-          
-          
-          <code class="ruby">      #</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="114">
+        <li class="covered" data-hits="1" data-linenumber="112">
           <span class="hits">1</span>
           
           <code class="ruby">      def combine_and_replace_js(html_path)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="115">
+        <li class="covered" data-hits="2" data-linenumber="113">
           <span class="hits">2</span>
           
           <code class="ruby">        js_blob_str = combine_js(html_path)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="116">
+        <li class="covered" data-hits="2" data-linenumber="114">
           <span class="hits">2</span>
           
           <code class="ruby">        js_blob_str = Babel::Transpiler.transform(js_blob_str)[&#39;code&#39;] unless ENV.key?(&#39;UNITTEST&#39;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="117">
+        <li class="never" data-hits="" data-linenumber="115">
           
           
           <code class="ruby">        # TODO: minify js blob. may be unnecessary using transport stream compression anyway</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="118">
+        <li class="covered" data-hits="2" data-linenumber="116">
           <span class="hits">2</span>
           
           <code class="ruby">        html_string, js_blob_path = replace_js_tags_with_blob(html_path, js_blob_str)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="119">
+        <li class="covered" data-hits="2" data-linenumber="117">
           <span class="hits">2</span>
           
           <code class="ruby">        File.open(html_path, &#39;w+&#39;) do |file|</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="120">
-          <span class="hits">2</span>
-          
-          <code class="ruby">          log(&#39;JS&#39;, &#39;insert JS blob into &#39; + html_path, :yellow)</code>
-        </li>
-      
-        <li class="covered" data-hits="2" data-linenumber="121">
+        <li class="covered" data-hits="2" data-linenumber="118">
           <span class="hits">2</span>
           
           <code class="ruby">          file.puts(html_string)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="122">
+        <li class="never" data-hits="" data-linenumber="119">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="123">
+        <li class="covered" data-hits="2" data-linenumber="120">
           <span class="hits">2</span>
           
           <code class="ruby">        return OpenStruct.new(</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="124">
+        <li class="never" data-hits="" data-linenumber="121">
           
           
           <code class="ruby">          html_path: html_path,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="125">
+        <li class="never" data-hits="" data-linenumber="122">
           
           
           <code class="ruby">          html: html_string,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="126">
+        <li class="never" data-hits="" data-linenumber="123">
           
           
           <code class="ruby">          js_blob_str: js_blob_str,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="127">
+        <li class="never" data-hits="" data-linenumber="124">
           
           
           <code class="ruby">          js_blob_path: js_blob_path</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="128">
+        <li class="never" data-hits="" data-linenumber="125">
           
           
           <code class="ruby">        )</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="129">
+        <li class="never" data-hits="" data-linenumber="126">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="130">
+        <li class="never" data-hits="" data-linenumber="127">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="131">
+        <li class="never" data-hits="" data-linenumber="128">
           
           
           <code class="ruby">      ##</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="132">
+        <li class="never" data-hits="" data-linenumber="129">
           
           
           <code class="ruby">      # Parses html file +path+ loking for javascript files</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="133">
+        <li class="never" data-hits="" data-linenumber="130">
           
           
           <code class="ruby">      #</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="134">
+        <li class="never" data-hits="" data-linenumber="131">
           
           
           <code class="ruby">      # Returns +script_source_files+ array containing &quot;src&quot; attribute values of script</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="135">
+        <li class="never" data-hits="" data-linenumber="132">
           
           
           <code class="ruby">      #   e.g. &lt;script src=&quot;js/1.js&quot;&gt; --&gt; [&#39;js/1.js&#39;]</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="136">
+        <li class="covered" data-hits="1" data-linenumber="133">
           <span class="hits">1</span>
           
           <code class="ruby">      def get_script_src_from_html_file(html_path)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="137">
+        <li class="covered" data-hits="2" data-linenumber="134">
           <span class="hits">2</span>
           
           <code class="ruby">        unless File.file?(html_path)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="138">
+        <li class="missed" data-hits="0" data-linenumber="135">
           
           
           <code class="ruby">          raise Exception.new(&quot;Could not read html file #{html_path}&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="139">
+        <li class="never" data-hits="" data-linenumber="136">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="140">
+        <li class="covered" data-hits="4" data-linenumber="137">
           <span class="hits">4</span>
           
           <code class="ruby">        doc = File.open(html_path) { |f| Nokogiri::HTML(f) }</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="141">
+        <li class="covered" data-hits="2" data-linenumber="138">
           <span class="hits">2</span>
           
           <code class="ruby">        dir = File.dirname(html_path)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="142">
+        <li class="covered" data-hits="2" data-linenumber="139">
           <span class="hits">2</span>
           
           <code class="ruby">        html_file = File.basename(html_path)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="143">
+        <li class="never" data-hits="" data-linenumber="140">
           
           
           <code class="ruby">        # change dir to content/ so we can find js/*.js</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="144">
+        <li class="covered" data-hits="2" data-linenumber="141">
           <span class="hits">2</span>
           
           <code class="ruby">        script_source_files = doc.search(&#39;script&#39;).map do |stag|</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="145">
+        <li class="covered" data-hits="6" data-linenumber="142">
           <span class="hits">6</span>
           
           <code class="ruby">          next if stag.key?(&#39;noblob&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="146">
+        <li class="covered" data-hits="6" data-linenumber="143">
           <span class="hits">6</span>
           
           <code class="ruby">          line_nr = stag.line</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="147">
+        <li class="covered" data-hits="6" data-linenumber="144">
           <span class="hits">6</span>
           
           <code class="ruby">          next unless stag.key?(&#39;src&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="148">
+        <li class="covered" data-hits="6" data-linenumber="145">
           <span class="hits">6</span>
           
           <code class="ruby">          next unless File.exist?(File.join(dir, stag.attribute(&#39;src&#39;)))</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="149">
+        <li class="covered" data-hits="4" data-linenumber="146">
           <span class="hits">4</span>
           
           <code class="ruby">          next unless stag.children.empty?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="150">
+        <li class="never" data-hits="" data-linenumber="147">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="151">
-          <span class="hits">4</span>
-          
-          <code class="ruby">          log(&#39;JS&#39;, &quot;Found src: #{stag.attribute(&#39;src&#39;)}&quot;)</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="152">
+        <li class="covered" data-hits="4" data-linenumber="148">
           <span class="hits">4</span>
           
           <code class="ruby">          ::File.join(dir, stag.attribute(&#39;src&#39;))</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="153">
+        <li class="never" data-hits="" data-linenumber="149">
           
           
           <code class="ruby">        end</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="154">
+        <li class="covered" data-hits="2" data-linenumber="150">
           <span class="hits">2</span>
           
           <code class="ruby">        script_source_files = script_source_files.compact # remove nil</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="155">
+        <li class="covered" data-hits="2" data-linenumber="151">
           <span class="hits">2</span>
           
           <code class="ruby">        return script_source_files</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="156">
+        <li class="never" data-hits="" data-linenumber="152">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="157">
+        <li class="never" data-hits="" data-linenumber="153">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="158">
+        <li class="never" data-hits="" data-linenumber="154">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="159">
+        <li class="never" data-hits="" data-linenumber="155">
           
           
           <code class="ruby">end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="160">
+        <li class="never" data-hits="" data-linenumber="156">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="161">
+        <li class="covered" data-hits="1" data-linenumber="157">
           <span class="hits">1</span>
           
           <code class="ruby">unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_COMBINE&#39;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="162">
+        <li class="covered" data-hits="1" data-linenumber="158">
           <span class="hits">1</span>
           
           <code class="ruby">  Toolchain::PreProcessManager</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="163">
+        <li class="never" data-hits="" data-linenumber="159">
           
           
           <code class="ruby">    .instance.register(Toolchain::Pre::CombineAndTranspileJS.new)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="164">
+        <li class="never" data-hits="" data-linenumber="160">
           
           
           <code class="ruby">end</code>

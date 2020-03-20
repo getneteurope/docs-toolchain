@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-18 14:15:15 +0100'>2020-03-18 14:15:15 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 15:42:33 +0100'>2020-03-20 15:42:33 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">164</span><small> lines of codes</small></div>
+              <div><span class="metric">160</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">18.9</span><small> complexity/method</small></div>
-              <div><span class="metric">24</span><small> churn</small></div>
+              <div><span class="metric">17.5</span><small> complexity/method</small></div>
+              <div><span class="metric">25</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">113.26</span><small> complexity</small></div>
+              <div><span class="metric">104.97</span><small> complexity</small></div>
               <div><span class="metric">16</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                4
                 smells
               </a>
             </li>
@@ -161,7 +161,7 @@ module Toolchain
       #
       # Returns HTML string and JS blob path.
       #
-      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 38</span>          </div>  </li></ol>
+      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 35</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
         # TODO: solve this with nokogiri fragment parser (which either
         # removes needed or adds unnecessary tags..)
         #
@@ -178,12 +178,10 @@ module Toolchain
           &#39;js&#39;,
           &#39;blob_&#39; + blob_name + &#39;.js&#39;
         )
-        log(&#39;JS&#39;, &#39;blob is at &#39; + js_blob_path, :yellow)
         js_blob_path_relative = js_blob_path
           .delete_prefix(root + &#39;/&#39;)
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
-        log(&#39;JS&#39;, &quot;Writing BLOB to #{js_blob_path}&quot;)
         File.open(js_blob_path, &#39;w+&#39;) { |file| file.puts(js_blob) }
 
         html_content_lines = File.read(path).lines
@@ -216,7 +214,6 @@ module Toolchain
         # TODO: minify js blob. may be unnecessary using transport stream compression anyway
         html_string, js_blob_path = replace_js_tags_with_blob(html_path, js_blob_str)
         File.open(html_path, &#39;w+&#39;) do |file|
-          log(&#39;JS&#39;, &#39;insert JS blob into &#39; + html_path, :yellow)
           file.puts(html_string)
         end
         return OpenStruct.new(
@@ -232,7 +229,7 @@ module Toolchain
       #
       # Returns +script_source_files+ array containing &quot;src&quot; attribute values of script
       #   e.g. &lt;script src=&quot;js/1.js&quot;&gt; --&gt; [&#39;js/1.js&#39;]
-      def get_script_src_from_html_file(html_path)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#get_script_src_from_html_file has a flog score of 31</span>          </div>  </li></ol>
+      def get_script_src_from_html_file(html_path)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#get_script_src_from_html_file has a flog score of 28</span>          </div>  </li></ol>
         unless File.file?(html_path)
           raise Exception.new(&quot;Could not read html file #{html_path}&quot;)
         end
@@ -247,7 +244,6 @@ module Toolchain
           next unless File.exist?(File.join(dir, stag.attribute(&#39;src&#39;)))
           next unless stag.children.empty?
 
-          log(&#39;JS&#39;, &quot;Found src: #{stag.attribute(&#39;src&#39;)}&quot;)
           ::File.join(dir, stag.attribute(&#39;src&#39;))
         end
         script_source_files = script_source_files.compact # remove nil
@@ -257,7 +253,7 @@ module Toolchain
   end
 end
 
-unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_COMBINE&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="../post.d/html_check.html#L57" class="js-smell-location">0</a>                  <a href="combine_transpile_js.html#L161" class="js-smell-location">1</a>                  </div>  </li></ol>
+unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_COMBINE&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="../post.d/html_check.html#L57" class="js-smell-location">0</a>                  <a href="combine_transpile_js.html#L157" class="js-smell-location">1</a>                  </div>  </li></ol>
   Toolchain::PreProcessManager
     .instance.register(Toolchain::Pre::CombineAndTranspileJS.new)
 end
