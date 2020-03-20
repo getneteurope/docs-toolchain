@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-23 11:37:00 +0100'>2020-01-23 11:37:00 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-02-20 15:27:10 +0100'>2020-02-20 15:27:10 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">66.8</span><small> complexity/method</small></div>
-              <div><span class="metric">16</span><small> churn</small></div>
+              <div><span class="metric">65.5</span><small> complexity/method</small></div>
+              <div><span class="metric">19</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">66.75</span><small> complexity</small></div>
+              <div><span class="metric">65.53</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -116,7 +116,7 @@ module Toolchain
     #
     # Returns a list of errors (can be empty).
     #
-    def run(adoc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run has a flog score of 67</span>          </div>  </li></ol>
+    def run(adoc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::IdChecker#run has a flog score of 66</span>          </div>  </li></ol>
       original = adoc.original
       parsed = adoc.parsed
       attributes = adoc.attributes
@@ -126,10 +126,10 @@ module Toolchain
       lines = parsed.reader.read_lines
       lines = parsed.reader.source_lines if lines.empty?
 
-      reader = Asciidoctor::PreprocessorReader.new parsed, lines
+      reader = ::Asciidoctor::PreprocessorReader.new parsed, lines
       combined_source = reader.read_lines
 
-      doc = Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
+      doc = ::Asciidoctor::Document.new combined_source, safe: :unsafe, attributes: attributes
       doc.convert
       adoc_ids = doc.catalog[:refs].keys.to_set
 
@@ -155,7 +155,7 @@ module Toolchain
       end.reject(&amp;:nil?).to_set
 
       (adoc_ids | parsed_ids).to_a.each do |id|
-        log(&#39;ID&#39;, &quot;checking #{id}&quot;, :magenta)
+        # log(&#39;ID&#39;, &quot;checking #{id}&quot;, :magenta)
         msg = &quot;Illegal character: &#39;#{id}&#39; does not match ID criteria (#{ID_PATTERN_REGEX.inspect})&quot;
         next if ID_PATTERN_REGEX.match?(id)
 

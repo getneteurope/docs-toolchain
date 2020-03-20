@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 12:57:48 +0100'>2020-01-31 12:57:48 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-02 16:58:52 +0100'>2020-03-02 16:58:52 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">214</span><small> lines of codes</small></div>
-              <div><span class="metric">12</span><small> methods</small></div>
+              <div><span class="metric">138</span><small> lines of codes</small></div>
+              <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.4</span><small> complexity/method</small></div>
-              <div><span class="metric">20</span><small> churn</small></div>
+              <div><span class="metric">8.7</span><small> complexity/method</small></div>
+              <div><span class="metric">27</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">112.99</span><small> complexity</small></div>
+              <div><span class="metric">78.18</span><small> complexity</small></div>
               <div><span class="metric">34</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                8
+                7
                 smells
               </a>
             </li>
@@ -100,8 +100,10 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require_relative &#39;../cli.rb&#39;
+require_relative &#39;../config_manager.rb&#39;
 require_relative &#39;../extension_manager.rb&#39;
 require_relative &#39;../log/log.rb&#39;
+require_relative &#39;../utils/adoc.rb&#39;
 Dir[File.join(__dir__, &#39;../&#39;, &#39;extensions.d&#39;, &#39;*.rb&#39;)].each { |file| require file }
 
 ##
@@ -109,7 +111,7 @@ Dir[File.join(__dir__, &#39;../&#39;, &#39;extensions.d&#39;, &#39;*.rb&#39;)].e
 ADOC_MAP = Hash.new(nil)
 ##
 # default index file
-DEFAULT_INDEX = &#39;content/index.adoc&#39;
+DEFAULT_INDEX = Toolchain::ConfigManager.instance.get(&#39;asciidoc.index.file&#39;)
 
 ##
 # represents a pair of parsed, resolved adoc and original adoc
@@ -146,92 +148,12 @@ end
 # Returns +nil+.
 #
 def print_errors(errors_map)
-  errors_map.each do |_file, errors|
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L149" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
+  errors_map.each do |file, errors|
+    log(&#39;ERRORS&#39;, &quot;for file #{file}&quot;, :red) unless errors.empty?
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L54" class="js-smell-location">0</a>                  <a href="test.html#L71" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
-end
-
-##
-# Takes document +doc+.
-# Returns +attribs+ all attributes newly set in this document.
-#
-def get_mod_attrs_from_doc(doc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>get_mod_attrs_from_doc doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
-  attribs = {}
-  doc.convert
-  attrs_mod = doc.instance_variable_get :@attributes_modified
-  attrs_mod.each do |k, _v|
-    attribs[k] = doc.attributes[k]
-  end
-  attribs
-end
-
-##
-# Recursively loops thourgh asdciidoc includes and collects their newly set attributes.
-# Returns collection of attributes +attribs+.
-def collect_attributes(doc, attribs = {})
-  # get initial attribs set in index
-  attribs = get_mod_attrs_from_doc(doc) if attribs == {}
-  incs = doc.catalog[:includes].keys.to_set
-  return attribs if incs.empty?
-  document_base_dir = doc.base_dir
-  incs.each do |inc|
-    inc_file_path = doc.normalize_asset_path(inc + &#39;.adoc&#39;)
-    doc = Asciidoctor.load_file(
-      inc_file_path,
-      base_dir: document_base_dir,
-      catalog_assets: true,
-      sourcemap: true,
-      safe: :unsafe,
-      parse: false,
-      attributes: attribs
-    )
-    # combine new modified attr from current file with existing attribs
-    get_mod_attrs_from_doc(doc).each do |k, v|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>collect_attributes contains iterators nested 2 deep</span>          </div>  </li></ol>
-      attribs[k] = v
-    end
-    collect_attributes(doc, attribs)
-  end
-  attribs
-end
-
-##
-# TODO: 1. use a Struct instead of an OpenStruct (with proper documentation of the fields)
-# TODO: 2. move function to a util file or something else (should not be in test.rb,
-#                                                           because we use it in unit tests)
-#
-# Load adoc file +filename+, convert given the parameters +safe+ and +parse+
-# https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
-#
-# Returns a pair of converted adoc +adoc+, original adoc +original+
-#
-def load_doc(filename, attribs = {})
-  original = Asciidoctor.load_file(
-    filename,
-    catalog_assets: true,
-    sourcemap: true,
-    safe: :unsafe,
-    parse: false,
-    attributes: attribs
-  )
-  parsed = Asciidoctor.load_file(
-    filename,
-    catalog_assets: true,
-    sourcemap: true,
-    safe: :unsafe,
-    parse: true,
-    attributes: attribs
-  )
-  attributes = collect_attributes parsed, attribs
-
-  adoc = OpenStruct.new(
-    original: original,
-    parsed: parsed,
-    attributes: attributes,
-    filename: filename
-  )
-  return adoc
 end
 
 ##
@@ -245,7 +167,7 @@ def test_files(files)
     next if errors.empty?
 
     puts f.blue.bold
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L51" class="js-smell-location">0</a>                  <a href="test.html#L149" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L54" class="js-smell-location">0</a>                  <a href="test.html#L71" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
@@ -259,10 +181,12 @@ end
 # in +ADOC_MAP+.
 #
 # Returns +errors+ for the given file.
-def run_tests(filename)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#run_tests has a flog score of 30</span>          </div>  </li></ol>
+def run_tests(filename)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#run_tests has a flog score of 27</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>run_tests doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
   if ADOC_MAP[filename].nil?
 
-    adoc = load_doc filename
+    adoc = Toolchain::Adoc.load_doc(filename,
+      &#39;root&#39; =&gt; ::Toolchain.document_root
+    )
     original = adoc.original
     parsed = adoc.parsed
     attributes = adoc.attributes
@@ -278,7 +202,7 @@ def run_tests(filename)<ol class="nocode errors smells">  <li>    <div class="de
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
-    log(&#39;EXTENSION&#39;, ext.class.name, :cyan)
+    # log(&#39;EXTENSION&#39;, ext.class.name, :cyan)
     errors += ext.run(adoc)
   end
   return errors

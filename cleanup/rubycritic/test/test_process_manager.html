@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 15:38:02 +0100'>2020-01-31 15:38:02 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 09:19:51 +0100'>2020-03-20 09:19:51 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">55</span><small> lines of codes</small></div>
-              <div><span class="metric">7</span><small> methods</small></div>
+              <div><span class="metric">66</span><small> lines of codes</small></div>
+              <div><span class="metric">8</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">6.7</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">6.6</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">46.77</span><small> complexity</small></div>
+              <div><span class="metric">52.78</span><small> complexity</small></div>
               <div><span class="metric">82</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                8
+                9
                 smells
               </a>
             </li>
@@ -150,6 +150,17 @@ class TestPostProcessManager &lt; Test::Unit::TestCase<ol class="nocode errors s
     assert_equal(3, procs.length)
     assert_equal((1..3).to_a.reverse, procs.map(&amp;:priority))
     assert_equal(3, procs.first.priority)
+  end
+end
+
+class TestProcess &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestProcess has no descriptive comment</span>          </div>  </li></ol>
+  PRIO = 10
+  def test_run
+    proc = ::Toolchain::BaseProcess.new(PRIO)
+    assert_equal(proc.priority, PRIO)
+    assert_raise(NotImplementedError) do
+      proc.run
+    end
   end
 end
 </code>

@@ -109,6 +109,10 @@
 
   <section class="description">
     
+<p>Class <a href="ProcessManager.html"><code>ProcessManager</code></a> Used to register processes based on <code>BaseProcess</code>, which run either before or after the build phase (pre or post).</p>
+
+<p>This class is an abstract class that is the base for <code>PreProcessManager</code> and <code>PostProcessManager</code>.</p>
+
   </section>
 
   
@@ -147,7 +151,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 32</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@processes</span> = []
 <span class="ruby-keyword">end</span></pre>
@@ -182,13 +186,13 @@
 
         <div class="method-description">
           
-          
+          <p>Delete all registered processes.</p>
           
           
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 26</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">clear</span>
 <span class="ruby-keyword">end</span></pre>
@@ -215,13 +219,13 @@
 
         <div class="method-description">
           
-          
+          <p>Returns all registered processes as list.</p>
           
           
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 14</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@processes</span>
 <span class="ruby-keyword">end</span></pre>
@@ -248,16 +252,19 @@
 
         <div class="method-description">
           
-          
+          <p>Register a process <code>proc</code> and sort the list of registered processes by priority.</p>
+
+<p>Returns nothing.</p>
           
           
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 9</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">register</span>(<span class="ruby-identifier">proc</span>)
   <span class="ruby-ivar">@processes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">proc</span>
   <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">sort_by!</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:priority</span>).<span class="ruby-identifier">reverse!</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -282,19 +289,15 @@
 
         <div class="method-description">
           
-          
+          <p>Run all registered processes as separate threads.</p>
           
           
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
-  <span class="ruby-identifier">threads</span> = []
-  <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">threads</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">run</span> }
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">threads</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:join</span>)
+  <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:run</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

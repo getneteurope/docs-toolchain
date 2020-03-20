@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 11:08:52 +0100'>2020-01-31 11:08:52 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-02 16:58:52 +0100'>2020-03-02 16:58:52 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">72</span><small> lines of codes</small></div>
+              <div><span class="metric">79</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">39.4</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">45.2</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">39.42</span><small> complexity</small></div>
+              <div><span class="metric">45.21</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -102,6 +102,7 @@
 
 require &#39;asciidoctor&#39;
 require_relative &#39;../lib/stages/test.rb&#39;
+require_relative &#39;../lib/utils/adoc.rb&#39;
 
 ##
 # Execute the test stage with +argv+ as argument vector.
@@ -111,7 +112,7 @@ require_relative &#39;../lib/stages/test.rb&#39;
 # as the stage aborts.
 #
 # Returns +nil+.
-def main(argv = ARGV)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#main has a flog score of 39</span>          </div>  </li></ol>
+def main(argv = ARGV)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#main has a flog score of 45</span>          </div>  </li></ol>
   args, opt_parser = Toolchain::Test::CLI.parse_args(argv)
   ### Print help
   if args.help
@@ -135,18 +136,24 @@ def main(argv = ARGV)<ol class="nocode errors smells">  <li>    <div class="desc
   log(&#39;ARGS&#39;, args)
   log(&#39;INDEX&#39;, index_adoc)
 
-  ############# adoc, original = load_doc(index_adoc)
-  # included_files = adoc.catalog[:includes]
-  adoc = load_doc index_adoc
+  adoc = Toolchain::Adoc.load_doc(index_adoc,
+    &#39;root&#39; =&gt; ::Toolchain.document_root
+  )
   original = adoc.original
   parsed = adoc.parsed
   attributes = adoc.attributes
 
   included_files = parsed.catalog[:includes]
-  # included_files = load_doc(index_adoc)
+  # included_files = Toolchain::Adoc.load_doc(index_adoc)
   stage_log(:test, &quot;Running checks on index and included files (total: #{included_files.length + 1})&quot;)
-  log(&#39;INCLUDES&#39;, included_files)
-  log(&#39;ATTRIBUTES2&#39;, attributes)
+  log(&#39;INCLUDES&#39;, &#39;List of includes:&#39;)
+  included_files.each do |k, _|
+    puts &quot;... #{k}&quot;
+  end
+  log(&#39;ATTRIBUTES&#39;, &#39;&#39;)
+  attributes.each do |k, v|
+    puts &quot;#{k}\t-&gt;\t#{v}&quot;
+  end
 
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)

@@ -136,12 +136,8 @@
       <span class="ruby-identifier">args</span>[<span class="ruby-value">:debug</span>] = <span class="ruby-keyword">true</span>
     <span class="ruby-keyword">end</span>
 
-    <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-l&#39;</span>, <span class="ruby-string">&#39;--list&#39;</span>, <span class="ruby-string">&#39;list all pre-processing units that will be loaded&#39;</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-l&#39;</span>, <span class="ruby-string">&#39;--list&#39;</span>, <span class="ruby-string">&#39;list all processing units that will be loaded&#39;</span>) <span class="ruby-keyword">do</span>
       <span class="ruby-identifier">args</span>[<span class="ruby-value">:list</span>] = <span class="ruby-keyword">true</span>
-    <span class="ruby-keyword">end</span>
-
-    <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-r&#39;</span>, <span class="ruby-string">&#39;--run&#39;</span>, <span class="ruby-string">&#39;run all pre-processing units in pre.d/&#39;</span>) <span class="ruby-keyword">do</span>
-      <span class="ruby-identifier">args</span>[<span class="ruby-value">:run</span>] = <span class="ruby-keyword">true</span>
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-h&#39;</span>, <span class="ruby-string">&#39;--help&#39;</span>, <span class="ruby-string">&#39;print this help&#39;</span>) <span class="ruby-keyword">do</span>

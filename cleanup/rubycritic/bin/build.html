@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-28 11:53:03 +0100'>2020-01-28 11:53:03 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-02 14:49:32 +0100'>2020-03-02 14:49:32 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">22</span><small> lines of codes</small></div>
+              <div><span class="metric">20</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">17.2</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">12.6</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">17.21</span><small> complexity</small></div>
+              <div><span class="metric">12.64</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -111,8 +111,6 @@ def main(argv = ARGV)
   end
 
   stage_log(:build, &#39;Starting build stage&#39;)
-  stage_log(:build, &quot;running build setup on content folder: #{args.content}&quot;)
-  Toolchain::Build.setup(content: args.content)
   stage_log(:build, &quot;running build with index: #{args.index}&quot;)
   Toolchain::Build.build(index: args.index)
   stage_log(:build, &#39;Build done&#39;)
