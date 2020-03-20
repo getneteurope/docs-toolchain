@@ -79,12 +79,10 @@ module Toolchain
           'js',
           'blob_' + blob_name + '.js'
         )
-        log('JS', 'blob is at ' + js_blob_path, :yellow)
         js_blob_path_relative = js_blob_path
           .delete_prefix(root + '/')
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
-        log('JS', "Writing BLOB to #{js_blob_path}")
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
 
         html_content_lines = File.read(path).lines
@@ -117,7 +115,6 @@ module Toolchain
         # TODO: minify js blob. may be unnecessary using transport stream compression anyway
         html_string, js_blob_path = replace_js_tags_with_blob(html_path, js_blob_str)
         File.open(html_path, 'w+') do |file|
-          log('JS', 'insert JS blob into ' + html_path, :yellow)
           file.puts(html_string)
         end
         return OpenStruct.new(
@@ -148,7 +145,6 @@ module Toolchain
           next unless File.exist?(File.join(dir, stag.attribute('src')))
           next unless stag.children.empty?
 
-          log('JS', "Found src: #{stag.attribute('src')}")
           ::File.join(dir, stag.attribute('src'))
         end
         script_source_files = script_source_files.compact # remove nil
