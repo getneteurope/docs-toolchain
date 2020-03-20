@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 11:43:27 +0100'>2020-03-20 11:43:27 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 11:21:37 +0100'>2020-03-20 11:21:37 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>test /</small> main.rb</h3>
+      <h3><small>test /</small> test_utils_paths.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">11</span><small> lines of codes</small></div>
-              <div><span class="metric">0</span><small> methods</small></div>
+              <div><span class="metric">50</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">12</span><small> churn</small></div>
+              <div><span class="metric">8.1</span><small> complexity/method</small></div>
+              <div><span class="metric">1</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">0.0</span><small> complexity</small></div>
+              <div><span class="metric">40.52</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
+                1
                 smell
               </a>
             </li>
@@ -99,15 +99,54 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require &#39;simplecov&#39;
-SimpleCov.start do |config|
-  add_filter &#39;test/&#39;
-  add_filter &#39;lib/stages/&#39;
-  add_filter &#39;lib/notify/slack.rb&#39; # not feasible to test
-end
+require &#39;test/unit&#39;
+require_relative &#39;../lib/utils/paths.rb&#39;
 
-ENV[&#39;UNITTEST&#39;] = &#39;true&#39;
-Dir[File.join(__dir__, &#39;test_*.rb&#39;)].each { |f| require f }
+class TestPaths &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestPaths has no descriptive comment</span>          </div>  </li></ol>
+  def test_content_path
+    ENV[&#39;CONTENT_PATH&#39;] = &#39;test_env&#39;
+    assert_equal(&#39;test_env&#39;, ::Toolchain.content_path)
+    ENV.delete(&#39;CONTENT_PATH&#39;)
+    ENV[&#39;GITHUB_ACTIONS&#39;] = &#39;true&#39;
+    ENV[&#39;GITHUB_WORKSPACE&#39;] = &#39;test_workspace&#39;
+    assert_equal(&#39;test_workspace&#39;, ::Toolchain.content_path)
+    ENV.delete(&#39;GITHUB_ACTIONS&#39;)
+    ENV.delete(&#39;GITHUB_WORKSPACE&#39;)
+    assert_equal(&#39;test&#39;, ::Toolchain.content_path(&#39;test&#39;))
+  end
+
+  def test_document_root
+    ENV[&#39;CONTENT_PATH&#39;] = &#39;test&#39;
+    assert_equal(&#39;test/content&#39;, ::Toolchain.document_root)
+    ENV.delete(&#39;CONTENT_PATH&#39;)
+  end
+
+  def test_toolchain_path
+    ENV[&#39;TOOLCHAIN_PATH&#39;] = &#39;test_env&#39;
+    assert_equal(&#39;test_env&#39;, ::Toolchain.toolchain_path)
+    ENV.delete(&#39;TOOLCHAIN_PATH&#39;)
+    assert_equal(&#39;test&#39;, ::Toolchain.toolchain_path(&#39;test&#39;))
+  end
+
+  def test_build_path
+    assert_equal(&#39;test&#39;, ::Toolchain.build_path(&#39;test&#39;))
+    config = { &#39;build&#39; =&gt; { &#39;dir&#39; =&gt; &#39;test_dir&#39; } }
+    with_tempfile(config.to_yaml) do |tf|
+      ::Toolchain::ConfigManager.instance.load(tf)
+    end
+    assert_equal(&#39;test_dir&#39;, ::Toolchain.build_path)
+  end
+
+  def test_html_path
+    assert_equal(&#39;test&#39;, ::Toolchain.html_path(&#39;test&#39;))
+    config = { &#39;build&#39; =&gt; { &#39;html&#39; =&gt; { &#39;dir&#39; =&gt; &#39;test_html_dir&#39; } } }
+    with_tempfile(config.to_yaml) do |tf|
+      ::Toolchain::ConfigManager.instance.load(tf)
+    end
+    assert_equal(&#39;test_html_dir&#39;, ::Toolchain.html_path)
+  end
+
+end
 </code>
   </div>
 </div>

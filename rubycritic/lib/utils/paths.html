@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-28 09:43:25 +0100'>2020-02-28 09:43:25 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 11:21:37 +0100'>2020-03-20 11:21:37 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">7.6</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">8</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">38.02</span><small> complexity</small></div>
@@ -151,7 +151,7 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
   # Returns path to generated html files.
   #
   def self.html_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.html_dir&#39;) : path)
+    return (path.nil? ? ConfigManager.instance.get(&#39;build.html.dir&#39;) : path)
   end
 end
 </code>

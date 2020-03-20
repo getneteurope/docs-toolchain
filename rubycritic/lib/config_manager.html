@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-03 10:12:41 +0100'>2020-03-03 10:12:41 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 11:21:17 +0100'>2020-03-20 11:21:17 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">99</span><small> lines of codes</small></div>
-              <div><span class="metric">6</span><small> methods</small></div>
+              <div><span class="metric">112</span><small> lines of codes</small></div>
+              <div><span class="metric">7</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">4.6</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">4.3</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">27.57</span><small> complexity</small></div>
+              <div><span class="metric">29.77</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -179,11 +179,24 @@ module Toolchain
     # Returns +@config+ if +identifier+ is nil.
     # Returns +default+ if result is nil and +identifier+ is not nil.
     def get(identifier = nil, default: nil)
-      load unless @loaded
       return @config if identifier.nil?
+      load unless @loaded
 
       keys = identifier.split(&#39;.&#39;)
       return get_recursively(@config, keys) || default
+    end
+
+    ##
+    # Delete the currently loaded configuration.
+    #
+    # Does NOT affect the files from which the config was loaded,
+    # only the current state of the +ConfigManager+.
+    #
+    # Returns nothing.
+    #
+    def clear
+      @config = nil
+      @loaded = false
     end
 
     private

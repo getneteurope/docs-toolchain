@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">235</span><small> lines of codes</small></div>
+              <div><span class="metric">229</span><small> lines of codes</small></div>
               <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">19.1</span><small> complexity/method</small></div>
+              <div><span class="metric">18.4</span><small> complexity/method</small></div>
               <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">172.16</span><small> complexity</small></div>
+              <div><span class="metric">165.98</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -284,7 +284,7 @@ module Toolchain
       # +htmls+ is a list of strings, representing the HTML file names.
       # Returns the index JSON and DB JSON for lunr.
       #
-      def generate_index(htmls)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Post::CompileSearchIndex#generate_index has a flog score of 49</span>          </div>  </li></ol>
+      def generate_index(htmls)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Post::CompileSearchIndex#generate_index has a flog score of 43</span>          </div>  </li></ol>
         docs = []
         lookup = {}
         htmls.each do |html|
@@ -318,12 +318,6 @@ module Toolchain
         idxjs = lunrjs.call(lunr_callback)
 
         index = ::JSON.parse(idxjs.dumpIndex, max_nesting: false)
-        if ENV.key?(&#39;DEBUG&#39;)
-          puts &#39;=== DATA ===&#39;
-          pp index
-          puts &#39;=== LOOKUP ===&#39;
-          pp lookup
-        end
         return index, lookup
       end
 

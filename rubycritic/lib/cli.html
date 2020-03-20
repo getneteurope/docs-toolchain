@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 15:49:00 +0100'>2020-01-31 15:49:00 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 11:33:27 +0100'>2020-03-20 11:33:27 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">133</span><small> lines of codes</small></div>
+              <div><span class="metric">129</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">17.8</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">17.0</span><small> complexity/method</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">53.41</span><small> complexity</small></div>
+              <div><span class="metric">51.13</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -208,12 +208,8 @@ Default: index file is \&#39;content/index.adoc\&#39;&#39;
             args[:debug] = true
           end
 
-          parser.on(&#39;-l&#39;, &#39;--list&#39;, &#39;list all pre-processing units that will be loaded&#39;) do
+          parser.on(&#39;-l&#39;, &#39;--list&#39;, &#39;list all processing units that will be loaded&#39;) do
             args[:list] = true
-          end
-
-          parser.on(&#39;-r&#39;, &#39;--run&#39;, &#39;run all pre-processing units in pre.d/&#39;) do
-            args[:run] = true
           end
 
           parser.on(&#39;-h&#39;, &#39;--help&#39;, &#39;print this help&#39;) do

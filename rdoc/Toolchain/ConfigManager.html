@@ -88,6 +88,8 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-clear">#clear</a>
+    
     <li ><a href="#method-i-get">#get</a>
     
     <li ><a href="#method-i-load">#load</a>
@@ -149,7 +151,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 92</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 105</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">nil</span>
@@ -170,6 +172,44 @@
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-clear" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">clear</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Delete the currently loaded configuration.</p>
+
+<p>Does NOT affect the files from which the config was loaded, only the current state of the <code>ConfigManager</code>.</p>
+
+<p>Returns nothing.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="clear-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
+  <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-get" class="method-detail ">
@@ -199,8 +239,8 @@
           <div class="method-source-code" id="get-source">
             <pre><span class="ruby-comment"># File lib/config_manager.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>(<span class="ruby-identifier">identifier</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-value">default:</span> <span class="ruby-keyword">nil</span>)
-  <span class="ruby-identifier">load</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@loaded</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@config</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">load</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@loaded</span>
 
   <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">keys</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">default</span>

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-09 15:48:26 +0100'>2020-03-09 15:48:26 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 10:47:41 +0100'>2020-03-20 10:47:41 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">366</span><small> lines of codes</small></div>
+              <div><span class="metric">372</span><small> lines of codes</small></div>
               <div><span class="metric">15</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">16.6</span><small> complexity/method</small></div>
-              <div><span class="metric">42</span><small> churn</small></div>
+              <div><span class="metric">17.9</span><small> complexity/method</small></div>
+              <div><span class="metric">43</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">249.69</span><small> complexity</small></div>
+              <div><span class="metric">268.86</span><small> complexity</small></div>
               <div><span class="metric">126</span><small> duplications</small></div>
             </div>
           </div>
@@ -392,7 +392,7 @@ class TestCreateTOC &lt; Test::Unit::TestCase<ol class="nocode errors smells">  
   ##
   # Tests TOC creation with sample document
   #
-  def test_create_toc<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>TestCreateTOC#test_create_toc has a flog score of 50</span>          </div>  </li></ol>
+  def test_create_toc<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>TestCreateTOC#test_create_toc has a flog score of 69</span>          </div>  </li></ol>
     adoc_content = &#39;= Test IDs
 
 [#level_one]
@@ -456,11 +456,17 @@ Sensing a pattern here?
     assert_equal(&#39;Getting sectioned at 5&#39;, toc_object[&#39;children&#39;][2][&#39;children&#39;][0][&#39;children&#39;][0][&#39;children&#39;][0][&#39;title&#39;])
 
     # Test HTML file
-    toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
-    assert_equal(&#39;level_two.html&#39;, toc_html.css(&#39;div#toc &gt; ul &gt; li#toc_li_level_two &gt; input + label &gt; a&#39;).attribute(&#39;href&#39;).value)
+    toc_document = Nokogiri::HTML.fragment(File.read(html_filepath))
+    assert_equal(&#39;level_two.html&#39;, toc_document.css(&#39;div#toc &gt; ul &gt; li#toc_li_level_two &gt; input + label &gt; a&#39;).attribute(&#39;href&#39;).value)
 
     # Test hierarchy level attribute
-    assert_equal(&#39;5&#39;, toc_html.css(&#39;li#toc_li_level_six&#39;).attribute(&#39;data-level&#39;).value)
+    assert_equal(&#39;5&#39;, toc_document.css(&#39;li#toc_li_level_six&#39;).attribute(&#39;data-level&#39;).value)
+
+    # Test if checkboxes are correctly ticked for a given page
+    ticked_toc = ::Toolchain::Adoc::CreateTOC.new.tick_toc_checkboxes(&#39;level_three_again&#39;, toc_document)
+    assert_nil(toc_document.at_css(&#39;#toc_cb_level_three&#39;).attributes[&#39;checked&#39;])
+    assert_not_nil(toc_document.at_css(&#39;#toc_cb_level_three_again&#39;).attributes[&#39;checked&#39;])
+    assert_not_nil(toc_document.at_css(&#39;#toc_cb_level_two_again&#39;).attributes[&#39;checked&#39;])
   end
 end
 </code>
