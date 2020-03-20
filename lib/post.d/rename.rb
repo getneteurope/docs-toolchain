@@ -14,11 +14,14 @@ module Toolchain
     #
     class Rename < BaseProcess
       def run
+        # TODO create a rename-map.yml or something similar and specify
+        # that in config.yml
         stage_log(:post, 'Copying Home.html to index.html')
+        home = ::File.join(::Toolchain.html_path, 'Home.html')
+        index = ::File.join(::Toolchain.html_path, 'index.html')
         ::FileUtils.cp(
-          ::File.join(::Toolchain.html_path, 'Home.html'),
-          ::File.join(::Toolchain.html_path, 'index.html')
-        )
+          home, index
+        ) if File.exist?(home)
       end
     end
   end
