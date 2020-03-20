@@ -682,7 +682,7 @@ class CodeRayCSSInjector < Asciidoctor::Extensions::Postprocessor
     css_links = html.xpath('html/head/link')
     last_css_link = css_links.last
     # only add the link if it's not already present (index file gets processed twice)
-    if (!last_css_link.nil?) && last_css_link.attr('href') == coderay_css
+    if (!last_css_link.nil?) && last_css_link.attr('href') != coderay_css
       css_links.last.add_next_sibling(
         '<link rel="stylesheet" href="css/coderay-asciidoctor.css">'
       )
