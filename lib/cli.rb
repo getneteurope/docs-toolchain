@@ -109,12 +109,8 @@ Default: index file is \'content/index.adoc\''
             args[:debug] = true
           end
 
-          parser.on('-l', '--list', 'list all pre-processing units that will be loaded') do
+          parser.on('-l', '--list', 'list all processing units that will be loaded') do
             args[:list] = true
-          end
-
-          parser.on('-r', '--run', 'run all pre-processing units in pre.d/') do
-            args[:run] = true
           end
 
           parser.on('-h', '--help', 'print this help') do

@@ -357,10 +357,16 @@ Sensing a pattern here?
     assert_equal('Getting sectioned at 5', toc_object['children'][2]['children'][0]['children'][0]['children'][0]['title'])
 
     # Test HTML file
-    toc_html = Nokogiri::HTML.fragment(File.read(html_filepath))
-    assert_equal('level_two.html', toc_html.css('div#toc > ul > li#toc_li_level_two > input + label > a').attribute('href').value)
+    toc_document = Nokogiri::HTML.fragment(File.read(html_filepath))
+    assert_equal('level_two.html', toc_document.css('div#toc > ul > li#toc_li_level_two > input + label > a').attribute('href').value)
 
     # Test hierarchy level attribute
-    assert_equal('5', toc_html.css('li#toc_li_level_six').attribute('data-level').value)
+    assert_equal('5', toc_document.css('li#toc_li_level_six').attribute('data-level').value)
+
+    # Test if checkboxes are correctly ticked for a given page
+    ticked_toc = ::Toolchain::Adoc::CreateTOC.new.tick_toc_checkboxes('level_three_again', toc_document)
+    assert_nil(toc_document.at_css('#toc_cb_level_three').attributes['checked'])
+    assert_not_nil(toc_document.at_css('#toc_cb_level_three_again').attributes['checked'])
+    assert_not_nil(toc_document.at_css('#toc_cb_level_two_again').attributes['checked'])
   end
 end

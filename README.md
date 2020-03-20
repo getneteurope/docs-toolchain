@@ -30,16 +30,16 @@ The toolchain is designed to run through different stages, that have specific re
 2. **test**:
     * validate all configuration files
     * test the current commit with:
-    * predefined tests by the toolchain (`lib/extensions.d/`)
-    * [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
+        * predefined tests by the toolchain (`lib/extensions.d/`)
+        * [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
     * abort the build if necessary
     * keep a log of all events which will be used in the notify stage
-3. **test**:
+3. **pre**:
     * combine Javascript files to BLOB file and transpile (cross-browser compatibility and loading speed)
 4. **build**:
     * invoke asciidoctor (with multipage converter)
     * `DEBUG` build for local testing:
-    * passthrough as `:debug:` to asciidoctor
+        * passthrough as `:debug:` to asciidoctor
     * [*future*] run custom build scripts `build.d/*.sh`
 5. **post**:
     * create Table of Content
@@ -50,7 +50,24 @@ The toolchain is designed to run through different stages, that have specific re
     * [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
     * required variables, see [Configuration/Secret/AWS](#Secret)
 7. **notify**:
-    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret**
+    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
+    
+### Rake Tasks
+1. _No rake task:_ `bash setup/setup.sh`
+2. `rake docs:test`
+3. `rake docs:pre`
+4. `rake docs:build`
+5. `rake docs:post`
+6. _No rake task:_ Deployed by Github Action
+7. **WIP**: either done by `rake docs:notify** or separate Github Action
+
+**Additional tasks**
+* `rake docs:clean`: delete build directory and clean up
+* `rake docs:all`: run the stages `clean test pre build post`
+* `rake docs:list:<stage>`: list loaded extensions for a processing stage
+    * `rake docs:list:pre`
+    * `rake docs:list:post`
+
 
 ## Development
 **Rake targets:**

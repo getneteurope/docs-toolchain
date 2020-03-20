@@ -5,7 +5,8 @@ asciidoc:
 
 build:
   dir: /tmp/build
-  html_dir: /tmp/build/html
+  html:
+    dir: /tmp/build/html
 
 checkers:
   pattern:

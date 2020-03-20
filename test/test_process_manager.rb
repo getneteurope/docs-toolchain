@@ -53,3 +53,14 @@ class TestPostProcessManager < Test::Unit::TestCase
     assert_equal(3, procs.first.priority)
   end
 end
+
+class TestProcess < Test::Unit::TestCase
+  PRIO = 10
+  def test_run
+    proc = ::Toolchain::BaseProcess.new(PRIO)
+    assert_equal(proc.priority, PRIO)
+    assert_raise(NotImplementedError) do
+      proc.run
+    end
+  end
+end

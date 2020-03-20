@@ -219,12 +219,6 @@ module Toolchain
         idxjs = lunrjs.call(lunr_callback)
 
         index = ::JSON.parse(idxjs.dumpIndex, max_nesting: false)
-        if ENV.key?('DEBUG')
-          puts '=== DATA ==='
-          pp index
-          puts '=== LOOKUP ==='
-          pp lookup
-        end
         return index, lookup
       end
 
