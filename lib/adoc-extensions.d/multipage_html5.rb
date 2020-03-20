@@ -629,14 +629,15 @@ end
 #
 class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
   def process(document, output)
-    _, toc_html_filepath, _ = ::Toolchain::Adoc::CreateTOC.new.run(document.catalog)
+    toc_factory = ::Toolchain::Adoc::CreateTOC.new
+    _, toc_html_filepath, _ = toc_factory.run(document.catalog)
     toc = File.read(toc_html_filepath)
     html = Nokogiri::HTML(output)
 
     # filename is based on ID, see `write` method above
     filename = document.id + '.html'
     toc_document = Nokogiri::HTML.fragment(toc)
-    toc_document = tick_toc_checkboxes(document.id, toc_document)
+    toc_document = toc_factory.tick_toc_checkboxes(document.id, toc_document)
     # table of content
     html.at_css('div#toc').remove if html.at_css('div#toc')
     html.at_css('body').children.first.add_previous_sibling(toc_document)
