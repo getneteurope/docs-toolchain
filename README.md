@@ -24,23 +24,27 @@ Under heavy development, everything is subject to change and most likely will no
 * [RubyCritic](https://wirecard.github.io/docs-toolchain/rubycritic)
 
 
-## Stages (out-of-date)
+## Stages
 The toolchain is designed to run through different stages, that have specific responsibilities:
 1. **setup**: install required dependencies
 2. **test**:
     * validate all configuration files
     * test the current commit with:
         * predefined tests by the toolchain (`lib/extensions.d/`)
+            * ID Checker
+            * `if` Checker
+            * Link Checker
+            * Pattern Checker
         * [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
-    * abort the build if necessary
-    * keep a log of all events which will be used in the notify stage
 3. **pre**:
-    * combine Javascript files to BLOB file and transpile (cross-browser compatibility and loading speed)
+    * combine Javascript files to BLOB file
+    * transpile (cross-browser compatibility and loading speed)
 4. **build**:
     * invoke asciidoctor (with multipage converter)
-    * `DEBUG` build for local testing:
-        * passthrough as `:debug:` to asciidoctor
     * [*future*] run custom build scripts `build.d/*.sh`
+    * [*future*] diagram integration
+    * Table of Content injector
+    * CodeRay source code highlighter
 5. **post**:
     * create Table of Content
     * create search index (Lunr)
@@ -77,6 +81,19 @@ The toolchain is designed to run through different stages, that have specific re
 * `rake toolchain:rdoc` generates rdoc documentation in `/tmp/rdoc`
 * `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch` on the code base
 
+### Environment Variables
+
+* `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
+* `SKIP_HTMLCHECK`: skips the HTML Check Post process.
+* Skip entire stages
+    * `SKIP_RAKE_TEST`: skips test stage (i.e. `rake docs:test`)
+* `FAST` sets the following variables (which may be set individually):
+    * `SKIP_COMBINE`, `SKIP_HTMLCHECK`, `SKIP_RAKE_TEST`
+* `DEBUG` for debug builds
+    * `SKIP_COMBINE`
+    * additional debug output
+
+
 ## Configuration
 There are some variables that need to be secret, while others can be public.
 Configuration files are public and checked into the repository like regular content files.
@@ -94,14 +111,6 @@ To disable the loading via CDN:
 :!webfonts:
 ```
 
-
-### Environment Variables
-* `FAST` sets the following variables (which may be set individually):
-    * `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
-    * `SKIP_HTMLCHECK`: skips the HTML Check Post process.
-    * Skip entire stages
-        * `SKIP_RAKE_TEST`: skips test stage (i.e. `rake docs:test`)
-
 ### Secrets
 #### AWS
 
@@ -112,8 +121,7 @@ To disable the loading via CDN:
 * `AWS_S3_BUCKET`
 
 #### Slack (outdated)
-
-**Needed:**
+**Token environment variable:**
 * `SLACK_TOKEN`
 
 The **test** and **build** stages produce `/tmp/slack.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
@@ -130,7 +138,6 @@ Configuration files:
 * `static/privacy-policy.(txt|adoc)`: **WIP**
 
 ## Run
-
 To run the toolchain locally, or run the unit tests, the following requirements must be met:
 * Ruby 2.x
     * installed dependencies (Gemfile)
