@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 15:42:33 +0100'>2020-03-20 15:42:33 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 15:44:45 +0100'>2020-03-20 15:44:45 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">17.5</span><small> complexity/method</small></div>
-              <div><span class="metric">25</span><small> churn</small></div>
+              <div><span class="metric">17.7</span><small> complexity/method</small></div>
+              <div><span class="metric">26</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">104.97</span><small> complexity</small></div>
+              <div><span class="metric">106.36</span><small> complexity</small></div>
               <div><span class="metric">16</span><small> duplications</small></div>
             </div>
           </div>
@@ -215,7 +215,7 @@ module Toolchain
         html_string, js_blob_path = replace_js_tags_with_blob(html_path, js_blob_str)
         File.open(html_path, &#39;w+&#39;) do |file|
           file.puts(html_string)
-        end
+        end unless js_blob_str.empty?
         return OpenStruct.new(
           html_path: html_path,
           html: html_string,

@@ -212,7 +212,7 @@
   <span class="ruby-identifier">html_string</span>, <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-identifier">replace_js_tags_with_blob</span>(<span class="ruby-identifier">html_path</span>, <span class="ruby-identifier">js_blob_str</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">html_path</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">file</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">html_string</span>)
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">js_blob_str</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
     <span class="ruby-value">html_path:</span> <span class="ruby-identifier">html_path</span>,
     <span class="ruby-value">html:</span> <span class="ruby-identifier">html_string</span>,
