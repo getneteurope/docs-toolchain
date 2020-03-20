@@ -246,7 +246,6 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">object</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">OpenStruct</span>
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>
-                <span class="ruby-keyword">when</span> <span class="ruby-constant">OpenStruct</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">openstruct_to_hash</span>(<span class="ruby-identifier">value</span>)
                 <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">openstruct_to_hash</span>(<span class="ruby-identifier">v</span>) }
                 <span class="ruby-keyword">else</span> <span class="ruby-identifier">value</span>
                 <span class="ruby-keyword">end</span>

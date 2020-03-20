@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 10:47:41 +0100'>2020-03-20 10:47:41 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 10:57:11 +0100'>2020-03-20 10:57:11 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">179</span><small> lines of codes</small></div>
+              <div><span class="metric">178</span><small> lines of codes</small></div>
               <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">47.1</span><small> complexity/method</small></div>
-              <div><span class="metric">30</span><small> churn</small></div>
+              <div><span class="metric">46.7</span><small> complexity/method</small></div>
+              <div><span class="metric">31</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">235.51</span><small> complexity</small></div>
+              <div><span class="metric">233.67</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -263,7 +263,6 @@ module Toolchain
         return object unless object.is_a? OpenStruct
         object.each_pair do |key, value|
           hash[key] = case value
-                      when OpenStruct then openstruct_to_hash(value)
                       when Array then value.map { |v| openstruct_to_hash(v) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#openstruct_to_hash contains iterators nested 2 deep</span>          </div>  </li></ol>
                       else value
                       end
