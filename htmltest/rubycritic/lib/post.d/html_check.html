@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 15:08:17 +0100'>2020-03-20 15:08:17 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 15:16:45 +0100'>2020-03-20 15:16:45 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">8.0</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">8.8</span><small> complexity/method</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">32.16</span><small> complexity</small></div>
+              <div><span class="metric">35.02</span><small> complexity</small></div>
               <div><span class="metric">16</span><small> duplications</small></div>
             </div>
           </div>
@@ -144,7 +144,7 @@ module Toolchain
           &quot;htmltest_#{@version}_#{os}_#{@arch}&quot;,
           (os == &#39;windows&#39; ? &#39;htmltest.exe&#39; : &#39;htmltest&#39;)
         )
-        unless os.nil?
+        unless os.nil? || OS.bits != 64
           stage_log(:post, &quot;Running htmltest #{@version} as #{os}&quot;)
           system(&quot;#{bin} #{directory}&quot;)
         end
