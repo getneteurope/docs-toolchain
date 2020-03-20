@@ -28,7 +28,26 @@ class TestCompileSearchIndex < Test::Unit::TestCase
 <div class="sect3">
 <h3 id="first-head">My First Heading</h3>
 <div class="paragraph">
-<p>My first paragraph.</p>
+<p>
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Integer massa odio, bibendum ut vulputate sit amet, fringilla in massa.
+Donec vitae venenatis dolor. Suspendisse efficitur cursus arcu.
+Duis tincidunt et quam et dapibus. Vivamus ut dui vitae nisl dignissim faucibus.
+Mauris venenatis eleifend nisi ut vehicula. Suspendisse semper viverra consequat.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+Donec maximus vestibulum urna id ullamcorper.
+Sed sem tortor, maximus a arcu id, accumsan varius ante.
+Pellentesque accumsan rhoncus est non sagittis.
+Sed ac eros sit amet neque semper ullamcorper vel eget mi.
+Sed non luctus nunc. Nulla non massa ac libero iaculis bibendum.
+Nulla non porttitor risus. Fusce ac molestie elit.
+Fusce purus est, accumsan eu odio vel, ornare tristique odio.
+Suspendisse ullamcorper mauris ac iaculis pellentesque.
+Donec rhoncus tortor vel est ultrices dignissim.
+Fusce tincidunt gravida orci eget placerat. Etiam nec scelerisque diam.
+Praesent quis feugiat enim.
+</p>
 </div>
 </div>
 
