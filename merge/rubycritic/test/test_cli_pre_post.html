@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 11:43:27 +0100'>2020-03-20 11:43:27 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 11:33:27 +0100'>2020-03-20 11:33:27 +0100</time>
         
       </span>
     </div>
     <div>
-      <h3><small>test /</small> main.rb</h3>
+      <h3><small>test /</small> test_cli_pre_post.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -62,22 +62,22 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">11</span><small> lines of codes</small></div>
-              <div><span class="metric">0</span><small> methods</small></div>
+              <div><span class="metric">36</span><small> lines of codes</small></div>
+              <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">12</span><small> churn</small></div>
+              <div><span class="metric">8.6</span><small> complexity/method</small></div>
+              <div><span class="metric">1</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">0.0</span><small> complexity</small></div>
-              <div><span class="metric">0</span><small> duplications</small></div>
+              <div><span class="metric">34.35</span><small> complexity</small></div>
+              <div><span class="metric">63</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
-                smell
+                2
+                smells
               </a>
             </li>
           </ul>
@@ -99,15 +99,40 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require &#39;simplecov&#39;
-SimpleCov.start do |config|
-  add_filter &#39;test/&#39;
-  add_filter &#39;lib/stages/&#39;
-  add_filter &#39;lib/notify/slack.rb&#39; # not feasible to test
-end
+require &#39;test/unit&#39;
+require_relative &#39;../lib/cli.rb&#39;
+require_relative &#39;./util.rb&#39;
 
-ENV[&#39;UNITTEST&#39;] = &#39;true&#39;
-Dir[File.join(__dir__, &#39;test_*.rb&#39;)].each { |f| require f }
+
+class TestProcessCLI &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestProcessCLI has no descriptive comment</span>          </div>  </li></ol>
+  def test_default
+    args, = Toolchain::Process::CLI.parse_args([])
+    assert_false(args.help)
+    assert_false(args.debug)
+    assert_false(args.list)
+  end
+
+  def test_help<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 3 nodes</span>              <span>Locations:</span>                  <a href="test_cli_pre_post.html#L16" class="js-smell-location">0</a>                  <a href="test_cli_pre_post.html#L23" class="js-smell-location">1</a>                  <a href="test_cli_pre_post.html#L30" class="js-smell-location">2</a>                  </div>  </li></ol>
+    args, = Toolchain::Process::CLI.parse_args(%w[--help])
+    assert_true(args.help)
+    assert_false(args.debug)
+    assert_false(args.list)
+  end
+
+  def test_debug<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 3 nodes</span>              <span>Locations:</span>                  <a href="test_cli_pre_post.html#L16" class="js-smell-location">0</a>                  <a href="test_cli_pre_post.html#L23" class="js-smell-location">1</a>                  <a href="test_cli_pre_post.html#L30" class="js-smell-location">2</a>                  </div>  </li></ol>
+    args, = Toolchain::Process::CLI.parse_args(%w[--debug])
+    assert_false(args.help)
+    assert_true(args.debug)
+    assert_false(args.list)
+  end
+
+  def test_list<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 3 nodes</span>              <span>Locations:</span>                  <a href="test_cli_pre_post.html#L16" class="js-smell-location">0</a>                  <a href="test_cli_pre_post.html#L23" class="js-smell-location">1</a>                  <a href="test_cli_pre_post.html#L30" class="js-smell-location">2</a>                  </div>  </li></ol>
+    args, = Toolchain::Process::CLI.parse_args(%w[--list])
+    assert_false(args.help)
+    assert_false(args.debug)
+    assert_true(args.list)
+  end
+end
 </code>
   </div>
 </div>

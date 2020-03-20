@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-19 13:49:13 +0100'>2020-03-19 13:49:13 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 10:57:11 +0100'>2020-03-20 10:57:11 +0100</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">47.7</span><small> complexity/method</small></div>
-              <div><span class="metric">29</span><small> churn</small></div>
+              <div><span class="metric">46.7</span><small> complexity/method</small></div>
+              <div><span class="metric">31</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">238.6</span><small> complexity</small></div>
+              <div><span class="metric">233.67</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                7
+                6
                 smells
               </a>
             </li>
@@ -213,7 +213,27 @@ module Toolchain
         return json_filepath, html_filepath, toc_hash
       end
 
-      private
+      ##
+      # Tick all checkboxes of ancestors of current page
+      # Requires +page_id+ and Nokogiri Table of Content +toc_document+
+      # Returns modified TOC +toc_document+
+      #
+      def tick_toc_checkboxes(page_id, toc_document)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#tick_toc_checkboxes doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+        selector = &#39;#toc_li_&#39; + page_id
+        list_element = toc_document.at_css selector
+        while list_element
+          break unless list_element.name == &#39;li&#39;
+          begin
+            cb = list_element.at_css(&#39;&gt; input&#39;)
+            cb.set_attribute(&#39;checked&#39;,&#39;&#39;)
+            selector = &#39;#&#39; + list_element.parent.parent.attr(&#39;id&#39;)
+            list_element = toc_document.at_css selector
+          rescue StandardError =&gt; _e
+            break
+          end
+        end
+        return toc_document
+      end
 
       ## Recursivelz generates a HTML fragment for the Table Of Content
       # Takes OpenStruct of +toc_elements+ as input
@@ -225,9 +245,9 @@ module Toolchain
           root_file = e.founder == &#39;root&#39; ? &#39;&#39; : e.founder + &#39;.html&#39;
           level = e.level || 0
 
-          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_li_&#39; + e.id + &#39;&quot; data-level=&quot;&#39; + level.to_s + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc calls 'e.id' 5 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L129" class="js-smell-location">0</a>                  <a href="create_toc.html#L131" class="js-smell-location">1</a>                  </div>  </li></ol>
+          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_li_&#39; + e.id + &#39;&quot; data-level=&quot;&#39; + level.to_s + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc calls 'e.id' 5 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L149" class="js-smell-location">0</a>                  <a href="create_toc.html#L151" class="js-smell-location">1</a>                  </div>  </li></ol>
           # FIXME fix this mess of string formatting
-          fragment_string.at(&#39;li&#39;) &lt;&lt; &quot;\n&quot; + &#39;  &lt;input id=&quot;toc_cb_&#39; + e.id + &#39;&quot; type=&quot;checkbox&quot;&#39; + (e.children.empty? ? &#39; disabled&#39; : &#39;&#39;) + &#39;&gt;&lt;label for=&quot;toc_cb_&#39; + e.id + &#39;&quot;&gt;&lt;a href=&quot;&#39; + root_file.to_s + (e.founder == e.id ? &#39;&#39; : &#39;#&#39; + e.id)+ &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&lt;/label&gt;&#39; + &quot;\n&quot;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc calls 'e.id' 5 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L129" class="js-smell-location">0</a>                  <a href="create_toc.html#L131" class="js-smell-location">1</a>                  </div>  </li></ol>
+          fragment_string.at(&#39;li&#39;) &lt;&lt; &quot;\n&quot; + &#39;  &lt;input id=&quot;toc_cb_&#39; + e.id + &#39;&quot; type=&quot;checkbox&quot;&#39; + (e.children.empty? ? &#39; disabled&#39; : &#39;&#39;) + &#39;&gt;&lt;label for=&quot;toc_cb_&#39; + e.id + &#39;&quot;&gt;&lt;a href=&quot;&#39; + root_file.to_s + (e.founder == e.id ? &#39;&#39; : &#39;#&#39; + e.id)+ &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&lt;/label&gt;&#39; + &quot;\n&quot;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc calls 'e.id' 5 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L149" class="js-smell-location">0</a>                  <a href="create_toc.html#L151" class="js-smell-location">1</a>                  </div>  </li></ol>
 
           # if element has child elements, add them to current list item
           fragment_string.at(&#39;li&#39;) &lt;&lt; generate_html_from_toc(e.children) unless e.children.empty?
@@ -243,7 +263,6 @@ module Toolchain
         return object unless object.is_a? OpenStruct
         object.each_pair do |key, value|
           hash[key] = case value
-                      when OpenStruct then openstruct_to_hash(value)
                       when Array then value.map { |v| openstruct_to_hash(v) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#openstruct_to_hash contains iterators nested 2 deep</span>          </div>  </li></ol>
                       else value
                       end
@@ -256,25 +275,6 @@ module Toolchain
   end
 end
 
-##
-# Tick all checkboxes of ancestors of current page
-# Requires +page_id+ and Nokogiri Table of Content +toc_document+
-# Returns modified TOC +toc_document+
-#
-def tick_toc_checkboxes(page_id, toc_document)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>tick_toc_checkboxes doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
-  selector = &#39;#toc_li_&#39; + page_id
-  while toc_document.at_css selector<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L167" class="js-smell-location">0</a>                  <a href="create_toc.html#L168" class="js-smell-location">1</a>                  <a href="create_toc.html#L170" class="js-smell-location">2</a>                  <a href="create_toc.html#L172" class="js-smell-location">3</a>                  </div>  </li></ol>
-    break unless toc_document.at_css(selector).name == &#39;li&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L167" class="js-smell-location">0</a>                  <a href="create_toc.html#L168" class="js-smell-location">1</a>                  <a href="create_toc.html#L170" class="js-smell-location">2</a>                  <a href="create_toc.html#L172" class="js-smell-location">3</a>                  </div>  </li></ol>
-    begin
-      cb = toc_document.at_css(selector).at_css(&#39;&gt; input&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L167" class="js-smell-location">0</a>                  <a href="create_toc.html#L168" class="js-smell-location">1</a>                  <a href="create_toc.html#L170" class="js-smell-location">2</a>                  <a href="create_toc.html#L172" class="js-smell-location">3</a>                  </div>  </li></ol>
-      cb.set_attribute(&#39;checked&#39;,&#39;&#39;)
-      selector = &#39;#&#39; + toc_document.at_css(selector).parent.parent.attr(&#39;id&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>tick_toc_checkboxes calls 'toc_document.at_css selector' 4 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L167" class="js-smell-location">0</a>                  <a href="create_toc.html#L168" class="js-smell-location">1</a>                  <a href="create_toc.html#L170" class="js-smell-location">2</a>                  <a href="create_toc.html#L172" class="js-smell-location">3</a>                  </div>  </li></ol>
-    rescue StandardError =&gt; _e
-      break
-    end
-  end
-  return toc_document
-end
 </code>
   </div>
 </div>

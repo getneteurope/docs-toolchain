@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-22 12:43:22 +0100'>2020-01-22 12:43:22 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 11:21:17 +0100'>2020-03-20 11:21:17 +0100</time>
         
       </span>
     </div>
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">49</span><small> lines of codes</small></div>
-              <div><span class="metric">4</span><small> methods</small></div>
+              <div><span class="metric">59</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">10.4</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">10.6</span><small> complexity/method</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">41.56</span><small> complexity</small></div>
+              <div><span class="metric">52.97</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -144,6 +144,16 @@ class TestConfigManager &lt; Test::Unit::TestCase<ol class="nocode errors smells
       Toolchain::ConfigManager.instance.load(tf)
     end
     assert_nil(Toolchain::ConfigManager.instance.get(&#39;x.y&#39;))
+  end
+
+  def test_clear
+    config = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39; }, &#39;d&#39; =&gt; &#39;e&#39; }
+    # use tempfile to load config into ConfigManager
+    with_tempfile(config.to_yaml) do |tf|
+      Toolchain::ConfigManager.instance.load(tf)
+    end
+    Toolchain::ConfigManager.instance.clear
+    assert_nil(Toolchain::ConfigManager.instance.get)
   end
 end
 </code>
