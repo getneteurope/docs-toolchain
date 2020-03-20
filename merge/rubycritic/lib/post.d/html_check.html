@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-09 14:03:56 +0100'>2020-03-09 14:03:56 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 15:08:17 +0100'>2020-03-20 15:08:17 +0100</time>
         
       </span>
     </div>
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">33</span><small> lines of codes</small></div>
-              <div><span class="metric">2</span><small> methods</small></div>
+              <div><span class="metric">63</span><small> lines of codes</small></div>
+              <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">6.3</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">8.0</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">12.57</span><small> complexity</small></div>
+              <div><span class="metric">32.16</span><small> complexity</small></div>
               <div><span class="metric">16</span><small> duplications</small></div>
             </div>
           </div>
@@ -100,6 +100,7 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require &#39;html-proofer&#39;
+require &#39;os&#39;
 require_relative &#39;../base_process.rb&#39;
 require_relative &#39;../utils/paths.rb&#39;
 require_relative &#39;../log/log.rb&#39;
@@ -109,9 +110,8 @@ module Toolchain
   # Adds modules for postprocessing files.
   module Post
     ##
-    # Provides an interface to create a lunr search index
-    # from the generated HTML files.
-    class HTMLCheck &lt; BaseProcess
+    # Post process that runs HTML Proofer on the generated HTML documents.
+    class HTMLProofer &lt; BaseProcess
       def initialize(priority = -10)
         super(priority)
       end
@@ -123,12 +123,42 @@ module Toolchain
         error(e.message)
       end
     end
+
+    ##
+    # Post process that runs HTML Proofer on the generated HTML documents.
+    class HTMLTest &lt; BaseProcess
+      def initialize(priority = -10)
+        super(priority)
+        @bin_dir = ::File.join(::Toolchain.toolchain_path, &#39;bin&#39;, &#39;ext&#39;)
+        @version = &#39;0.12.1&#39;
+        @arch = &#39;amd64&#39;
+      end
+
+      def run(directory = ::Toolchain.html_path)
+        os = nil
+        os = &#39;linux&#39; if OS.linux?
+        os = &#39;windows&#39; if OS.windows?
+        os = &#39;osx&#39; if OS.mac?
+        bin = ::File.join(
+          @bin_dir,
+          &quot;htmltest_#{@version}_#{os}_#{@arch}&quot;,
+          (os == &#39;windows&#39; ? &#39;htmltest.exe&#39; : &#39;htmltest&#39;)
+        )
+        unless os.nil?
+          stage_log(:post, &quot;Running htmltest #{@version} as #{os}&quot;)
+          system(&quot;#{bin} #{directory}&quot;)
+        end
+      end
+    end
   end
 end
 
-unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_HTMLCHECK&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="html_check.html#L30" class="js-smell-location">0</a>                  <a href="../pre.d/combine_transpile_js.html#L161" class="js-smell-location">1</a>                  </div>  </li></ol>
+unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_HTMLCHECK&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="html_check.html#L57" class="js-smell-location">0</a>                  <a href="../pre.d/combine_transpile_js.html#L161" class="js-smell-location">1</a>                  </div>  </li></ol>
   Toolchain::PostProcessManager
-    .instance.register(Toolchain::Post::HTMLCheck.new)
+    .instance.register(Toolchain::Post::HTMLTest.new)
+
+  #   Toolchain::PostProcessManager
+  #     .instance.register(Toolchain::Post::HTMLCheck.new)
 end
 </code>
   </div>
