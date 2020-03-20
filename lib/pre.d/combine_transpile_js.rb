@@ -116,7 +116,7 @@ module Toolchain
         html_string, js_blob_path = replace_js_tags_with_blob(html_path, js_blob_str)
         File.open(html_path, 'w+') do |file|
           file.puts(html_string)
-        end
+        end unless js_blob_str.empty?
         return OpenStruct.new(
           html_path: html_path,
           html: html_string,
