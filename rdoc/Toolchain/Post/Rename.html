@@ -132,11 +132,14 @@
           <div class="method-source-code" id="run-source">
             <pre><span class="ruby-comment"># File lib/post.d/rename.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
+  <span class="ruby-comment"># TODO create a rename-map.yml or something similar and specify</span>
+  <span class="ruby-comment"># that in config.yml</span>
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:post</span>, <span class="ruby-string">&#39;Copying Home.html to index.html&#39;</span>)
+  <span class="ruby-identifier">home</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>, <span class="ruby-string">&#39;Home.html&#39;</span>)
+  <span class="ruby-identifier">index</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>, <span class="ruby-string">&#39;index.html&#39;</span>)
   <span class="ruby-operator">::</span><span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp</span>(
-    <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>, <span class="ruby-string">&#39;Home.html&#39;</span>),
-    <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">html_path</span>, <span class="ruby-string">&#39;index.html&#39;</span>)
-  )
+    <span class="ruby-identifier">home</span>, <span class="ruby-identifier">index</span>
+  ) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">home</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
