@@ -16,13 +16,14 @@ require_relative '../utils/string.rb'
 # +stream+: Which output stream to use (default: +STDOUT+)
 #
 # Returns nothing.
-def log(tag, msg, color = :blue, bold = false, length: 14, stream: $stdout)
+def log(tag, msg, color = :blue, bold = false, stream: $stdout)
   return if ENV.key?('UNITTEST') && !ENV.key?('DEBUG')
 
-  length = tag.length if length.zero?
-  tag = "[#{colorize(tag.center(length), color)}]".bold
-  msg = msg.bold if bold && msg.respond_to?(:bold)
-  stream.puts "#{tag} #{msg}"
+  tag = colorize(tag, color)
+  tag_line = "[#{Time.now.strftime('%H:%m:%S')}]::#{tag} =>".bold
+  msg = msg.bold if bold
+
+  stream.puts "#{tag_line} #{msg}"
 end
 
 ##
@@ -35,7 +36,7 @@ end
 # Returns nothing.
 def stage_log(stage, msg, color = :green)
   stage = stage.to_s.upcase
-  log(stage, msg, color, true)
+  log(stage, msg, color)
 end
 
 
