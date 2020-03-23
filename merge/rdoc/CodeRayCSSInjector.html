@@ -146,7 +146,7 @@
   <span class="ruby-identifier">css_links</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;html/head/link&#39;</span>)
   <span class="ruby-identifier">last_css_link</span> = <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>
   <span class="ruby-comment"># only add the link if it&#39;s not already present (index file gets processed twice)</span>
-  <span class="ruby-keyword">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;href&#39;</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">coderay_css</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;href&#39;</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">coderay_css</span>
     <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">add_next_sibling</span>(
       <span class="ruby-string">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/coderay-asciidoctor.css&quot;&gt;&#39;</span>
     )

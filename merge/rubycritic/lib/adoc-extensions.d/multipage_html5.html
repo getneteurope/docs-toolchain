@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 12:18:59 +0100'>2020-03-20 12:18:59 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-20 16:05:31 +0100'>2020-03-20 16:05:31 +0100</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">29.3</span><small> complexity/method</small></div>
-              <div><span class="metric">26</span><small> churn</small></div>
+              <div><span class="metric">27</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">616.09</span><small> complexity</small></div>
@@ -781,7 +781,7 @@ class CodeRayCSSInjector &lt; Asciidoctor::Extensions::Postprocessor
     css_links = html.xpath(&#39;html/head/link&#39;)
     last_css_link = css_links.last
     # only add the link if it&#39;s not already present (index file gets processed twice)
-    if (!last_css_link.nil?) &amp;&amp; last_css_link.attr(&#39;href&#39;) == coderay_css
+    if (!last_css_link.nil?) &amp;&amp; last_css_link.attr(&#39;href&#39;) != coderay_css
       css_links.last.add_next_sibling(
         &#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/coderay-asciidoctor.css&quot;&gt;&#39;
       )

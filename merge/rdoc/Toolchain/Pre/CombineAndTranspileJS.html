@@ -204,16 +204,15 @@
 
           
           <div class="method-source-code" id="combine_and_replace_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 114</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace_js</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-identifier">js_blob_str</span> = <span class="ruby-identifier">combine_js</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-identifier">js_blob_str</span> = <span class="ruby-constant">Babel</span><span class="ruby-operator">::</span><span class="ruby-constant">Transpiler</span>.<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">js_blob_str</span>)[<span class="ruby-string">&#39;code&#39;</span>] <span class="ruby-keyword">unless</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>)
   <span class="ruby-comment"># TODO: minify js blob. may be unnecessary using transport stream compression anyway</span>
   <span class="ruby-identifier">html_string</span>, <span class="ruby-identifier">js_blob_path</span> = <span class="ruby-identifier">replace_js_tags_with_blob</span>(<span class="ruby-identifier">html_path</span>, <span class="ruby-identifier">js_blob_str</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">html_path</span>, <span class="ruby-string">&#39;w+&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-string">&#39;insert JS blob into &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">html_path</span>, <span class="ruby-value">:yellow</span>)
     <span class="ruby-identifier">file</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">html_string</span>)
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">js_blob_str</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
     <span class="ruby-value">html_path:</span> <span class="ruby-identifier">html_path</span>,
     <span class="ruby-value">html:</span> <span class="ruby-identifier">html_string</span>,
@@ -289,7 +288,7 @@
 
           
           <div class="method-source-code" id="get_script_src_from_html_file-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 136</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_script_src_from_html_file</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">html_path</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Could not read html file #{html_path}&quot;</span>)
@@ -305,7 +304,6 @@
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">&#39;src&#39;</span>)))
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>
 
-    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;Found src: #{stag.attribute(&#39;src&#39;)}&quot;</span>)
     <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">stag</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">&#39;src&#39;</span>))
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">script_source_files</span> = <span class="ruby-identifier">script_source_files</span>.<span class="ruby-identifier">compact</span> <span class="ruby-comment"># remove nil</span>
@@ -360,12 +358,10 @@
     <span class="ruby-string">&#39;js&#39;</span>,
     <span class="ruby-string">&#39;blob_&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">blob_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.js&#39;</span>
   )
-  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-string">&#39;blob is at &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">js_blob_path</span>, <span class="ruby-value">:yellow</span>)
   <span class="ruby-identifier">js_blob_path_relative</span> = <span class="ruby-identifier">js_blob_path</span>
     .<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>)
   <span class="ruby-identifier">js_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">js_blob_path</span>)
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">js_dir</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">js_dir</span>)
-  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;JS&#39;</span>, <span class="ruby-node">&quot;Writing BLOB to #{js_blob_path}&quot;</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">js_blob_path</span>, <span class="ruby-string">&#39;w+&#39;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">js_blob</span>) }
 
   <span class="ruby-identifier">html_content_lines</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">lines</span>
