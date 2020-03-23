@@ -148,3 +148,4 @@ export TOOLCHAIN_PATH="$(pwd)"
 bash stages/setup/setup_main.sh
 ```
 
+Alternatively, use the Docker image at [wirecard/docs-dockerfile](https://github.com/wirecard/docs-dockerfile).
