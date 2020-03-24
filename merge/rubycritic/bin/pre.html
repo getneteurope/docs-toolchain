@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-01-31 15:49:00 +0100'>2020-01-31 15:49:00 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-24 14:19:33 +0100'>2020-03-24 14:19:33 +0100</time>
         
       </span>
     </div>
@@ -68,16 +68,16 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">28</span><small> lines of codes</small></div>
+              <div><span class="metric">29</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">23.5</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> churn</small></div>
+              <div><span class="metric">26.4</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">23.48</span><small> complexity</small></div>
-              <div><span class="metric">53</span><small> duplications</small></div>
+              <div><span class="metric">26.36</span><small> complexity</small></div>
+              <div><span class="metric">59</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
-                smell
+                2
+                smells
               </a>
             </li>
           </ul>
@@ -105,7 +105,7 @@ require_relative &#39;../lib/process_manager.rb&#39;
 require_relative &#39;../lib/log/log.rb&#39;
 Dir[File.join(__dir__, &#39;../&#39;, &#39;lib&#39;, &#39;pre.d&#39;, &#39;*.rb&#39;)].each { |file| require file }
 
-def main(argv = ARGV)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="post.html#L9" class="js-smell-location">0</a>                  <a href="pre.html#L9" class="js-smell-location">1</a>                  </div>  </li></ol>
+def main(argv = ARGV)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="post.html#L9" class="js-smell-location">0</a>                  <a href="pre.html#L9" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#main has a flog score of 26</span>          </div>  </li></ol>
   args, opt_parser = Toolchain::Process::CLI.parse_args(argv)
   if args.help
     puts opt_parser
@@ -117,11 +117,12 @@ def main(argv = ARGV)<ol class="nocode errors smells">  <li>    <div class="desc
     Toolchain::PreProcessManager.instance.get.each do |proc|
       log(&#39;PROC&#39;, proc.class.name)
     end
-    exit 0
+    exit 0 if args.list
   end
 
   stage_log(:pre, &#39;Starting pre-processing stage&#39;)
-  Toolchain::PreProcessManager.instance.run
+  ret = Toolchain::PreProcessManager.instance.run
+  exit ret
 end
 
 main
