@@ -36,6 +36,7 @@ module Toolchain
     #
     def run
       @processes.each(&:run)
+      return @code
     end
 
     ##
@@ -44,10 +45,18 @@ module Toolchain
       @processes.clear
     end
 
+    ##
+    # Set the return code `@code` to non-zero value `error_code`.
+    # This means the stage failed.
+    def return_code(error_code = 10)
+      @code = error_code
+    end
+
     private
 
     def initialize
       @processes = []
+      @code = 0
     end
   end
 

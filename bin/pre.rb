@@ -18,11 +18,12 @@ def main(argv = ARGV)
     Toolchain::PreProcessManager.instance.get.each do |proc|
       log('PROC', proc.class.name)
     end
-    exit 0
+    exit 0 if args.list
   end
 
   stage_log(:pre, 'Starting pre-processing stage')
-  Toolchain::PreProcessManager.instance.run
+  ret = Toolchain::PreProcessManager.instance.run
+  exit ret
 end
 
 main
