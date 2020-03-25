@@ -194,7 +194,9 @@
   )
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">os</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-constant">OS</span>.<span class="ruby-identifier">bits</span> <span class="ruby-operator">!=</span> <span class="ruby-value">64</span>
     <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:post</span>, <span class="ruby-node">&quot;Running htmltest #{@version} as #{os}&quot;</span>)
-    <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;#{bin} #{directory}&quot;</span>)
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;#{bin} #{directory}&quot;</span>) <span class="ruby-comment"># returns false if failed</span>
+      <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">PostProcessManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">return_code</span>
+    <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

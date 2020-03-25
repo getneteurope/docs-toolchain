@@ -94,6 +94,8 @@
     
     <li ><a href="#method-i-register">#register</a>
     
+    <li ><a href="#method-i-return_code">#return_code</a>
+    
     <li ><a href="#method-i-run">#run</a>
     
   </ul>
@@ -151,9 +153,10 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@processes</span> = []
+  <span class="ruby-ivar">@code</span> = <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -192,7 +195,7 @@
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">clear</span>
 <span class="ruby-keyword">end</span></pre>
@@ -276,6 +279,39 @@
       </div>
 
     
+      <div id="method-i-return_code" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">return_code</span><span
+            class="method-args">(error_code = 10)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Set the return code `@code` to non-zero value `error_code`. This means the stage failed.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="return_code-source">
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">return_code</span>(<span class="ruby-identifier">error_code</span> = <span class="ruby-value">10</span>)
+  <span class="ruby-ivar">@code</span> = <span class="ruby-identifier">error_code</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-run" class="method-detail ">
         
         <div class="method-heading">
@@ -298,6 +334,7 @@
             <pre><span class="ruby-comment"># File lib/process_manager.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:run</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@code</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
