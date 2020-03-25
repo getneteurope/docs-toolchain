@@ -18,11 +18,12 @@ def main(argv = ARGV)
     Toolchain::PostProcessManager.instance.get.each do |proc|
       log('PROC', proc.class.name)
     end
-    exit 0
+    exit 0 if args.list
   end
 
   stage_log(:post, 'Starting post-processing stage')
-  Toolchain::PostProcessManager.instance.run
+  ret = Toolchain::PostProcessManager.instance.run
+  exit ret
 end
 
 main

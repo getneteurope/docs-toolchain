@@ -47,7 +47,9 @@ module Toolchain
         )
         unless os.nil? || OS.bits != 64
           stage_log(:post, "Running htmltest #{@version} as #{os}")
-          system("#{bin} #{directory}")
+          unless system("#{bin} #{directory}") # returns false if failed
+            ::Toolchain::PostProcessManager.instance.return_code
+          end
         end
       end
     end
