@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 16:05:31 +0100'>2020-03-20 16:05:31 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-26 14:48:36 +0100'>2020-03-26 14:48:36 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">700</span><small> lines of codes</small></div>
-              <div><span class="metric">21</span><small> methods</small></div>
+              <div><span class="metric">737</span><small> lines of codes</small></div>
+              <div><span class="metric">22</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">29.3</span><small> complexity/method</small></div>
-              <div><span class="metric">27</span><small> churn</small></div>
+              <div><span class="metric">28.9</span><small> complexity/method</small></div>
+              <div><span class="metric">28</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">616.09</span><small> complexity</small></div>
+              <div><span class="metric">636.04</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                40
+                43
                 smells
               </a>
             </li>
@@ -771,7 +771,7 @@ class CodeRayCSSInjector &lt; Asciidoctor::Extensions::Postprocessor
   # Check for the link tag loading coderay-asciidoctor.css and
   # remove it from the body.
   def process(document, output)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>CodeRayCSSInjector#process has unused parameter 'document'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>CodeRayCSSInjector#process doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
-    html = Nokogiri::HTML(output)
+    html = ::Nokogiri::HTML(output)
     coderay_css = &#39;css/coderay-asciidoctor.css&#39;
 
     # get the coderay CSS if it exists and remove it
@@ -791,10 +791,47 @@ class CodeRayCSSInjector &lt; Asciidoctor::Extensions::Postprocessor
   end
 end
 
+# CodeRay NVP Highlighter
+#
+# By default, CodeRay does not highlight url-encoded code sections.
+# This PostProcessor will convert any code blocks containing NVP,
+# i.e. `code[data-lang=&quot;nvp&quot;]`, into highlighted code, using the
+# CodeRay stylesheet.
+#
+class CodeRayHighlighterNVP &lt; Asciidoctor::Extensions::Postprocessor
+
+  # Find all the NVP code blocks in +output+ and highlight them.
+  # The NVP string simply gets wrapped in `span`s with
+  # CodeRay classes.
+  #
+  # The original code block will be replaced with the highlighted version.
+  #
+  def process(document, output)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>CodeRayHighlighterNVP#process has unused parameter 'document'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>CodeRayHighlighterNVP#process doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+    html = ::Nokogiri::HTML(output)
+    # nvp = html.at_css(&#39;div.tab-wrapper[data-lang=&quot;NVP&quot;] pre.CodeRay &gt; code&#39;)
+    nvps = html.css(&#39;code[data-lang=&quot;nvp&quot;]&#39;)
+    return output if nvps.nil? || nvps.empty?
+
+    nvps.each do |nvp|
+      src = nvp.content.chomp
+      markup_src = src.split(&#39;&amp;&#39;).map do |pair|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>CodeRayHighlighterNVP#process contains iterators nested 2 deep</span>          </div>  </li></ol>
+        key, val = pair.split(&#39;=&#39;)
+        %(&lt;span class=&quot;key&quot;&gt;#{key}&lt;/span&gt;&lt;span=&quot;assign&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;value&quot;&gt;#{val}&lt;/span&gt;)
+      end.join(&#39;&lt;span class=&quot;connector&quot;&gt;&amp;&lt;/span&gt;&#39;)
+      nvp.inner_html = markup_src
+    end
+
+    return html.to_html
+  end
+end
+
+
+
 Asciidoctor::Extensions.register do
   if %w[html html5 multipage_html5].any? { |be| @document.basebackend?(be) }
     postprocessor TableOfContentInjector
     postprocessor CodeRayCSSInjector
+    postprocessor CodeRayHighlighterNVP
   end
 end
 </code>
