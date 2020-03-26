@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class CodeRayCSSInjector - RDoc Documentation</title>
+<title>class CodeRayHighlighterNVP - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -83,18 +83,16 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-CodeRayCSSInjector">
-  <h1 id="class-CodeRayCSSInjector" class="class">
-    class CodeRayCSSInjector
+<main role="main" aria-labelledby="class-CodeRayHighlighterNVP">
+  <h1 id="class-CodeRayHighlighterNVP" class="class">
+    class CodeRayHighlighterNVP
   </h1>
 
   <section class="description">
     
-<p>CodeRay CSS Injector</p>
+<p>CodeRay NVP Highlighter</p>
 
-<p>By default, <a href="Asciidoctor.html"><code>Asciidoctor</code></a> will put the CodeRay CSS file in the body of the HTML as one of the very last tags. In addition, this will only be injected if the page has actual source code on it. Given, that we use the page switch functionality to only change the `div#content` when clicking on a new subsection, this tag needs to be on every page. Only then will every source code block show correctly, even if switching from a page without source code.</p>
-
-<p>This class will add the coderay-asciidoctor.css to every document head and remove the CSS link tag in the body, if it exists.</p>
+<p>By default, CodeRay does not highlight url-encoded code sections. This PostProcessor will convert any code blocks containing NVP, i.e. `<a href="data-lang="nvp"">code</a>`, into highlighted code, using the CodeRay stylesheet.</p>
 
   </section>
 
@@ -128,28 +126,28 @@
 
         <div class="method-description">
           
-          <p>Always add the link tag in the head after the others. Check for the link tag loading coderay-asciidoctor.css and remove it from the body.</p>
+          <p>Find all the NVP code blocks in <code>output</code> and highlight them. The NVP string simply gets wrapped in `span`s with CodeRay classes.</p>
+
+<p>The original code block will be replaced with the highlighted version.</p>
           
           
 
           
           <div class="method-source-code" id="process-source">
-            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 674</span>
+            <pre><span class="ruby-comment"># File lib/adoc-extensions.d/multipage_html5.rb, line 710</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">process</span>(<span class="ruby-identifier">document</span>, <span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">html</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">output</span>)
-  <span class="ruby-identifier">coderay_css</span> = <span class="ruby-string">&#39;css/coderay-asciidoctor.css&#39;</span>
+  <span class="ruby-comment"># nvp = html.at_css(&#39;div.tab-wrapper[data-lang=&quot;NVP&quot;] pre.CodeRay &gt; code&#39;)</span>
+  <span class="ruby-identifier">nvps</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;code[data-lang=&quot;nvp&quot;]&#39;</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">output</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">nvps</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">nvps</span>.<span class="ruby-identifier">empty?</span>
 
-  <span class="ruby-comment"># get the coderay CSS if it exists and remove it</span>
-  <span class="ruby-identifier">coderay_css_tag</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">at_xpath</span>(<span class="ruby-string">&#39;html/body/link&#39;</span>)
-  <span class="ruby-identifier">coderay_css_tag</span>.<span class="ruby-identifier">remove</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">coderay_css_tag</span>
-
-  <span class="ruby-identifier">css_links</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;html/head/link&#39;</span>)
-  <span class="ruby-identifier">last_css_link</span> = <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>
-  <span class="ruby-comment"># only add the link if it&#39;s not already present (index file gets processed twice)</span>
-  <span class="ruby-keyword">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">last_css_link</span>.<span class="ruby-identifier">attr</span>(<span class="ruby-string">&#39;href&#39;</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">coderay_css</span>
-    <span class="ruby-identifier">css_links</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">add_next_sibling</span>(
-      <span class="ruby-string">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/coderay-asciidoctor.css&quot;&gt;&#39;</span>
-    )
+  <span class="ruby-identifier">nvps</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">nvp</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">src</span> = <span class="ruby-identifier">nvp</span>.<span class="ruby-identifier">content</span>.<span class="ruby-identifier">chomp</span>
+    <span class="ruby-identifier">markup_src</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;&amp;&#39;</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pair</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;=&#39;</span>)
+      <span class="ruby-node">%(&lt;span class=&quot;key&quot;&gt;#{key}&lt;/span&gt;&lt;span=&quot;assign&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;value&quot;&gt;#{val}&lt;/span&gt;)</span>
+    <span class="ruby-keyword">end</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;&lt;span class=&quot;connector&quot;&gt;&amp;&lt;/span&gt;&#39;</span>)
+    <span class="ruby-identifier">nvp</span>.<span class="ruby-identifier">inner_html</span> = <span class="ruby-identifier">markup_src</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">html</span>.<span class="ruby-identifier">to_html</span>
