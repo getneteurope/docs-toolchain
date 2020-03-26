@@ -23,6 +23,33 @@ Under heavy development, everything is subject to change and most likely will no
 * [SimpleCov Coverage](https://wirecard.github.io/docs-toolchain/coverage/)
 * [RubyCritic](https://wirecard.github.io/docs-toolchain/rubycritic)
 
+## Quickstart
+### Dependencies
+To run the toolchain locally, or run the unit tests, the following requirements must be met:
+* Ruby 2.x
+    * installed dependencies (Gemfile)
+
+In order to install dependencies, run the following at the root of the project:
+```bash
+bash stages/setup/setup_main.sh
+```
+
+### Build
+Building the content can be done one stage after another:
+```sh
+rake docs:clean
+rake docs:test
+rake docs:pre
+rake docs:build
+rake docs:post
+```
+
+or by using the target `all`, which runs all of the stages mentioned above:
+```sh
+rake docs:all
+```
+
+Alternatively, use the Docker image at [wirecard/docs-dockerfile](https://github.com/wirecard/docs-dockerfile).
 
 ## Stages
 The toolchain is designed to run through different stages, that have specific responsibilities:
@@ -56,7 +83,17 @@ The toolchain is designed to run through different stages, that have specific re
 7. **notify**:
     * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
     
-### Rake Tasks
+
+## Development
+### Rake targets
+#### Toolchain
+* `rake toolchain:lint` calls rubocop
+* `rake toolchain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
+* `rake toolchain:quality` runs `rubycritic` and generates an overview in `/tmp/rubycritic/overview.html`
+* `rake toolchain:rdoc` generates rdoc documentation in `/tmp/rdoc`
+* `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch` on the code base
+
+#### Content (Stages)
 1. _No rake task:_ `bash setup/setup.sh`
 2. `rake docs:test`
 3. `rake docs:pre`
@@ -73,16 +110,7 @@ The toolchain is designed to run through different stages, that have specific re
     * `rake docs:list:post`
 
 
-## Development
-**Rake targets:**
-* `rake toolchain:lint` calls rubocop
-* `rake toolchain:test` runs unit tests with `simplecov` and writes report to `coverage/index.html`
-* `rake toolchain:quality` runs `rubycritic` and generates an overview in `/tmp/rubycritic/overview.html`
-* `rake toolchain:rdoc` generates rdoc documentation in `/tmp/rdoc`
-* `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch` on the code base
-
 ### Environment Variables
-
 * `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
 * `SKIP_HTMLCHECK`: skips the HTML Check Post process.
 * Skip entire stages
@@ -97,19 +125,6 @@ The toolchain is designed to run through different stages, that have specific re
 ## Configuration
 There are some variables that need to be secret, while others can be public.
 Configuration files are public and checked into the repository like regular content files.
-
-### Frontend Configuration
-#### CDN
-By default, Font Awesome is loaded via CDN.
-To disable the loading via CDN:
-1. add `font-awesome.css` to the `css/` folder 
-2. the Font Awesome font files to `fonts/`
-3. add the following to your `index.adoc` below `:icons: font`:
-```
-:!iconfont-remote:
-:iconfont-cdn: css/font-awesome.css
-:!webfonts:
-```
 
 ### Secrets
 #### AWS
@@ -134,18 +149,4 @@ The **test** and **build** stages produce `/tmp/slack.json`, a central file cont
 Configuration files:
 * `config/default.yaml`: default settings
 * `content/docinfo-search.html`: search overlay for the frontend
-* `config/invalid-patterns.json`: **WIP**
-* `static/privacy-policy.(txt|adoc)`: **WIP**
 
-## Run
-To run the toolchain locally, or run the unit tests, the following requirements must be met:
-* Ruby 2.x
-    * installed dependencies (Gemfile)
-
-In order to install dependencies, run the following at the root of the project:
-```bash
-export TOOLCHAIN_PATH="$(pwd)"
-bash stages/setup/setup_main.sh
-```
-
-Alternatively, use the Docker image at [wirecard/docs-dockerfile](https://github.com/wirecard/docs-dockerfile).
