@@ -672,7 +672,7 @@ class CodeRayCSSInjector < Asciidoctor::Extensions::Postprocessor
   # Check for the link tag loading coderay-asciidoctor.css and
   # remove it from the body.
   def process(document, output)
-    html = Nokogiri::HTML(output)
+    html = ::Nokogiri::HTML(output)
     coderay_css = 'css/coderay-asciidoctor.css'
 
     # get the coderay CSS if it exists and remove it
@@ -692,9 +692,46 @@ class CodeRayCSSInjector < Asciidoctor::Extensions::Postprocessor
   end
 end
 
+# CodeRay NVP Highlighter
+#
+# By default, CodeRay does not highlight url-encoded code sections.
+# This PostProcessor will convert any code blocks containing NVP,
+# i.e. `code[data-lang="nvp"]`, into highlighted code, using the
+# CodeRay stylesheet.
+#
+class CodeRayHighlighterNVP < Asciidoctor::Extensions::Postprocessor
+
+  # Find all the NVP code blocks in +output+ and highlight them.
+  # The NVP string simply gets wrapped in `span`s with
+  # CodeRay classes.
+  #
+  # The original code block will be replaced with the highlighted version.
+  #
+  def process(document, output)
+    html = ::Nokogiri::HTML(output)
+    # nvp = html.at_css('div.tab-wrapper[data-lang="NVP"] pre.CodeRay > code')
+    nvps = html.css('code[data-lang="nvp"]')
+    return output if nvps.nil? || nvps.empty?
+
+    nvps.each do |nvp|
+      src = nvp.content.chomp
+      markup_src = src.split('&').map do |pair|
+        key, val = pair.split('=')
+        %(<span class="key">#{key}</span><span="assign">=</span><span class="value">#{val}</span>)
+      end.join('<span class="connector">&</span>')
+      nvp.inner_html = markup_src
+    end
+
+    return html.to_html
+  end
+end
+
+
+
 Asciidoctor::Extensions.register do
   if %w[html html5 multipage_html5].any? { |be| @document.basebackend?(be) }
     postprocessor TableOfContentInjector
     postprocessor CodeRayCSSInjector
+    postprocessor CodeRayHighlighterNVP
   end
 end
