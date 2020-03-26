@@ -7,10 +7,19 @@ require_relative 'lib/utils/setup.rb'
 
 task default: %w[toolchain:test toolchain:lint]
 
+FLAGS = '-E utf-8'
+
+# HELPER
+def call script
+  debug = '--debug' if ENV.key?('DEBUG')
+  ruby "#{FLAGS} #{toolchain_path}/#{script} #{debug}"
+end
+
 def toolchain_path
   ENV.key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : File.dirname(__FILE__)
 end
 
+# TASKS
 namespace :docs do
   @setup_done = false
 
@@ -19,41 +28,43 @@ namespace :docs do
     %w[clean test pre build post notify].each { |t| Rake::Task["docs:#{t}"].execute }
   end
 
+  desc 'Run through all stages without checks and tests'
+  task :fast do
+    ENV['FAST'] = 'true'
+    Rake::Task['docs:all'].execute
+  end
+
   desc 'Clean build directory'
   task :clean do
-    ruby "#{toolchain_path}/bin/clean.rb"
+    call "bin/clean.rb"
   end
 
   desc 'Run test stage'
   task :test do
-    debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/bin/test.rb #{debug}" unless ENV.key?('SKIP_RAKE_TEST')
+    call "bin/test.rb" unless ENV.key?('SKIP_RAKE_TEST')
   end
 
   desc 'Run pre-processing stage'
   task :pre do
     Toolchain::Setup.setup()
     @setup_done = true
-    debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/bin/pre.rb #{debug}"
+    call "bin/pre.rb"
   end
 
   desc 'Run build stage'
   task :build do
     Toolchain::Setup.setup() unless @setup_done
-    debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/bin/build.rb #{debug}"
+    call "bin/build.rb"
   end
 
   desc 'Run post processing'
   task :post do
-    debug = '--debug' if ENV.key?('DEBUG')
-    ruby "#{toolchain_path}/bin/post.rb #{debug}"
+    call "bin/post.rb"
   end
 
   desc 'Send notifications'
   task :notify do
-    ruby "#{toolchain_path}/bin/notify.rb"
+    call "bin/notify.rb"
   end
 
   ###
@@ -61,12 +72,12 @@ namespace :docs do
   namespace :list do
     desc 'List Pre processing actions that will be loaded'
     task :pre do
-      ruby "#{toolchain_path}/bin/pre.rb --list"
+      call "bin/pre.rb --list"
     end
 
     desc 'List Post processing actions that will be loaded'
     task :post do
-      ruby "#{toolchain_path}/bin/post.rb --list"
+      call "bin/post.rb --list"
     end
   end
 end
@@ -83,7 +94,7 @@ namespace :toolchain do
 
   desc 'Run toolchain unit tests'
   task :test do
-    ruby 'test/main.rb'
+    call 'test/main.rb'
   end
 
   RuboCop::RakeTask.new(:lint) do |task|
