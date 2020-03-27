@@ -11,6 +11,10 @@ FLAGS = '-E utf-8'
 
 # HELPER
 def call script
+  if ENV.key?('FAST')
+    ENV['SKIP_RAKE_TEST'] = 'true'
+    ENV['SKIP_HTMLCHECK'] = 'true'
+  end
   debug = '--debug' if ENV.key?('DEBUG')
   ruby "#{FLAGS} #{toolchain_path}/#{script} #{debug}"
 end
@@ -31,6 +35,8 @@ namespace :docs do
   desc 'Run through all stages without checks and tests'
   task :fast do
     ENV['FAST'] = 'true'
+    ENV['SKIP_RAKE_TEST'] = 'true'
+    ENV['SKIP_HTMLCHECK'] = 'true'
     Rake::Task['docs:all'].execute
   end
 
@@ -41,7 +47,7 @@ namespace :docs do
 
   desc 'Run test stage'
   task :test do
-    call "bin/test.rb" unless ENV.key?('SKIP_RAKE_TEST')
+    call "bin/test.rb"
   end
 
   desc 'Run pre-processing stage'

@@ -76,4 +76,4 @@ def main(argv = ARGV)
   stage_log(:test, 'Test done.')
 end
 
-main
+main unless ENV.key?('SKIP_RAKE_TEST')
