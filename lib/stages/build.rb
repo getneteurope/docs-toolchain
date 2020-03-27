@@ -90,13 +90,14 @@ module Toolchain
       end
 
       # move assets to html/
-      assets = %w[css js fonts images icons]
+      assets = %w[css js fonts images icons favicon.ico]
       assets.each do |asset|
         stage_log(:build, "... Copying #{asset}")
-        from_dir = File.join(build_dir, asset)
-        next unless Dir.exist?(from_dir)
-        to_dir = File.join(html_dir, asset)
-        FileUtils.mv(from_dir, to_dir, force: true)
+        from = File.join(build_dir, asset)
+        next unless File.file?(from) || Dir.exist?(from)
+
+        to = File.join(html_dir, asset)
+        FileUtils.mv(from, to, force: true)
       end
 
       stage_log(:build, "Files are in #{html_dir}")
