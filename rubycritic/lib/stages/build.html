@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-18 10:14:24 +0100'>2020-03-18 10:14:24 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-27 08:54:02 +0100'>2020-03-27 08:54:02 +0100</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">105</span><small> lines of codes</small></div>
+              <div><span class="metric">106</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">20.0</span><small> complexity/method</small></div>
-              <div><span class="metric">28</span><small> churn</small></div>
+              <div><span class="metric">20.8</span><small> complexity/method</small></div>
+              <div><span class="metric">29</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">39.96</span><small> complexity</small></div>
+              <div><span class="metric">41.64</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -136,7 +136,7 @@ module Toolchain
     #
     # Returns nil.
     #
-    def self.build(build_dir = ::Toolchain.build_path, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 37</span>          </div>  </li></ol>
+    def self.build(build_dir = ::Toolchain.build_path, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 39</span>          </div>  </li></ol>
       index_path = File.join(build_dir, index)
       raise IOError, &quot;File #{index_path} does not exist&quot; unless
         File.exist?(index_path)
@@ -189,13 +189,14 @@ module Toolchain
       end
 
       # move assets to html/
-      assets = %w[css js fonts images icons]
+      assets = %w[css js fonts images icons favicon.ico]
       assets.each do |asset|
         stage_log(:build, &quot;... Copying #{asset}&quot;)
-        from_dir = File.join(build_dir, asset)
-        next unless Dir.exist?(from_dir)
-        to_dir = File.join(html_dir, asset)
-        FileUtils.mv(from_dir, to_dir, force: true)
+        from = File.join(build_dir, asset)
+        next unless File.file?(from) || Dir.exist?(from)
+
+        to = File.join(html_dir, asset)
+        FileUtils.mv(from, to, force: true)
       end
 
       stage_log(:build, &quot;Files are in #{html_dir}&quot;)
