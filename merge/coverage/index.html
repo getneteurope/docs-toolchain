@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-30T09:09:07+00:00">2020-03-30T09:09:07+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-03-30T09:11:31+00:00">2020-03-30T09:11:31+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -213,7 +213,7 @@
       <tr>
         <td class="strong"><a href="#dca3345478b52ede890c5a377814a38162e6ed73" class="src_link" title="lib/utils/hash.rb">lib/utils/hash.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>58</td>
+        <td>60</td>
         <td>21</td>
         <td>21</td>
         <td>0</td>
@@ -10162,79 +10162,91 @@
           <code class="ruby">    #</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="46">
+        <li class="never" data-hits="" data-linenumber="46">
+          
+          
+          <code class="ruby">    # TODO: check if this can&#39;t be replaced with OpenStruct#to_h instead.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="47">
+          
+          
+          <code class="ruby">    # Might require changes to existing code, but should be possible.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="48">
           <span class="hits">1</span>
           
           <code class="ruby">    def self.openstruct_to_hash(object, hash = {})</code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="47">
+        <li class="covered" data-hits="21" data-linenumber="49">
           <span class="hits">21</span>
           
           <code class="ruby">      return object unless object.is_a? OpenStruct</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="48">
+        <li class="never" data-hits="" data-linenumber="50">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="49">
+        <li class="covered" data-hits="10" data-linenumber="51">
           <span class="hits">10</span>
           
           <code class="ruby">      object.each_pair do |key, value|</code>
         </li>
       
-        <li class="covered" data-hits="71" data-linenumber="50">
+        <li class="covered" data-hits="71" data-linenumber="52">
           <span class="hits">71</span>
           
           <code class="ruby">        hash[key] = case value</code>
         </li>
       
-        <li class="covered" data-hits="36" data-linenumber="51">
+        <li class="covered" data-hits="36" data-linenumber="53">
           <span class="hits">36</span>
           
           <code class="ruby">                    when Array then value.map { |v| openstruct_to_hash(v) }</code>
         </li>
       
-        <li class="covered" data-hits="54" data-linenumber="52">
+        <li class="covered" data-hits="54" data-linenumber="54">
           <span class="hits">54</span>
           
           <code class="ruby">                    else value</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="53">
+        <li class="never" data-hits="" data-linenumber="55">
           
           
           <code class="ruby">                    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="54">
+        <li class="never" data-hits="" data-linenumber="56">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="55">
+        <li class="covered" data-hits="10" data-linenumber="57">
           <span class="hits">10</span>
           
           <code class="ruby">      return hash</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="56">
+        <li class="never" data-hits="" data-linenumber="58">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="57">
+        <li class="never" data-hits="" data-linenumber="59">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="58">
+        <li class="never" data-hits="" data-linenumber="60">
           
           
           <code class="ruby">end</code>

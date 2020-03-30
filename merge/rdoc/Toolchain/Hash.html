@@ -118,12 +118,14 @@
         <div class="method-description">
           
           <p>Takes OpenStruct <code>object</code> and returns <code>hash</code> Useful for converting OpenStruct <a href="Hash.html"><code>Hash</code></a> for later conversion to JSON</p>
+
+<p>TODO: check if this can&#39;t be replaced with OpenStruct#to_h instead. Might require changes to existing code, but should be possible.</p>
           
           
 
           
           <div class="method-source-code" id="openstruct_to_hash-source">
-            <pre><span class="ruby-comment"># File lib/utils/hash.rb, line 46</span>
+            <pre><span class="ruby-comment"># File lib/utils/hash.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">openstruct_to_hash</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">hash</span> = {})
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">object</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">OpenStruct</span>
 
