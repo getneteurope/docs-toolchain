@@ -129,8 +129,6 @@
       <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">parse_args</span>(<span class="ruby-identifier">argv</span> = <span class="ruby-constant">ARGV</span>)
         <span class="ruby-identifier">args</span> = { <span class="ruby-value">content:</span> <span class="ruby-string">&#39;content&#39;</span>, <span class="ruby-value">index:</span> <span class="ruby-string">&#39;index.adoc&#39;</span>, <span class="ruby-value">debug:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">help:</span> <span class="ruby-keyword">false</span> }
 
-        <span class="ruby-comment"># TODO: add options for custom build dir</span>
-        <span class="ruby-comment"># TODO: add support for debug flag</span>
         <span class="ruby-identifier">opt_parser</span> = <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">parser</span><span class="ruby-operator">|</span>
           <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-string">&quot;Usage: main.rb [options] [--content CONTENT] [--index INDEX]
 Defaults:

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 10:57:11 +0100'>2020-03-20 10:57:11 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-30 10:04:35 +0200'>2020-03-30 10:04:35 +0200</time>
         
       </span>
     </div>
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating d big">
-              D
+            <div class="rating c big">
+              C
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">178</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">170</span><small> lines of codes</small></div>
+              <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">46.7</span><small> complexity/method</small></div>
-              <div><span class="metric">31</span><small> churn</small></div>
+              <div><span class="metric">40.0</span><small> complexity/method</small></div>
+              <div><span class="metric">34</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">233.67</span><small> complexity</small></div>
+              <div><span class="metric">159.83</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                6
+                5
                 smells
               </a>
             </li>
@@ -102,7 +102,8 @@
 require_relative &#39;../process_manager.rb&#39;
 require_relative &#39;../base_process.rb&#39;
 require_relative &#39;../config_manager.rb&#39;
-require_relative &#39;../utils/adoc.rb&#39;
+require_relative &#39;./adoc.rb&#39;
+require_relative &#39;./hash.rb&#39;
 require_relative &#39;../log/log.rb&#39;
 require &#39;json&#39;
 require &#39;nokogiri&#39;
@@ -111,11 +112,8 @@ require &#39;fileutils&#39;
 module Toolchain
   module Adoc
     ##
-    # Create a Table of Contents, inherts BaseProcess
-    class CreateTOC &lt; BaseProcess
-
-      def initialize(priority = 0)
-        super(priority)
+    class CreateTOC<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC has no descriptive comment</span>          </div>  </li></ol>
+      def initialize
         @multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)
         @default_json_filepath = File.join(
           ::Toolchain.build_path,
@@ -126,18 +124,20 @@ module Toolchain
       end
 
       ##
-      # Creates a TOC JSON file from an Asciidoctor +catalog+ object
+      # Creates a TOC JSON file from an Asciidoctor document +document+
       # Default JSON path is taken from +ConfigManager+.
       #
       # Saves toc as json tree +toc_json+
       # Saves toc as html code +html_fragment+
-      # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
+      # Returns path to created JSON file +json_filepath+,
+      # path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
-      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#run has a flog score of 88</span>          </div>  </li></ol>
-        catalog,
+      def run(<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#run has a flog score of 90</span>          </div>  </li></ol>
+        document,
         json_filepath = @default_json_filepath,
         html_filepath = @default_html_filepath
       )
+        catalog = document.catalog
         FileUtils.mkdir_p(File.dirname(@default_json_filepath))
         FileUtils.mkdir_p(File.dirname(@default_html_filepath))
         stage_log(:build, &#39;Create TOC&#39;)
@@ -194,7 +194,7 @@ module Toolchain
         toc_openstruct = stack.first
 
         # create JSON from TOC tree
-        toc_hash = openstruct_to_hash(toc_openstruct)
+        toc_hash = ::Toolchain::Hash.openstruct_to_hash(toc_openstruct)
         toc_json = JSON.pretty_generate(toc_hash)
         File.open(json_filepath, &#39;w+&#39;) do |json_file|
           json_file.write(toc_json)
@@ -239,15 +239,24 @@ module Toolchain
       # Takes OpenStruct of +toc_elements+ as input
       # Returns HTML code fragment as string Nokogiri Object +fragment+
       #
-      def generate_html_from_toc(toc_elements)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc has a flog score of 108</span>          </div>  </li></ol>
+      def generate_html_from_toc(toc_elements)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc has a flog score of 42</span>          </div>  </li></ol>
         fragment = Nokogiri::HTML.fragment(&#39;&lt;ul&gt;&lt;/ul&gt;&#39;)
         toc_elements.each do |e|
           root_file = e.founder == &#39;root&#39; ? &#39;&#39; : e.founder + &#39;.html&#39;
           level = e.level || 0
+          id = e.id
+          disabled = &#39;&#39;
+          disabled = &#39; disabled&#39; if e.children.empty?
 
-          fragment_string = Nokogiri::HTML.fragment(&#39;&lt;li id=&quot;toc_li_&#39; + e.id + &#39;&quot; data-level=&quot;&#39; + level.to_s + &#39;&quot;&gt;&lt;/li&gt;&#39; + &quot;\n&quot;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc calls 'e.id' 5 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L149" class="js-smell-location">0</a>                  <a href="create_toc.html#L151" class="js-smell-location">1</a>                  </div>  </li></ol>
-          # FIXME fix this mess of string formatting
-          fragment_string.at(&#39;li&#39;) &lt;&lt; &quot;\n&quot; + &#39;  &lt;input id=&quot;toc_cb_&#39; + e.id + &#39;&quot; type=&quot;checkbox&quot;&#39; + (e.children.empty? ? &#39; disabled&#39; : &#39;&#39;) + &#39;&gt;&lt;label for=&quot;toc_cb_&#39; + e.id + &#39;&quot;&gt;&lt;a href=&quot;&#39; + root_file.to_s + (e.founder == e.id ? &#39;&#39; : &#39;#&#39; + e.id)+ &#39;&quot;&gt;&#39; + e.title + &#39;&lt;/a&gt;&lt;/label&gt;&#39; + &quot;\n&quot;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#generate_html_from_toc calls 'e.id' 5 times</span>              <span>Locations:</span>                  <a href="create_toc.html#L149" class="js-smell-location">0</a>                  <a href="create_toc.html#L151" class="js-smell-location">1</a>                  </div>  </li></ol>
+          fragment_string = Nokogiri::HTML.fragment(
+            %(&lt;li id=&quot;toc_li_#{id}&quot; data-level=&quot;#{level}&quot;&gt;&lt;/li&gt;)
+          )
+
+          link = %(&lt;a href=&quot;#{root_file}#{(e.founder == id ? &#39;&#39; : &#39;#&#39; + id)}&quot;&gt;#{e.title}&lt;/a&gt;)
+          fragment_string.at(&#39;li&#39;) &lt;&lt; (
+            &quot;\n&quot; + %(&lt;input id=&quot;toc_cb_#{id}&quot; type=&quot;checkbox&quot;#{disabled}&gt;) +
+              %(&lt;label for=&quot;toc_cb_#{id}&quot;&gt;#{link}&lt;/label&gt;) + &quot;\n&quot;
+          )
 
           # if element has child elements, add them to current list item
           fragment_string.at(&#39;li&#39;) &lt;&lt; generate_html_from_toc(e.children) unless e.children.empty?
@@ -255,26 +264,9 @@ module Toolchain
         end
         return fragment
       end
-
-      ## Takes OpenStruct +object+ and returns +hash+
-      # Useful for converting OpenStruct Hash for later conversion to JSON
-      #
-      def openstruct_to_hash(object, hash = {})
-        return object unless object.is_a? OpenStruct
-        object.each_pair do |key, value|
-          hash[key] = case value
-                      when Array then value.map { |v| openstruct_to_hash(v) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#openstruct_to_hash contains iterators nested 2 deep</span>          </div>  </li></ol>
-                      else value
-                      end
-        end
-        return hash
-      end
     end
-
-
   end
 end
-
 </code>
   </div>
 </div>

@@ -127,7 +127,7 @@
 
           
           <div class="method-source-code" id="collect_attributes-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">collect_attributes</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">additional_attribs</span> = {})
   <span class="ruby-comment"># get initial attribs set in index</span>
   <span class="ruby-identifier">attribs</span> = <span class="ruby-identifier">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>)
@@ -188,7 +188,7 @@
 
           
           <div class="method-source-code" id="get_mod_attrs_from_doc-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 92</span>
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">get_mod_attrs_from_doc</span>(<span class="ruby-identifier">doc</span>)
   <span class="ruby-identifier">attribs</span> = {}
   <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">convert</span>
@@ -221,17 +221,15 @@
 
         <div class="method-description">
           
-          <p>TODO: use a Struct instead of an OpenStruct (with proper documentation of the fields)</p>
+          <p>Load adoc file <code>filename</code>, convert given the parameters <code>safe</code> and <code>parse</code> <a href="https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html">discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html</a></p>
 
-<p>Load adoc file <code>filename</code>, convert given the parameters <code>safe</code> and <code>parse</code> <a href="https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html">discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html</a></p>
-
-<p>Returns a pair of converted adoc <code>adoc</code>, original adoc <code>original</code></p>
+<p>Returns an OpenStruct of converted adoc <code>adoc</code>, original adoc <code>original</code>, attributes <code>attributes</code> and filename <code>filename</code>.</p>
           
           
 
           
           <div class="method-source-code" id="load_doc-source">
-            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/utils/adoc.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_doc</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">attribs</span> = {<span class="ruby-string">&#39;root&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>})
   <span class="ruby-identifier">root</span> = <span class="ruby-identifier">attribs</span>[<span class="ruby-string">&#39;root&#39;</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">filename</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;/&#39;</span>)

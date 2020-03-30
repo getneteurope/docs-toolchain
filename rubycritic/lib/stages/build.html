@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-27 08:54:02 +0100'>2020-03-27 08:54:02 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-30 09:25:30 +0200'>2020-03-30 09:25:30 +0200</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">20.8</span><small> complexity/method</small></div>
-              <div><span class="metric">29</span><small> churn</small></div>
+              <div><span class="metric">30</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">41.64</span><small> complexity</small></div>
@@ -142,13 +142,13 @@ module Toolchain
         File.exist?(index_path)
 
       # call asciidoctor
-      # FIXME hardcoded, extract attributes and read config file from content repo
-      # or overwrite default attributes with a config file
-      # NOTE Requires need to be required explicitly with require or require_relative
-      # instead of being passed as options[:requires]
+      # TODO hardcoded, extract attributes and read config file from the
+      # content repo or overwrite default attributes with a config file
+      # NOTE Backends need to be required explicitly with require or
+      # require_relative instead of being passed as options[:requires]
       stage_log(:build, &#39;HTML5 Multipage Backend loaded&#39;)
-      require File.join(File.expand_path(::Toolchain.toolchain_path),
-        &#39;lib/adoc-extensions.d/multipage_html5.rb&#39;)
+      require File.join(File.expand_path(
+        ::Toolchain.toolchain_path), &#39;lib/adoc-extensions.d/multipage_html5.rb&#39;)
       options = {
         attributes: {
           # General

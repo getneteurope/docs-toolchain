@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 11:33:27 +0100'>2020-03-20 11:33:27 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-30 11:05:11 +0200'>2020-03-30 11:05:11 +0200</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">129</span><small> lines of codes</small></div>
+              <div><span class="metric">127</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">17.0</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">51.13</span><small> complexity</small></div>
@@ -116,8 +116,6 @@ module Toolchain
       def self.parse_args(argv = ARGV)
         args = { content: &#39;content&#39;, index: &#39;index.adoc&#39;, debug: false, help: false }
 
-        # TODO: add options for custom build dir
-        # TODO: add support for debug flag
         opt_parser = OptionParser.new do |parser|
           parser.banner = &quot;Usage: main.rb [options] [--content CONTENT] [--index INDEX]
 Defaults:
@@ -128,11 +126,11 @@ Defaults:
             args[:debug] = true
           end
 
-          parser.on(&#39;-c CONTENT&#39;, &#39;--content CONTENT&#39;, &#39;content directory&#39;) do |content|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Build::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L32" class="js-smell-location">0</a>                  <a href="cli.html#L36" class="js-smell-location">1</a>                  </div>  </li></ol>
+          parser.on(&#39;-c CONTENT&#39;, &#39;--content CONTENT&#39;, &#39;content directory&#39;) do |content|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Build::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L30" class="js-smell-location">0</a>                  <a href="cli.html#L34" class="js-smell-location">1</a>                  </div>  </li></ol>
             args[:content] = content
           end
 
-          parser.on(&#39;-i INDEX&#39;, &#39;--index INDEX&#39;, &#39;index file within the content directory&#39;) do |index|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Build::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L32" class="js-smell-location">0</a>                  <a href="cli.html#L36" class="js-smell-location">1</a>                  </div>  </li></ol>
+          parser.on(&#39;-i INDEX&#39;, &#39;--index INDEX&#39;, &#39;index file within the content directory&#39;) do |index|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Build::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L30" class="js-smell-location">0</a>                  <a href="cli.html#L34" class="js-smell-location">1</a>                  </div>  </li></ol>
             args[:index] = index
           end
 
@@ -167,10 +165,10 @@ Default: index file is \&#39;content/index.adoc\&#39;&#39;
             args[:debug] = true
           end
 
-          parser.on(&#39;-iINDEX&#39;, &#39;--index INDEX&#39;, &#39;specify an index file&#39;) do |index|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Test::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L71" class="js-smell-location">0</a>                  <a href="cli.html#L74" class="js-smell-location">1</a>                  </div>  </li></ol>
+          parser.on(&#39;-iINDEX&#39;, &#39;--index INDEX&#39;, &#39;specify an index file&#39;) do |index|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Test::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L69" class="js-smell-location">0</a>                  <a href="cli.html#L72" class="js-smell-location">1</a>                  </div>  </li></ol>
             args[:index] = index
           end
-          parser.on(&#39;-fFILE&#39;, &#39;--file FILE&#39;, &#39;specify multiple files instead of one index file&#39;) do |file|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Test::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L71" class="js-smell-location">0</a>                  <a href="cli.html#L74" class="js-smell-location">1</a>                  </div>  </li></ol>
+          parser.on(&#39;-fFILE&#39;, &#39;--file FILE&#39;, &#39;specify multiple files instead of one index file&#39;) do |file|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Test::CLI#self.parse_args contains iterators nested 2 deep</span>              <span>Locations:</span>                  <a href="cli.html#L69" class="js-smell-location">0</a>                  <a href="cli.html#L72" class="js-smell-location">1</a>                  </div>  </li></ol>
             args[:files] &lt;&lt; file
           end
 
