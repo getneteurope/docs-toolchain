@@ -43,13 +43,13 @@ module Toolchain
         File.exist?(index_path)
 
       # call asciidoctor
-      # FIXME hardcoded, extract attributes and read config file from content repo
-      # or overwrite default attributes with a config file
-      # NOTE Requires need to be required explicitly with require or require_relative
-      # instead of being passed as options[:requires]
+      # TODO hardcoded, extract attributes and read config file from the
+      # content repo or overwrite default attributes with a config file
+      # NOTE Backends need to be required explicitly with require or
+      # require_relative instead of being passed as options[:requires]
       stage_log(:build, 'HTML5 Multipage Backend loaded')
-      require File.join(File.expand_path(::Toolchain.toolchain_path),
-        'lib/adoc-extensions.d/multipage_html5.rb')
+      require File.join(File.expand_path(
+        ::Toolchain.toolchain_path), 'lib/adoc-extensions.d/multipage_html5.rb')
       options = {
         attributes: {
           # General
