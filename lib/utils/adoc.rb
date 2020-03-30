@@ -8,12 +8,11 @@ module Toolchain
   # Module containing Asciidoctor related Toolchain manipulations.
   module Adoc
     ##
-    # TODO: use a Struct instead of an OpenStruct (with proper documentation of the fields)
-    #
     # Load adoc file +filename+, convert given the parameters +safe+ and +parse+
     # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
     #
-    # Returns a pair of converted adoc +adoc+, original adoc +original+
+    # Returns an OpenStruct of converted adoc +adoc+, original adoc +original+,
+    # attributes +attributes+ and filename +filename+.
     #
     def self.load_doc(filename, attribs = {'root' => Toolchain.build_path})
       root = attribs['root']

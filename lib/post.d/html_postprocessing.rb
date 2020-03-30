@@ -50,7 +50,7 @@ module Toolchain
       def inject_fragment_into_html_file(html_fragment, html_file)
         file_content = File.read(html_file)
         document = Nokogiri::HTML(file_content)
-        page_id = File.basename(html_file, '.html') # TODO find better way to get page_id
+        page_id = File.basename(html_file, '.html')
         toc_document = Nokogiri::HTML.fragment(html_fragment)
         stage_log(:post, '[Inject TOC] Starting')
         toc_document = tick_toc_checkboxes(page_id, toc_document)

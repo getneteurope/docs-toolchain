@@ -26,7 +26,6 @@ module Toolchain
       #
       # Returns the results of the substitution.
       def run(filepaths = nil)
-        # TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html
         root = ::Toolchain.build_path
         header_path = filepaths.nil? ? File.join(root, @header_name_default) : filepaths.header
         footer_path = filepaths.nil? ? File.join(root, @footer_name_default) : filepaths.footer
@@ -63,9 +62,6 @@ module Toolchain
       # Returns HTML string and JS blob path.
       #
       def replace_js_tags_with_blob(path, js_blob)
-        # TODO: solve this with nokogiri fragment parser (which either
-        # removes needed or adds unnecessary tags..)
-        #
         # derive .js path from html filename
         # e.g. docinfo-footer.html => content/js/docinfo-footer.js
         root = if ENV.key?('UNITTEST')

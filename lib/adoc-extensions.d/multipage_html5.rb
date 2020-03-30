@@ -632,7 +632,7 @@ end
 class TableOfContentInjector < Asciidoctor::Extensions::Postprocessor
   def process(document, output)
     toc_factory = ::Toolchain::Adoc::CreateTOC.new
-    _, toc_html_filepath, _ = toc_factory.run(document.catalog)
+    _, toc_html_filepath, _ = toc_factory.run(document)
     toc = File.read(toc_html_filepath)
     html = Nokogiri::HTML(output)
 
