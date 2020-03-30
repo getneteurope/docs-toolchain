@@ -17,8 +17,6 @@ module Toolchain
       def self.parse_args(argv = ARGV)
         args = { content: 'content', index: 'index.adoc', debug: false, help: false }
 
-        # TODO: add options for custom build dir
-        # TODO: add support for debug flag
         opt_parser = OptionParser.new do |parser|
           parser.banner = "Usage: main.rb [options] [--content CONTENT] [--index INDEX]
 Defaults:

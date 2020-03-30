@@ -52,7 +52,7 @@ module Toolchain
             id = attributes[r_pid]
           end
         end
-        id # TODO: fix ugly return
+        id
       end.reject(&:nil?).to_set
 
       (adoc_ids | parsed_ids).to_a.each do |id|

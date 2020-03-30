@@ -13,7 +13,6 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
   # Then combines and transpiles and check results
   #
   def test_combine_and_transpile_js
-    # TODO: outsource writing stuff to its own method
     # HEADER
     js_header_files_paths = []
     CONTENT.each_with_index do |script, i|
