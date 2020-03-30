@@ -3,7 +3,8 @@
 require_relative '../process_manager.rb'
 require_relative '../base_process.rb'
 require_relative '../config_manager.rb'
-require_relative '../utils/adoc.rb'
+require_relative './adoc.rb'
+require_relative './hash.rb'
 require_relative '../log/log.rb'
 require 'json'
 require 'nokogiri'
@@ -93,7 +94,7 @@ module Toolchain
         toc_openstruct = stack.first
 
         # create JSON from TOC tree
-        toc_hash = openstruct_to_hash(toc_openstruct)
+        toc_hash = ::Toolchain::Hash.openstruct_to_hash(toc_openstruct)
         toc_json = JSON.pretty_generate(toc_hash)
         File.open(json_filepath, 'w+') do |json_file|
           json_file.write(toc_json)
@@ -163,23 +164,6 @@ module Toolchain
         end
         return fragment
       end
-
-      ##
-      # Takes OpenStruct +object+ and returns +hash+
-      # Useful for converting OpenStruct Hash for later conversion to JSON
-      #
-      def openstruct_to_hash(object, hash = {})
-        return object unless object.is_a? OpenStruct
-        object.each_pair do |key, value|
-          hash[key] = case value
-                      when Array then value.map { |v| openstruct_to_hash(v) }
-                      else value
-                      end
-        end
-        return hash
-      end
     end
-
-
   end
 end

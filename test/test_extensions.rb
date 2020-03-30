@@ -6,6 +6,7 @@ require_relative '../lib/stages/test.rb'
 require_relative '../lib/log/log.rb'
 require_relative './util.rb'
 require_relative '../lib/utils/create_toc.rb'
+require_relative '../lib/utils/hash.rb'
 
 extensions = File.join(__dir__, '..', 'lib', 'extensions.d', '*.rb')
 Dir[extensions].each { |file| require file }

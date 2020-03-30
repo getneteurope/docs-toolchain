@@ -34,3 +34,25 @@ class Hash
     self
   end
 end
+
+# Toolchain main module
+module Toolchain
+  # Hash related operations
+  module Hash
+    ##
+    # Takes OpenStruct +object+ and returns +hash+
+    # Useful for converting OpenStruct Hash for later conversion to JSON
+    #
+    def self.openstruct_to_hash(object, hash = {})
+      return object unless object.is_a? OpenStruct
+
+      object.each_pair do |key, value|
+        hash[key] = case value
+                    when Array then value.map { |v| openstruct_to_hash(v) }
+                    else value
+                    end
+      end
+      return hash
+    end
+  end
+end
