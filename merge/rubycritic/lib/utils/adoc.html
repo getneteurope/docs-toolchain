@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-02 16:40:49 +0100'>2020-03-02 16:40:49 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-30 09:58:17 +0200'>2020-03-30 09:58:17 +0200</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">103</span><small> lines of codes</small></div>
+              <div><span class="metric">102</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">15.2</span><small> complexity/method</small></div>
-              <div><span class="metric">7</span><small> churn</small></div>
+              <div><span class="metric">8</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">45.61</span><small> complexity</small></div>
@@ -107,12 +107,11 @@ module Toolchain
   # Module containing Asciidoctor related Toolchain manipulations.
   module Adoc
     ##
-    # TODO: use a Struct instead of an OpenStruct (with proper documentation of the fields)
-    #
     # Load adoc file +filename+, convert given the parameters +safe+ and +parse+
     # https://discuss.asciidoctor.org/Compiling-all-includes-into-a-master-Adoc-file-td2308.html
     #
-    # Returns a pair of converted adoc +adoc+, original adoc +original+
+    # Returns an OpenStruct of converted adoc +adoc+, original adoc +original+,
+    # attributes +attributes+ and filename +filename+.
     #
     def self.load_doc(filename, attribs = {&#39;root&#39; =&gt; Toolchain.build_path})
       root = attribs[&#39;root&#39;]

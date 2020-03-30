@@ -204,7 +204,7 @@
 
           
           <div class="method-source-code" id="combine_and_replace_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 112</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace_js</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-identifier">js_blob_str</span> = <span class="ruby-identifier">combine_js</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-identifier">js_blob_str</span> = <span class="ruby-constant">Babel</span><span class="ruby-operator">::</span><span class="ruby-constant">Transpiler</span>.<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">js_blob_str</span>)[<span class="ruby-string">&#39;code&#39;</span>] <span class="ruby-keyword">unless</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>)
@@ -249,7 +249,7 @@
 
           
           <div class="method-source-code" id="combine_js-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 53</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_js</span>(<span class="ruby-identifier">html_path</span>, <span class="ruby-identifier">seperator</span> = <span class="ruby-string">&quot;\n\n&quot;</span>)
   <span class="ruby-identifier">get_script_src_from_html_file</span>(<span class="ruby-identifier">html_path</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">js</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">js</span>)
@@ -288,7 +288,7 @@
 
           
           <div class="method-source-code" id="get_script_src_from_html_file-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 133</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_script_src_from_html_file</span>(<span class="ruby-identifier">html_path</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">html_path</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Could not read html file #{html_path}&quot;</span>)
@@ -340,11 +340,8 @@
 
           
           <div class="method-source-code" id="replace_js_tags_with_blob-source">
-            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">replace_js_tags_with_blob</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">js_blob</span>)
-  <span class="ruby-comment"># TODO: solve this with nokogiri fragment parser (which either</span>
-  <span class="ruby-comment"># removes needed or adds unnecessary tags..)</span>
-  <span class="ruby-comment">#</span>
   <span class="ruby-comment"># derive .js path from html filename</span>
   <span class="ruby-comment"># e.g. docinfo-footer.html =&gt; content/js/docinfo-footer.js</span>
   <span class="ruby-identifier">root</span> = <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>)
@@ -415,7 +412,6 @@
           <div class="method-source-code" id="run-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_transpile_js.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">filepaths</span> = <span class="ruby-keyword">nil</span>)
-  <span class="ruby-comment"># TODO: add files from header.js.d to docinfo.html and footer.js.d to docinfo-footer.html</span>
   <span class="ruby-identifier">root</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">build_path</span>
   <span class="ruby-identifier">header_path</span> = <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">root</span>, <span class="ruby-ivar">@header_name_default</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">header</span>
   <span class="ruby-identifier">footer_path</span> = <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">root</span>, <span class="ruby-ivar">@footer_name_default</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">filepaths</span>.<span class="ruby-identifier">footer</span>

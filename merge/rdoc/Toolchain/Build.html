@@ -145,13 +145,13 @@
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">index_path</span>)
 
   <span class="ruby-comment"># call asciidoctor</span>
-  <span class="ruby-comment"># FIXME hardcoded, extract attributes and read config file from content repo</span>
-  <span class="ruby-comment"># or overwrite default attributes with a config file</span>
-  <span class="ruby-comment"># NOTE Requires need to be required explicitly with require or require_relative</span>
-  <span class="ruby-comment"># instead of being passed as options[:requires]</span>
+  <span class="ruby-comment"># TODO hardcoded, extract attributes and read config file from the</span>
+  <span class="ruby-comment"># content repo or overwrite default attributes with a config file</span>
+  <span class="ruby-comment"># NOTE Backends need to be required explicitly with require or</span>
+  <span class="ruby-comment"># require_relative instead of being passed as options[:requires]</span>
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-string">&#39;HTML5 Multipage Backend loaded&#39;</span>)
-  <span class="ruby-identifier">require</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">toolchain_path</span>),
-    <span class="ruby-string">&#39;lib/adoc-extensions.d/multipage_html5.rb&#39;</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(
+    <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">toolchain_path</span>), <span class="ruby-string">&#39;lib/adoc-extensions.d/multipage_html5.rb&#39;</span>)
   <span class="ruby-identifier">options</span> = {
     <span class="ruby-value">attributes:</span> {
       <span class="ruby-comment"># General</span>

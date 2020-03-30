@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-11 13:18:21 +0100'>2020-03-11 13:18:21 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-30 11:05:11 +0200'>2020-03-30 11:05:11 +0200</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">12.7</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">9</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">38.19</span><small> complexity</small></div>
@@ -149,7 +149,7 @@ module Toolchain
       def inject_fragment_into_html_file(html_fragment, html_file)
         file_content = File.read(html_file)
         document = Nokogiri::HTML(file_content)
-        page_id = File.basename(html_file, &#39;.html&#39;) # TODO find better way to get page_id
+        page_id = File.basename(html_file, &#39;.html&#39;)
         toc_document = Nokogiri::HTML.fragment(html_fragment)
         stage_log(:post, &#39;[Inject TOC] Starting&#39;)
         toc_document = tick_toc_checkboxes(page_id, toc_document)
