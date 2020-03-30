@@ -12,11 +12,8 @@ require 'fileutils'
 module Toolchain
   module Adoc
     ##
-    # Create a Table of Contents, inherts BaseProcess
-    class CreateTOC < BaseProcess
-
-      def initialize(priority = 0)
-        super(priority)
+    class CreateTOC
+      def initialize
         @multipage_level = CM.get('asciidoc.multipage_level')
         @default_json_filepath = File.join(
           ::Toolchain.build_path,
@@ -32,7 +29,8 @@ module Toolchain
       #
       # Saves toc as json tree +toc_json+
       # Saves toc as html code +html_fragment+
-      # Returns path to created JSON file +json_filepath+, path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
+      # Returns path to created JSON file +json_filepath+,
+      # path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
       def run(
         catalog,
@@ -145,10 +143,19 @@ module Toolchain
         toc_elements.each do |e|
           root_file = e.founder == 'root' ? '' : e.founder + '.html'
           level = e.level || 0
+          id = e.id
+          disabled = ''
+          disabled = ' disabled' if e.children.empty?
 
-          fragment_string = Nokogiri::HTML.fragment('<li id="toc_li_' + e.id + '" data-level="' + level.to_s + '"></li>' + "\n")
-          # FIXME fix this mess of string formatting
-          fragment_string.at('li') << "\n" + '  <input id="toc_cb_' + e.id + '" type="checkbox"' + (e.children.empty? ? ' disabled' : '') + '><label for="toc_cb_' + e.id + '"><a href="' + root_file.to_s + (e.founder == e.id ? '' : '#' + e.id)+ '">' + e.title + '</a></label>' + "\n"
+          fragment_string = Nokogiri::HTML.fragment(
+            %(<li id="toc_li_#{id}" data-level="#{level}"></li>)
+          )
+
+          link = %(<a href="#{root_file}#{(e.founder == id ? '' : '#' + id)}">#{e.title}</a>)
+          fragment_string.at('li') << (
+            "\n" + %(<input id="toc_cb_#{id}" type="checkbox"#{disabled}>) +
+              %(<label for="toc_cb_#{id}">#{link}</label>) + "\n"
+          )
 
           # if element has child elements, add them to current list item
           fragment_string.at('li') << generate_html_from_toc(e.children) unless e.children.empty?
@@ -157,7 +164,8 @@ module Toolchain
         return fragment
       end
 
-      ## Takes OpenStruct +object+ and returns +hash+
+      ##
+      # Takes OpenStruct +object+ and returns +hash+
       # Useful for converting OpenStruct Hash for later conversion to JSON
       #
       def openstruct_to_hash(object, hash = {})
@@ -175,4 +183,3 @@ module Toolchain
 
   end
 end
-
