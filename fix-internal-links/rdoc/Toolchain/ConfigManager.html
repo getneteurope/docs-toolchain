@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Toolchain::ConfigManager - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">Singleton</span>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-clear">#clear</a>
+    
+    <li ><a href="#method-i-get">#get</a>
+    
+    <li ><a href="#method-i-load">#load</a>
+    
+    <li ><a href="#method-i-update">#update</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Toolchain::ConfigManager">
+  <h1 id="class-Toolchain::ConfigManager" class="class">
+    class Toolchain::ConfigManager
+  </h1>
+
+  <section class="description">
+    
+<p>Central class keeping track of all configuration options.</p>
+
+<p>Configurations can be changed via certain files or direct calls to <code>ConfigManager</code>.</p>
+
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
+  <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-clear" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">clear</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Delete the currently loaded configuration.</p>
+
+<p>Does NOT affect the files from which the config was loaded, only the current state of the <code>ConfigManager</code>.</p>
+
+<p>Returns nothing.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="clear-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
+  <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get</span><span
+            class="method-args">(identifier = nil, default: nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get the configuration value for a key <code>identifier</code>.</p>
+
+<p>The <code>identifier</code> is a string in the format <em>key1.key2.key3</em>, where keyX is the key for the Xth level of the +@config+ hash.</p>
+
+<p>The named parameter <code>default</code> will be used as fallback if set.</p>
+
+<p>Returns the corresponding value for <code>identifier</code>. Returns +@config+ if <code>identifier</code> is nil. Returns <code>default</code> if result is nil and <code>identifier</code> is not nil.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>(<span class="ruby-identifier">identifier</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-value">default:</span> <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@config</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">load</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@loaded</span>
+
+  <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">keys</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">default</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-load" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load</span><span
+            class="method-args">( file = File.join(Toolchain.toolchain_path, &#39;config&#39;, &#39;default.yaml&#39;) )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Load configuration from <code>file</code>.</p>
+
+<p>Returns the configuration as hash (YAML parsed)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>(
+  <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">toolchain_path</span>, <span class="ruby-string">&#39;config&#39;</span>, <span class="ruby-string">&#39;default.yaml&#39;</span>)
+)
+  <span class="ruby-ivar">@config</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">file</span>)
+  <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">(file)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Update current configuration with configuration from <code>file</code>.</p>
+
+<p>Merging of the configuration options is with a _right join_, i.e. the new <code>file</code> options overwrite old ones.</p>
+
+<p>Returns the updated configuration as hash (YAML parsed)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">update</span>(<span class="ruby-identifier">file</span>)
+  <span class="ruby-identifier">update</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">file</span>)
+  <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">merge_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">update</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
