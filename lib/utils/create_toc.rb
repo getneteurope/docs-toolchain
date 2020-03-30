@@ -25,7 +25,7 @@ module Toolchain
       end
 
       ##
-      # Creates a TOC JSON file from an Asciidoctor +catalog+ object
+      # Creates a TOC JSON file from an Asciidoctor document +document+
       # Default JSON path is taken from +ConfigManager+.
       #
       # Saves toc as json tree +toc_json+
@@ -34,10 +34,11 @@ module Toolchain
       # path to creted HTML fragment file +html_path+ and the TOC Has +toc_hash+
       #
       def run(
-        catalog,
+        document,
         json_filepath = @default_json_filepath,
         html_filepath = @default_html_filepath
       )
+        catalog = document.catalog
         FileUtils.mkdir_p(File.dirname(@default_json_filepath))
         FileUtils.mkdir_p(File.dirname(@default_html_filepath))
         stage_log(:build, 'Create TOC')
