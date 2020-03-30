@@ -43,6 +43,8 @@ module Toolchain
     # Takes OpenStruct +object+ and returns +hash+
     # Useful for converting OpenStruct Hash for later conversion to JSON
     #
+    # TODO: check if this can't be replaced with OpenStruct#to_h instead.
+    # Might require changes to existing code, but should be possible.
     def self.openstruct_to_hash(object, hash = {})
       return object unless object.is_a? OpenStruct
 
