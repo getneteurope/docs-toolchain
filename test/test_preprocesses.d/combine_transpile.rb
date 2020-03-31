@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../lib/pre.d/combine_transpile_js.rb'
-require_relative './util.rb'
-require 'json'
 require 'test/unit'
+require 'json'
+require_relative '../../lib/pre.d/combine_transpile_js.rb'
+require_relative '../util.rb'
 
 class TestJsCombineAndTranspile < Test::Unit::TestCase
   CONTENT = ['[1, 2, 3].map(n => n ** 2);', 'var [a,,b] = [1,2,3];']

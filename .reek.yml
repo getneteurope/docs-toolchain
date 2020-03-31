@@ -24,3 +24,6 @@ detectors:
 
   UncommunicativeVariableName:
     enabled: false
+
+exclude_paths:
+  - test/**/*.rb
