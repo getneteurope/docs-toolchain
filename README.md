@@ -2,11 +2,10 @@
 <a href="https://undraw.co/"><img src="logo/landing_page.svg" alt="Docs Toolchain Logo"></a>
 </h1>
 
-[![Github workflow](https://github.com/wirecard/docs-toolchain/workflows/Main/badge.svg)](https://github.com/wirecard/docs-toolchain/actions) 
+[![Github workflow](https://github.com/wirecard/docs-toolchain/workflows/Main/badge.svg)](https://github.com/wirecard/docs-toolchain/actions)
 [![Coverage Status](https://coveralls.io/repos/github/wirecard/docs-toolchain/badge.svg?branch=coveralls)](https://coveralls.io/github/wirecard/docs-toolchain?branch=coveralls)
-[![GitHub Issues](https://img.shields.io/github/issues-raw/wirecard/docs-toolchain)](https://github.com/wirecard/docs-toolchain/issues)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![Inline docs](http://inch-ci.org/github/wirecard/docs-toolchain.svg?branch=master)](http://inch-ci.org/github/wirecard/docs-toolchain)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 # docs-toolchain
 Toolchain for TecDoc managed documentation repositories
@@ -32,7 +31,7 @@ Under heavy development, everything is subject to change and most likely will no
 ### Dependencies
 To run the toolchain locally, or run the unit tests, the following requirements must be met:
 * Ruby 2.x
-    * installed dependencies (Gemfile)
+* installed dependencies (Gemfile)
 
 In order to install dependencies, run the following at the root of the project:
 ```bash
@@ -60,34 +59,34 @@ Alternatively, use the Docker image at [wirecard/docs-dockerfile](https://github
 The toolchain is designed to run through different stages, that have specific responsibilities:
 1. **setup**: install required dependencies
 2. **test**:
-    * validate all configuration files
-    * test the current commit with:
-        * predefined tests by the toolchain (`lib/extensions.d/`)
-            * ID Checker
-            * `if` Checker
-            * Link Checker
-            * Pattern Checker
-        * [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
+* validate all configuration files
+* test the current commit with:
+* predefined tests by the toolchain (`lib/extensions.d/`)
+* ID Checker
+* `if` Checker
+* Link Checker
+* Pattern Checker
+* [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
 3. **pre**:
-    * combine Javascript files to BLOB file
-    * transpile (cross-browser compatibility and loading speed)
+* combine Javascript files to BLOB file
+* transpile (cross-browser compatibility and loading speed)
 4. **build**:
-    * invoke asciidoctor (with multipage converter)
-    * [*future*] run custom build scripts `build.d/*.sh`
-    * [*future*] diagram integration
-    * Table of Content injector
-    * CodeRay source code highlighter
+* invoke asciidoctor (with multipage converter)
+* [*future*] run custom build scripts `build.d/*.sh`
+* [*future*] diagram integration
+* Table of Content injector
+* CodeRay source code highlighter
 5. **post**:
-    * create Table of Content
-    * create search index (Lunr)
-    * [*future*] trigger translation
+* create Table of Content
+* create search index (Lunr)
+* [*future*] trigger translation
 6. **deploy**:
-    * [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
-    * [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
-    * required variables, see [Configuration/Secret/AWS](#Secret)
+* [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
+* [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
+* required variables, see [Configuration/Secret/AWS](#Secret)
 7. **notify**:
-    * send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
-    
+* send Slack message stating the fail status and a description if the build failed, see [Configuration/Secret/Slack](#Secret)
+
 
 ## Development
 ### Rake targets
@@ -111,20 +110,20 @@ The toolchain is designed to run through different stages, that have specific re
 * `rake docs:clean`: delete build directory and clean up
 * `rake docs:all`: run the stages `clean test pre build post`
 * `rake docs:list:<stage>`: list loaded extensions for a processing stage
-    * `rake docs:list:pre`
-    * `rake docs:list:post`
+* `rake docs:list:pre`
+* `rake docs:list:post`
 
 
 ### Environment Variables
 * `SKIP_COMBINE`: skips the Javascript combine and transpile operation.
 * `SKIP_HTMLCHECK`: skips the HTML Check Post process.
 * Skip entire stages
-    * `SKIP_RAKE_TEST`: skips test stage (i.e. `rake docs:test`)
+* `SKIP_RAKE_TEST`: skips test stage (i.e. `rake docs:test`)
 * `FAST` sets the following variables (which may be set individually):
-    * `SKIP_COMBINE`, `SKIP_HTMLCHECK`, `SKIP_RAKE_TEST`
+* `SKIP_COMBINE`, `SKIP_HTMLCHECK`, `SKIP_RAKE_TEST`
 * `DEBUG` for debug builds
-    * `SKIP_COMBINE`
-    * additional debug output
+* `SKIP_COMBINE`
+* additional debug output
 
 
 ## Configuration
@@ -154,4 +153,3 @@ The **test** and **build** stages produce `/tmp/slack.json`, a central file cont
 Configuration files:
 * `config/default.yaml`: default settings
 * `content/docinfo-search.html`: search overlay for the frontend
-
