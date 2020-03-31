@@ -17,11 +17,6 @@ Toolchain for TecDoc managed documentation repositories
 </div>
 
 
-## Disclaimer
-
-Under heavy development, everything is subject to change and most likely will not be up-to-date!
-
-
 ## Docs and Metrics
 * [Source Code Documentation (rdoc)](https://wirecard.github.io/docs-toolchain/rdoc/)
 * [SimpleCov Coverage](https://wirecard.github.io/docs-toolchain/coverage/)
