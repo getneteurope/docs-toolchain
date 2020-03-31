@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-28 10:35:17 +0100'>2020-02-28 10:35:17 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-31 10:30:49 +0200'>2020-03-31 10:30:49 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">58</span><small> lines of codes</small></div>
+              <div><span class="metric">61</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">35.4</span><small> complexity/method</small></div>
-              <div><span class="metric">14</span><small> churn</small></div>
+              <div><span class="metric">44.0</span><small> complexity/method</small></div>
+              <div><span class="metric">15</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">35.43</span><small> complexity</small></div>
+              <div><span class="metric">44.02</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -100,6 +100,7 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require_relative &#39;../extension_manager.rb&#39;
+require_relative &#39;../config_manager.rb&#39;
 require_relative &#39;../base_extension.rb&#39;
 
 module Toolchain
@@ -114,24 +115,26 @@ module Toolchain
     #
     # Returns a list of errors (can be empty).
     #
-    def run(adoc, blacklist_file = &#39;../blacklist.txt&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run has a flog score of 35</span>          </div>  </li></ol>
+    def run(adoc,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run has a flog score of 44</span>          </div>  </li></ol>
+      blacklist_file = ::File.join(
+        ::Toolchain.content_path,
+        ::Toolchain::ConfigManager.instance.get(&#39;checkers.pattern.blacklist&#39;))
+    )
+      log(&#39;PATTERN&#39;, &quot;Blacklist file #{blacklist_file}&quot;)
       original = adoc.original
       parsed = adoc.parsed
       attributes = adoc.attributes
       errors = []
       unless File.exist?(blacklist_file)
-        #   log(
-        #     &#39;PATTERN&#39;,
-        #     &quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;,
-        #     :magenta
-        #   )
+        log(
+          &#39;PATTERN&#39;,
+          &quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;,
+          :magenta
+        )
         return errors
       end
-      blacklist_file = File.open(blacklist_file, &#39;r&#39;)
-      blacklist_patterns = blacklist_file.readlines
-      blacklist_file.close
-
-      blacklist_patterns.delete_if { |line| !line.match? %r{^/(.+)/$} }
+      blacklist_patterns = File.foreach(blacklist_file).map(&amp;:chomp)
+      blacklist_patterns.delete_if { |line| !line.match?(%r{^/(.+)/$}) }
 
       blacklist_patterns = blacklist_patterns.map do |pattern|
         Regexp.new(pattern.chomp.gsub(%r{^/(.+)/$}, &#39;\1&#39;))
@@ -139,7 +142,7 @@ module Toolchain
 
       original.reader.source_lines.each_with_index do |line, index|
         blacklist_patterns.each_with_index do |pattern, _p_idx|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run contains iterators nested 2 deep</span>          </div>  </li></ol>
-          next unless line.match? pattern
+          next unless line.match?(pattern)
 
           msg = &quot;Illegal pattern in line #{index + 1}: #{pattern.inspect}&quot;
           # log(&#39;PATTERN&#39;, msg, :magenta)
