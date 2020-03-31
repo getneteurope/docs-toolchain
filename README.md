@@ -100,7 +100,7 @@ The toolchain is designed to run through different stages, that have specific re
 4. `rake docs:build`
 5. `rake docs:post`
 6. _No rake task:_ Deployed by Github Action
-7. **WIP**: either done by `rake docs:notify** or separate Github Action
+7. _No rake task:_ Separate Github Action
 
 **Additional tasks**
 * `rake docs:clean`: delete build directory and clean up
