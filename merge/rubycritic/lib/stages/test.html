@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-02 16:58:52 +0100'>2020-03-02 16:58:52 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-31 10:30:49 +0200'>2020-03-31 10:30:49 +0200</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">8.7</span><small> complexity/method</small></div>
-              <div><span class="metric">27</span><small> churn</small></div>
+              <div><span class="metric">28</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">78.18</span><small> complexity</small></div>
@@ -134,9 +134,9 @@ end
 # print help
 # print all loaded extensions
 def print_loaded_extensions
-  puts &#39;*** Loaded extensions:&#39;
+  log(&#39;TESTING&#39;, &#39;loaded extensions:&#39;)
   Toolchain::ExtensionManager.instance.get.each do |ext|
-    puts ext.class.name
+    log(&#39;EXT&#39;, ext.class.name)
   end
 end
 

@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-31 10:30:49 +0200'>2020-03-31 10:30:49 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-03-31 11:49:39 +0200'>2020-03-31 11:49:39 +0200</time>
         
       </span>
     </div>
     <div>
-      <h3><small>lib/extensions.d /</small> pattern_blacklist.rb</h3>
+      <h3><small>test/test_postprocesses.d /</small> compile_search_index.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">61</span><small> lines of codes</small></div>
+              <div><span class="metric">72</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">44.0</span><small> complexity/method</small></div>
-              <div><span class="metric">15</span><small> churn</small></div>
+              <div><span class="metric">21.1</span><small> complexity/method</small></div>
+              <div><span class="metric">9</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">44.02</span><small> complexity</small></div>
+              <div><span class="metric">21.09</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -99,65 +99,76 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require_relative &#39;../extension_manager.rb&#39;
-require_relative &#39;../config_manager.rb&#39;
-require_relative &#39;../base_extension.rb&#39;
+require &#39;test/unit&#39;
+require &#39;fileutils&#39;
+require_relative &#39;../util.rb&#39;
+require_relative &#39;../../lib/post.d/compile_search_index.rb&#39;
 
-module Toolchain
+class TestCompileSearchIndex &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestCompileSearchIndex has no descriptive comment</span>          </div>  </li></ol>
   ##
-  # Pattern Checker
+  # Creates lunr index json from an adoc file with include(s)
   #
-  # Checks the text against a predefined list of patterns which are not allowed.
-  class PatternBlacklist &lt; BaseExtension
-    ##
-    # Run the Pattern tests on the given document (+adoc+).
-    # Illegal patterns are loaded from +blacklist_file+.
-    #
-    # Returns a list of errors (can be empty).
-    #
-    def run(adoc,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run has a flog score of 44</span>          </div>  </li></ol>
-      blacklist_file = ::File.join(
-        ::Toolchain.content_path,
-        ::Toolchain::ConfigManager.instance.get(&#39;checkers.pattern.blacklist&#39;))
-    )
-      log(&#39;PATTERN&#39;, &quot;Blacklist file #{blacklist_file}&quot;)
-      original = adoc.original
-      parsed = adoc.parsed
-      attributes = adoc.attributes
-      errors = []
-      unless File.exist?(blacklist_file)
-        log(
-          &#39;PATTERN&#39;,
-          &quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;,
-          :magenta
-        )
-        return errors
-      end
-      blacklist_patterns = File.foreach(blacklist_file).map(&amp;:chomp)
-      blacklist_patterns.delete_if { |line| !line.match?(%r{^/(.+)/$}) }
+  def test_compile_search_index
+    content =
+      &#39;&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Unit test&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
 
-      blacklist_patterns = blacklist_patterns.map do |pattern|
-        Regexp.new(pattern.chomp.gsub(%r{^/(.+)/$}, &#39;\1&#39;))
-      end
+&lt;div id=&quot;content&quot;&gt;
 
-      original.reader.source_lines.each_with_index do |line, index|
-        blacklist_patterns.each_with_index do |pattern, _p_idx|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run contains iterators nested 2 deep</span>          </div>  </li></ol>
-          next unless line.match?(pattern)
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;ApplePay_Main&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#ApplePay_Main&quot;&gt;&lt;/a&gt;&lt;a class=&quot;link&quot; href=&quot;#ApplePay_Main&quot;&gt;Apple Pay&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Test Apple Pay paragraph is here.&lt;/p&gt;
+&lt;/div&gt;
 
-          msg = &quot;Illegal pattern in line #{index + 1}: #{pattern.inspect}&quot;
-          # log(&#39;PATTERN&#39;, msg, :magenta)
-          errors &lt;&lt; create_error(
-            msg: msg,
-            location: Location.new(parsed.attr(&#39;docfile&#39;), nil)
-          )
-        end
-      end
-      return errors
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h3 id=&quot;first-head&quot;&gt;My First Heading&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Integer massa odio, bibendum ut vulputate sit amet, fringilla in massa.
+Donec vitae venenatis dolor. Suspendisse efficitur cursus arcu.
+Duis tincidunt et quam et dapibus. Vivamus ut dui vitae nisl dignissim faucibus.
+Mauris venenatis eleifend nisi ut vehicula. Suspendisse semper viverra consequat.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+Donec maximus vestibulum urna id ullamcorper.
+Sed sem tortor, maximus a arcu id, accumsan varius ante.
+Pellentesque accumsan rhoncus est non sagittis.
+Sed ac eros sit amet neque semper ullamcorper vel eget mi.
+Sed non luctus nunc. Nulla non massa ac libero iaculis bibendum.
+Nulla non porttitor risus. Fusce ac molestie elit.
+Fusce purus est, accumsan eu odio vel, ornare tristique odio.
+Suspendisse ullamcorper mauris ac iaculis pellentesque.
+Donec rhoncus tortor vel est ultrices dignissim.
+Fusce tincidunt gravida orci eget placerat. Etiam nec scelerisque diam.
+Praesent quis feugiat enim.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;&#39;
+    outfile = &#39;/tmp/test_index.json&#39;
+    dbfile = &#39;/tmp/test_db.json&#39;
+
+    ::Toolchain::ConfigManager.instance.load
+    toc_file = ::File.join(::Toolchain.build_path, CM.get(&#39;toc.json_file&#39;))
+    FileUtils.mkdir_p(::File.dirname(toc_file))
+    ::File.write(toc_file, &#39;{}&#39;)
+    index, lookup = with_tempfile(content, &#39;_CompileSearchIndex&#39;) do |file|
+      ::Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile, dbfile: dbfile)
     end
+    assert_equal(%w[title body file], index[&#39;fields&#39;])
+    assert_true(lookup.size.positive?)
   end
 end
-
-Toolchain::ExtensionManager.instance.register(Toolchain::PatternBlacklist.new)
 </code>
   </div>
 </div>

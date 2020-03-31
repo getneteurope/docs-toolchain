@@ -117,7 +117,7 @@
         
         <div class="method-heading">
           <span class="method-name">run</span><span
-            class="method-args">(adoc, blacklist_file = &#39;../blacklist.txt&#39;)</span>
+            class="method-args">(adoc, blacklist_file = ::File.join( ::Toolchain.content_path, ::Toolchain::ConfigManager.instance.get(&#39;checkers.pattern.blacklist&#39;)) )</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -134,25 +134,27 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/extensions.d/pattern_blacklist.rb, line 18</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">adoc</span>, <span class="ruby-identifier">blacklist_file</span> = <span class="ruby-string">&#39;../blacklist.txt&#39;</span>)
+            <pre><span class="ruby-comment"># File lib/extensions.d/pattern_blacklist.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">adoc</span>,
+  <span class="ruby-identifier">blacklist_file</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(
+    <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>,
+    <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;checkers.pattern.blacklist&#39;</span>))
+)
+  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;PATTERN&#39;</span>, <span class="ruby-node">&quot;Blacklist file #{blacklist_file}&quot;</span>)
   <span class="ruby-identifier">original</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">original</span>
   <span class="ruby-identifier">parsed</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">parsed</span>
   <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>
   <span class="ruby-identifier">errors</span> = []
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">blacklist_file</span>)
-    <span class="ruby-comment">#   log(</span>
-    <span class="ruby-comment">#     &#39;PATTERN&#39;,</span>
-    <span class="ruby-comment">#     &quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;,</span>
-    <span class="ruby-comment">#     :magenta</span>
-    <span class="ruby-comment">#   )</span>
+    <span class="ruby-identifier">log</span>(
+      <span class="ruby-string">&#39;PATTERN&#39;</span>,
+      <span class="ruby-node">&quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;</span>,
+      <span class="ruby-value">:magenta</span>
+    )
     <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">blacklist_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">blacklist_file</span>, <span class="ruby-string">&#39;r&#39;</span>)
-  <span class="ruby-identifier">blacklist_patterns</span> = <span class="ruby-identifier">blacklist_file</span>.<span class="ruby-identifier">readlines</span>
-  <span class="ruby-identifier">blacklist_file</span>.<span class="ruby-identifier">close</span>
-
-  <span class="ruby-identifier">blacklist_patterns</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">match?</span> <span class="ruby-regexp">%r{^/(.+)/$}</span> }
+  <span class="ruby-identifier">blacklist_patterns</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-identifier">blacklist_file</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:chomp</span>)
+  <span class="ruby-identifier">blacklist_patterns</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-regexp">%r{^/(.+)/$}</span>) }
 
   <span class="ruby-identifier">blacklist_patterns</span> = <span class="ruby-identifier">blacklist_patterns</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%r{^/(.+)/$}</span>, <span class="ruby-string">&#39;\1&#39;</span>))
@@ -160,7 +162,7 @@
 
   <span class="ruby-identifier">original</span>.<span class="ruby-identifier">reader</span>.<span class="ruby-identifier">source_lines</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">blacklist_patterns</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">_p_idx</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">match?</span> <span class="ruby-identifier">pattern</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">pattern</span>)
 
       <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;Illegal pattern in line #{index + 1}: #{pattern.inspect}&quot;</span>
       <span class="ruby-comment"># log(&#39;PATTERN&#39;, msg, :magenta)</span>
