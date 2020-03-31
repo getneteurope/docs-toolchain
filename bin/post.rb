@@ -14,7 +14,7 @@ def main(argv = ARGV)
   end
 
   if args.list || args.debug
-    log('LOADED POST-PROCESSING', 'loaded processes:')
+    log('POST-PROCESSING', 'loaded processes:')
     Toolchain::PostProcessManager.instance.get.each do |proc|
       log('PROC', proc.class.name)
     end

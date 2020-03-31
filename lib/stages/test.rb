@@ -35,9 +35,9 @@ end
 # print help
 # print all loaded extensions
 def print_loaded_extensions
-  puts '*** Loaded extensions:'
+  log('TESTING', 'loaded extensions:')
   Toolchain::ExtensionManager.instance.get.each do |ext|
-    puts ext.class.name
+    log('EXT', ext.class.name)
   end
 end
 

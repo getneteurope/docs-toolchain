@@ -266,6 +266,8 @@ class TestPatternBlacklist < Test::Unit::TestCase
 WPP
 document-center
 
+In this paragraph there is a bad_word. Oh no!
+
     '
     blacklist_patterns = '
 # do not match this comment
@@ -279,7 +281,7 @@ document
     blacklist_filepath = write_tempfile('blacklist_patterns.txt', blacklist_patterns)
     adoc = init(adoc, "#{self.class.name}_#{__method__}", 'test_toolchain_pattern_blacklist.adoc')
     errors = Toolchain::PatternBlacklist.new.run(adoc, blacklist_filepath)
-    assert_equal(3, errors.length)
+    assert_equal(4, errors.length)
   end
 
   def test_no_blacklist

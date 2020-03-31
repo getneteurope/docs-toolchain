@@ -50,8 +50,12 @@ module Toolchain
     #
     # Returns the configuration as hash (YAML parsed)
     def load(
-      file = File.join(Toolchain.toolchain_path, 'config', 'default.yaml')
+      file = File.join(Toolchain.content_path, 'config.yaml')
     )
+      unless File.exist?(file)
+        file = File.join(Toolchain.toolchain_path, 'config', 'default.yaml')
+      end
+
       @config = YAML.load_file(file)
       @loaded = true
     end
