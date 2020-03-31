@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../lib/post.d/compile_search_index.rb'
-require_relative '../lib/utils/create_toc.rb'
-require_relative './util.rb'
 require 'test/unit'
 require 'fileutils'
+require_relative '../util.rb'
+require_relative '../../lib/post.d/compile_search_index.rb'
 
 class TestCompileSearchIndex < Test::Unit::TestCase
   ##
