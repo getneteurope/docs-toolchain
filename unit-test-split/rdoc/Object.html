@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Object - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/navigation.js" defer></script>
+<script src="./js/search.js" defer></script>
+<script src="./js/search_index.js" defer></script>
+<script src="./js/searcher.js" defer></script>
+<script src="./js/darkfish.js" defer></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">BasicObject
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-check_docs">#check_docs</a>
+    
+    <li ><a href="#method-i-colorize">#colorize</a>
+    
+    <li ><a href="#method-i-error">#error</a>
+    
+    <li ><a href="#method-i-get_recursively">#get_recursively</a>
+    
+    <li ><a href="#method-i-log">#log</a>
+    
+    <li ><a href="#method-i-main">#main</a>
+    
+    <li ><a href="#method-i-merge_recursively">#merge_recursively</a>
+    
+    <li ><a href="#method-i-mkdir">#mkdir</a>
+    
+    <li ><a href="#method-i-post_process_errors">#post_process_errors</a>
+    
+    <li ><a href="#method-i-print_errors">#print_errors</a>
+    
+    <li ><a href="#method-i-print_loaded_extensions">#print_loaded_extensions</a>
+    
+    <li ><a href="#method-i-run_tests">#run_tests</a>
+    
+    <li ><a href="#method-i-stage_log">#stage_log</a>
+    
+    <li ><a href="#method-i-test_files">#test_files</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Object">
+  <h1 id="class-Object" class="class">
+    class Object
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="ADOC_MAP">ADOC_MAP
+        
+        <dd><p>hash to cache all filename: converted_adoc pairs</p>
+        
+      
+        <dt id="CM">CM
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_INDEX">DEFAULT_INDEX
+        
+        <dd><p>default index file</p>
+        
+      
+        <dt id="Entry">Entry
+        
+        <dd><p>represents a pair of parsed, resolved adoc and original adoc Params:</p>
+<ul><li>
+<p><code>original</code>: original adoc source code before conversion</p>
+</li><li>
+<p><code>parsed</code>: parsed adoc source code</p>
+</li><li>
+<p><code>attributes</code>: attributes of document</p>
+</li></ul>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-check_docs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_docs</span><span
+            class="method-args">(included_files, content_dir)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Check all included files in for a given index.</p>
+
+<p>All include files <code>included_files</code> in <code>content_dir</code> will be checked. This means each file will be tested with <code>run_tests</code>.</p>
+
+<p>Returns a map of <code>errors_map</code> with schema filename =&gt; [errors].</p>
+          
+          
+
+          
+          <div class="method-source-code" id="check_docs-source">
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 119</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">check_docs</span>(<span class="ruby-identifier">included_files</span>, <span class="ruby-identifier">content_dir</span>)
+  <span class="ruby-identifier">errors_map</span> = {}
+  <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;INCLUDE&#39;</span>, <span class="ruby-node">&quot;Testing #{f}&quot;</span>)
+    <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)
+    <span class="ruby-identifier">errors_map</span>[<span class="ruby-identifier">f</span>] = <span class="ruby-identifier">errors</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors_map</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-colorize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">colorize</span><span
+            class="method-args">(text, color)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Colorize <code>text</code> in the color specified by <code>color</code>.</p>
+
+<p>Returns the colorized string</p>
+          
+          
+
+          
+          <div class="method-source-code" id="colorize-source">
+            <pre><span class="ruby-comment"># File lib/utils/string.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">colorize</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">color</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">color</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:black</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">black</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:red</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">red</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:green</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">green</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:brown</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">brown</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:blue</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">blue</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:magenta</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">magenta</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:cyan</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">cyan</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:gray</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">gray</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">error</span><span
+            class="method-args">(msg)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Log error to STDOUT.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="error-source">
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">error</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">:red</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stderr</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_recursively" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_recursively</span><span
+            class="method-args">(map, keys)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get a certain value in a hash of hashes.</p>
+
+<p>The key is described by <code>keys</code>, an array of keys representing the path through the hash of hashes, called <code>map</code>.</p>
+
+<p>Returns the corresponding value or nil.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_recursively-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_recursively</span>(<span class="ruby-identifier">map</span>, <span class="ruby-identifier">keys</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">map</span>.<span class="ruby-identifier">nil?</span>
+
+  <span class="ruby-identifier">key</span> = <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">shift</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">map</span>[<span class="ruby-identifier">key</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_recursively</span>(<span class="ruby-identifier">map</span>[<span class="ruby-identifier">key</span>], <span class="ruby-identifier">keys</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-log" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">log</span><span
+            class="method-args">(tag, msg, color = :blue, bold = false, stream: $stdout)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Create a log entry in the format:</p>
+
+<pre>[tag] msg</pre>
+
+<p>using the given color and font weight.</p>
+
+<p>Params: <code>tag</code>: The tag to display at the beginning <code>msg</code>: The message to log <code>color</code>: Define color as symbol (default: <code>:blue</code>) <code>bold</code>: Whether <code>msg</code> should be bold (default: false) <code>length</code>: Width of the <code>tag</code> inside the brackets (default: 14) <code>stream</code>: Which output stream to use (default: <code>STDOUT</code>)</p>
+
+<p>Returns nothing.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="log-source">
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stdout</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;UNITTEST&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;DEBUG&#39;</span>)
+
+  <span class="ruby-identifier">tag</span> = <span class="ruby-identifier">colorize</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">color</span>)
+  <span class="ruby-identifier">tag_line</span> = <span class="ruby-node">&quot;[#{Time.now.strftime(&#39;%H:%m:%S&#39;)}]::#{tag} =&gt;&quot;</span>.<span class="ruby-identifier">bold</span>
+  <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">bold</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bold</span>
+
+  <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{tag_line} #{msg}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-main" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">main</span><span
+            class="method-args">(argv = ARGV)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="main-source">
+            <pre><span class="ruby-comment"># File bin/build.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">main</span>(<span class="ruby-identifier">argv</span> = <span class="ruby-constant">ARGV</span>)
+  <span class="ruby-identifier">args</span>, <span class="ruby-identifier">opt_parser</span> = <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Build</span><span class="ruby-operator">::</span><span class="ruby-constant">CLI</span>.<span class="ruby-identifier">parse_args</span>(<span class="ruby-identifier">argv</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">help</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">opt_parser</span>
+    <span class="ruby-identifier">exit</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-string">&#39;Starting build stage&#39;</span>)
+  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-node">&quot;running build with index: #{args.index}&quot;</span>)
+  <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Build</span>.<span class="ruby-identifier">build</span>(<span class="ruby-value">index:</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">index</span>)
+  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-string">&#39;Build done&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-merge_recursively" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">merge_recursively</span><span
+            class="method-args">(left, right)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Merge two hashes <code>left</code> and <code>right</code> recursively</p>
+
+<p>Merge strategy: right join</p>
+
+<p>Returns merged hash.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="merge_recursively-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_recursively</span>(<span class="ruby-identifier">left</span>, <span class="ruby-identifier">right</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">right</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">left</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">left</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">right</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">_</span>, <span class="ruby-identifier">left_item</span>, <span class="ruby-identifier">right_item</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">merge_recursively</span>(<span class="ruby-identifier">left_item</span>, <span class="ruby-identifier">right_item</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-mkdir" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mkdir</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>mkdir</p>
+
+<p>Create <code>path</code> if <code>path</code> does not exist. Returns nothing.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mkdir-source">
+            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">mkdir</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">path</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">path</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-post_process_errors" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">post_process_errors</span><span
+            class="method-args">(index_errors, errors_map)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Resolves all errors from index to point to the correct location in include files.</p>
+
+<p>Given <code>index_errors</code> and <code>errors_map</code>, determine which errors are false positives and which errors are duplicates. Remove false positives and merge duplicates (keeping the more specific filename).</p>
+
+<p>Returns <code>nil</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="post_process_errors-source">
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-print_errors" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_errors</span><span
+            class="method-args">(errors_map)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Print all errors in <code>errors_map</code>. <code>errors_map</code> is a hash containing a mapping of filename -&gt; [errors]. Format: “id message”</p>
+
+<p>Returns <code>nil</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="print_errors-source">
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_errors</span>(<span class="ruby-identifier">errors_map</span>)
+  <span class="ruby-identifier">errors_map</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span>, <span class="ruby-identifier">errors</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERRORS&#39;</span>, <span class="ruby-node">&quot;for file #{file}&quot;</span>, <span class="ruby-value">:red</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">err</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{err[:id]}\t#{err[:msg]}&quot;</span>.<span class="ruby-identifier">bold</span>.<span class="ruby-identifier">red</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-print_loaded_extensions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_loaded_extensions</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>print help print all loaded extensions</p>
+          
+          
+
+          
+          <div class="method-source-code" id="print_loaded_extensions-source">
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_loaded_extensions</span>
+  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;TESTING&#39;</span>, <span class="ruby-string">&#39;loaded extensions:&#39;</span>)
+  <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;EXT&#39;</span>, <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-run_tests" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">run_tests</span><span
+            class="method-args">(filename)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Run all extensions registered with <code>ExtensionManager</code> on the file <code>filename</code>.</p>
+
+<p>During this process, the file <code>filename</code> will be loaded, converted and cached in <code>ADOC_MAP</code>.</p>
+
+<p>Returns <code>errors</code> for the given file.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="run_tests-source">
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_tests</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>].<span class="ruby-identifier">nil?</span>
+
+    <span class="ruby-identifier">adoc</span> = <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Adoc</span>.<span class="ruby-identifier">load_doc</span>(<span class="ruby-identifier">filename</span>,
+      <span class="ruby-string">&#39;root&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">document_root</span>
+    )
+    <span class="ruby-identifier">original</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">original</span>
+    <span class="ruby-identifier">parsed</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">parsed</span>
+    <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>
+
+    <span class="ruby-identifier">entry</span> = <span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">original:</span> <span class="ruby-identifier">original</span>, <span class="ruby-value">parsed:</span> <span class="ruby-identifier">parsed</span>, <span class="ruby-value">attributes:</span> <span class="ruby-identifier">attributes</span>)
+    <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>] = <span class="ruby-identifier">entry</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">entry</span> = <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>]
+    <span class="ruby-identifier">parsed</span> = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">parsed</span>
+    <span class="ruby-identifier">original</span> = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">original</span>
+    <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">attributes</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">errors</span> = []
+  <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># log(&#39;EXTENSION&#39;, ext.class.name, :cyan)</span>
+    <span class="ruby-identifier">errors</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">adoc</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-stage_log" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stage_log</span><span
+            class="method-args">(stage, msg, color = :green)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Create a log entry for a given stage.</p>
+
+<p>The stage is defined by <code>stage</code>, and will be formated like:</p>
+
+<pre>[stage] msg</pre>
+
+<p>using the given color.</p>
+
+<p>Returns nothing.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stage_log-source">
+            <pre><span class="ruby-comment"># File lib/log/log.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:green</span>)
+  <span class="ruby-identifier">stage</span> = <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>
+  <span class="ruby-identifier">log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_files" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_files</span><span
+            class="method-args">(files)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Test all files given as <code>files</code>, <code>files</code> must be a list of filenames. Only used for testing individual files, i.e. &#39;–file&#39; parameter.</p>
+
+<p>Returns nothing, this function will exit.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_files-source">
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_files</span>(<span class="ruby-identifier">files</span>)
+  <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
+
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">blue</span>.<span class="ruby-identifier">bold</span>
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">err</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{err[:id]}\t#{err[:msg]}&quot;</span>.<span class="ruby-identifier">bold</span>.<span class="ruby-identifier">red</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">exit</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
