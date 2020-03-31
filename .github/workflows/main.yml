@@ -11,17 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Extract branch name
-      shell: bash
-      id: extract_branch
-      run: |
-        echo "GITHUB_REF: "${GITHUB_REF}
-        if [[ ${GITHUB_EVENT_NAME} == 'pull_request' ]]; then
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|refs/pull/\([0-9]\+\)/merge|PR\1|')"
-        else
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##refs\/heads/})"
-        fi
-
     - name: "Install tools"
       run: |
         sudo snap install --classic ripgrep
@@ -59,34 +48,19 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: "Prepare upload"
+      if: endsWith(github.ref, 'master')
       run: |
         mkdir -p public
         mv /tmp/rdoc /tmp/rubycritic coverage public/
         cp public/rubycritic/{overview,index}.html
-        if [[ ${GITHUB_REF##*/} != 'master' ]]; then
-          mv public "${GITHUB_REF##*/}"
-          mkdir public
-          mv "${GITHUB_REF##*/}" public/
-        fi
 
-    - name: "Deploy reports to Github Pages (Master branch)"
-      if: steps.extract_branch.outputs.branch == 'master'
+    - name: "Deploy reports to Github Pages"
+      if: endsWith(github.ref, 'master')
       uses: peaceiris/actions-gh-pages@v2
       env:
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: ./public
         PERSONAL_TOKEN: ${{ secrets.GITHUB_PAT }}
-      with:
-        keepFiles: true
-
-    - name: "Deploy reports to Github Pages (Dev branches)"
-      if: steps.extract_branch.outputs.branch != 'master'
-      uses: peaceiris/actions-gh-pages@v2
-      env:
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: ./public
-        PERSONAL_TOKEN: ${{ secrets.GITHUB_PAT }}
-        TARGET_FOLDER: ${{ steps.extract_branch.outputs.branch }}
       with:
         keepFiles: true
 
