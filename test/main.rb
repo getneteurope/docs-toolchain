@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-require 'simplecov'
+if ENV.key?('GITHUB_ACTIONS')
+  require 'coveralls'
+  Coveralls.wear!
+else
+  require 'simplecov'
+end
 
 ENV['UNITTEST'] = 'true'
 Dir[File.join(__dir__, 'test_*.rb')].each { |f| require f }

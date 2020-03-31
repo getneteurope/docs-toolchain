@@ -53,13 +53,15 @@ jobs:
       run: |
         rake toolchain:quality
 
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: "Prepare upload"
       run: |
         mkdir -p public
-        ls -l
         mv /tmp/rdoc /tmp/rubycritic coverage public/
-        ls -l public/
-        ls -l public/rubycritic/
         cp public/rubycritic/{overview,index}.html
         if [[ ${GITHUB_REF##*/} != 'master' ]]; then
           mv public "${GITHUB_REF##*/}"
