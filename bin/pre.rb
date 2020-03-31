@@ -14,7 +14,7 @@ def main(argv = ARGV)
   end
 
   if args.list || args.debug
-    log('LOADED PRE-PROCESSING', 'loaded processes:')
+    log('PRE-PROCESSING', 'loaded processes:')
     Toolchain::PreProcessManager.instance.get.each do |proc|
       log('PROC', proc.class.name)
     end
