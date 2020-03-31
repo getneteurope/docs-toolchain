@@ -49,14 +49,14 @@ jobs:
         path-to-lcov: ./coverage/lcov/docs-toolchain.lcov
 
     - name: "Prepare upload"
-      if: endsWith(github.ref, 'master')
+      if: endsWith(github.ref, '/master')
       run: |
         mkdir -p public
         mv /tmp/rdoc /tmp/rubycritic coverage public/
         cp public/rubycritic/{overview,index}.html
 
     - name: "Deploy reports to Github Pages"
-      if: endsWith(github.ref, 'master')
+      if: endsWith(github.ref, '/master')
       uses: peaceiris/actions-gh-pages@v2
       env:
         PUBLISH_BRANCH: gh-pages
