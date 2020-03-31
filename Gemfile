@@ -13,7 +13,7 @@ gem "concurrent-ruby", "~> 1.1"
 
 gem "rubocop", "~> 0.69.0"
 gem 'rubycritic', '~> 4.3', '>= 4.3.1'
-gem 'simplecov', '~> 0.17.1'
+gem 'simplecov', '~> 0.18'
 gem "inch", "~> 0.8.0"
 gem "rdoc", "~> 6.2"
 gem "pry", "~> 0.12.2"
@@ -24,4 +24,4 @@ gem "therubyracer"
 gem "html-proofer", "~> 3.15"
 gem "os", "~> 1.0"
 
-gem 'coveralls', require: false
+gem "simplecov-lcov", "~> 0.8.0"
