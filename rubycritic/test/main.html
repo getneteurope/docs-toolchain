@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 11:43:27 +0100'>2020-03-20 11:43:27 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-03-31 11:44:56 +0200'>2020-03-31 11:44:56 +0200</time>
         
       </span>
     </div>
@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">11</span><small> lines of codes</small></div>
+              <div><span class="metric">7</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">12</span><small> churn</small></div>
+              <div><span class="metric">14</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">0.0</span><small> complexity</small></div>
@@ -100,14 +100,10 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require &#39;simplecov&#39;
-SimpleCov.start do |config|
-  add_filter &#39;test/&#39;
-  add_filter &#39;lib/stages/&#39;
-  add_filter &#39;lib/notify/slack.rb&#39; # not feasible to test
-end
 
 ENV[&#39;UNITTEST&#39;] = &#39;true&#39;
 Dir[File.join(__dir__, &#39;test_*.rb&#39;)].each { |f| require f }
+Dir[File.join(__dir__, &#39;test_*.d&#39;, &#39;*.rb&#39;)].each { |f| require f }
 </code>
   </div>
 </div>
