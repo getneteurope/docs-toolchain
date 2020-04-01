@@ -41,7 +41,7 @@ class TestPreProcessManager < Test::Unit::TestCase
 end
 
 class TestPostProcessManager < Test::Unit::TestCase
-  CONFIG = { 'processes' => { 'pre' => { 'enable' => ['BaseProcess'] } } }
+  CONFIG = { 'processes' => { 'post' => { 'enable' => ['BaseProcess'] } } }
 
   def setup
     PostM.clear
