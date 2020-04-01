@@ -44,12 +44,14 @@ module Toolchain
     # Returns nothing.
     #
     def register(ext)
-      enabled_ext = ConfigManager.instance.get('extensions.enable')
-      load = (enabled_ext || []).include?(ext.class.name)
+      enabled_exts = ConfigManager.instance.get('extensions.enable')
+      # extract ClassName from Toolchain::Extension::ClassName
+      name = ext.class.name.split('::').last
+      load = (enabled_exts || []).include?(name)
       if load
         @extensions << ext
       else
-        log('CONFIG', "ignoring #{ext.class.name}: not in config", :yellow)
+        log('CONFIG', "ignoring #{name}: not in config", :yellow)
       end
     end
 
