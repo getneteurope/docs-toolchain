@@ -2,6 +2,7 @@
 
 require 'yaml'
 require 'singleton'
+require_relative './log/log.rb'
 
 ##
 # Merge two hashes +left+ and +right+ recursively
@@ -54,6 +55,7 @@ module Toolchain
     )
       unless File.exist?(file)
         file = File.join(Toolchain.toolchain_path, 'config', 'default.yaml')
+        log('CONFIG', "loading backup config @ #{file}")
       end
 
       @config = YAML.load_file(file)
@@ -101,6 +103,15 @@ module Toolchain
     def clear
       @config = nil
       @loaded = false
+    end
+
+    ##
+    # Check whether the field at +field+ contains +value+.
+    #
+    # Return true or false.
+    #
+    def contains?(field, value)
+      return (get(field) || []).include?(value)
     end
 
     private
