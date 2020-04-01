@@ -52,7 +52,7 @@ module Toolchain
       if load
         @extensions << ext
       else
-        log('CONFIG', "ignoring #{name}: not in config", :yellow)
+        log('CONFIG', "skipping #{name}: not found in config", :yellow)
       end
     end
 

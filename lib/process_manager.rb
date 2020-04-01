@@ -28,7 +28,7 @@ module Toolchain
         @processes << proc
         @processes.sort_by!(&:priority).reverse!
       else
-        log('CONFIG', "ignoring #{name}: not in config", :yellow)
+        log('CONFIG', "skipping #{name}: not found in config", :yellow)
       end
       return nil
     end
