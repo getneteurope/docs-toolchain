@@ -112,5 +112,3 @@ module Toolchain
     end
   end
 end
-
-CM = Toolchain::ConfigManager.instance

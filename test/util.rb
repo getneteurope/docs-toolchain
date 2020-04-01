@@ -11,7 +11,6 @@ def write_tempfile(name, content, prefix: 'test_toolchain_', suffix: nil)
   ensure
     tmp.close
   end
-  log('TMP_FILE', tempfile_path, :gray)
   return tempfile_path
 end
 
