@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-31 11:49:39 +0200'>2020-03-31 11:49:39 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-01 15:25:33 +0200'>2020-04-01 15:25:33 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">72</span><small> lines of codes</small></div>
+              <div><span class="metric">73</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">21.1</span><small> complexity/method</small></div>
-              <div><span class="metric">9</span><small> churn</small></div>
+              <div><span class="metric">22.5</span><small> complexity/method</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">21.09</span><small> complexity</small></div>
+              <div><span class="metric">22.49</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -159,7 +159,8 @@ Praesent quis feugiat enim.
     dbfile = &#39;/tmp/test_db.json&#39;
 
     ::Toolchain::ConfigManager.instance.load
-    toc_file = ::File.join(::Toolchain.build_path, CM.get(&#39;toc.json_file&#39;))
+    toc_file = ::File.join(::Toolchain.build_path,
+      ::Toolchain::ConfigManager.instance.get(&#39;toc.json_file&#39;))
     FileUtils.mkdir_p(::File.dirname(toc_file))
     ::File.write(toc_file, &#39;{}&#39;)
     index, lookup = with_tempfile(content, &#39;_CompileSearchIndex&#39;) do |file|

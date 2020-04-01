@@ -134,7 +134,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 17</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@multipage_level</span> = <span class="ruby-constant">CM</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;asciidoc.multipage_level&#39;</span>)
   <span class="ruby-ivar">@default_json_filepath</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(
@@ -183,7 +183,7 @@
 
           
           <div class="method-source-code" id="generate_html_from_toc-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 143</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 145</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_html_from_toc</span>(<span class="ruby-identifier">toc_elements</span>)
   <span class="ruby-identifier">fragment</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;ul&gt;&lt;/ul&gt;&#39;</span>)
   <span class="ruby-identifier">toc_elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -240,7 +240,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(
   <span class="ruby-identifier">document</span>,
   <span class="ruby-identifier">json_filepath</span> = <span class="ruby-ivar">@default_json_filepath</span>,
@@ -350,7 +350,7 @@
 
           
           <div class="method-source-code" id="tick_toc_checkboxes-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tick_toc_checkboxes</span>(<span class="ruby-identifier">page_id</span>, <span class="ruby-identifier">toc_document</span>)
   <span class="ruby-identifier">selector</span> = <span class="ruby-string">&#39;#toc_li_&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">page_id</span>
   <span class="ruby-identifier">list_element</span> = <span class="ruby-identifier">toc_document</span>.<span class="ruby-identifier">at_css</span> <span class="ruby-identifier">selector</span>

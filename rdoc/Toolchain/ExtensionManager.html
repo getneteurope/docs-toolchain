@@ -180,7 +180,7 @@
 
           
           <div class="method-source-code" id="create_error-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_error</span>(<span class="ruby-value">msg:</span>, <span class="ruby-value">type:</span>, <span class="ruby-value">location:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">extras:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">return</span> {
     <span class="ruby-value">id:</span> <span class="ruby-identifier">instance</span>.<span class="ruby-identifier">next_id</span>,
@@ -219,7 +219,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 72</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@extensions</span> = []
   <span class="ruby-ivar">@id</span> = <span class="ruby-value">0</span>
@@ -261,7 +261,7 @@
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-ivar">@extensions</span>.<span class="ruby-identifier">clear</span>
   <span class="ruby-ivar">@id</span> = <span class="ruby-value">0</span>
@@ -295,7 +295,7 @@
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@extensions</span>
 <span class="ruby-keyword">end</span></pre>
@@ -328,7 +328,7 @@
 
           
           <div class="method-source-code" id="next_id-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 58</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">next_id</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@id</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
 <span class="ruby-keyword">end</span></pre>
@@ -363,9 +363,18 @@
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">register</span>(<span class="ruby-identifier">ext</span>)
-  <span class="ruby-ivar">@extensions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ext</span>
+  <span class="ruby-comment"># extract ClassName from Toolchain::Extension::ClassName</span>
+  <span class="ruby-identifier">name</span> = <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;::&#39;</span>).<span class="ruby-identifier">last</span>
+  <span class="ruby-identifier">load</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>
+    .<span class="ruby-identifier">contains?</span>(<span class="ruby-string">&#39;extensions.enable&#39;</span>, <span class="ruby-identifier">name</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">load</span>
+    <span class="ruby-ivar">@extensions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ext</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;CONFIG&#39;</span>, <span class="ruby-node">&quot;skipping #{name}: not found in config&quot;</span>, <span class="ruby-value">:yellow</span>)
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

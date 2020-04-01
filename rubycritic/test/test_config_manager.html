@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 11:21:17 +0100'>2020-03-20 11:21:17 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-04-01 15:23:10 +0200'>2020-04-01 15:23:10 +0200</time>
         
       </span>
     </div>
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating b big">
-              B
+            <div class="rating a big">
+              A
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">59</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">55</span><small> lines of codes</small></div>
+              <div><span class="metric">8</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">10.6</span><small> complexity/method</small></div>
-              <div><span class="metric">5</span><small> churn</small></div>
+              <div><span class="metric">6.1</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">52.97</span><small> complexity</small></div>
+              <div><span class="metric">48.81</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
-                smell
+                2
+                smells
               </a>
             </li>
           </ul>
@@ -103,24 +103,29 @@ require &#39;test/unit&#39;
 require_relative &#39;../lib/config_manager.rb&#39;
 require_relative &#39;./util.rb&#39;
 
+
 class TestConfigManager &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestConfigManager has no descriptive comment</span>          </div>  </li></ol>
-  def test_load
-    config = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39; }, &#39;d&#39; =&gt; &#39;e&#39; }
+  CONFIG = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39; }, &#39;d&#39; =&gt; &#39;e&#39; }
+
+  def setup
+    Toolchain::ConfigManager.instance.clear
     # use tempfile to load config into ConfigManager
-    with_tempfile(config.to_yaml) do |tf|
+    with_tempfile(CONFIG.to_yaml) do |tf|
       Toolchain::ConfigManager.instance.load(tf)
     end
-    assert_equal(config, Toolchain::ConfigManager.instance.get)
+  end
+
+  def teardown<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>TestConfigManager#teardown doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+    Toolchain::ConfigManager.instance.clear
+  end
+
+  def test_load
+    assert_equal(CONFIG, Toolchain::ConfigManager.instance.get)
   end
 
   def test_update
-    config = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39; }, &#39;d&#39; =&gt; &#39;e&#39; }
     update = { &#39;a&#39; =&gt; { &#39;f&#39; =&gt; &#39;g&#39; }, &#39;d&#39; =&gt; &#39;h&#39; }
     ref = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39;, &#39;f&#39; =&gt; &#39;g&#39; }, &#39;d&#39; =&gt; &#39;h&#39; }
-    # use tempfile to load config into ConfigManager
-    with_tempfile(config.to_yaml) do |tf|
-      Toolchain::ConfigManager.instance.load(tf)
-    end
     # use tempfile to update config in ConfigManager
     with_tempfile(update.to_yaml) do |tf|
       Toolchain::ConfigManager.instance.update(tf)
@@ -129,31 +134,22 @@ class TestConfigManager &lt; Test::Unit::TestCase<ol class="nocode errors smells
   end
 
   def test_get
-    config = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39; }, &#39;d&#39; =&gt; &#39;e&#39; }
-    # use tempfile to load config into ConfigManager
-    with_tempfile(config.to_yaml) do |tf|
-      Toolchain::ConfigManager.instance.load(tf)
-    end
     assert_equal(&#39;c&#39;, Toolchain::ConfigManager.instance.get(&#39;a.b&#39;))
   end
 
   def test_get_nil
-    config = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39; }, &#39;d&#39; =&gt; &#39;e&#39; }
-    # use tempfile to load config into ConfigManager
-    with_tempfile(config.to_yaml) do |tf|
-      Toolchain::ConfigManager.instance.load(tf)
-    end
     assert_nil(Toolchain::ConfigManager.instance.get(&#39;x.y&#39;))
   end
 
   def test_clear
-    config = { &#39;a&#39; =&gt; { &#39;b&#39; =&gt; &#39;c&#39; }, &#39;d&#39; =&gt; &#39;e&#39; }
-    # use tempfile to load config into ConfigManager
-    with_tempfile(config.to_yaml) do |tf|
-      Toolchain::ConfigManager.instance.load(tf)
-    end
     Toolchain::ConfigManager.instance.clear
     assert_nil(Toolchain::ConfigManager.instance.get)
+  end
+
+  def test_contains
+    assert_true(Toolchain::ConfigManager.instance.contains?(&#39;a.b&#39;, &#39;c&#39;))
+    assert_false(Toolchain::ConfigManager.instance.contains?(&#39;a.b&#39;, &#39;d&#39;))
+    assert_false(Toolchain::ConfigManager.instance.contains?(&#39;a.b.z&#39;, &#39;z&#39;))
   end
 end
 </code>

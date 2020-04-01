@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-01 11:35:16 +0200'>2020-04-01 11:35:16 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-01 15:25:55 +0200'>2020-04-01 15:25:55 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">25</span><small> lines of codes</small></div>
-              <div><span class="metric">2</span><small> methods</small></div>
+              <div><span class="metric">49</span><small> lines of codes</small></div>
+              <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">10.1</span><small> complexity/method</small></div>
-              <div><span class="metric">5</span><small> churn</small></div>
+              <div><span class="metric">13.9</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">20.16</span><small> complexity</small></div>
+              <div><span class="metric">41.78</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
-                smell
+                3
+                smells
               </a>
             </li>
           </ul>
@@ -101,25 +101,49 @@
 
 require &#39;test/unit&#39;
 require_relative &#39;../lib/extension_manager.rb&#39;
+require_relative &#39;../lib/config_manager.rb&#39;
 require_relative &#39;./util.rb&#39;
 
-EM = Toolchain::ExtensionManager
+
+class TestAccept<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestAccept has no descriptive comment</span>          </div>  </li></ol>
+end
+
+class TestDeny<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestDeny has no descriptive comment</span>          </div>  </li></ol>
+end
 
 class TestExtensionManager &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestExtensionManager has no descriptive comment</span>          </div>  </li></ol>
+  EM = ::Toolchain::ExtensionManager.instance
+  CM = ::Toolchain::ConfigManager.instance
+  CONFIG = {&#39;extensions&#39; =&gt; { &#39;enable&#39; =&gt; [&#39;TestAccept&#39;] } }.to_yaml
+
   def test_register
-    EM.instance.register(&#39;Test&#39;)
-    exts = EM.instance.get
+    with_tempfile(CONFIG) { |conf| CM.load(conf) }
+
+    EM.register(TestAccept.new)
+    exts = EM.get
     assert_equal(1, exts.length)
-    assert_equal(&#39;Test&#39;, exts.first)
-    EM.instance.clear
+    assert_equal(TestAccept.name, exts.first.class.name)
+    EM.clear
+  end
+
+  def test_register_deny
+    with_tempfile(CONFIG) { |conf| CM.load(conf) }
+
+    EM.register(TestAccept.new)
+    EM.register(TestDeny.new)
+    exts = EM.get
+    assert_equal(1, exts.length)
+    assert_equal(TestAccept.name, exts.first.class.name)
+    EM.clear
+    CM.clear
   end
 
   def test_next_id
     (1..3).each do |idx|
-      id = EM.instance.next_id
+      id = EM.next_id
       assert_equal(idx, id)
     end
-    EM.instance.clear
+    EM.clear
   end
 end
 </code>

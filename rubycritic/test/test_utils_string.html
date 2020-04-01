@@ -68,16 +68,16 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">47</span><small> lines of codes</small></div>
+              <div><span class="metric">45</span><small> lines of codes</small></div>
               <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">6.7</span><small> complexity/method</small></div>
+              <div><span class="metric">6.5</span><small> complexity/method</small></div>
               <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">26.99</span><small> complexity</small></div>
-              <div><span class="metric">56</span><small> duplications</small></div>
+              <div><span class="metric">25.9</span><small> complexity</small></div>
+              <div><span class="metric">36</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -103,10 +103,10 @@ require &#39;test/unit&#39;
 require_relative &#39;../lib/utils/string.rb&#39;
 
 class TestString &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestString has no descriptive comment</span>          </div>  </li></ol>
-  def test_colors<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_utils_string.html#L7" class="js-smell-location">0</a>                  <a href="test_utils_string.html#L38" class="js-smell-location">1</a>                  </div>  </li></ol>
-    colors = %i[black red green brown blue magenta cyan gray]
+  COLORS = %i[black red green yellow blue magenta cyan gray]
+  def test_colors<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_utils_string.html#L8" class="js-smell-location">0</a>                  <a href="test_utils_string.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
     text = &#39;Test&#39;
-    colors.each do |color|
+    COLORS.each do |color|
       colorized = text.public_send(color)
       assert_not_nil(colorized)
       assert_match(text, colorized)
@@ -114,8 +114,7 @@ class TestString &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li
   end
 
   def test_bg_colors
-    colors = \
-      %w[black red green brown blue magenta cyan gray].map { |s| &quot;bg_#{s}&quot;.to_sym }
+    colors = COLORS.map { |s| &quot;bg_#{s}&quot;.to_sym }
     text = &#39;Test&#39;
     colors.each do |color|
       colorized = text.public_send(color)
@@ -134,10 +133,9 @@ class TestString &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li
     end
   end
 
-  def test_colorize<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_utils_string.html#L7" class="js-smell-location">0</a>                  <a href="test_utils_string.html#L38" class="js-smell-location">1</a>                  </div>  </li></ol>
-    colors = %i[black red green brown blue magenta cyan gray]
+  def test_colorize<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_utils_string.html#L8" class="js-smell-location">0</a>                  <a href="test_utils_string.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
     text = &#39;Test&#39;
-    colors.each do |color|
+    COLORS.each do |color|
       colorized = colorize(text, color)
       assert_not_nil(colorized)
       assert_match(text, colorized)

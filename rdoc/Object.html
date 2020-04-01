@@ -89,8 +89,6 @@
     
     <li ><a href="#method-i-merge_recursively">#merge_recursively</a>
     
-    <li ><a href="#method-i-mkdir">#mkdir</a>
-    
     <li ><a href="#method-i-post_process_errors">#post_process_errors</a>
     
     <li ><a href="#method-i-print_errors">#print_errors</a>
@@ -237,6 +235,7 @@
           <div class="method-source-code" id="colorize-source">
             <pre><span class="ruby-comment"># File lib/utils/string.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">colorize</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">color</span>)
+  <span class="ruby-comment"># TODO use repond_to? and send in stead of switch case</span>
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">color</span>
   <span class="ruby-keyword">when</span> <span class="ruby-value">:black</span>
     <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">black</span>
@@ -244,8 +243,8 @@
     <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">red</span>
   <span class="ruby-keyword">when</span> <span class="ruby-value">:green</span>
     <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">green</span>
-  <span class="ruby-keyword">when</span> <span class="ruby-value">:brown</span>
-    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">brown</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:yellow</span>
+    <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">yellow</span>
   <span class="ruby-keyword">when</span> <span class="ruby-value">:blue</span>
     <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">blue</span>
   <span class="ruby-keyword">when</span> <span class="ruby-value">:magenta</span>
@@ -323,7 +322,7 @@
 
           
           <div class="method-source-code" id="get_recursively-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_recursively</span>(<span class="ruby-identifier">map</span>, <span class="ruby-identifier">keys</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">map</span>.<span class="ruby-identifier">nil?</span>
 
@@ -454,48 +453,13 @@
 
           
           <div class="method-source-code" id="merge_recursively-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 13</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_recursively</span>(<span class="ruby-identifier">left</span>, <span class="ruby-identifier">right</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">right</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">left</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">left</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">right</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">_</span>, <span class="ruby-identifier">left_item</span>, <span class="ruby-identifier">right_item</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">merge_recursively</span>(<span class="ruby-identifier">left_item</span>, <span class="ruby-identifier">right_item</span>)
   <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-mkdir" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">mkdir</span><span
-            class="method-args">(path)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>mkdir</p>
-
-<p>Create <code>path</code> if <code>path</code> does not exist. Returns nothing.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="mkdir-source">
-            <pre><span class="ruby-comment"># File lib/stages/build.rb, line 14</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">mkdir</span>(<span class="ruby-identifier">path</span>)
-  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">path</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">path</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

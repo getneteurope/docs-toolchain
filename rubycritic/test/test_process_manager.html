@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 09:19:51 +0100'>2020-03-20 09:19:51 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-04-01 16:36:51 +0200'>2020-04-01 16:36:51 +0200</time>
         
       </span>
     </div>
@@ -68,16 +68,16 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">66</span><small> lines of codes</small></div>
+              <div><span class="metric">77</span><small> lines of codes</small></div>
               <div><span class="metric">8</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">6.6</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">7.9</span><small> complexity/method</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">52.78</span><small> complexity</small></div>
-              <div><span class="metric">82</span><small> duplications</small></div>
+              <div><span class="metric">62.97</span><small> complexity</small></div>
+              <div><span class="metric">120</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                9
+                7
                 smells
               </a>
             </li>
@@ -102,6 +102,7 @@
 require &#39;test/unit&#39;
 require_relative &#39;../lib/base_process.rb&#39;
 require_relative &#39;../lib/process_manager.rb&#39;
+require_relative &#39;../lib/config_manager.rb&#39;
 require_relative &#39;./util.rb&#39;
 
 PreM = Toolchain::PreProcessManager.instance
@@ -113,9 +114,14 @@ def generate<ol class="nocode errors smells">  <li>    <div class="description">
   end
 end
 
-class TestPreProcessManager &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_process_manager.html#L17" class="js-smell-location">0</a>                  <a href="test_process_manager.html#L37" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestPreProcessManager has no descriptive comment</span>          </div>  </li></ol>
-  def setup<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>TestPreProcessManager#setup doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+class TestPreProcessManager &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_process_manager.html#L18" class="js-smell-location">0</a>                  <a href="test_process_manager.html#L43" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestPreProcessManager has no descriptive comment</span>          </div>  </li></ol>
+  CONFIG = { &#39;processes&#39; =&gt; { &#39;pre&#39; =&gt; { &#39;enable&#39; =&gt; [&#39;BaseProcess&#39;] } } }
+
+  def setup
     PreM.clear
+    with_tempfile(CONFIG.to_yaml) do |config|
+      ::Toolchain::ConfigManager.instance.load(config)
+    end
   end
 
   def teardown<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>TestPreProcessManager#teardown doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
@@ -133,9 +139,14 @@ class TestPreProcessManager &lt; Test::Unit::TestCase<ol class="nocode errors sm
   end
 end
 
-class TestPostProcessManager &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_process_manager.html#L17" class="js-smell-location">0</a>                  <a href="test_process_manager.html#L37" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestPostProcessManager has no descriptive comment</span>          </div>  </li></ol>
-  def setup<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>TestPostProcessManager#setup doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+class TestPostProcessManager &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test_process_manager.html#L18" class="js-smell-location">0</a>                  <a href="test_process_manager.html#L43" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>TestPostProcessManager has no descriptive comment</span>          </div>  </li></ol>
+  CONFIG = { &#39;processes&#39; =&gt; { &#39;post&#39; =&gt; { &#39;enable&#39; =&gt; [&#39;BaseProcess&#39;] } } }
+
+  def setup
     PostM.clear
+    with_tempfile(CONFIG.to_yaml) do |config|
+      ::Toolchain::ConfigManager.instance.load(config)
+    end
   end
 
   def teardown<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>TestPostProcessManager#teardown doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>

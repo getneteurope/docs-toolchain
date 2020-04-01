@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-24 14:19:33 +0100'>2020-03-24 14:19:33 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-04-01 16:37:02 +0200'>2020-04-01 16:37:02 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">72</span><small> lines of codes</small></div>
-              <div><span class="metric">6</span><small> methods</small></div>
+              <div><span class="metric">92</span><small> lines of codes</small></div>
+              <div><span class="metric">8</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">2.6</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">3.8</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">15.72</span><small> complexity</small></div>
+              <div><span class="metric">30.5</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -100,6 +100,7 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require &#39;singleton&#39;
+require_relative &#39;./config_manager.rb&#39;
 
 module Toolchain
   # Class ProcessManager
@@ -118,8 +119,16 @@ module Toolchain
     # Returns nothing.
     #
     def register(proc)
-      @processes &lt;&lt; proc
-      @processes.sort_by!(&amp;:priority).reverse!
+      # extract ClassName from Toolchain::Extension::ClassName
+      name = proc.class.name.split(&#39;::&#39;).last
+      load = ::Toolchain::ConfigManager.instance
+        .contains?(&quot;processes.#{@phase}.enable&quot;, name)
+      if load
+        @processes &lt;&lt; proc
+        @processes.sort_by!(&amp;:priority).reverse!
+      else
+        log(&#39;CONFIG&#39;, &quot;skipping #{name}: not found in config&quot;, :yellow)
+      end
       return nil
     end
 
@@ -153,20 +162,31 @@ module Toolchain
 
     private
 
-    def initialize
+    def initialize(phase = nil)
       @processes = []
       @code = 0
+      @phase = phase
     end
   end
 
   # Class representing the manager for all processes which
   # need to be run during the *Pre Processing* stage.
   class PreProcessManager &lt; ProcessManager
+    private
+
+    def initialize
+      super(&#39;pre&#39;)
+    end
   end
 
   # Class representing the manager for all processes which
   # need to be run during the *Post Processing* stage.
   class PostProcessManager &lt; ProcessManager
+    private
+
+    def initialize
+      super(&#39;post&#39;)
+    end
   end
 end
 </code>

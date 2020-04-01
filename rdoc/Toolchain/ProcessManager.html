@@ -138,7 +138,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">()</span>
+            class="method-args">(phase = nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -153,10 +153,11 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 57</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">phase</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-ivar">@processes</span> = []
   <span class="ruby-ivar">@code</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@phase</span> = <span class="ruby-identifier">phase</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -195,7 +196,7 @@
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 44</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">clear</span>
 <span class="ruby-keyword">end</span></pre>
@@ -228,7 +229,7 @@
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 30</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@processes</span>
 <span class="ruby-keyword">end</span></pre>
@@ -263,10 +264,18 @@
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 21</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">register</span>(<span class="ruby-identifier">proc</span>)
-  <span class="ruby-ivar">@processes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">proc</span>
-  <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">sort_by!</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:priority</span>).<span class="ruby-identifier">reverse!</span>
+  <span class="ruby-comment"># extract ClassName from Toolchain::Extension::ClassName</span>
+  <span class="ruby-identifier">name</span> = <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;::&#39;</span>).<span class="ruby-identifier">last</span>
+  <span class="ruby-identifier">load</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>
+    .<span class="ruby-identifier">contains?</span>(<span class="ruby-node">&quot;processes.#{@phase}.enable&quot;</span>, <span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">load</span>
+    <span class="ruby-ivar">@processes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">proc</span>
+    <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">sort_by!</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:priority</span>).<span class="ruby-identifier">reverse!</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;CONFIG&#39;</span>, <span class="ruby-node">&quot;skipping #{name}: not found in config&quot;</span>, <span class="ruby-value">:yellow</span>)
+  <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -298,7 +307,7 @@
 
           
           <div class="method-source-code" id="return_code-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">return_code</span>(<span class="ruby-identifier">error_code</span> = <span class="ruby-value">10</span>)
   <span class="ruby-ivar">@code</span> = <span class="ruby-identifier">error_code</span>
 <span class="ruby-keyword">end</span></pre>
@@ -331,7 +340,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 37</span>
+            <pre><span class="ruby-comment"># File lib/process_manager.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-ivar">@processes</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:run</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@code</span>

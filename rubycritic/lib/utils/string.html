@@ -68,7 +68,7 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">57</span><small> lines of codes</small></div>
+              <div><span class="metric">58</span><small> lines of codes</small></div>
               <div><span class="metric">22</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
@@ -107,7 +107,7 @@ class String<ol class="nocode errors smells">  <li>    <div class="description">
   def black;          &quot;\e[30m#{self}\e[0m&quot; end
   def red;            &quot;\e[31m#{self}\e[0m&quot; end
   def green;          &quot;\e[32m#{self}\e[0m&quot; end
-  def brown;          &quot;\e[33m#{self}\e[0m&quot; end
+  def yellow;         &quot;\e[33m#{self}\e[0m&quot; end
   def blue;           &quot;\e[34m#{self}\e[0m&quot; end
   def magenta;        &quot;\e[35m#{self}\e[0m&quot; end
   def cyan;           &quot;\e[36m#{self}\e[0m&quot; end
@@ -116,7 +116,7 @@ class String<ol class="nocode errors smells">  <li>    <div class="description">
   def bg_black;       &quot;\e[40m#{self}\e[0m&quot; end
   def bg_red;         &quot;\e[41m#{self}\e[0m&quot; end
   def bg_green;       &quot;\e[42m#{self}\e[0m&quot; end
-  def bg_brown;       &quot;\e[43m#{self}\e[0m&quot; end
+  def bg_yellow;      &quot;\e[43m#{self}\e[0m&quot; end
   def bg_blue;        &quot;\e[44m#{self}\e[0m&quot; end
   def bg_magenta;     &quot;\e[45m#{self}\e[0m&quot; end
   def bg_cyan;        &quot;\e[46m#{self}\e[0m&quot; end
@@ -134,6 +134,7 @@ end
 #
 # Returns the colorized string
 def colorize(text, color)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>colorize doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+  # TODO use repond_to? and send in stead of switch case
   case color
   when :black
     text = text.black
@@ -141,8 +142,8 @@ def colorize(text, color)<ol class="nocode errors smells">  <li>    <div class="
     text = text.red
   when :green
     text = text.green
-  when :brown
-    text = text.brown
+  when :yellow
+    text = text.yellow
   when :blue
     text = text.blue
   when :magenta

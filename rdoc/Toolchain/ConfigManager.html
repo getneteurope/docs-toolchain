@@ -90,6 +90,8 @@
     
     <li ><a href="#method-i-clear">#clear</a>
     
+    <li ><a href="#method-i-contains-3F">#contains?</a>
+    
     <li ><a href="#method-i-get">#get</a>
     
     <li ><a href="#method-i-load">#load</a>
@@ -151,10 +153,11 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 109</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">load</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -197,10 +200,45 @@
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 102</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 103</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-contains-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">contains?</span><span
+            class="method-args">(field, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Check whether the field at <code>field</code> contains <code>value</code>.</p>
+
+<p>Return true or false.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="contains-3F-source">
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">contains?</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">return</span> (<span class="ruby-identifier">get</span>(<span class="ruby-identifier">field</span>) <span class="ruby-operator">||</span> []).<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">value</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -237,10 +275,9 @@
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>(<span class="ruby-identifier">identifier</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-value">default:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@config</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">nil?</span>
-  <span class="ruby-identifier">load</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@loaded</span>
 
   <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">identifier</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">keys</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">default</span>
@@ -276,12 +313,13 @@
 
           
           <div class="method-source-code" id="load-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>(
   <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>, <span class="ruby-string">&#39;config.yaml&#39;</span>)
 )
   <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
     <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">toolchain_path</span>, <span class="ruby-string">&#39;config&#39;</span>, <span class="ruby-string">&#39;default.yaml&#39;</span>)
+    <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;CONFIG&#39;</span>, <span class="ruby-node">&quot;loading backup config @ #{file}&quot;</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-ivar">@config</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">file</span>)
@@ -320,7 +358,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 70</span>
+            <pre><span class="ruby-comment"># File lib/config_manager.rb, line 72</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">update</span>(<span class="ruby-identifier">file</span>)
   <span class="ruby-identifier">update</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">file</span>)
   <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">merge_recursively</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">update</span>)

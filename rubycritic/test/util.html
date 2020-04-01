@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">54</span><small> lines of codes</small></div>
+              <div><span class="metric">53</span><small> lines of codes</small></div>
               <div><span class="metric">7</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">4.5</span><small> complexity/method</small></div>
+              <div><span class="metric">4.4</span><small> complexity/method</small></div>
               <div><span class="metric">14</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">31.71</span><small> complexity</small></div>
+              <div><span class="metric">30.71</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                4
+                5
                 smells
               </a>
             </li>
@@ -102,7 +102,7 @@
 require &#39;asciidoctor&#39;
 require_relative &#39;../lib/utils/adoc.rb&#39;
 
-def write_tempfile(name, content, prefix: &#39;test_toolchain_&#39;, suffix: nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>write_tempfile has 4 parameters</span>          </div>  </li></ol>
+def write_tempfile(name, content, prefix: &#39;test_toolchain_&#39;, suffix: nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>write_tempfile has 4 parameters</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>write_tempfile doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
   tempfile_path = File.join(&#39;/tmp&#39;, &quot;#{prefix}#{name}#{suffix}&quot;)
   tmp = File.open(tempfile_path, &#39;w+&#39;)
   begin
@@ -110,7 +110,6 @@ def write_tempfile(name, content, prefix: &#39;test_toolchain_&#39;, suffix: nil
   ensure
     tmp.close
   end
-  log(&#39;TMP_FILE&#39;, tempfile_path, :gray)
   return tempfile_path
 end
 

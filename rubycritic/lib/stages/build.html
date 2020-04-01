@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">106</span><small> lines of codes</small></div>
-              <div><span class="metric">2</span><small> methods</small></div>
+              <div><span class="metric">101</span><small> lines of codes</small></div>
+              <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">20.8</span><small> complexity/method</small></div>
+              <div><span class="metric">41.7</span><small> complexity/method</small></div>
               <div><span class="metric">31</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">41.64</span><small> complexity</small></div>
+              <div><span class="metric">41.7</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                3
+                2
                 smells
               </a>
             </li>
@@ -104,15 +104,6 @@ require &#39;fileutils&#39;
 require_relative &#39;../config_manager.rb&#39;
 require_relative &#39;../log/log.rb&#39;
 require_relative &#39;../utils/paths.rb&#39;
-
-##
-# mkdir
-#
-# Create +path+ if +path+ does not exist.
-# Returns nothing.
-def mkdir(path)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>mkdir doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
-  Dir.mkdir(path) unless Dir.exist?(path)
-end
 
 ##
 # Toolchain module
@@ -136,7 +127,7 @@ module Toolchain
     #
     # Returns nil.
     #
-    def self.build(build_dir = ::Toolchain.build_path, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 39</span>          </div>  </li></ol>
+    def self.build(build_dir = ::Toolchain.build_path, index: &#39;index.adoc&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Build::build has a flog score of 42</span>          </div>  </li></ol>
       index_path = File.join(build_dir, index)
       raise IOError, &quot;File #{index_path} does not exist&quot; unless
         File.exist?(index_path)
@@ -147,14 +138,18 @@ module Toolchain
       # NOTE Backends need to be required explicitly with require or
       # require_relative instead of being passed as options[:requires]
       stage_log(:build, &#39;HTML5 Multipage Backend loaded&#39;)
-      require File.join(File.expand_path(
-        ::Toolchain.toolchain_path), &#39;lib/adoc-extensions.d/multipage_html5.rb&#39;)
+      require File.join(
+        File.expand_path(::Toolchain.toolchain_path),
+        &#39;lib/adoc-extensions.d/multipage_html5.rb&#39;
+      )
+
       options = {
         attributes: {
           # General
-          &#39;root&#39; =&gt; Toolchain.build_path,
+          &#39;root&#39; =&gt; ::Toolchain.build_path,
           # Multipage
-          &#39;multipage-level&#39; =&gt; CM.get(&#39;asciidoc.multipage_level&#39;),
+          &#39;multipage-level&#39; =&gt;
+            ::Toolchain::ConfigManager.instance.get(&#39;asciidoc.multipage_level&#39;),
           &#39;backend&#39; =&gt; &#39;multipage_html5&#39;,
           # CSS
           &#39;linkcss&#39; =&gt; true,
@@ -178,7 +173,7 @@ module Toolchain
 
       # create HTML folder
       html_dir = ::Toolchain.html_path
-      mkdir(html_dir)
+      Dir.mkdir(html_dir) unless Dir.exist?(html_dir)
 
       # move web pages to html/
       htmls = Dir[File.join(build_dir, &#39;*.html&#39;)].delete_if do |file|
