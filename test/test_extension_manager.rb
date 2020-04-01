@@ -5,8 +5,6 @@ require_relative '../lib/extension_manager.rb'
 require_relative '../lib/config_manager.rb'
 require_relative './util.rb'
 
-EM = Toolchain::ExtensionManager.instance
-CM = Toolchain::ConfigManager.instance
 
 class TestAccept
 end
@@ -15,12 +13,9 @@ class TestDeny
 end
 
 class TestExtensionManager < Test::Unit::TestCase
-
-  CONFIG = %q(
-extensions:
-    enable:
-        - TestAccept
-  )
+  EM = ::Toolchain::ExtensionManager.instance
+  CM = ::Toolchain::ConfigManager.instance
+  CONFIG = {'extensions' => { 'enable' => ['TestAccept'] } }.to_yaml
 
   def test_register
     with_tempfile(CONFIG) { |conf| CM.load(conf) }

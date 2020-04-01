@@ -44,10 +44,11 @@ module Toolchain
     # Returns nothing.
     #
     def register(ext)
-      enabled_exts = ConfigManager.instance.get('extensions.enable')
       # extract ClassName from Toolchain::Extension::ClassName
       name = ext.class.name.split('::').last
-      load = (enabled_exts || []).include?(name)
+      load = ::Toolchain::ConfigManager.instance
+        .contains?('extensions.enable', name)
+
       if load
         @extensions << ext
       else

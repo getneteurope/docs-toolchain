@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'singleton'
+require_relative './config_manager.rb'
 
 module Toolchain
   # Class ProcessManager
@@ -19,8 +20,16 @@ module Toolchain
     # Returns nothing.
     #
     def register(proc)
-      @processes << proc
-      @processes.sort_by!(&:priority).reverse!
+      # extract ClassName from Toolchain::Extension::ClassName
+      name = proc.class.name.split('::').last
+      load = ::Toolchain::ConfigManager.instance
+        .contains?("processes.#{@phase}.enable", name)
+      if load
+        @processes << proc
+        @processes.sort_by!(&:priority).reverse!
+      else
+        log('CONFIG', "ignoring #{name}: not in config", :yellow)
+      end
       return nil
     end
 
@@ -54,19 +63,30 @@ module Toolchain
 
     private
 
-    def initialize
+    def initialize(phase = nil)
       @processes = []
       @code = 0
+      @phase = phase
     end
   end
 
   # Class representing the manager for all processes which
   # need to be run during the *Pre Processing* stage.
   class PreProcessManager < ProcessManager
+    private
+
+    def initialize
+      super('pre')
+    end
   end
 
   # Class representing the manager for all processes which
   # need to be run during the *Post Processing* stage.
   class PostProcessManager < ProcessManager
+    private
+
+    def initialize
+      super('pre')
+    end
   end
 end
