@@ -46,7 +46,11 @@ module Toolchain
     def register(ext)
       load = ::Toolchain::ConfigManager.instance
         .get('extensions.enable').include?(ext.class.name)
-      @extensions << ext if load
+      if load
+        @extensions << ext
+      else
+        log('CONFIG', "ignoring #{ext.class.name}: not in config", :yellow)
+      end
     end
 
     ##
