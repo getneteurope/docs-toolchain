@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'singleton'
+require_relative './config_manager.rb'
 
 module Toolchain
   # ExtensionManager
@@ -43,7 +44,9 @@ module Toolchain
     # Returns nothing.
     #
     def register(ext)
-      @extensions << ext
+      load = ::Toolchain::ConfigManager.instance
+        .get('extensions.enable').include?(ext.class.name)
+      @extensions << ext if load
     end
 
     ##
