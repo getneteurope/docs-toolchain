@@ -86,7 +86,7 @@ module Toolchain
     private
 
     def initialize
-      super('pre')
+      super('post')
     end
   end
 end
