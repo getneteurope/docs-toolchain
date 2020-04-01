@@ -85,7 +85,6 @@ module Toolchain
     # Returns +default+ if result is nil and +identifier+ is not nil.
     def get(identifier = nil, default: nil)
       return @config if identifier.nil?
-      load unless @loaded
 
       keys = identifier.split('.')
       return get_recursively(@config, keys) || default
@@ -109,6 +108,7 @@ module Toolchain
     def initialize
       @loaded = false
       @config = nil
+      load
     end
   end
 end
