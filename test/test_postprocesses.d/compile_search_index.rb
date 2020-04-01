@@ -60,7 +60,8 @@ Praesent quis feugiat enim.
     dbfile = '/tmp/test_db.json'
 
     ::Toolchain::ConfigManager.instance.load
-    toc_file = ::File.join(::Toolchain.build_path, CM.get('toc.json_file'))
+    toc_file = ::File.join(::Toolchain.build_path,
+      ::Toolchain::ConfigManager.instance.get('toc.json_file'))
     FileUtils.mkdir_p(::File.dirname(toc_file))
     ::File.write(toc_file, '{}')
     index, lookup = with_tempfile(content, '_CompileSearchIndex') do |file|

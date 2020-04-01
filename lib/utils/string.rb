@@ -8,7 +8,7 @@ class String
   def black;          "\e[30m#{self}\e[0m" end
   def red;            "\e[31m#{self}\e[0m" end
   def green;          "\e[32m#{self}\e[0m" end
-  def brown;          "\e[33m#{self}\e[0m" end
+  def yellow;         "\e[33m#{self}\e[0m" end
   def blue;           "\e[34m#{self}\e[0m" end
   def magenta;        "\e[35m#{self}\e[0m" end
   def cyan;           "\e[36m#{self}\e[0m" end
@@ -17,7 +17,7 @@ class String
   def bg_black;       "\e[40m#{self}\e[0m" end
   def bg_red;         "\e[41m#{self}\e[0m" end
   def bg_green;       "\e[42m#{self}\e[0m" end
-  def bg_brown;       "\e[43m#{self}\e[0m" end
+  def bg_yellow;      "\e[43m#{self}\e[0m" end
   def bg_blue;        "\e[44m#{self}\e[0m" end
   def bg_magenta;     "\e[45m#{self}\e[0m" end
   def bg_cyan;        "\e[46m#{self}\e[0m" end
@@ -35,6 +35,7 @@ end
 #
 # Returns the colorized string
 def colorize(text, color)
+  # TODO use repond_to? and send in stead of switch case
   case color
   when :black
     text = text.black
@@ -42,8 +43,8 @@ def colorize(text, color)
     text = text.red
   when :green
     text = text.green
-  when :brown
-    text = text.brown
+  when :yellow
+    text = text.yellow
   when :blue
     text = text.blue
   when :magenta

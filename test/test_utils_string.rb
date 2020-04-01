@@ -4,10 +4,10 @@ require 'test/unit'
 require_relative '../lib/utils/string.rb'
 
 class TestString < Test::Unit::TestCase
+  COLORS = %i[black red green yellow blue magenta cyan gray]
   def test_colors
-    colors = %i[black red green brown blue magenta cyan gray]
     text = 'Test'
-    colors.each do |color|
+    COLORS.each do |color|
       colorized = text.public_send(color)
       assert_not_nil(colorized)
       assert_match(text, colorized)
@@ -15,8 +15,7 @@ class TestString < Test::Unit::TestCase
   end
 
   def test_bg_colors
-    colors = \
-      %w[black red green brown blue magenta cyan gray].map { |s| "bg_#{s}".to_sym }
+    colors = COLORS.map { |s| "bg_#{s}".to_sym }
     text = 'Test'
     colors.each do |color|
       colorized = text.public_send(color)
@@ -36,9 +35,8 @@ class TestString < Test::Unit::TestCase
   end
 
   def test_colorize
-    colors = %i[black red green brown blue magenta cyan gray]
     text = 'Test'
-    colors.each do |color|
+    COLORS.each do |color|
       colorized = colorize(text, color)
       assert_not_nil(colorized)
       assert_match(text, colorized)

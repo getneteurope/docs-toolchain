@@ -7,15 +7,6 @@ require_relative '../log/log.rb'
 require_relative '../utils/paths.rb'
 
 ##
-# mkdir
-#
-# Create +path+ if +path+ does not exist.
-# Returns nothing.
-def mkdir(path)
-  Dir.mkdir(path) unless Dir.exist?(path)
-end
-
-##
 # Toolchain module
 #
 module Toolchain
@@ -48,14 +39,18 @@ module Toolchain
       # NOTE Backends need to be required explicitly with require or
       # require_relative instead of being passed as options[:requires]
       stage_log(:build, 'HTML5 Multipage Backend loaded')
-      require File.join(File.expand_path(
-        ::Toolchain.toolchain_path), 'lib/adoc-extensions.d/multipage_html5.rb')
+      require File.join(
+        File.expand_path(::Toolchain.toolchain_path),
+        'lib/adoc-extensions.d/multipage_html5.rb'
+      )
+
       options = {
         attributes: {
           # General
-          'root' => Toolchain.build_path,
+          'root' => ::Toolchain.build_path,
           # Multipage
-          'multipage-level' => CM.get('asciidoc.multipage_level'),
+          'multipage-level' =>
+            ::Toolchain::ConfigManager.instance.get('asciidoc.multipage_level'),
           'backend' => 'multipage_html5',
           # CSS
           'linkcss' => true,
@@ -79,7 +74,7 @@ module Toolchain
 
       # create HTML folder
       html_dir = ::Toolchain.html_path
-      mkdir(html_dir)
+      Dir.mkdir(html_dir) unless Dir.exist?(html_dir)
 
       # move web pages to html/
       htmls = Dir[File.join(build_dir, '*.html')].delete_if do |file|

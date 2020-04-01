@@ -3,6 +3,7 @@
 require 'test/unit'
 require_relative '../lib/base_process.rb'
 require_relative '../lib/process_manager.rb'
+require_relative '../lib/config_manager.rb'
 require_relative './util.rb'
 
 PreM = Toolchain::PreProcessManager.instance
@@ -15,8 +16,13 @@ def generate
 end
 
 class TestPreProcessManager < Test::Unit::TestCase
+  CONFIG = { 'processes' => { 'pre' => { 'enable' => ['BaseProcess'] } } }
+
   def setup
     PreM.clear
+    with_tempfile(CONFIG.to_yaml) do |config|
+      ::Toolchain::ConfigManager.instance.load(config)
+    end
   end
 
   def teardown
@@ -35,8 +41,13 @@ class TestPreProcessManager < Test::Unit::TestCase
 end
 
 class TestPostProcessManager < Test::Unit::TestCase
+  CONFIG = { 'processes' => { 'post' => { 'enable' => ['BaseProcess'] } } }
+
   def setup
     PostM.clear
+    with_tempfile(CONFIG.to_yaml) do |config|
+      ::Toolchain::ConfigManager.instance.load(config)
+    end
   end
 
   def teardown

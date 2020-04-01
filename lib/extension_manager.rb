@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'singleton'
+require_relative './config_manager.rb'
 
 module Toolchain
   # ExtensionManager
@@ -43,7 +44,16 @@ module Toolchain
     # Returns nothing.
     #
     def register(ext)
-      @extensions << ext
+      # extract ClassName from Toolchain::Extension::ClassName
+      name = ext.class.name.split('::').last
+      load = ::Toolchain::ConfigManager.instance
+        .contains?('extensions.enable', name)
+
+      if load
+        @extensions << ext
+      else
+        log('CONFIG', "skipping #{name}: not found in config", :yellow)
+      end
     end
 
     ##

@@ -24,7 +24,10 @@ module Toolchain
       XPATH_PARAGRAPHS = './div/p'
       def initialize(priority = 0)
         super(priority)
-        @toc_file = File.join(::Toolchain.build_path, CM.get('toc.json_file'))
+        @toc_file = File.join(
+          ::Toolchain.build_path,
+          ::Toolchain::ConfigManager.instance.get('toc.json_file')
+        )
         @nodes = {}
         @paragraph_max_length = 140
       end
