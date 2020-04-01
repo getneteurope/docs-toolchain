@@ -44,8 +44,8 @@ module Toolchain
     # Returns nothing.
     #
     def register(ext)
-      load = ::Toolchain::ConfigManager.instance
-        .get('extensions.enable').include?(ext.class.name)
+      enabled_ext = ConfigManager.instance.get('extensions.enable')
+      load = (enabled_ext || []).include?(ext.class.name)
       if load
         @extensions << ext
       else
