@@ -61,6 +61,7 @@ module Toolchain
   # in the content repository.
   #
   def self.custom_dir
-    return File.join(content_path, ConfigManager.instance.get('custom.dir'))
+    return File.join(content_path,
+      ConfigManager.instance.get('custom.dir') || '')
   end
 end
