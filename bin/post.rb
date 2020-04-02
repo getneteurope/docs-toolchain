@@ -4,8 +4,17 @@
 require_relative '../lib/cli.rb'
 require_relative '../lib/process_manager.rb'
 require_relative '../lib/log/log.rb'
-Dir[File.join(__dir__, '../', 'lib', 'post.d', '*.rb')].each { |file| require file }
+require_relative '../lib/utils/paths.rb'
 
+# require processes
+Dir[
+  File.join(__dir__, '../', 'lib', 'post.d', '*.rb')
+].each { |file| require file }
+Dir[
+  File.join(::Toolchain.custom_dir, 'post.d', '*.rb')
+].each { |file| require file }
+
+# MAIN
 def main(argv = ARGV)
   args, opt_parser = Toolchain::Process::CLI.parse_args(argv)
   if args.help

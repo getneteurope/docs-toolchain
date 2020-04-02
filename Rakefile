@@ -7,9 +7,12 @@ require_relative 'lib/utils/setup.rb'
 
 task default: %w[toolchain:test toolchain:lint]
 
-FLAGS = '-E utf-8'
+def toolchain_path
+  ENV.key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : File.dirname(__FILE__)
+end
 
-# HELPER
+FLAGS = "-E utf-8 -I#{toolchain_path}/lib"
+
 def call script
   if ENV.key?('FAST')
     ENV['SKIP_RAKE_TEST'] = 'true'
@@ -17,10 +20,6 @@ def call script
   end
   debug = '--debug' if ENV.key?('DEBUG')
   ruby "#{FLAGS} #{toolchain_path}/#{script} #{debug}"
-end
-
-def toolchain_path
-  ENV.key?('TOOLCHAIN_PATH') ? ENV['TOOLCHAIN_PATH'] : File.dirname(__FILE__)
 end
 
 # TASKS
@@ -140,5 +139,6 @@ namespace :env do
     puts "DEBUG = #{ENV['DEBUG']}"
     puts "TOOLCHAIN_PATH = #{ENV['TOOLCHAIN_PATH']}"
     puts "UNITTEST = #{ENV['UNITTEST']}"
+    puts "LOAD_PATH = #{$LOAD_PATH}"
   end
 end

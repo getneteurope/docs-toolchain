@@ -5,7 +5,15 @@ require_relative '../config_manager.rb'
 require_relative '../extension_manager.rb'
 require_relative '../log/log.rb'
 require_relative '../utils/adoc.rb'
-Dir[File.join(__dir__, '../', 'extensions.d', '*.rb')].each { |file| require file }
+require_relative '../utils/paths.rb'
+
+# require extensions
+Dir[
+  File.join(__dir__, '../', 'extensions.d', '*.rb')
+].each { |file| require file }
+Dir[
+  File.join(::Toolchain.custom_dir, 'extensions.d', '*.rb')
+].each { |file| require file }
 
 ##
 # hash to cache all filename: converted_adoc pairs
@@ -103,8 +111,8 @@ def run_tests(filename)
 
   errors = []
   Toolchain::ExtensionManager.instance.get.each do |ext|
-    # log('EXTENSION', ext.class.name, :cyan)
-    errors += ext.run(adoc)
+    result = ext.run(adoc)
+    errors += result if result.is_a?(Array)
   end
   return errors
 end

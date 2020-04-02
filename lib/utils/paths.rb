@@ -54,4 +54,14 @@ module Toolchain
   def self.html_path(path = nil)
     return (path.nil? ? ConfigManager.instance.get('build.html.dir') : path)
   end
+
+  ##
+  # custom_dir
+  # Returns the custom/ directory, which holds custom extensions and processes
+  # in the content repository.
+  #
+  def self.custom_dir
+    return File.join(content_path,
+      ConfigManager.instance.get('custom.dir') || '')
+  end
 end
