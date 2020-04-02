@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 11:21:37 +0100'>2020-03-20 11:21:37 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-04-02 16:58:36 +0200'>2020-04-02 16:58:36 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">57</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">67</span><small> lines of codes</small></div>
+              <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">7.6</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">7.3</span><small> complexity/method</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">38.02</span><small> complexity</small></div>
+              <div><span class="metric">43.58</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -152,6 +152,16 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
   #
   def self.html_path(path = nil)
     return (path.nil? ? ConfigManager.instance.get(&#39;build.html.dir&#39;) : path)
+  end
+
+  ##
+  # custom_dir
+  # Returns the custom/ directory, which holds custom extensions and processes
+  # in the content repository.
+  #
+  def self.custom_dir
+    return File.join(content_path,
+      ConfigManager.instance.get(&#39;custom.dir&#39;) || &#39;&#39;)
   end
 end
 </code>
