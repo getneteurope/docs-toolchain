@@ -120,35 +120,3 @@ The toolchain is designed to run through different stages, that have specific re
 * `SKIP_COMBINE`
 * additional debug output
 
-
-## Configuration
-There are some variables that need to be secret, while others can be public.
-Configuration files are public and checked into the repository like regular content files.
-
-### Secrets
-#### AWS
-
-**Needed:**
-* `AWS_ACCESS_KEY_ID`
-* `AWS_SECRET_ACCESS_KEY`
-* `AWS_REGION`
-* `AWS_S3_BUCKET`
-
-#### Slack (outdated)
-**Token environment variable:**
-* `SLACK_TOKEN`
-
-The **test** and **build** stages produce `/tmp/slack.json`, a central file containing all warnings and errors that occured during the **test** or **build** stages.
-`lib/notify/slack.rb` sends these warnings and/or errors (if there are any) to a Slack channel, defined in the secret variable `SLACK_TOKEN**.
-
-### Public
-#### Variables
-
-#### Files
-Configuration files:
-**Toolchain**
-* `config/default.yaml**: default settings
-
-**Content**
-* `config.yaml`: default settings
-* `docinfo-search.html`: search overlay for the frontend
