@@ -21,7 +21,7 @@ module Toolchain
         ::Toolchain.content_path,
         ::Toolchain::ConfigManager.instance.get('checkers.pattern.blacklist'))
     )
-      log('PATTERN', "Blacklist file #{blacklist_file}")
+      log('PATTERN', "Blacklist file #{blacklist_file}") if ENV.key?('DEBUG')
       original = adoc.original
       parsed = adoc.parsed
       attributes = adoc.attributes
@@ -31,7 +31,7 @@ module Toolchain
           'PATTERN',
           "Blacklist file '#{blacklist_file}' not found. Skipping this test.",
           :magenta
-        )
+        ) if ENV.key?('DEBUG')
         return errors
       end
       blacklist_patterns = File.foreach(blacklist_file).map(&:chomp)
