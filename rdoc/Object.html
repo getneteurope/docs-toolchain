@@ -204,7 +204,8 @@
   <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;THREADING&#39;</span>, <span class="ruby-node">&quot;Pool size: #{size}&quot;</span>)
   <span class="ruby-identifier">pool</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">pool</span>(<span class="ruby-identifier">size</span>)
 
-  <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">paths</span> = <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }
+  <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">process</span> <span class="ruby-keyword">do</span>
       <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;INCLUDE&#39;</span>, <span class="ruby-node">&quot;Testing #{f}&quot;</span>)
       <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)
@@ -509,7 +510,7 @@
 
           
           <div class="method-source-code" id="post_process_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 159</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 162</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>

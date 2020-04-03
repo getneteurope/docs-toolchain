@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-03 08:51:05 +0200'>2020-04-03 08:51:05 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-03 13:17:32 +0200'>2020-04-03 13:17:32 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">160</span><small> lines of codes</small></div>
+              <div><span class="metric">163</span><small> lines of codes</small></div>
               <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">9.7</span><small> complexity/method</small></div>
-              <div><span class="metric">36</span><small> churn</small></div>
+              <div><span class="metric">33</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">87.6</span><small> complexity</small></div>
+              <div><span class="metric">87.69</span><small> complexity</small></div>
               <div><span class="metric">34</span><small> duplications</small></div>
             </div>
           </div>
@@ -233,7 +233,8 @@ def check_docs(included_files, content_dir)
   log(&#39;THREADING&#39;, &quot;Pool size: #{size}&quot;)
   pool = Thread.pool(size)
 
-  included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }.each do |f|
+  paths = included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }
+  paths.each do |f|
     pool.process do
       log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
       errors = run_tests(f)
@@ -248,11 +249,13 @@ def check_docs(included_files, content_dir)
 end
 
 ##
-# Resolves all errors from index to point to the correct location in include files.
+# Resolves all errors from index to point to the correct location in
+# include files.
 #
-# Given +index_errors+ and +errors_map+, determine which errors are false positives and
-# which errors are duplicates.
-# Remove false positives and merge duplicates (keeping the more specific filename).
+# Given +index_errors+ and +errors_map+, determine which errors are
+# false positives and which errors are duplicates.
+# Remove false positives and merge duplicates
+# (keeping the more specific filename).
 #
 # Returns +nil+.
 def post_process_errors(index_errors, errors_map)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>post_process_errors has unused parameter 'errors_map'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>post_process_errors has unused parameter 'index_errors'</span>          </div>  </li></ol>
