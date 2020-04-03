@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-31 10:30:49 +0200'>2020-03-31 10:30:49 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-03 08:06:53 +0200'>2020-04-03 08:06:53 +0200</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">44.0</span><small> complexity/method</small></div>
-              <div><span class="metric">15</span><small> churn</small></div>
+              <div><span class="metric">47.0</span><small> complexity/method</small></div>
+              <div><span class="metric">16</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">44.02</span><small> complexity</small></div>
+              <div><span class="metric">46.96</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -115,12 +115,12 @@ module Toolchain
     #
     # Returns a list of errors (can be empty).
     #
-    def run(adoc,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run has a flog score of 44</span>          </div>  </li></ol>
+    def run(adoc,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run has a flog score of 47</span>          </div>  </li></ol>
       blacklist_file = ::File.join(
         ::Toolchain.content_path,
         ::Toolchain::ConfigManager.instance.get(&#39;checkers.pattern.blacklist&#39;))
     )
-      log(&#39;PATTERN&#39;, &quot;Blacklist file #{blacklist_file}&quot;)
+      log(&#39;PATTERN&#39;, &quot;Blacklist file #{blacklist_file}&quot;) if ENV.key?(&#39;DEBUG&#39;)
       original = adoc.original
       parsed = adoc.parsed
       attributes = adoc.attributes
@@ -130,7 +130,7 @@ module Toolchain
           &#39;PATTERN&#39;,
           &quot;Blacklist file &#39;#{blacklist_file}&#39; not found. Skipping this test.&quot;,
           :magenta
-        )
+        ) if ENV.key?(&#39;DEBUG&#39;)
         return errors
       end
       blacklist_patterns = File.foreach(blacklist_file).map(&amp;:chomp)

@@ -156,6 +156,11 @@
 </li></ul>
         
       
+        <dt id="MUTEX">MUTEX
+        
+        <dd><p>Mutex</p>
+        
+      
       </dl>
     </section>
     
@@ -192,14 +197,24 @@
 
           
           <div class="method-source-code" id="check_docs-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 127</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">check_docs</span>(<span class="ruby-identifier">included_files</span>, <span class="ruby-identifier">content_dir</span>)
   <span class="ruby-identifier">errors_map</span> = {}
+  <span class="ruby-identifier">size</span> = <span class="ruby-value">8</span>
+  <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;THREADING&#39;</span>, <span class="ruby-node">&quot;Pool size: #{size}&quot;</span>)
+  <span class="ruby-identifier">pool</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">pool</span>(<span class="ruby-identifier">size</span>)
+
   <span class="ruby-identifier">included_files</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{File.join(content_dir, f)}.adoc&quot;</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;INCLUDE&#39;</span>, <span class="ruby-node">&quot;Testing #{f}&quot;</span>)
-    <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)
-    <span class="ruby-identifier">errors_map</span>[<span class="ruby-identifier">f</span>] = <span class="ruby-identifier">errors</span>
+    <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">process</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)
+      <span class="ruby-constant">MUTEX</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">errors_map</span>[<span class="ruby-identifier">f</span>] = <span class="ruby-identifier">errors</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">shutdown</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors_map</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -494,7 +509,7 @@
 
           
           <div class="method-source-code" id="post_process_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 145</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 159</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post_process_errors</span>(<span class="ruby-identifier">index_errors</span>, <span class="ruby-identifier">errors_map</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -528,7 +543,7 @@
 
           
           <div class="method-source-code" id="print_errors-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 59</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_errors</span>(<span class="ruby-identifier">errors_map</span>)
   <span class="ruby-identifier">errors_map</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span>, <span class="ruby-identifier">errors</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERRORS&#39;</span>, <span class="ruby-node">&quot;for file #{file}&quot;</span>, <span class="ruby-value">:red</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
@@ -566,7 +581,7 @@
 
           
           <div class="method-source-code" id="print_loaded_extensions-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_loaded_extensions</span>
   <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;TESTING&#39;</span>, <span class="ruby-string">&#39;loaded extensions:&#39;</span>)
   <span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
@@ -606,7 +621,7 @@
 
           
           <div class="method-source-code" id="run_tests-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 93</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_tests</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">ADOC_MAP</span>[<span class="ruby-identifier">filename</span>].<span class="ruby-identifier">nil?</span>
 
@@ -706,7 +721,7 @@
 
           
           <div class="method-source-code" id="test_files-source">
-            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 73</span>
+            <pre><span class="ruby-comment"># File lib/stages/test.rb, line 77</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_files</span>(<span class="ruby-identifier">files</span>)
   <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">f</span>)

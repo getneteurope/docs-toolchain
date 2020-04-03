@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-02 15:32:22 +0200'>2020-04-02 15:32:22 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-03 08:39:02 +0200'>2020-04-03 08:39:02 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">146</span><small> lines of codes</small></div>
+              <div><span class="metric">160</span><small> lines of codes</small></div>
               <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">8.9</span><small> complexity/method</small></div>
-              <div><span class="metric">33</span><small> churn</small></div>
+              <div><span class="metric">9.8</span><small> complexity/method</small></div>
+              <div><span class="metric">35</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">80.31</span><small> complexity</small></div>
+              <div><span class="metric">87.91</span><small> complexity</small></div>
               <div><span class="metric">34</span><small> duplications</small></div>
             </div>
           </div>
@@ -99,6 +99,7 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
+require &#39;thread/pool&#39;
 require_relative &#39;../cli.rb&#39;
 require_relative &#39;../config_manager.rb&#39;
 require_relative &#39;../extension_manager.rb&#39;
@@ -120,6 +121,9 @@ ADOC_MAP = Hash.new(nil)
 ##
 # default index file
 DEFAULT_INDEX = Toolchain::ConfigManager.instance.get(&#39;asciidoc.index.file&#39;)
+##
+# Mutex
+MUTEX = Mutex.new
 
 ##
 # represents a pair of parsed, resolved adoc and original adoc
@@ -158,7 +162,7 @@ end
 def print_errors(errors_map)
   errors_map.each do |file, errors|
     log(&#39;ERRORS&#39;, &quot;for file #{file}&quot;, :red) unless errors.empty?
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L62" class="js-smell-location">0</a>                  <a href="test.html#L79" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L66" class="js-smell-location">0</a>                  <a href="test.html#L83" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>print_errors contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
@@ -175,7 +179,7 @@ def test_files(files)
     next if errors.empty?
 
     puts f.blue.bold
-    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L62" class="js-smell-location">0</a>                  <a href="test.html#L79" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
+    errors.each do |err|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Identical code found in 2 nodes</span>              <span>Locations:</span>                  <a href="test.html#L66" class="js-smell-location">0</a>                  <a href="test.html#L83" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>test_files contains iterators nested 2 deep</span>          </div>  </li></ol>
       puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
     end
   end
@@ -225,11 +229,21 @@ end
 # Returns a map of +errors_map+ with schema filename =&gt; [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
+  size = 8
+  log(&#39;THREADING&#39;, &quot;Pool size: #{size}&quot;)
+  pool = Thread.pool(size)
+
   included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }.each do |f|
     log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
-    errors = run_tests(f)
-    errors_map[f] = errors
+    pool.process do
+      errors = run_tests(f)
+      MUTEX.synchronize do
+        errors_map[f] = errors
+      end
+    end
   end
+
+  pool.shutdown
   return errors_map
 end
 

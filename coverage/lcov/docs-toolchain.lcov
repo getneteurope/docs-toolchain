@@ -269,7 +269,7 @@ DA:26,2
 DA:27,2
 DA:28,2
 DA:29,2
-DA:30,1
+DA:34,1
 DA:35,1
 DA:37,1
 DA:38,10
@@ -286,7 +286,7 @@ end_of_record
 SF:./lib/log/log.rb
 DA:3,1
 DA:19,1
-DA:20,30
+DA:20,27
 DA:22,10
 DA:23,10
 DA:24,10
