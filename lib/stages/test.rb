@@ -21,6 +21,9 @@ ADOC_MAP = Hash.new(nil)
 ##
 # default index file
 DEFAULT_INDEX = Toolchain::ConfigManager.instance.get('asciidoc.index.file')
+##
+# Mutex
+MUTEX = Mutex.new
 
 ##
 # represents a pair of parsed, resolved adoc and original adoc
@@ -126,11 +129,19 @@ end
 # Returns a map of +errors_map+ with schema filename => [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
+  threads = []
+
   included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }.each do |f|
     log('INCLUDE', "Testing #{f}")
-    errors = run_tests(f)
-    errors_map[f] = errors
+    threads << Thread.new do
+      errors = run_tests(f)
+      MUTEX.synchronize do
+        errors_map[f] = errors
+      end
+    end
   end
+
+  threads.each(&:join)
   return errors_map
 end
 
