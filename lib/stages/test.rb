@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'thread/pool'
 require_relative '../cli.rb'
 require_relative '../config_manager.rb'
 require_relative '../extension_manager.rb'
@@ -129,11 +130,13 @@ end
 # Returns a map of +errors_map+ with schema filename => [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
-  threads = []
+  size = 8
+  log('THREADING', "Pool size: #{size}")
+  pool = Thread.pool(size)
 
   included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }.each do |f|
     log('INCLUDE', "Testing #{f}")
-    threads << Thread.new do
+    pool.process do
       errors = run_tests(f)
       MUTEX.synchronize do
         errors_map[f] = errors
@@ -141,7 +144,7 @@ def check_docs(included_files, content_dir)
     end
   end
 
-  threads.each(&:join)
+  pool.shutdown
   return errors_map
 end
 
