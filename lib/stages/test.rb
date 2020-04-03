@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'thread/pool'
 require_relative '../cli.rb'
 require_relative '../config_manager.rb'
 require_relative '../extension_manager.rb'
@@ -21,6 +22,9 @@ ADOC_MAP = Hash.new(nil)
 ##
 # default index file
 DEFAULT_INDEX = Toolchain::ConfigManager.instance.get('asciidoc.index.file')
+##
+# Mutex
+MUTEX = Mutex.new
 
 ##
 # represents a pair of parsed, resolved adoc and original adoc
@@ -126,11 +130,21 @@ end
 # Returns a map of +errors_map+ with schema filename => [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
+  size = 8
+  log('THREADING', "Pool size: #{size}")
+  pool = Thread.pool(size)
+
   included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }.each do |f|
     log('INCLUDE', "Testing #{f}")
-    errors = run_tests(f)
-    errors_map[f] = errors
+    pool.process do
+      errors = run_tests(f)
+      MUTEX.synchronize do
+        errors_map[f] = errors
+      end
+    end
   end
+
+  pool.shutdown
   return errors_map
 end
 
