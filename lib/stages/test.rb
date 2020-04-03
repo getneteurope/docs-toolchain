@@ -134,7 +134,8 @@ def check_docs(included_files, content_dir)
   log('THREADING', "Pool size: #{size}")
   pool = Thread.pool(size)
 
-  included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }.each do |f|
+  paths = included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }
+  paths.each do |f|
     pool.process do
       log('INCLUDE', "Testing #{f}")
       errors = run_tests(f)
@@ -149,11 +150,13 @@ def check_docs(included_files, content_dir)
 end
 
 ##
-# Resolves all errors from index to point to the correct location in include files.
+# Resolves all errors from index to point to the correct location in
+# include files.
 #
-# Given +index_errors+ and +errors_map+, determine which errors are false positives and
-# which errors are duplicates.
-# Remove false positives and merge duplicates (keeping the more specific filename).
+# Given +index_errors+ and +errors_map+, determine which errors are
+# false positives and which errors are duplicates.
+# Remove false positives and merge duplicates
+# (keeping the more specific filename).
 #
 # Returns +nil+.
 def post_process_errors(index_errors, errors_map)
