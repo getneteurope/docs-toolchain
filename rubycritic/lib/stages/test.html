@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-03 08:39:02 +0200'>2020-04-03 08:39:02 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-03 08:51:05 +0200'>2020-04-03 08:51:05 +0200</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.8</span><small> complexity/method</small></div>
-              <div><span class="metric">35</span><small> churn</small></div>
+              <div><span class="metric">9.7</span><small> complexity/method</small></div>
+              <div><span class="metric">36</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">87.91</span><small> complexity</small></div>
+              <div><span class="metric">87.6</span><small> complexity</small></div>
               <div><span class="metric">34</span><small> duplications</small></div>
             </div>
           </div>
@@ -234,8 +234,8 @@ def check_docs(included_files, content_dir)
   pool = Thread.pool(size)
 
   included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }.each do |f|
-    log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
     pool.process do
+      log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
       errors = run_tests(f)
       MUTEX.synchronize do
         errors_map[f] = errors
