@@ -135,8 +135,8 @@ def check_docs(included_files, content_dir)
   pool = Thread.pool(size)
 
   included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }.each do |f|
-    log('INCLUDE', "Testing #{f}")
     pool.process do
+      log('INCLUDE', "Testing #{f}")
       errors = run_tests(f)
       MUTEX.synchronize do
         errors_map[f] = errors
