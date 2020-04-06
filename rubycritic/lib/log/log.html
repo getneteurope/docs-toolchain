@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-23 10:27:27 +0100'>2020-03-23 10:27:27 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-04-06 08:47:23 +0200'>2020-04-06 08:47:23 +0200</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">6.0</span><small> complexity/method</small></div>
-              <div><span class="metric">15</span><small> churn</small></div>
+              <div><span class="metric">16</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">18.1</span><small> complexity</small></div>
@@ -119,7 +119,7 @@ def log(tag, msg, color = :blue, bold = false, stream: $stdout)<ol class="nocode
   return if ENV.key?(&#39;UNITTEST&#39;) &amp;&amp; !ENV.key?(&#39;DEBUG&#39;)
 
   tag = colorize(tag, color)
-  tag_line = &quot;[#{Time.now.strftime(&#39;%H:%m:%S&#39;)}]::#{tag} =&gt;&quot;.bold
+  tag_line = &quot;[#{Time.now.strftime(&#39;%H:%M:%S&#39;)}]::#{tag} =&gt;&quot;.bold
   msg = msg.bold if bold
 
   stream.puts &quot;#{tag_line} #{msg}&quot;
