@@ -19,6 +19,9 @@ detectors:
   FeatureEnvy:
     enabled: false
 
+  NestedIterators:
+    max_allowed_nesting: 3
+
   NilCheck:
     enabled: false
 
