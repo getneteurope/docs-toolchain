@@ -20,7 +20,7 @@ def log(tag, msg, color = :blue, bold = false, stream: $stdout)
   return if ENV.key?('UNITTEST') && !ENV.key?('DEBUG')
 
   tag = colorize(tag, color)
-  tag_line = "[#{Time.now.strftime('%H:%m:%S')}]::#{tag} =>".bold
+  tag_line = "[#{Time.now.strftime('%H:%M:%S')}]::#{tag} =>".bold
   msg = msg.bold if bold
 
   stream.puts "#{tag_line} #{msg}"
