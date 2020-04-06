@@ -229,4 +229,5 @@ module Toolchain
   end
 end
 
-Toolchain::PostProcessManager.instance.register(Toolchain::Post::CompileSearchIndex.new)
+Toolchain::PostProcessManager.instance.register(
+  Toolchain::Post::CompileSearchIndex.new)
