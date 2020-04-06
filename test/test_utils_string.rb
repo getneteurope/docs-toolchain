@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../lib/utils/string.rb'
+require_relative './util.rb'
 
 class TestString < Test::Unit::TestCase
   COLORS = %i[black red green yellow blue magenta cyan gray]

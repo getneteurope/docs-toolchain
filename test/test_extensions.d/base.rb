@@ -3,6 +3,7 @@
 require 'test/unit'
 require_relative '../../lib/stages/test.rb'
 require_relative '../../lib/base_extension.rb'
+require_relative '../util.rb'
 
 class TestLocation < Test::Unit::TestCase
   def test_to_s

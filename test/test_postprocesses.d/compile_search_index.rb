@@ -2,8 +2,8 @@
 
 require 'test/unit'
 require 'fileutils'
-require_relative '../util.rb'
 require_relative '../../lib/post.d/compile_search_index.rb'
+require_relative '../util.rb'
 
 class TestCompileSearchIndex < Test::Unit::TestCase
   ##

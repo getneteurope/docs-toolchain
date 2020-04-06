@@ -3,6 +3,23 @@
 require 'asciidoctor'
 require_relative '../lib/utils/adoc.rb'
 
+# UNIT TESTING COVERAGE
+require 'simplecov'
+require 'simplecov-lcov'
+
+SimpleCov::Formatter::LcovFormatter.config do |config|
+  config.report_with_single_file = true
+  config.single_report_path = 'coverage/lcov/docs-toolchain.lcov'
+end
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::LcovFormatter
+])
+
+SimpleCov.start
+# END - UNIT TESTING COVERAGE
+
 def write_tempfile(name, content, prefix: 'test_toolchain_', suffix: nil)
   tempfile_path = File.join('/tmp', "#{prefix}#{name}#{suffix}")
   tmp = File.open(tempfile_path, 'w+')

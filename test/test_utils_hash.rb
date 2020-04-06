@@ -3,6 +3,7 @@
 require 'test/unit'
 require 'ostruct'
 require_relative '../lib/utils/hash.rb'
+require_relative './util.rb'
 
 class TestHash < Test::Unit::TestCase
   DEFAULT = { a: true, b: false, c: 'Remove' }.freeze

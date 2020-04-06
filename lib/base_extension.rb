@@ -14,12 +14,6 @@ module Toolchain
     def to_s
       return "#{filename}:#{lineno}"
     end
-
-    private
-
-    def filename=; end
-
-    def lineno=; end
   end
 
   # Base class for extensions,
