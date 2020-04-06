@@ -131,15 +131,3 @@ def check_docs(included_files, content_dir)
   return errors_map
 end
 
-##
-# Resolves all errors from index to point to the correct location in
-# include files.
-#
-# Given +index_errors+ and +errors_map+, determine which errors are
-# false positives and which errors are duplicates.
-# Remove false positives and merge duplicates
-# (keeping the more specific filename).
-#
-# Returns +nil+.
-def post_process_errors(index_errors, errors_map)
-end
