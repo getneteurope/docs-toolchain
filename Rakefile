@@ -107,9 +107,12 @@ namespace :toolchain do
   end
 
   RubyCritic::RakeTask.new(:quality) do |task|
-    task.options = '-p /tmp/rubycritic'
-    task.options = '-p /tmp/rubycritic --format console --format html --no-browser' \
-      if ENV.key?('GITHUB_ACTIONS')
+    opts = '-p /tmp/rubycritic --no-browser'
+    if ENV.key?('GITHUB_ACTIONS')
+      opts += ' --format console --format html'
+    end
+    task.options = opts
+    task.paths = FileList['lib/**/*.rb'].exclude('lib/bin/*.rb')
   end
 
   RDoc::Task.new(
