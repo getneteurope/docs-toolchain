@@ -31,6 +31,10 @@ detectors:
   UncommunicativeVariableName:
     enabled: false
 
+  UtilityFunction:
+    exclude:
+      - lib/utils/string.rb
+
 exclude_paths:
   - test/
   - adoc-extensions.d/multipage_html5.rb
