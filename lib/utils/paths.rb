@@ -7,14 +7,13 @@ module Toolchain
   # content_path
   # Returns path to content directory root.
   #
-  def self.content_path(path = nil)
+  def self.content_path
     content_dir_path = Dir.pwd
     content_dir_path = File.join(Dir.pwd, '..') if File.basename(Dir.pwd) == 'toolchain'
-    content_dir_path = ENV['GITHUB_WORKSPACE'] \
-      if ENV.key?('TOOLCHAIN_TEST') || ENV.key?('GITHUB_ACTIONS')
+    if ENV.key?('TOOLCHAIN_TEST') || ENV.key?('GITHUB_ACTIONS')
+      content_dir_path = ENV['GITHUB_WORKSPACE']
+    end
     content_dir_path = ENV['CONTENT_PATH'] if ENV.key?('CONTENT_PATH')
-    # For Unit testing:
-    content_dir_path = path unless path.nil?
     return content_dir_path
   end
 
@@ -30,12 +29,10 @@ module Toolchain
   # toolchain_path
   # Returns path to toolchain root.
   #
-  def self.toolchain_path(path = nil)
+  def self.toolchain_path
     toolchain_dir_path = File.join(Dir.pwd, 'toolchain')
     toolchain_dir_path = Dir.pwd unless File.exist?(toolchain_dir_path)
     toolchain_dir_path = ENV['TOOLCHAIN_PATH'] if ENV.key?('TOOLCHAIN_PATH')
-    # For Unit testing:
-    toolchain_dir_path = path unless path.nil?
     return toolchain_dir_path
   end
 
@@ -43,16 +40,16 @@ module Toolchain
   # build_path
   # Returns path to toolchain build directory.
   #
-  def self.build_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get('build.dir') : path)
+  def self.build_path
+    return ConfigManager.instance.get('build.dir')
   end
 
   ##
   # html_path
   # Returns path to generated html files.
   #
-  def self.html_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get('build.html.dir') : path)
+  def self.html_path
+    return ConfigManager.instance.get('build.html.dir')
   end
 
   ##

@@ -38,8 +38,8 @@ module Toolchain
     # The path of the git repo is controlled by ENV: $PWD > $TOOLCHAIN_PATH/..
     #
     # Returns a OpenStruct containing the information described above.
-    def self.generate_info(path = nil)
-      content_path = ::Toolchain.content_path(path)
+    def self.generate_info
+      content_path = ::Toolchain.content_path
 
       git_info = nil
       begin
