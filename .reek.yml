@@ -26,4 +26,5 @@ detectors:
     enabled: false
 
 exclude_paths:
-  - test/**/*.rb
+  - test/
+  - lib/adoc-extensions.d/multipage_html5.rb
