@@ -3,6 +3,9 @@
 
 detectors:
 
+  BooleanParameter:
+    enabled: false
+
   ClassVariable:
     exclude:
       - lib/notify/*.rb
