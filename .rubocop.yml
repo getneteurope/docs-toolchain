@@ -5,7 +5,7 @@ AllCops:
     - lib/utils.rb
     - Gemfile
     - Rakefile
-    - lib/adoc-extensions.d/*.rb
+    - adoc-extensions.d/*.rb
     - test/**/*.rb
 
 Layout:

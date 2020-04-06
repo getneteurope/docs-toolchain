@@ -27,4 +27,4 @@ detectors:
 
 exclude_paths:
   - test/
-  - lib/adoc-extensions.d/multipage_html5.rb
+  - adoc-extensions.d/multipage_html5.rb
