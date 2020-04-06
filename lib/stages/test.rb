@@ -70,24 +70,6 @@ def print_errors(errors_map)
 end
 
 ##
-# Test all files given as +files+, +files+ must be a list of filenames.
-# Only used for testing individual files, i.e. '--file' parameter.
-#
-# Returns nothing, this function will exit.
-def test_files(files)
-  files.each do |f|
-    errors = run_tests(f)
-    next if errors.empty?
-
-    puts f.blue.bold
-    errors.each do |err|
-      puts "#{err[:id]}\t#{err[:msg]}".bold.red
-    end
-  end
-  exit 0
-end
-
-##
 # Run all extensions registered with +ExtensionManager+ on the file +filename+.
 #
 # During this process, the file +filename+ will be loaded, converted and cached
