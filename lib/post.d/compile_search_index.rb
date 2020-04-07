@@ -12,6 +12,23 @@ require 'v8'
 require 'json'
 
 module Toolchain
+  # Module for Table of Content utility functions.
+  module TableOfContent
+    ##
+    # Build toc entry tree from +entry+ and fill +nodes+ with entries.
+    # Returns nothing.
+    def self.convert_nodes(entry, nodes = {})
+      return nodes if entry.nil? || entry.size.zero?
+
+      nodes[entry['id']] = entry.only(%w[parents label]) unless
+        entry['level'] == -1
+      entry['children'].each do |e|
+        convert_nodes(e, nodes)
+      end
+      return nodes
+    end
+  end
+
   ##
   # Adds modules for postprocessing files.
   module Post
@@ -44,18 +61,9 @@ module Toolchain
         htmls = Dir[File.join(Toolchain.html_path, '*.html')]
 
         stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
-        stage_log(:post, "Parse #{@toc_file} as Table of Content")
         toc_orig = ::JSON.parse(File.read(@toc_file))
 
-        # build toc entry tree
-        def add_to_toc(entry)
-          return if entry.nil? || entry.size.zero?
-          @nodes[entry['id']] = entry.only(%w[parents label]) unless entry['level'] == -1
-          entry['children'].each do |e|
-            add_to_toc(e)
-          end
-        end
-        add_to_toc(toc_orig)
+        @nodes = TableOfContent.convert_nodes(toc_orig)
 
         # exclude certain files, defined in the yaml config
         ConfigManager.instance.get('search.exclude').each do |pattern|

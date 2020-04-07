@@ -1,0 +1,22 @@
+{
+  "first": {
+    "label": null,
+    "parents": []
+  },
+  "second": {
+    "label": null,
+    "parents": []
+  },
+  "admonitions_and_icons": {
+    "label": null,
+    "parents": [
+      "Second Section"
+    ]
+  },
+  "_sample_switch": {
+    "label": null,
+    "parents": [
+      "Second Section"
+    ]
+  }
+}
