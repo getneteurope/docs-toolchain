@@ -9,12 +9,23 @@ require_relative './util.rb'
 PreM = Toolchain::PreProcessManager.instance
 PostM = Toolchain::PostProcessManager.instance
 
-def generate
-  (1..3).map do |i|
-    Toolchain::BaseProcess.new(i)
+class MyProcess < Toolchain::BaseProcess
+  def initialize(num)
+    @num = num
+  end
+
+  def run
+    return @num
   end
 end
 
+def generate(cls = Toolchain::BaseProcess)
+  (1..3).map do |i|
+    cls.new(i)
+  end
+end
+
+# TODO add test that loads extensions from default directory AND custom directory
 class TestPreProcessManager < Test::Unit::TestCase
   CONFIG = { 'processes' => { 'pre' => { 'enable' => ['BaseProcess'] } } }
 
@@ -38,8 +49,33 @@ class TestPreProcessManager < Test::Unit::TestCase
     assert_equal((1..3).to_a.reverse, procs.map(&:priority))
     assert_equal(3, procs.first.priority)
   end
+
+  def test_process_run_fail
+    generate.each { |ref_p| PreM.register(ref_p) }
+    assert_raise(NotImplementedError) do
+      PreM.run
+    end
+  end
+
+  def test_process_run_success
+    generate(MyProcess).each { |ref_p| PreM.register(ref_p) }
+    assert_nothing_raised(NotImplementedError) do
+      PreM.run
+    end
+  end
+
+  def test_return_code
+    assert_equal(0, PreM.run)
+    PreM.return_code
+    assert_equal(10, PreM.run)
+    PreM.return_code(23)
+    assert_equal(23, PreM.run)
+    PreM.return_code(-1)
+    assert_equal(-1, PreM.run)
+  end
 end
 
+# TODO add test that loads extensions from default directory AND custom directory
 class TestPostProcessManager < Test::Unit::TestCase
   CONFIG = { 'processes' => { 'post' => { 'enable' => ['BaseProcess'] } } }
 
@@ -62,6 +98,30 @@ class TestPostProcessManager < Test::Unit::TestCase
     assert_equal(3, procs.length)
     assert_equal((1..3).to_a.reverse, procs.map(&:priority))
     assert_equal(3, procs.first.priority)
+  end
+
+  def test_process_run_fail
+    generate.each { |ref_p| PostM.register(ref_p) }
+    assert_raise(NotImplementedError) do
+      PostM.run
+    end
+  end
+
+  def test_process_run_success
+    generate(MyProcess).each { |ref_p| PreM.register(ref_p) }
+    assert_nothing_raised(NotImplementedError) do
+      PreM.run
+    end
+  end
+
+  def test_return_code
+    assert_equal(0, PostM.run)
+    PostM.return_code
+    assert_equal(10, PostM.run)
+    PostM.return_code(23)
+    assert_equal(23, PostM.run)
+    PostM.return_code(-1)
+    assert_equal(-1, PostM.run)
   end
 end
 
