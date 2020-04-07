@@ -52,6 +52,7 @@ module Toolchain
   # Returns path to generated html files.
   #
   def self.html_path(path = nil)
+    return ENV['HTML_DIR'] if ENV.key?('HTML_DIR')
     return (path.nil? ? ConfigManager.instance.get('build.html.dir') : path)
   end
 
