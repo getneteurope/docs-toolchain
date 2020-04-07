@@ -9,6 +9,11 @@ module Toolchain
   #
   # Umbrella module for all Git related actions.
   module Git
+    # Returns the time format used by +Toolchain::Git+.
+    def self.time_format
+      return '%H:%M:%S %d.%m.%Y'
+    end
+
     ##
     # Pass a reference +ref+ and a fallback +fallback+ and return
     # the parsed reference.
@@ -48,16 +53,13 @@ module Toolchain
         head = repo.object('HEAD').sha
         commit = repo.gcommit(head)
         author = commit.author
-        branch = parse_ref(
-          ENV['GITHUB_REPOSITORY'],
-          repo.remote('origin')
-        ) || repo.revparse(commit.sha)
+        branch = repo.current_branch
 
         git_info = OpenStruct.new(
           author: "#{author.name} <#{author.email}>",
           commit: commit.sha,
           branch: branch.to_s,
-          time: commit.date.strftime('%H:%M %d.%m.%Y')
+          time: commit.date.strftime(time_format)
         )
       rescue StandardError => _e
         log('GIT', "Error opening Git repository at #{content_path}")
