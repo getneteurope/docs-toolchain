@@ -19,6 +19,15 @@ detectors:
   FeatureEnvy:
     enabled: false
 
+  IrresponsibleModule:
+    exclude:
+      - Toolchain
+      - Hash
+      - String
+
+  LongParameterList:
+    max_params: 5
+
   NestedIterators:
     max_allowed_nesting: 3
 
@@ -28,12 +37,15 @@ detectors:
   TooManyStatements:
     enabled: false
 
+  TooManyMethods:
+    exclude:
+      - String
+
   UncommunicativeVariableName:
     enabled: false
 
   UtilityFunction:
-    exclude:
-      - lib/utils/string.rb
+    enabled: false
 
 exclude_paths:
   - test/
