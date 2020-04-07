@@ -40,12 +40,8 @@ module Toolchain
       #
       # Returns JSON search index for lunr
       #
-      def run(html = nil, outfile: nil, dbfile: nil)
-        htmls = if html.nil?
-                  Dir[File.join(Toolchain.build_path, 'html', '*.html')]
-                else
-                  (html.is_a?(Array) ? html : [html])
-                end
+      def run(outfile: nil, dbfile: nil)
+        htmls = Dir[File.join(Toolchain.html_path, '*.html')]
 
         stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
         stage_log(:post, "Parse #{@toc_file} as Table of Content")

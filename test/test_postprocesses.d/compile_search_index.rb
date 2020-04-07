@@ -6,11 +6,7 @@ require_relative '../../lib/post.d/compile_search_index.rb'
 require_relative '../util.rb'
 
 class TestCompileSearchIndex < Test::Unit::TestCase
-  ##
-  # Creates lunr index json from an adoc file with include(s)
-  #
-  def test_compile_search_index
-    content =
+    CONTENT =
       '<!DOCTYPE html>
 <html>
 <head><title>Unit test</title></head>
@@ -56,17 +52,31 @@ Praesent quis feugiat enim.
 
 </body>
 </html>'
-    outfile = '/tmp/test_index.json'
-    dbfile = '/tmp/test_db.json'
 
-    ::Toolchain::ConfigManager.instance.load
+  ##
+  # Creates lunr index json from an adoc file with include(s)
+  #
+  def test_compile_search_index
+    outfile = File.join(Dir.tmpdir, 'test_index.json')
+    dbfile = File.join(Dir.tmpdir, 'test_db.json')
+
+    Toolchain::ConfigManager.instance.load
     toc_file = ::File.join(::Toolchain.build_path,
-      ::Toolchain::ConfigManager.instance.get('toc.json_file'))
+      Toolchain::ConfigManager.instance.get('toc.json_file'))
     FileUtils.mkdir_p(::File.dirname(toc_file))
-    ::File.write(toc_file, '{}')
-    index, lookup = with_tempfile(content, '_CompileSearchIndex') do |file|
-      ::Toolchain::Post::CompileSearchIndex.new.run(file, outfile: outfile, dbfile: dbfile)
+    File.write(toc_file, '{}')
+
+    index, lookup = Dir.mktmpdir do |tmpdir|
+      htmldir = File.join(tmpdir, 'html')
+      Dir.mkdir(htmldir)
+      html = File.join(htmldir, 'test.html')
+      File.open(html, 'w+') { |f| f.puts(CONTENT) }
+
+      ENV['HTML_DIR'] = htmldir
+      Toolchain::Post::CompileSearchIndex.new
+        .run(outfile: outfile, dbfile: dbfile)
     end
+    ENV.delete('HTML_DIR')
     assert_equal(%w[title body file], index['fields'])
     assert_true(lookup.size.positive?)
   end
