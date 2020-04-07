@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-20 10:18:06 +0100'>2020-03-20 10:18:06 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-04-06 14:06:27 +0200'>2020-04-06 14:06:27 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">34</span><small> lines of codes</small></div>
-              <div><span class="metric">3</span><small> methods</small></div>
+              <div><span class="metric">25</span><small> lines of codes</small></div>
+              <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">9.9</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">29.63</span><small> complexity</small></div>
+              <div><span class="metric">19.89</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -120,15 +120,6 @@ class TestGit &lt; Test::Unit::TestCase<ol class="nocode errors smells">  <li>  
     assert_not_equal(git_info.commit, not_available)
     assert_not_equal(git_info.branch, not_available)
     assert_not_equal(git_info.time, not_available)
-  end
-
-  def test_git_info_empty
-    git_info = Toolchain::Git.generate_info(&#39;asgasdg71243234&#39;)
-    not_available = &#39;&lt;N/A&gt;&#39;
-    assert_equal(git_info.author, not_available)
-    assert_equal(git_info.commit, not_available)
-    assert_equal(git_info.branch, not_available)
-    assert_equal(git_info.time, not_available)
   end
 end
 </code>

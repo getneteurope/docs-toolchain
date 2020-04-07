@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-02 16:58:36 +0200'>2020-04-02 16:58:36 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-06 09:17:29 +0200'>2020-04-06 09:17:29 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">67</span><small> lines of codes</small></div>
+              <div><span class="metric">64</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">7.3</span><small> complexity/method</small></div>
-              <div><span class="metric">10</span><small> churn</small></div>
+              <div><span class="metric">6.0</span><small> complexity/method</small></div>
+              <div><span class="metric">11</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">43.58</span><small> complexity</small></div>
+              <div><span class="metric">35.84</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -106,14 +106,13 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
   # content_path
   # Returns path to content directory root.
   #
-  def self.content_path(path = nil)
+  def self.content_path
     content_dir_path = Dir.pwd
     content_dir_path = File.join(Dir.pwd, &#39;..&#39;) if File.basename(Dir.pwd) == &#39;toolchain&#39;
-    content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;] \
-      if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
+    if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
+      content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;]
+    end
     content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)
-    # For Unit testing:
-    content_dir_path = path unless path.nil?
     return content_dir_path
   end
 
@@ -129,12 +128,10 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
   # toolchain_path
   # Returns path to toolchain root.
   #
-  def self.toolchain_path(path = nil)
+  def self.toolchain_path
     toolchain_dir_path = File.join(Dir.pwd, &#39;toolchain&#39;)
     toolchain_dir_path = Dir.pwd unless File.exist?(toolchain_dir_path)
     toolchain_dir_path = ENV[&#39;TOOLCHAIN_PATH&#39;] if ENV.key?(&#39;TOOLCHAIN_PATH&#39;)
-    # For Unit testing:
-    toolchain_dir_path = path unless path.nil?
     return toolchain_dir_path
   end
 
@@ -142,16 +139,16 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
   # build_path
   # Returns path to toolchain build directory.
   #
-  def self.build_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.dir&#39;) : path)
+  def self.build_path
+    return ConfigManager.instance.get(&#39;build.dir&#39;)
   end
 
   ##
   # html_path
   # Returns path to generated html files.
   #
-  def self.html_path(path = nil)
-    return (path.nil? ? ConfigManager.instance.get(&#39;build.html.dir&#39;) : path)
+  def self.html_path
+    return ConfigManager.instance.get(&#39;build.html.dir&#39;)
   end
 
   ##
