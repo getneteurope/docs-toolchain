@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-06 09:17:29 +0200'>2020-04-06 09:17:29 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-07 10:12:39 +0200'>2020-04-07 10:12:39 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">64</span><small> lines of codes</small></div>
+              <div><span class="metric">65</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">6.0</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">6.4</span><small> complexity/method</small></div>
+              <div><span class="metric">12</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">35.84</span><small> complexity</small></div>
+              <div><span class="metric">38.39</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -101,7 +101,7 @@
 
 require_relative &#39;../config_manager.rb&#39;
 
-module Toolchain<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain has no descriptive comment</span>          </div>  </li></ol>
+module Toolchain
   ##
   # content_path
   # Returns path to content directory root.
@@ -147,7 +147,8 @@ module Toolchain<ol class="nocode errors smells">  <li>    <div class="descripti
   # html_path
   # Returns path to generated html files.
   #
-  def self.html_path
+  def self.html_path(path = nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>Toolchain#self.html_path has unused parameter 'path'</span>          </div>  </li></ol>
+    return ENV[&#39;HTML_DIR&#39;] if ENV.key?(&#39;HTML_DIR&#39;)
     return ConfigManager.instance.get(&#39;build.html.dir&#39;)
   end
 

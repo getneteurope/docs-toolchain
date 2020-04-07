@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">60</span><small> lines of codes</small></div>
-              <div><span class="metric">5</span><small> methods</small></div>
+              <div><span class="metric">54</span><small> lines of codes</small></div>
+              <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">2.3</span><small> complexity/method</small></div>
+              <div><span class="metric">3.8</span><small> complexity/method</small></div>
               <div><span class="metric">12</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">11.7</span><small> complexity</small></div>
+              <div><span class="metric">11.5</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -113,12 +113,6 @@ module Toolchain
     def to_s
       return &quot;#{filename}:#{lineno}&quot;
     end
-
-    private
-
-    def filename=; end
-
-    def lineno=; end
   end
 
   # Base class for extensions,

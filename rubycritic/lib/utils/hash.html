@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                0
+                smell
               </a>
             </li>
           </ul>
@@ -100,7 +100,7 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 # https://stackoverflow.com/a/11105831
-class Hash<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Hash has no descriptive comment</span>          </div>  </li></ol>
+class Hash
   # Returns a hash that includes everything but the given keys.
   #   hash = { a: true, b: false, c: nil}
   #   hash.except(:c) # =&gt; { a: true, b: false}
@@ -149,7 +149,7 @@ module Toolchain
 
       object.each_pair do |key, value|
         hash[key] = case value
-                    when Array then value.map { |v| openstruct_to_hash(v) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Hash#self.openstruct_to_hash contains iterators nested 2 deep</span>          </div>  </li></ol>
+                    when Array then value.map { |v| openstruct_to_hash(v) }
                     else value
                     end
       end

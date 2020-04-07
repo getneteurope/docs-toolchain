@@ -68,7 +68,7 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">65</span><small> lines of codes</small></div>
+              <div><span class="metric">64</span><small> lines of codes</small></div>
               <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
@@ -156,9 +156,8 @@ module Toolchain
 end
 
 unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_HTMLCHECK&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="html_check.html#L59" class="js-smell-location">0</a>                  <a href="../pre.d/combine_transpile_js.html#L153" class="js-smell-location">1</a>                  </div>  </li></ol>
-  Toolchain::PostProcessManager
-    .instance.register(Toolchain::Post::HTMLTest.new)
-
+  Toolchain::PostProcessManager .instance.register(
+    Toolchain::Post::HTMLTest.new)
   #   Toolchain::PostProcessManager
   #     .instance.register(Toolchain::Post::HTMLCheck.new)
 end

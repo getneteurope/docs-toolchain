@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -141,7 +141,7 @@ module Toolchain
       end
 
       original.reader.source_lines.each_with_index do |line, index|
-        blacklist_patterns.each_with_index do |pattern, _p_idx|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::PatternBlacklist#run contains iterators nested 2 deep</span>          </div>  </li></ol>
+        blacklist_patterns.each_with_index do |pattern, _p_idx|
           next unless line.match?(pattern)
 
           msg = &quot;Illegal pattern in line #{index + 1}: #{pattern.inspect}&quot;

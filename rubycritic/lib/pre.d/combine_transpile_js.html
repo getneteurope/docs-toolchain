@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                4
+                3
                 smells
               </a>
             </li>
@@ -160,7 +160,7 @@ module Toolchain
       #
       # Returns HTML string and JS blob path.
       #
-      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 35</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+      def replace_js_tags_with_blob(path, js_blob)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::Pre::CombineAndTranspileJS#replace_js_tags_with_blob has a flog score of 35</span>          </div>  </li></ol>
         # derive .js path from html filename
         # e.g. docinfo-footer.html =&gt; content/js/docinfo-footer.js
         root = if ENV.key?(&#39;UNITTEST&#39;)
@@ -250,8 +250,8 @@ module Toolchain
 end
 
 unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_COMBINE&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="../post.d/html_check.html#L59" class="js-smell-location">0</a>                  <a href="combine_transpile_js.html#L153" class="js-smell-location">1</a>                  </div>  </li></ol>
-  Toolchain::PreProcessManager
-    .instance.register(Toolchain::Pre::CombineAndTranspileJS.new)
+  Toolchain::PreProcessManager.instance.register(
+    Toolchain::Pre::CombineAndTranspileJS.new)
 end
 </code>
   </div>

@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -206,7 +206,7 @@ module Toolchain
       # Returns a Slack template with +msg+ as message part.
       # Returned format it Slack-readable JSON.
       #
-      def template(msg)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Notify::Slack#template doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+      def template(msg)
         return { &#39;type&#39; =&gt; &#39;section&#39;, &#39;text&#39; =&gt; { &#39;type&#39; =&gt; &#39;mrkdwn&#39;, &#39;text&#39; =&gt; msg.to_s } }
       end
 

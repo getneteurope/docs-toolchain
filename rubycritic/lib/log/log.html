@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-06 08:47:23 +0200'>2020-04-06 08:47:23 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-07 10:16:53 +0200'>2020-04-07 10:16:53 +0200</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">6.0</span><small> complexity/method</small></div>
-              <div><span class="metric">16</span><small> churn</small></div>
+              <div><span class="metric">5.2</span><small> complexity/method</small></div>
+              <div><span class="metric">17</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">18.1</span><small> complexity</small></div>
+              <div><span class="metric">15.57</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                0
+                smell
               </a>
             </li>
           </ul>
@@ -115,8 +115,8 @@ require_relative &#39;../utils/string.rb&#39;
 # +stream+: Which output stream to use (default: +STDOUT+)
 #
 # Returns nothing.
-def log(tag, msg, color = :blue, bold = false, stream: $stdout)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md" target="_blank"><b>BooleanParameter</b></a>        </span>      </div>      <span>log has boolean parameter 'bold'</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>log has 5 parameters</span>          </div>  </li></ol>
-  return if ENV.key?(&#39;UNITTEST&#39;) &amp;&amp; !ENV.key?(&#39;DEBUG&#39;)
+def log(tag, msg, color = :blue, bold = false, stream: $stdout)
+  return if ENV.key?(&#39;UNITTEST&#39;)
 
   tag = colorize(tag, color)
   tag_line = &quot;[#{Time.now.strftime(&#39;%H:%M:%S&#39;)}]::#{tag} =&gt;&quot;.bold

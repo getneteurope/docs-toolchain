@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                0
+                smell
               </a>
             </li>
           </ul>
@@ -103,7 +103,7 @@
 # Default class: String
 #
 # Text color and weight modifications
-class String<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Methods.md" target="_blank"><b>TooManyMethods</b></a>        </span>      </div>      <span>String has at least 21 methods</span>          </div>  </li></ol>
+class String
   def black;          &quot;\e[30m#{self}\e[0m&quot; end
   def red;            &quot;\e[31m#{self}\e[0m&quot; end
   def green;          &quot;\e[32m#{self}\e[0m&quot; end
@@ -133,7 +133,7 @@ end
 # Colorize +text+ in the color specified by +color+.
 #
 # Returns the colorized string
-def colorize(text, color)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>colorize doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+def colorize(text, color)
   # TODO use repond_to? and send in stead of switch case
   case color
   when :black

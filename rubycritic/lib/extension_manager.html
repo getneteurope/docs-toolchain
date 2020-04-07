@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -126,7 +126,7 @@ module Toolchain
       #
       # Returns the error as Hash.
       #
-      def create_error(msg:, type:, location: nil, extras: nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md" target="_blank"><b>LongParameterList</b></a>        </span>      </div>      <span>Toolchain::ExtensionManager#create_error has 4 parameters</span>          </div>  </li></ol>
+      def create_error(msg:, type:, location: nil, extras: nil)
         return {
           id: instance.next_id,
           type: type,

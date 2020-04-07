@@ -68,7 +68,7 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">172</span><small> lines of codes</small></div>
+              <div><span class="metric">176</span><small> lines of codes</small></div>
               <div><span class="metric">4</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                5
+                2
                 smells
               </a>
             </li>
@@ -114,7 +114,7 @@ CM = Toolchain::ConfigManager.instance
 module Toolchain
   module Adoc
     ##
-    class CreateTOC<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC has no descriptive comment</span>          </div>  </li></ol>
+    class CreateTOC
       def initialize
         @multipage_level = CM.get(&#39;asciidoc.multipage_level&#39;)
         @default_json_filepath = File.join(
@@ -162,7 +162,8 @@ module Toolchain
             id: id,
             level: level,
             label: nil,
-            title: title.gsub(/&lt;\/?[^&gt;]*&gt;/, &#39;&#39;), # remove style tags that asciidoctor leaves in titles
+            # remove style tags that asciidoctor leaves in titles
+            title: title.gsub(%r{&lt;\/?[^&gt;]*&gt;}, &#39;&#39;),
             parent: nil,
             parents: [],
             children: []
@@ -182,8 +183,8 @@ module Toolchain
             title = sect.title
             next if title.nil?
             current.parents &lt;&lt; title
-            current.label = title if [&#39;REST&#39;, &#39;WPP v1&#39;, &#39;WPP v2&#39;].any? do |keyword|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#run contains iterators nested 3 deep</span>          </div>  </li></ol>
-              title.include?(keyword)
+            current.label = title if [&#39;REST&#39;, &#39;WPP v1&#39;, &#39;WPP v2&#39;].any? do |kw|
+              title.include?(kw)
             end
           end
           # replace parent object now with it&#39;s id to avoid loops
@@ -204,8 +205,11 @@ module Toolchain
 
         # create Nokogiri HTML document Object from TOC tree
         # class and id same as default asciidoctor html5 converter with enabled TOC for drop-in replacement
-        toc_html_dom = Nokogiri::HTML.fragment(&#39;&lt;div id=&quot;toc&quot; class=&quot;toc2&quot;&gt;&lt;/div&gt;&#39; + &quot;\n&quot;)
-        toc_html_dom.at_css(&#39;#toc&#39;) &lt;&lt; generate_html_from_toc(toc_openstruct.children)
+        toc_html_dom = Nokogiri::HTML.fragment(
+          &#39;&lt;div id=&quot;toc&quot; class=&quot;toc2&quot;&gt;&lt;/div&gt;&#39; + &quot;\n&quot;)
+
+        toc_html_dom.at_css(&#39;#toc&#39;) &lt;&lt; generate_html_from_toc(
+          toc_openstruct.children)
 
         # convert Nokogiri HTML Object to string
         toc_html_string = toc_html_dom.to_xhtml(indent: 3)
@@ -220,9 +224,9 @@ module Toolchain
       # Requires +page_id+ and Nokogiri Table of Content +toc_document+
       # Returns modified TOC +toc_document+
       #
-      def tick_toc_checkboxes(page_id, toc_document)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Toolchain::Adoc::CreateTOC#tick_toc_checkboxes doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+      def tick_toc_checkboxes(page_id, toc_document)
         selector = &#39;#toc_li_&#39; + page_id
-        list_element = toc_document.at_css selector
+        list_element = toc_document.at_css(selector)
         while list_element
           break unless list_element.name == &#39;li&#39;
           begin

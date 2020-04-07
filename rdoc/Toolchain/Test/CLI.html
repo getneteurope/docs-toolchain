@@ -125,23 +125,22 @@
 
           
           <div class="method-source-code" id="parse_args-source">
-            <pre><span class="ruby-comment"># File lib/cli.rb, line 58</span>
+            <pre><span class="ruby-comment"># File lib/cli.rb, line 59</span>
       <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">parse_args</span>(<span class="ruby-identifier">argv</span> = <span class="ruby-constant">ARGV</span>)
-        <span class="ruby-identifier">args</span> = { <span class="ruby-value">help:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">debug:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">index:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">files:</span> [] }
+        <span class="ruby-identifier">args</span> = { <span class="ruby-value">help:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">debug:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">index:</span> <span class="ruby-keyword">nil</span> }
 
         <span class="ruby-identifier">opt_parser</span> = <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">parser</span><span class="ruby-operator">|</span>
-          <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-string">&#39;Usage: main.rb [options] [--index INDEX | --file FILE [--file FILE ...]]
+          <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">banner</span> =
+            <span class="ruby-string">&#39;Usage: main.rb [options] [--index INDEX]
 Default: index file is \&#39;content/index.adoc\&#39;&#39;</span>
 
           <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-d&#39;</span>, <span class="ruby-string">&#39;--debug&#39;</span>, <span class="ruby-string">&#39;enable debug mode&#39;</span>) <span class="ruby-keyword">do</span>
             <span class="ruby-identifier">args</span>[<span class="ruby-value">:debug</span>] = <span class="ruby-keyword">true</span>
           <span class="ruby-keyword">end</span>
 
-          <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-iINDEX&#39;</span>, <span class="ruby-string">&#39;--index INDEX&#39;</span>, <span class="ruby-string">&#39;specify an index file&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-iINDEX&#39;</span>, <span class="ruby-string">&#39;--index INDEX&#39;</span>,
+            <span class="ruby-string">&#39;specify an index file&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
             <span class="ruby-identifier">args</span>[<span class="ruby-value">:index</span>] = <span class="ruby-identifier">index</span>
-          <span class="ruby-keyword">end</span>
-          <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-fFILE&#39;</span>, <span class="ruby-string">&#39;--file FILE&#39;</span>, <span class="ruby-string">&#39;specify multiple files instead of one index file&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-            <span class="ruby-identifier">args</span>[<span class="ruby-value">:files</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">file</span>
           <span class="ruby-keyword">end</span>
 
           <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&#39;-h&#39;</span>, <span class="ruby-string">&#39;--help&#39;</span>, <span class="ruby-string">&#39;print this help&#39;</span>) <span class="ruby-keyword">do</span>
@@ -149,9 +148,6 @@ Default: index file is \&#39;content/index.adoc\&#39;&#39;</span>
           <span class="ruby-keyword">end</span>
         <span class="ruby-keyword">end</span>
         <span class="ruby-identifier">opt_parser</span>.<span class="ruby-identifier">parse!</span>(<span class="ruby-identifier">argv</span>)
-
-        <span class="ruby-identifier">err_msg</span> = <span class="ruby-string">&#39;Cannot provide &quot;file&quot; and &quot;index&quot; arguments simultaneously. Pick one!&#39;</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-identifier">err_msg</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">:index</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>[<span class="ruby-value">:files</span>].<span class="ruby-identifier">empty?</span>
 
         <span class="ruby-keyword">return</span> <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">args</span>), <span class="ruby-identifier">opt_parser</span>
       <span class="ruby-keyword">end</span></pre>

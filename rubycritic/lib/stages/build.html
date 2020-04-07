@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -140,7 +140,7 @@ module Toolchain
       stage_log(:build, &#39;HTML5 Multipage Backend loaded&#39;)
       require File.join(
         File.expand_path(::Toolchain.toolchain_path),
-        &#39;lib/adoc-extensions.d/multipage_html5.rb&#39;
+        &#39;adoc-extensions.d/multipage_html5.rb&#39;
       )
 
       options = {
@@ -177,7 +177,7 @@ module Toolchain
 
       # move web pages to html/
       htmls = Dir[File.join(build_dir, &#39;*.html&#39;)].delete_if do |file|
-        %w[docinfo toc].any? { |term| File.basename(file).start_with?(term) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank"><b>NestedIterators</b></a>        </span>      </div>      <span>Toolchain::Build#self.build contains iterators nested 2 deep</span>          </div>  </li></ol>
+        %w[docinfo toc].any? { |term| File.basename(file).start_with?(term) }
       end
       htmls.each do |html|
         FileUtils.mv(html, html_dir, force: true)

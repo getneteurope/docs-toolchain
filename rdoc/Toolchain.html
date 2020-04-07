@@ -230,7 +230,7 @@
 
           
           <div class="method-source-code" id="custom_dir-source">
-            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 60</span>
+            <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">custom_dir</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">content_path</span>,
     <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;custom.dir&#39;</span>) <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>)
@@ -326,7 +326,7 @@
         
         <div class="method-heading">
           <span class="method-name">html_path</span><span
-            class="method-args">()</span>
+            class="method-args">(path = nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -342,7 +342,8 @@
           
           <div class="method-source-code" id="html_path-source">
             <pre><span class="ruby-comment"># File lib/utils/paths.rb, line 51</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">html_path</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">html_path</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;HTML_DIR&#39;</span>] <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;HTML_DIR&#39;</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;build.html.dir&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
