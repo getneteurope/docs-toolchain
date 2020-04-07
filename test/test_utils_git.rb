@@ -23,13 +23,4 @@ class TestGit < Test::Unit::TestCase
     assert_not_equal(git_info.branch, not_available)
     assert_not_equal(git_info.time, not_available)
   end
-
-  def test_git_info_empty
-    git_info = Toolchain::Git.generate_info('asgasdg71243234')
-    not_available = '<N/A>'
-    assert_equal(git_info.author, not_available)
-    assert_equal(git_info.commit, not_available)
-    assert_equal(git_info.branch, not_available)
-    assert_equal(git_info.time, not_available)
-  end
 end

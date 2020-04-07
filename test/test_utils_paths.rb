@@ -14,7 +14,6 @@ class TestPaths < Test::Unit::TestCase
     assert_equal('test_workspace', ::Toolchain.content_path)
     ENV.delete('GITHUB_ACTIONS')
     ENV.delete('GITHUB_WORKSPACE')
-    assert_equal('test', ::Toolchain.content_path('test'))
   end
 
   def test_document_root
@@ -27,11 +26,9 @@ class TestPaths < Test::Unit::TestCase
     ENV['TOOLCHAIN_PATH'] = 'test_env'
     assert_equal('test_env', ::Toolchain.toolchain_path)
     ENV.delete('TOOLCHAIN_PATH')
-    assert_equal('test', ::Toolchain.toolchain_path('test'))
   end
 
   def test_build_path
-    assert_equal('test', ::Toolchain.build_path('test'))
     config = { 'build' => { 'dir' => 'test_dir' } }
     with_tempfile(config.to_yaml) do |tf|
       ::Toolchain::ConfigManager.instance.load(tf)
@@ -40,7 +37,6 @@ class TestPaths < Test::Unit::TestCase
   end
 
   def test_html_path
-    assert_equal('test', ::Toolchain.html_path('test'))
     config = { 'build' => { 'html' => { 'dir' => 'test_html_dir' } } }
     with_tempfile(config.to_yaml) do |tf|
       ::Toolchain::ConfigManager.instance.load(tf)
