@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-07 10:12:39 +0200'>2020-04-07 10:12:39 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-07 14:10:52 +0200'>2020-04-07 14:10:52 +0200</time>
         
       </span>
     </div>
@@ -62,22 +62,22 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">65</span><small> lines of codes</small></div>
+              <div><span class="metric">70</span><small> lines of codes</small></div>
               <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">6.4</span><small> complexity/method</small></div>
-              <div><span class="metric">12</span><small> churn</small></div>
+              <div><span class="metric">6.8</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">38.39</span><small> complexity</small></div>
-              <div><span class="metric">0</span><small> duplications</small></div>
+              <div><span class="metric">40.72</span><small> complexity</small></div>
+              <div><span class="metric">32</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -101,19 +101,21 @@
 
 require_relative &#39;../config_manager.rb&#39;
 
+# Toolchain module
 module Toolchain
   ##
   # content_path
   # Returns path to content directory root.
   #
   def self.content_path
-    content_dir_path = Dir.pwd
-    content_dir_path = File.join(Dir.pwd, &#39;..&#39;) if File.basename(Dir.pwd) == &#39;toolchain&#39;
-    if ENV.key?(&#39;TOOLCHAIN_TEST&#39;) || ENV.key?(&#39;GITHUB_ACTIONS&#39;)
-      content_dir_path = ENV[&#39;GITHUB_WORKSPACE&#39;]
+    content_dir = Dir.pwd
+    dir = File.basename(Dir.pwd)
+    content_dir = dir if dir == &#39;toolchain&#39;
+
+    %w[GITHUB_WORKSPACE CONTENT_PATH].each do |envvar|
+      content_dir = ENV[envvar] if ENV.key?(envvar)
     end
-    content_dir_path = ENV[&#39;CONTENT_PATH&#39;] if ENV.key?(&#39;CONTENT_PATH&#39;)
-    return content_dir_path
+    return content_dir
   end
 
   ##
@@ -121,6 +123,7 @@ module Toolchain
   # Returns the root of content structure, i.e. where +index.adoc+ is located.
   #
   def self.document_root
+    return ENV[&#39;DOCUMENT_ROOT&#39;] if ENV.key?(&#39;DOCUMENT_ROOT&#39;)
     return File.join(content_path, &#39;content&#39;)
   end
 
@@ -129,17 +132,18 @@ module Toolchain
   # Returns path to toolchain root.
   #
   def self.toolchain_path
-    toolchain_dir_path = File.join(Dir.pwd, &#39;toolchain&#39;)
-    toolchain_dir_path = Dir.pwd unless File.exist?(toolchain_dir_path)
-    toolchain_dir_path = ENV[&#39;TOOLCHAIN_PATH&#39;] if ENV.key?(&#39;TOOLCHAIN_PATH&#39;)
-    return toolchain_dir_path
+    toolchain_dir = File.join(Dir.pwd, &#39;toolchain&#39;)
+    toolchain_dir = Dir.pwd unless Dir.exist?(toolchain_dir)
+    toolchain_dir = ENV[&#39;TOOLCHAIN_PATH&#39;] if ENV.key?(&#39;TOOLCHAIN_PATH&#39;)
+    return toolchain_dir
   end
 
   ##
   # build_path
   # Returns path to toolchain build directory.
   #
-  def self.build_path
+  def self.build_path<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="paths.html#L46" class="js-smell-location">0</a>                  <a href="paths.html#L55" class="js-smell-location">1</a>                  </div>  </li></ol>
+    return ENV[&#39;BUILD_PATH&#39;] if ENV.key?(&#39;BUILD_PATH&#39;)
     return ConfigManager.instance.get(&#39;build.dir&#39;)
   end
 
@@ -147,7 +151,7 @@ module Toolchain
   # html_path
   # Returns path to generated html files.
   #
-  def self.html_path(path = nil)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md" target="_blank"><b>UnusedParameters</b></a>        </span>      </div>      <span>Toolchain#self.html_path has unused parameter 'path'</span>          </div>  </li></ol>
+  def self.html_path<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="paths.html#L46" class="js-smell-location">0</a>                  <a href="paths.html#L55" class="js-smell-location">1</a>                  </div>  </li></ol>
     return ENV[&#39;HTML_DIR&#39;] if ENV.key?(&#39;HTML_DIR&#39;)
     return ConfigManager.instance.get(&#39;build.html.dir&#39;)
   end
@@ -158,6 +162,7 @@ module Toolchain
   # in the content repository.
   #
   def self.custom_dir
+    return ENV[&#39;CUSTOM_DIR&#39;] if ENV.key?(&#39;CUSTOM_DIR&#39;)
     return File.join(content_path,
       ConfigManager.instance.get(&#39;custom.dir&#39;) || &#39;&#39;)
   end

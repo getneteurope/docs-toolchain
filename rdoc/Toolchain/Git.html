@@ -72,6 +72,8 @@
     
     <li ><a href="#method-c-parse_ref">::parse_ref</a>
     
+    <li ><a href="#method-c-time_format">::time_format</a>
+    
   </ul>
 </div>
 
@@ -144,7 +146,7 @@
 
           
           <div class="method-source-code" id="generate_info-source">
-            <pre><span class="ruby-comment"># File lib/utils/git.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/utils/git.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">generate_info</span>
   <span class="ruby-identifier">content_path</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span>.<span class="ruby-identifier">content_path</span>
 
@@ -155,16 +157,13 @@
     <span class="ruby-identifier">head</span> = <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">object</span>(<span class="ruby-string">&#39;HEAD&#39;</span>).<span class="ruby-identifier">sha</span>
     <span class="ruby-identifier">commit</span> = <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">gcommit</span>(<span class="ruby-identifier">head</span>)
     <span class="ruby-identifier">author</span> = <span class="ruby-identifier">commit</span>.<span class="ruby-identifier">author</span>
-    <span class="ruby-identifier">branch</span> = <span class="ruby-identifier">parse_ref</span>(
-      <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_REPOSITORY&#39;</span>],
-      <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">remote</span>(<span class="ruby-string">&#39;origin&#39;</span>)
-    ) <span class="ruby-operator">||</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">revparse</span>(<span class="ruby-identifier">commit</span>.<span class="ruby-identifier">sha</span>)
+    <span class="ruby-identifier">branch</span> = <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">current_branch</span>
 
     <span class="ruby-identifier">git_info</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(
       <span class="ruby-value">author:</span> <span class="ruby-node">&quot;#{author.name} &lt;#{author.email}&gt;&quot;</span>,
       <span class="ruby-value">commit:</span> <span class="ruby-identifier">commit</span>.<span class="ruby-identifier">sha</span>,
       <span class="ruby-value">branch:</span> <span class="ruby-identifier">branch</span>.<span class="ruby-identifier">to_s</span>,
-      <span class="ruby-value">time:</span> <span class="ruby-identifier">commit</span>.<span class="ruby-identifier">date</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%H:%M %d.%m.%Y&#39;</span>)
+      <span class="ruby-value">time:</span> <span class="ruby-identifier">commit</span>.<span class="ruby-identifier">date</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">time_format</span>)
     )
   <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">_e</span>
     <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;GIT&#39;</span>, <span class="ruby-node">&quot;Error opening Git repository at #{content_path}&quot;</span>)
@@ -209,13 +208,46 @@
 
           
           <div class="method-source-code" id="parse_ref-source">
-            <pre><span class="ruby-comment"># File lib/utils/git.rb, line 23</span>
+            <pre><span class="ruby-comment"># File lib/utils/git.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">parse_ref</span>(<span class="ruby-identifier">ref</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_REF&#39;</span>], <span class="ruby-identifier">fallback</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">fallback</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ref</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;/&#39;</span>).<span class="ruby-identifier">last</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">count</span>(<span class="ruby-string">&#39;/&#39;</span>).<span class="ruby-identifier">zero?</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">ref</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-time_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">time_format</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the time format used by <code>Toolchain::Git</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="time_format-source">
+            <pre><span class="ruby-comment"># File lib/utils/git.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">time_format</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-string">&#39;%H:%M:%S %d.%m.%Y&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
