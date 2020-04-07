@@ -63,7 +63,8 @@ module Toolchain
             id: id,
             level: level,
             label: nil,
-            title: title.gsub(/<\/?[^>]*>/, ''), # remove style tags that asciidoctor leaves in titles
+            # remove style tags that asciidoctor leaves in titles
+            title: title.gsub(%r{<\/?[^>]*>}, ''),
             parent: nil,
             parents: [],
             children: []
@@ -83,8 +84,8 @@ module Toolchain
             title = sect.title
             next if title.nil?
             current.parents << title
-            current.label = title if ['REST', 'WPP v1', 'WPP v2'].any? do |keyword|
-              title.include?(keyword)
+            current.label = title if ['REST', 'WPP v1', 'WPP v2'].any? do |kw|
+              title.include?(kw)
             end
           end
           # replace parent object now with it's id to avoid loops
@@ -105,8 +106,11 @@ module Toolchain
 
         # create Nokogiri HTML document Object from TOC tree
         # class and id same as default asciidoctor html5 converter with enabled TOC for drop-in replacement
-        toc_html_dom = Nokogiri::HTML.fragment('<div id="toc" class="toc2"></div>' + "\n")
-        toc_html_dom.at_css('#toc') << generate_html_from_toc(toc_openstruct.children)
+        toc_html_dom = Nokogiri::HTML.fragment(
+          '<div id="toc" class="toc2"></div>' + "\n")
+
+        toc_html_dom.at_css('#toc') << generate_html_from_toc(
+          toc_openstruct.children)
 
         # convert Nokogiri HTML Object to string
         toc_html_string = toc_html_dom.to_xhtml(indent: 3)
@@ -123,7 +127,7 @@ module Toolchain
       #
       def tick_toc_checkboxes(page_id, toc_document)
         selector = '#toc_li_' + page_id
-        list_element = toc_document.at_css selector
+        list_element = toc_document.at_css(selector)
         while list_element
           break unless list_element.name == 'li'
           begin

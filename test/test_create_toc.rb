@@ -7,12 +7,11 @@ require_relative './util.rb'
 require_relative '../lib/utils/create_toc.rb'
 require_relative '../lib/utils/hash.rb'
 
+##
+# Tests TOC creation with sample document
+#
 class TestCreateTOC < Test::Unit::TestCase
-  ##
-  # Tests TOC creation with sample document
-  #
-  def test_create_toc
-    adoc_content = '= Test IDs
+  CONTENT = '= Test IDs
 
 [#level_one]
 == First 1
@@ -65,18 +64,25 @@ Sensing a pattern here?
 
 [discrete]
 === Hide me senpai
-    '
-    adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
+  '
+
+  def test_create_toc
+    adoc = init(CONTENT, "#{self.class.name}_#{__method__}")
     ::Toolchain::ConfigManager.instance.load
     json_filepath, html_filepath, = ::Toolchain::Adoc::CreateTOC.new.run(adoc.parsed)
 
     # Test JSON file
     toc_object = JSON.parse(File.read(json_filepath))
-    assert_equal('Getting sectioned at 5', toc_object['children'][2]['children'][0]['children'][0]['children'][0]['title'])
+    assert_equal('Getting sectioned at 5',
+      toc_object['children'][2]['children'][0]['children'][0]['children'][0]['title'])
 
     # Test HTML file
     toc_document = Nokogiri::HTML.fragment(File.read(html_filepath))
-    assert_equal('level_two.html', toc_document.css('div#toc > ul > li#toc_li_level_two > input + label > a').attribute('href').value)
+    href = toc_document.css(
+      'div#toc > ul > li#toc_li_level_two > input + label > a'
+    ).attribute('href').value
+
+    assert_equal('level_two.html', href)
 
     # Test hierarchy level attribute
     assert_equal('5', toc_document.css('li#toc_li_level_six').attribute('data-level').value)
@@ -86,5 +92,25 @@ Sensing a pattern here?
     assert_nil(toc_document.at_css('#toc_cb_level_three').attributes['checked'])
     assert_not_nil(toc_document.at_css('#toc_cb_level_three_again').attributes['checked'])
     assert_not_nil(toc_document.at_css('#toc_cb_level_two_again').attributes['checked'])
+  end
+
+  def test_create_toc_fail_silently
+    adoc = init(CONTENT, "#{self.class.name}_#{__method__}")
+    ::Toolchain::ConfigManager.instance.load
+    json_filepath, html_filepath, = ::Toolchain::Adoc::CreateTOC.new.run(adoc.parsed)
+
+
+    # Test HTML file
+    toc_document = Nokogiri::HTML.fragment(File.read(html_filepath))
+    toc_original = toc_document.dup
+    # removing the input tag under li will force an exception in tick_toc_checkboxes
+    elem = toc_document.css('li#toc_li_level_five > input')
+    elem.remove
+
+    # Test if exceptions are caught and the methods fails silently
+    assert_nothing_raised(StandardError) do
+      ticked_toc = ::Toolchain::Adoc::CreateTOC.new
+        .tick_toc_checkboxes('level_six', toc_document)
+    end
   end
 end
