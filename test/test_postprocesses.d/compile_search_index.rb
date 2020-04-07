@@ -6,6 +6,11 @@ require 'json'
 require_relative '../../lib/post.d/compile_search_index.rb'
 require_relative '../util.rb'
 
+class Toolchain::Post::CompileSearchIndex
+  attr_reader :nodes
+  attr_writer :nodes
+end
+
 class TestCompileSearchIndex < Test::Unit::TestCase
   ##
   # Creates lunr index json from an adoc file with include(s)
@@ -40,5 +45,19 @@ class TestCompileSearchIndex < Test::Unit::TestCase
     toc = JSON.parse(File.read(File.join(__dir__, 'toc.json')))
     nodes = Toolchain::TableOfContent.convert_nodes(toc)
     ref = File.read(File.join(__dir__, 'nodes.ref.json'))
+  end
+
+  def test_get_label
+    obj = Toolchain::Post::CompileSearchIndex.new
+    obj.nodes = JSON.parse(File.read(File.join(__dir__, 'nodes.ref.json')))
+    assert_nil(obj.get('first', :label))
+    assert_nil(obj.get('notexisting', :label))
+  end
+
+  def test_parent_sections
+    obj = Toolchain::Post::CompileSearchIndex.new
+    obj.nodes = JSON.parse(File.read(File.join(__dir__, 'nodes.ref.json')))
+    assert_equal(['Second Section'], obj.get('_sample_switch', :parents))
+    assert_nil(obj.get('notexisting', :parents))
   end
 end

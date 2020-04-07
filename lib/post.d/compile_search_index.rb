@@ -50,6 +50,16 @@ module Toolchain
       end
 
       ##
+      # Get the value for key +field+ for this section given the section id +id+.
+      # Returns the label, if there is one, +nil+ otherwise.
+      def get(id, field)
+        entry = @nodes[id]
+        return nil if entry.nil?
+        return entry[field.to_s]
+      end
+
+
+      ##
       # Takes a single HTML file or a list of HTML files (+html+).
       # If not provided, the HTML will be inferred from +$CONTENT_PATH+.
       #
@@ -112,25 +122,6 @@ module Toolchain
       end
 
       ##
-      # Get the parents sections of a section given the section id +id+.
-      # Returns a descending array of parent sections,
-      # starting with the highest level.
-      def _get_parent_sections(id)
-        entry = @nodes[id]
-        return nil if entry.nil?
-        return entry['parents']
-      end
-
-      ##
-      # Get the label for this section given the section id +id+.
-      # Returns the label, if there is one, +nil+ otherwise.
-      def _get_label(id)
-        entry = @nodes[id]
-        return nil if entry.nil?
-        return entry['label']
-      end
-
-      ##
       # Parse a single HTML file +html_file+.
       # This will convert the document to a Nokogiri object and
       # parse each section.
@@ -164,8 +155,8 @@ module Toolchain
         body = ps.map(&:content).join.gsub(/\R+/, ' ') # sub newline for space
         file = File.basename(filename)
 
-        parents = _get_parent_sections(ref)
-        label = _get_label(ref)
+        parents = get(ref, :parents)
+        label = get(ref, :label)
 
         # format body
         if body.size > @paragraph_max_length
