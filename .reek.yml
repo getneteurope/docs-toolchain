@@ -3,6 +3,9 @@
 
 detectors:
 
+  BooleanParameter:
+    enabled: false
+
   ClassVariable:
     exclude:
       - lib/notify/*.rb
@@ -16,14 +19,34 @@ detectors:
   FeatureEnvy:
     enabled: false
 
+  IrresponsibleModule:
+    exclude:
+      - Toolchain
+      - Hash
+      - String
+
+  LongParameterList:
+    max_params: 5
+
+  NestedIterators:
+    max_allowed_nesting: 3
+
   NilCheck:
     enabled: false
 
   TooManyStatements:
     enabled: false
 
+  TooManyMethods:
+    exclude:
+      - String
+
   UncommunicativeVariableName:
     enabled: false
 
+  UtilityFunction:
+    enabled: false
+
 exclude_paths:
-  - test/**/*.rb
+  - test/
+  - adoc-extensions.d/multipage_html5.rb

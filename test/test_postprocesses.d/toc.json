@@ -1,0 +1,53 @@
+{
+    "id": "root",
+    "level": -1,
+    "children": [
+        {
+            "id": "first",
+            "level": 1,
+            "label": null,
+            "title": "First Section",
+            "parent": "root",
+            "parents": [],
+            "children": [],
+            "founder": "first"
+        },
+        {
+            "id": "second",
+            "level": 1,
+            "label": null,
+            "title": "Second Section",
+            "parent": "root",
+            "parents": [
+
+            ],
+            "children": [
+                {
+                    "id": "admonitions_and_icons",
+                    "level": 2,
+                    "label": null,
+                    "title": "Admonitions and Icons",
+                    "parent": "second",
+                    "parents": [
+                        "Second Section"
+                    ],
+                    "children": [],
+                    "founder": "admonitions_and_icons"
+                },
+                {
+                    "id": "_sample_switch",
+                    "level": 2,
+                    "label": null,
+                    "title": "Sample Switch",
+                    "parent": "second",
+                    "parents": [
+                        "Second Section"
+                    ],
+                    "children": [],
+                    "founder": "_sample_switch"
+                }
+            ],
+            "founder": "second"
+        }
+    ]
+}

@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../../lib/extensions.d/pattern_blacklist.rb'
+require_relative '../util.rb'
 
 class TestPatternBlacklist < Test::Unit::TestCase
   def test_pattern_blacklist

@@ -41,7 +41,7 @@ module Toolchain
       stage_log(:build, 'HTML5 Multipage Backend loaded')
       require File.join(
         File.expand_path(::Toolchain.toolchain_path),
-        'lib/adoc-extensions.d/multipage_html5.rb'
+        'adoc-extensions.d/multipage_html5.rb'
       )
 
       options = {

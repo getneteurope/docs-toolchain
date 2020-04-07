@@ -1,4 +1,4 @@
 files:
   excluded:
-    - lib/adoc-extensions.d/multipage_html5.rb
+    - adoc-extensions.d/multipage_html5.rb
     - lib/utils/string.rb

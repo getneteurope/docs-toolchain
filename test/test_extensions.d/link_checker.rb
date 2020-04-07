@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../../lib/extensions.d/link_checker.rb'
+require_relative '../util.rb'
 
 class TestLinkChecker < Test::Unit::TestCase
   def test_links

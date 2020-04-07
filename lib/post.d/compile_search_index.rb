@@ -12,6 +12,23 @@ require 'v8'
 require 'json'
 
 module Toolchain
+  # Module for Table of Content utility functions.
+  module TableOfContent
+    ##
+    # Build toc entry tree from +entry+ and fill +nodes+ with entries.
+    # Returns nothing.
+    def self.convert_nodes(entry, nodes = {})
+      return nodes if entry.nil? || entry.size.zero?
+
+      nodes[entry['id']] = entry.only(%w[parents label]) unless
+        entry['level'] == -1
+      entry['children'].each do |e|
+        convert_nodes(e, nodes)
+      end
+      return nodes
+    end
+  end
+
   ##
   # Adds modules for postprocessing files.
   module Post
@@ -33,6 +50,16 @@ module Toolchain
       end
 
       ##
+      # Get the value for key +field+ for this section given the section id +id+.
+      # Returns the label, if there is one, +nil+ otherwise.
+      def get(id, field)
+        entry = @nodes[id]
+        return nil if entry.nil?
+        return entry[field.to_s]
+      end
+
+
+      ##
       # Takes a single HTML file or a list of HTML files (+html+).
       # If not provided, the HTML will be inferred from +$CONTENT_PATH+.
       #
@@ -40,26 +67,13 @@ module Toolchain
       #
       # Returns JSON search index for lunr
       #
-      def run(html = nil, outfile: nil, dbfile: nil)
-        htmls = if html.nil?
-                  Dir[File.join(Toolchain.build_path, 'html', '*.html')]
-                else
-                  (html.is_a?(Array) ? html : [html])
-                end
+      def run(outfile: nil, dbfile: nil)
+        htmls = Dir[File.join(Toolchain.html_path, '*.html')]
 
         stage_log(:post, "Running #{self.class.name} on #{htmls.length} files")
-        stage_log(:post, "Parse #{@toc_file} as Table of Content")
         toc_orig = ::JSON.parse(File.read(@toc_file))
 
-        # build toc entry tree
-        def add_to_toc(entry)
-          return if entry.nil? || entry.size.zero?
-          @nodes[entry['id']] = entry.only(%w[parents label]) unless entry['level'] == -1
-          entry['children'].each do |e|
-            add_to_toc(e)
-          end
-        end
-        add_to_toc(toc_orig)
+        @nodes = TableOfContent.convert_nodes(toc_orig)
 
         # exclude certain files, defined in the yaml config
         ConfigManager.instance.get('search.exclude').each do |pattern|
@@ -108,25 +122,6 @@ module Toolchain
       end
 
       ##
-      # Get the parents sections of a section given the section id +id+.
-      # Returns a descending array of parent sections,
-      # starting with the highest level.
-      def _get_parent_sections(id)
-        entry = @nodes[id]
-        return nil if entry.nil?
-        return entry['parents']
-      end
-
-      ##
-      # Get the label for this section given the section id +id+.
-      # Returns the label, if there is one, +nil+ otherwise.
-      def _get_label(id)
-        entry = @nodes[id]
-        return nil if entry.nil?
-        return entry['label']
-      end
-
-      ##
       # Parse a single HTML file +html_file+.
       # This will convert the document to a Nokogiri object and
       # parse each section.
@@ -160,8 +155,8 @@ module Toolchain
         body = ps.map(&:content).join.gsub(/\R+/, ' ') # sub newline for space
         file = File.basename(filename)
 
-        parents = _get_parent_sections(ref)
-        label = _get_label(ref)
+        parents = get(ref, :parents)
+        label = get(ref, :label)
 
         # format body
         if body.size > @paragraph_max_length
@@ -229,4 +224,5 @@ module Toolchain
   end
 end
 
-Toolchain::PostProcessManager.instance.register(Toolchain::Post::CompileSearchIndex.new)
+Toolchain::PostProcessManager.instance.register(
+  Toolchain::Post::CompileSearchIndex.new)

@@ -17,7 +17,7 @@ require_relative '../utils/string.rb'
 #
 # Returns nothing.
 def log(tag, msg, color = :blue, bold = false, stream: $stdout)
-  return if ENV.key?('UNITTEST') && !ENV.key?('DEBUG')
+  return if ENV.key?('UNITTEST')
 
   tag = colorize(tag, color)
   tag_line = "[#{Time.now.strftime('%H:%M:%S')}]::#{tag} =>".bold

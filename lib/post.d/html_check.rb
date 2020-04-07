@@ -57,9 +57,8 @@ module Toolchain
 end
 
 unless ENV.key?('FAST') || ENV.key?('SKIP_HTMLCHECK')
-  Toolchain::PostProcessManager
-    .instance.register(Toolchain::Post::HTMLTest.new)
-
+  Toolchain::PostProcessManager .instance.register(
+    Toolchain::Post::HTMLTest.new)
   #   Toolchain::PostProcessManager
   #     .instance.register(Toolchain::Post::HTMLCheck.new)
 end

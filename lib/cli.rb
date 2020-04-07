@@ -54,23 +54,23 @@ Defaults:
       ##
       # Parse arguments given as +argv+.
       #
-      # Returns hash containing all options as key=value pairs and the parser object.
+      # Returns hash containing all options as key=value pairs
+      # and the parser object.
       def self.parse_args(argv = ARGV)
-        args = { help: false, debug: false, index: nil, files: [] }
+        args = { help: false, debug: false, index: nil }
 
         opt_parser = OptionParser.new do |parser|
-          parser.banner = 'Usage: main.rb [options] [--index INDEX | --file FILE [--file FILE ...]]
+          parser.banner =
+            'Usage: main.rb [options] [--index INDEX]
 Default: index file is \'content/index.adoc\''
 
           parser.on('-d', '--debug', 'enable debug mode') do
             args[:debug] = true
           end
 
-          parser.on('-iINDEX', '--index INDEX', 'specify an index file') do |index|
+          parser.on('-iINDEX', '--index INDEX',
+            'specify an index file') do |index|
             args[:index] = index
-          end
-          parser.on('-fFILE', '--file FILE', 'specify multiple files instead of one index file') do |file|
-            args[:files] << file
           end
 
           parser.on('-h', '--help', 'print this help') do
@@ -78,9 +78,6 @@ Default: index file is \'content/index.adoc\''
           end
         end
         opt_parser.parse!(argv)
-
-        err_msg = 'Cannot provide "file" and "index" arguments simultaneously. Pick one!'
-        raise ArgumentError, err_msg if args[:index] && !args[:files].empty?
 
         return OpenStruct.new(args), opt_parser
       end

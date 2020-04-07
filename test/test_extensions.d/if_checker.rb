@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../../lib/extensions.d/if_checker.rb'
+require_relative '../util.rb'
 
 class TestIfChecker < Test::Unit::TestCase
   def test_simple_if

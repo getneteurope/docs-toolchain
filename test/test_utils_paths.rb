@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../lib/utils/paths.rb'
+require_relative './util.rb'
 
 class TestPaths < Test::Unit::TestCase
   def test_content_path

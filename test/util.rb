@@ -1,5 +1,24 @@
 # frozen_string_literal: true
 
+# UNIT TESTING COVERAGE
+if ENV.key?('UTIL_SIMPLECOV')
+  require 'simplecov'
+  require 'simplecov-lcov'
+
+  SimpleCov::Formatter::LcovFormatter.config do |config|
+    config.report_with_single_file = true
+    config.single_report_path = 'coverage/lcov/docs-toolchain.lcov'
+  end
+
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::LcovFormatter
+  ])
+
+  SimpleCov.start
+end
+# END - UNIT TESTING COVERAGE
+
 require 'asciidoctor'
 require_relative '../lib/utils/adoc.rb'
 

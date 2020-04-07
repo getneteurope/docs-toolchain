@@ -40,7 +40,7 @@
 
 require 'asciidoctor/converter/html5'
 require 'nokogiri'
-require_relative '../utils/create_toc.rb'
+require_relative '../lib/utils/create_toc.rb'
 
 # HTML5 Multipage Converter adapted Asciidoctor::AbstractBlock
 class Asciidoctor::AbstractBlock

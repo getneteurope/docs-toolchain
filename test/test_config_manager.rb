@@ -24,6 +24,23 @@ class TestConfigManager < Test::Unit::TestCase
     assert_equal(CONFIG, Toolchain::ConfigManager.instance.get)
   end
 
+  def test_load_fallback
+    Dir.mktmpdir do |tmpdir|
+      config = File.join(tmpdir, 'config', 'default.yaml')
+      Dir.mkdir(File.dirname(config))
+      File.open(config, 'w+') do |conf|
+        conf.puts(CONFIG.to_yaml)
+      end
+
+      Toolchain::ConfigManager.instance.clear
+      # force fallback config
+      ENV['TOOLCHAIN_PATH'] = tmpdir
+      Toolchain::ConfigManager.instance.load('filethatdoesnotexist')
+      ENV.delete('TOOLCHAIN_PATH')
+    end
+    assert_equal(CONFIG, Toolchain::ConfigManager.instance.get)
+  end
+
   def test_update
     update = { 'a' => { 'f' => 'g' }, 'd' => 'h' }
     ref = { 'a' => { 'b' => 'c', 'f' => 'g' }, 'd' => 'h' }
@@ -43,6 +60,7 @@ class TestConfigManager < Test::Unit::TestCase
   end
 
   def test_clear
+    assert_not_nil(Toolchain::ConfigManager.instance.get)
     Toolchain::ConfigManager.instance.clear
     assert_nil(Toolchain::ConfigManager.instance.get)
   end

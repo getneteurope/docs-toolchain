@@ -24,14 +24,6 @@ def main(argv = ARGV)
   ### Print loaded modules
   print_loaded_extensions if args.debug
 
-  ### Run on file arguments
-  files = args.files
-  unless files.empty?
-    stage_log(:test, "Running file checks on file set: #{files}")
-    stage_log(:test, 'Will exit after this.')
-    test_files(files) # will exit if run
-  end
-
   ### Run checks on default files
   index_adoc = args.index || DEFAULT_INDEX
   log('ARGS', args)

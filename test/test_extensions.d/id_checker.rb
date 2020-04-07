@@ -2,6 +2,7 @@
 
 require 'test/unit'
 require_relative '../../lib/extensions.d/id_checker.rb'
+require_relative '../util.rb'
 
 class TestIDChecker < Test::Unit::TestCase
   def test_short_ids
