@@ -69,12 +69,10 @@ module Toolchain
         root = ::Toolchain.build_path
         blob_name = path.include?('footer') ? 'footer' : 'header'
         js_blob_path = File.join(
-          root,
-          'js',
-          'blob_' + blob_name + '.js'
+          root, 'js', "blob_#{blob_name}.js"
         )
         js_blob_path_relative = js_blob_path
-          .delete_prefix(root + '/')
+          .delete_prefix("#{root}/")
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
