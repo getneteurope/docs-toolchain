@@ -4,6 +4,8 @@ require_relative '../process_manager.rb'
 require_relative '../base_process.rb'
 require 'nokogiri'
 require 'babel/transpiler'
+# toolchain
+require 'errors'
 
 module Toolchain
   module Pre
@@ -130,11 +132,14 @@ module Toolchain
       ##
       # Parses html file +path+ loking for javascript files
       #
-      # Returns +script_source_files+ array containing "src" attribute values of script
+      # Returns +script_source_files+ array containing "src" attribute
+      # values of script
+      #
       #   e.g. <script src="js/1.js"> --> ['js/1.js']
       def get_script_src_from_html_file(html_path)
         unless File.file?(html_path)
-          raise Exception.new("Could not read html file #{html_path}")
+          raise(::Toolchain::FileNotFound,
+            "Could not read html file #{html_path}")
         end
         doc = File.open(html_path) { |f| Nokogiri::HTML(f) }
         dir = File.dirname(html_path)

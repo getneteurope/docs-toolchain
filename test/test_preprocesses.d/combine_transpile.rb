@@ -4,6 +4,7 @@ require 'test/unit'
 require 'json'
 require_relative '../../lib/pre.d/combine_transpile_js.rb'
 require_relative '../util.rb'
+require 'errors'
 
 class TestJsCombineAndTranspile < Test::Unit::TestCase
   CONTENT = ['[1, 2, 3].map(n => n ** 2);', 'var [a,,b] = [1,2,3];']
@@ -71,5 +72,14 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
     assert_equal('"use strict";', result0.split(/\r?\n/).first, 'Prepends "use strict"')
     assert_match('[1, 2, 3].map(function (n) {', result0, 'Converts arrow lambda function')
     assert_match('return Math.pow(n, 2);', result0, 'Converts infix power (x ** 2) to Math.pow')
+  end
+
+  def test_missing
+    missing_files = OpenStruct.new(
+      'header' => '/tmp/adfasdfgadgadfa',
+      'footer' => '/tmp/agagdgfsdfgdfgd')
+    assert_raise(::Toolchain::FileNotFound) do
+      ::Toolchain::Pre::CombineAndTranspileJS.new.run(missing_files)
+    end
   end
 end
