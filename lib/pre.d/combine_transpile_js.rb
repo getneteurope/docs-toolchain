@@ -71,8 +71,7 @@ module Toolchain
         js_blob_path = File.join(
           root, 'js', "blob_#{blob_name}.js"
         )
-        js_blob_path_relative = js_blob_path
-          .delete_prefix("#{root}/")
+        js_blob_relpath = js_blob_path.delete_prefix("#{root}/")
         js_dir = File.dirname(js_blob_path)
         FileUtils.mkdir_p(js_dir) unless File.directory?(js_dir)
         File.open(js_blob_path, 'w+') { |file| file.puts(js_blob) }
@@ -86,8 +85,10 @@ module Toolchain
         end
 
         # replace last script tag with blob script tag
-        blob_script_tag = "<script src=\"#{js_blob_path_relative}\"></script>\n"
-        html_content_lines[script_tags_idx.pop] = blob_script_tag unless script_tags_idx.empty?
+        blob_script_tag = %(<script src=\"#{js_blob_relpath}\"></script>\n)
+        unless script_tags_idx.empty?
+          html_content_lines[script_tags_idx.pop] = blob_script_tag
+        end
 
         # remove all other script tags that use src attribute
         script_tags_idx.each { |i| html_content_lines[i] = nil }.reject(&:nil?)
@@ -97,7 +98,8 @@ module Toolchain
       end
 
       ##
-      # Replaces all js tags in an HTML file +html_path+ with a tag that includes one big blob JS.
+      # Replaces all js tags in an HTML file +html_path+ with a tag that
+      # includes one big blob JS.
       #
       # Returns an OpenStruct +{ html_path, html, js_blob_str, js_blob_path }+.
       #
