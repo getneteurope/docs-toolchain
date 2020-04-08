@@ -14,8 +14,8 @@ module Toolchain
 
       def initialize(priority = 0)
         super(priority)
-        @header_name_default = 'docinfo.html'
-        @footer_name_default = 'docinfo-footer.html'
+        @header_default = 'docinfo.html'
+        @footer_default = 'docinfo-footer.html'
       end
 
       ##
@@ -27,8 +27,10 @@ module Toolchain
       # Returns the results of the substitution.
       def run(filepaths = nil)
         root = ::Toolchain.build_path
-        header_path = filepaths.nil? ? File.join(root, @header_name_default) : filepaths.header
-        footer_path = filepaths.nil? ? File.join(root, @footer_name_default) : filepaths.footer
+        header_path =
+          filepaths.nil? ? File.join(root, @header_default) : filepaths.header
+        footer_path =
+          filepaths.nil? ? File.join(root, @footer_default) : filepaths.footer
         # js_header_files = Dir[content_path + '/js/header.js.d/*.js']
         results = []
         [header_path, footer_path].each do |docpath|
@@ -64,11 +66,7 @@ module Toolchain
       def replace_js_tags_with_blob(path, js_blob)
         # derive .js path from html filename
         # e.g. docinfo-footer.html => content/js/docinfo-footer.js
-        root = if ENV.key?('UNITTEST')
-                 File.dirname(path)
-               else
-                 ::Toolchain.build_path
-               end
+        root = ::Toolchain.build_path
         blob_name = path.include?('footer') ? 'footer' : 'header'
         js_blob_path = File.join(
           root,
