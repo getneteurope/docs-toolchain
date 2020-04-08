@@ -11,7 +11,7 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
   def setup
     js_header_files_paths = []
     CONTENT.each_with_index do |script, i|
-      js_header_files_paths << write_tempfile("js_header_#{i}.js", script).delete_prefix('/tmp/')
+      js_header_files_paths << write_tempfile("js/js_header_#{i}.js", script).delete_prefix('/tmp/')
     end
     html_header = '<script src="invalid-file.js"></script>' + "\n"
     js_header_files_paths.each do |path|
@@ -37,6 +37,11 @@ class TestJsCombineAndTranspile < Test::Unit::TestCase
     @docinfo_files_paths = OpenStruct.new(
       'header' => html_header_filepath, 'footer' => html_footer_filepath
     )
+    ENV['BUILD_PATH'] = '/tmp'
+  end
+
+  def teardown
+    ENV.delete('BUILD_PATH')
   end
 
   ##
