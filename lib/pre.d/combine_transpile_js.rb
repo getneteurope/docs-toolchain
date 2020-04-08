@@ -107,12 +107,20 @@ module Toolchain
       #
       def combine_and_replace_js(html_path)
         js_blob_str = combine_js(html_path)
-        js_blob_str = Babel::Transpiler.transform(js_blob_str)['code'] unless ENV.key?('UNITTEST')
-        # TODO: minify js blob. may be unnecessary using transport stream compression anyway
-        html_string, js_blob_path = replace_js_tags_with_blob(html_path, js_blob_str)
-        File.open(html_path, 'w+') do |file|
-          file.puts(html_string)
-        end unless js_blob_str.empty?
+        unless ENV.key?('NO_BABEL')
+          js_blob_str = Babel::Transpiler.transform(js_blob_str)['code']
+        end
+        # TODO: minify js blob.
+        # May be unnecessary using transport stream compression anyway
+        html_string, js_blob_path = replace_js_tags_with_blob(
+          html_path, js_blob_str)
+
+        unless js_blob_str.empty?
+          File.open(html_path, 'w+') do |file|
+            file.puts(html_string)
+          end
+        end
+
         return OpenStruct.new(
           html_path: html_path,
           html: html_string,
