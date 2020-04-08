@@ -23,7 +23,15 @@ require 'asciidoctor'
 require_relative '../lib/utils/adoc.rb'
 
 def write_tempfile(name, content, prefix: 'test_toolchain_', suffix: nil)
-  tempfile_path = File.join('/tmp', "#{prefix}#{name}#{suffix}")
+  dir = File.dirname(name)
+  basename = File.basename(name)
+
+  tempfile_path = File.join('/tmp', "#{prefix}#{basename}#{suffix}")
+  unless dir.nil? || dir == '.'
+    tempfile_path = File.join('/tmp', dir, "#{prefix}#{basename}#{suffix}")
+  end
+  FileUtils.mkdir_p(File.dirname(tempfile_path))
+
   tmp = File.open(tempfile_path, 'w+')
   begin
     tmp.write(content)
