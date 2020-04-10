@@ -31,7 +31,7 @@ module Toolchain
         htmls = [header_path, footer_path]
 
         htmls.each do |path|
-          stage_log('pre', "[JS Combine and Transpile] -> #{path}")
+          stage_log('pre', "[CombineJS] -> #{path}")
           begin
             unless File.file?(path)
               raise(::Toolchain::FileNotFound,
@@ -41,7 +41,7 @@ module Toolchain
             html = Nokogiri::HTML.fragment(File.read(path))
             combine_and_replace(html, path)
           rescue StandardError => e
-            log('ERROR', 'JS Combine and Transpile', :red)
+            log('ERROR', 'CombineJS', :red)
             log('ERROR', e.message, :red)
             raise e
           end

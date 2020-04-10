@@ -2,15 +2,23 @@
 
 require_relative '../process_manager.rb'
 require_relative '../base_process.rb'
-require_relative './combine_js.rb'
+require_relative '../log/log.rb'
 require 'babel/transpiler'
 # toolchain
 require 'errors'
 
 module Toolchain
   module Pre
+    ##
+    # Babel wrapper class for PreProcessing
+    #
     class TranspileJS < BaseProcess
+      ##
+      # Transpile all JS files using Babel.
+      # Ignore the path +js/vendor/+
+      #
       def run
+        stage_log('pre', '[TranspileJS] -> running')
         root = ::Toolchain.build_path
         js_files_glob = File.join(root, 'js', '*.js')
         Dir[js_files_glob].each do |js|
