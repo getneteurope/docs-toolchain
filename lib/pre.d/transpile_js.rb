@@ -14,7 +14,7 @@ module Toolchain
         root = ::Toolchain.build_path
         js_files_glob = File.join(root, 'js', '*.js')
         Dir[js_files_glob].each do |js|
-          js_code = File.open(js, 'r') { |f| f.read }
+          js_code = File.read(js)
           transpiled = Babel::Transpiler.transform(js_code)['code']
           File.open(js, 'w') { |f| f.puts(transpiled) }
         end
