@@ -29,9 +29,21 @@ class TestTranspileJS < Test::Unit::TestCase
 
   def test_run
     Toolchain::Pre::TranspileJS.new.run
-    Dir[File.join(@js_dir), '*.js'] do |jsfile|
+    Dir[File.join(@js_dir, '*.js')] do |jsfile|
       content = IO.readlines(jsfile, chomp: true)
       assert_equal('"use strict;"', content.first)
+    end
+  end
+
+  # Ignore JS files in subfolders.
+  def test_ignore
+    vendor_dir = File.join(@js_dir, 'vendor')
+    Dir.mkdir(vendor_dir)
+    FileUtils.mv(Dir[File.join(@js_dir, '*.js')], vendor_dir)
+    Toolchain::Pre::TranspileJS.new.run
+    Dir[File.join(@js_dir, '*.js')].zip(JS) do |jsfile, script|
+      content = File.read(jsfile)
+      assert_equal(script, content)
     end
   end
 end
