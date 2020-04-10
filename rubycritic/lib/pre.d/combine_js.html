@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ruby Critic - Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- StyleSheets -->
+    <link href="../../assets/stylesheets/bootstrap.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/stylesheets/font-awesome.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/stylesheets/prettify.custom_theme.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/stylesheets/application.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <header class="navbar navbar-default navbar-fixed-top">
+      <a href="#menu-toggle" class="btn btn-default hidden-lg visible-sm-* hidden-md visible-xs-* pull-left" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+      <a href="../../overview.html"><img src="../../assets/images/logo.png" alt="Ruby Critic Logo" title="Ruby Critic Logo" width="55"><span class="logo">RUBYCRITIC</span></a>
+      
+    </header>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <aside id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a href="../../overview.html" class="project-nav-item overview-nav"><i class="fa fa-dashboard"></i>Overview</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../code_index.html" class="project-nav-item code-index-nav"><i class="fa fa-code"></i>Code</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../smells_index.html" class="project-nav-item smells-index-nav"><i class="fa fa-warning"></i>Smells</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../simple_cov_index.html" class="project-nav-item coverage-index-nav"><i class="fa fa-umbrella"></i>Coverage</a>
+          </li>
+        </ul>
+      </aside>
+      <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+  <!--Page Title -->
+  <div class="Page_Title">
+    <div class="file-time">
+      <span class="committed-at">
+        
+          Updated <time class='js-timeago' datetime='2020-04-10 09:14:37 +0200'>2020-04-10 09:14:37 +0200</time>
+        
+      </span>
+    </div>
+    <div>
+      <h3><small>lib/pre.d /</small> combine_js.rb</h3>
+    </div>
+  </div>
+  <!--End Page Title -->
+  <div class="Content_Wrapper">
+    <!-- code detail -->
+    <div class="code-top-detail clearfix row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="rating c big">
+              C
+            </div>
+          </div>
+          <div class="code-statistics col-md-11">
+            <div class="col-md-3">
+              <div><span class="metric">140</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">18.2</span><small> complexity/method</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">91.13</span><small> complexity</small></div>
+              <div><span class="metric">20</span><small> duplications</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="code-tabs">
+          <ul class="nav nav-pills right-to-left">
+            <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
+            <li class="active">
+              <a href="#" id="toggle-smells" class="toggle-button button">
+                1
+                smell
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+require_relative &#39;../process_manager.rb&#39;
+require_relative &#39;../base_process.rb&#39;
+require &#39;nokogiri&#39;
+# toolchain
+require &#39;errors&#39;
+
+module Toolchain
+  module Pre
+    ##
+    # Adds modules for preprocessing files.
+    class CombineJS &lt; BaseProcess
+      def initialize(priority)
+        super(priority)
+        @header_default = &#39;docinfo.html&#39;
+        @footer_default = &#39;docinfo-footer.html&#39;
+      end
+
+      ##
+      # Combines JS files referenced in docinfo{,-footer}.html
+      # into a single .js file and then reinserts the combined
+      # file as script tags into the HTML files.
+      #
+      # Returns nothing.
+      #
+      def run
+        root = ::Toolchain.build_path
+        header_path = File.join(root, @header_default)
+        footer_path = File.join(root, @footer_default)
+        htmls = [header_path, footer_path]
+
+        htmls.each do |path|
+          stage_log(&#39;pre&#39;, &quot;[CombineJS] -&gt; #{path}&quot;)
+          begin
+            unless File.file?(path)
+              raise(::Toolchain::FileNotFound,
+                &quot;Could not find html file #{path}&quot;)
+            end
+
+            html = Nokogiri::HTML.fragment(File.read(path))
+            combine_and_replace(html, path)
+          rescue StandardError =&gt; e
+            log(&#39;ERROR&#39;, &#39;CombineJS&#39;, :red)
+            log(&#39;ERROR&#39;, e.message, :red)
+            raise e
+          end
+        end
+      end
+
+      ##
+      # Replaces all JS tags in an Nokogiri HTML object +html+ with
+      # one tag that includes one big blob JS.
+      #
+      # Overwrites the initial file at +path+.
+      #
+      # Returns nothing.
+      #
+      def combine_and_replace(html, path)
+        # returns nil if no tags were removed, e.g. nothing
+        # can be combined
+        html = combine_js(html, path)
+        return if html.nil? || html.to_s.empty?
+
+        # remove empty lines
+        idx = html.children.find_index do |c|
+          !c.to_s.strip.empty? # find first non-empty element
+        end
+        html.children.slice(0, idx).map(&amp;:remove)
+
+        # replace original HTML
+        File.open(path, &#39;w&#39;) do |file|
+          file.puts(html.to_html)
+        end
+      end
+
+      ##
+      # Combines JS files found in +html+ Nokogiri object,
+      # and writes the combined JS to a new file.
+      # Takes HTML file +path+ and +separator+.
+      #
+      # Returns blob file path +blob_path+ or +nil+ if no
+      # JS tags were found (i.e. nothing was combined).
+      #
+      def combine_js(html, path, separator = &quot;\n\n&quot;)
+        dir = File.dirname(path)
+        src_files = get_script_sources(html).map do |src|
+          File.join(dir, src)
+        end
+        return nil if src_files.empty?
+
+        blob = src_files.map do |js|
+          File.read(js)
+        end.join(separator)
+
+        root = File.dirname(src_files.first)
+        blob_file =
+          &quot;blob_#{path.include?(&#39;footer&#39;) ? &#39;footer&#39; : &#39;header&#39;}.js&quot;
+        js_blob_relpath = File.join(&#39;js&#39;, blob_file)
+        js_blob_path = File.join(root, blob_file)
+
+        File.open(js_blob_path, &#39;w+&#39;) do |blobfile|
+          blobfile.puts(blob)
+        end
+        html.add_child(%(&lt;script src=&quot;#{js_blob_relpath}&quot;&gt;&lt;/script&gt;))
+
+        return html
+      end
+
+      ##
+      # Take Nokogiri HTML +html+ and check for javascript files.
+      #
+      # Returns +js_files+ array containing +src+ attribute
+      # values of script.
+      #
+      #   e.g. &lt;script src=&quot;js/1.js&quot;&gt; --&gt; [&#39;js/1.js&#39;]
+      def get_script_sources(html)
+        delete_list = []
+        js_files = html.search(&#39;script&#39;).map do |tag|
+          next if tag.key?(&#39;noblob&#39;)
+          next unless tag.key?(&#39;src&#39;)
+          next unless tag.children.empty?
+          next if tag.attribute(&#39;src&#39;).value.start_with?(&#39;js/vendor&#39;)
+
+          delete_list &lt;&lt; tag
+          tag.attribute(&#39;src&#39;).value
+        end
+
+        delete_list.each(&amp;:remove)
+        return js_files.compact # remove nil
+      end
+    end
+  end
+end
+
+unless %w[FAST SKIP_JS SKIP_COMBINE].any? { |var| ENV.key?(var) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="combine_js.html#L136" class="js-smell-location">0</a>                  <a href="transpile_js.html#L35" class="js-smell-location">1</a>                  </div>  </li></ol>
+  # must have higher priority than TranspileJS
+  Toolchain::PreProcessManager.instance.register(
+    Toolchain::Pre::CombineJS.new(100))
+end
+</code>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScripts -->
+    <script src='../../assets/javascripts/jquery.min.js'></script>
+    <script src='../../assets/javascripts/jquery.tablesorter.min.js'></script>
+    <script src='../../assets/javascripts/jquery.scrollTo.min.js'></script>
+    <script src='../../assets/javascripts/jquery.timeago.js'></script>
+    <script src='../../assets/javascripts/highcharts.src-4.0.1.js'></script>
+    <script src='../../assets/javascripts/prettify.js'></script>
+    <script src='../../assets/javascripts/bootstrap.min.js'></script>
+    <script src='../../assets/javascripts/application.js'></script>
+    <script src='../../assets/javascripts/jquery.filtertable.min.js'></script>
+  </body>
+</html>

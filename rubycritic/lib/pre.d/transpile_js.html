@@ -47,12 +47,12 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-06 15:40:17 +0200'>2020-04-06 15:40:17 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-04-10 09:14:37 +0200'>2020-04-10 09:14:37 +0200</time>
         
       </span>
     </div>
     <div>
-      <h3><small>lib/post.d /</small> html_check.rb</h3>
+      <h3><small>lib/pre.d /</small> transpile_js.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,16 +68,16 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">64</span><small> lines of codes</small></div>
-              <div><span class="metric">4</span><small> methods</small></div>
+              <div><span class="metric">38</span><small> lines of codes</small></div>
+              <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.5</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">13.6</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">38.04</span><small> complexity</small></div>
-              <div><span class="metric">0</span><small> duplications</small></div>
+              <div><span class="metric">13.6</span><small> complexity</small></div>
+              <div><span class="metric">20</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
+                1
                 smell
               </a>
             </li>
@@ -99,67 +99,41 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require &#39;html-proofer&#39;
-require &#39;os&#39;
+require_relative &#39;../process_manager.rb&#39;
 require_relative &#39;../base_process.rb&#39;
-require_relative &#39;../utils/paths.rb&#39;
 require_relative &#39;../log/log.rb&#39;
+require &#39;babel/transpiler&#39;
+# toolchain
+require &#39;errors&#39;
 
 module Toolchain
-  ##
-  # Adds modules for postprocessing files.
-  module Post
+  module Pre
     ##
-    # Post process that runs HTML Proofer on the generated HTML documents.
-    class HTMLProofer &lt; BaseProcess
-      def initialize(priority = -10)
-        super(priority)
-      end
-
-      def run(directory = ::Toolchain.html_path)
-        ::HTMLProofer.check_directory(directory).run
-      rescue RuntimeError =&gt; e
-        stage_log(:post, &quot;#{self.class.name} ran into errors&quot;)
-        error(e.message)
-      end
-    end
-
-    ##
-    # Post process that runs HTML Proofer on the generated HTML documents.
-    class HTMLTest &lt; BaseProcess
-      def initialize(priority = -10)
-        super(priority)
-        @bin_dir = ::File.join(::Toolchain.toolchain_path, &#39;bin&#39;, &#39;ext&#39;)
-        @version = &#39;0.12.1&#39;
-        @arch = &#39;amd64&#39;
-      end
-
-      def run(directory = ::Toolchain.html_path)
-        os = nil
-        os = &#39;linux&#39; if OS.linux?
-        os = &#39;windows&#39; if OS.windows?
-        os = &#39;osx&#39; if OS.mac?
-        bin = ::File.join(
-          @bin_dir,
-          &quot;htmltest_#{@version}_#{os}_#{@arch}&quot;,
-          (os == &#39;windows&#39; ? &#39;htmltest.exe&#39; : &#39;htmltest&#39;)
-        )
-        unless os.nil? || OS.bits != 64
-          stage_log(:post, &quot;Running htmltest #{@version} as #{os}&quot;)
-          unless system(&quot;#{bin} #{directory}&quot;) # returns false if failed
-            ::Toolchain::PostProcessManager.instance.return_code
-          end
+    # Babel wrapper class for PreProcessing
+    #
+    class TranspileJS &lt; BaseProcess
+      ##
+      # Transpile all JS files using Babel.
+      # Ignore the path +js/vendor/+
+      #
+      def run
+        stage_log(&#39;pre&#39;, &#39;[TranspileJS] -&gt; running&#39;)
+        root = ::Toolchain.build_path
+        js_files_glob = File.join(root, &#39;js&#39;, &#39;*.js&#39;)
+        Dir[js_files_glob].each do |js|
+          js_code = File.read(js)
+          transpiled = Babel::Transpiler.transform(js_code)[&#39;code&#39;]
+          File.open(js, &#39;w&#39;) { |f| f.puts(transpiled) }
         end
       end
     end
   end
 end
 
-unless ENV.key?(&#39;FAST&#39;) || ENV.key?(&#39;SKIP_HTMLCHECK&#39;)
-  Toolchain::PostProcessManager .instance.register(
-    Toolchain::Post::HTMLTest.new)
-  #   Toolchain::PostProcessManager
-  #     .instance.register(Toolchain::Post::HTMLCheck.new)
+
+unless %w[FAST SKIP_JS SKIP_TRANSPILE].any? { |var| ENV.key?(var) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="combine_js.html#L136" class="js-smell-location">0</a>                  <a href="transpile_js.html#L35" class="js-smell-location">1</a>                  </div>  </li></ol>
+  Toolchain::PreProcessManager.instance.register(
+    Toolchain::Pre::TranspileJS.new(90))
 end
 </code>
   </div>
