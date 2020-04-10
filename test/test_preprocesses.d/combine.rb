@@ -3,6 +3,7 @@
 require 'test/unit'
 require 'json'
 require 'nokogiri'
+require 'fileutils'
 require_relative '../../lib/pre.d/combine_js.rb'
 require_relative '../util.rb'
 require 'errors'
