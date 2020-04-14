@@ -27,3 +27,5 @@ gem "os", "~> 1.0"
 gem "simplecov-lcov", "~> 0.8.0"
 
 gem "thread", "~> 0.2.2"
+
+gem "selenium-webdriver", "~> 3.142"
