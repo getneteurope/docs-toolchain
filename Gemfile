@@ -7,13 +7,18 @@ gem "coderay", "~> 1.1"
 gem 'asciidoctor-diagram', '~> 2.0.0'
 gem 'asciidoctor-pdf', '~> 1.5.0.beta.5'
 
+gem 'simplecov', '~> 0.18'
+gem "simplecov-lcov", "~> 0.8.0"
+gem "minitest", "~> 5.14"
+gem "minitest-color", "~> 0.0.2"
+
 gem "git", "~> 1.5"
 gem "json", "~> 2.3"
 gem "concurrent-ruby", "~> 1.1"
+gem "thread", "~> 0.2.2"
 
 gem "rubocop", "~> 0.69.0"
 gem 'rubycritic', '~> 4.3', '>= 4.3.1'
-gem 'simplecov', '~> 0.18'
 gem "inch", "~> 0.8.0"
 gem "rdoc", "~> 6.2"
 gem "pry", "~> 0.12.2"
@@ -24,8 +29,5 @@ gem "therubyracer"
 gem "html-proofer", "~> 3.15"
 gem "os", "~> 1.0"
 
-gem "simplecov-lcov", "~> 0.8.0"
-
-gem "thread", "~> 0.2.2"
-
 gem "selenium-webdriver", "~> 3.142"
+
