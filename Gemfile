@@ -13,17 +13,19 @@ gem "simplecov-lcov", "~> 0.8.0"
 gem "minitest", "~> 5.14"
 gem "minitest-color", "~> 0.0.2"
 
-gem "git", "~> 1.5"
-gem "json", "~> 2.3"
 gem "concurrent-ruby", "~> 1.1"
 gem "thread", "~> 0.2.2"
 
 gem "rubocop", "~> 0.69.0"
+gem "rubocop-performance", "~> 1.3"
+gem "rubocop-jekyll", "~> 0.11.0"
 gem 'rubycritic', '~> 4.3', '>= 4.3.1'
 gem "inch", "~> 0.8.0"
 gem "rdoc", "~> 6.2"
 gem "pry", "~> 0.12.2"
 
+gem "git", "~> 1.5"
+gem "json", "~> 2.3"
 gem "nokogiri", "~> 1.10.7"
 gem "babel-transpiler", "~> 0.7.0s"
 gem "therubyracer"
