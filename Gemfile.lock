@@ -102,6 +102,7 @@ GEM
       ruby-rc4
       ttfunk
     polyglot (0.3.5)
+    power_assert (1.1.7)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -168,6 +169,8 @@ GEM
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
+    test-unit (3.3.5)
+      power_assert
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -216,6 +219,7 @@ DEPENDENCIES
   selenium-webdriver (~> 3.142)
   simplecov (~> 0.18)
   simplecov-lcov (~> 0.8.0)
+  test-unit (~> 3.3)
   therubyracer
   thread (~> 0.2.2)
 

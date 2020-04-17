@@ -7,6 +7,7 @@ gem "coderay", "~> 1.1"
 gem 'asciidoctor-diagram', '~> 2.0.0'
 gem 'asciidoctor-pdf', '~> 1.5.0.beta.5'
 
+gem "test-unit", "~> 3.3"
 gem 'simplecov', '~> 0.18'
 gem "simplecov-lcov", "~> 0.8.0"
 gem "minitest", "~> 5.14"
@@ -30,4 +31,3 @@ gem "html-proofer", "~> 3.15"
 gem "os", "~> 1.0"
 
 gem "selenium-webdriver", "~> 3.142"
-
