@@ -103,6 +103,7 @@ namespace :toolchain do
 
   RuboCop::RakeTask.new(:lint) do |task|
     task.options = ['--fail-level', 'E']
+    task.patterns = ['lib/**/*.rb']
   end
 
   RubyCritic::RakeTask.new(:quality) do |task|

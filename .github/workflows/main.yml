@@ -20,27 +20,37 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
+
     - uses: actions/checkout@v1
+
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
 
     - name: "Install Gems"
       run: |
-        bash setup/setup.sh
+        gem install bundler
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
 
     - name: "Running unit tests"
       run: |
-        rake toolchain:test
+        bundle exec rake toolchain:test
 
     - name: "Linting"
       run: |
-        rake toolchain:lint
+        bundle exec rake toolchain:lint
 
     - name: "Generate rdoc"
       run: |
-        rake toolchain:rdoc
+        bundle exec rake toolchain:rdoc
 
     - name: "Quality check"
       run: |
-        rake toolchain:quality
+        bundle exec rake toolchain:quality
 
     - name: Coveralls
       uses: coverallsapp/github-action@master
