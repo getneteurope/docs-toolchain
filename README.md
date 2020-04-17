@@ -30,8 +30,11 @@ To run the toolchain locally, or run the unit tests, the following requirements 
 
 In order to install dependencies, run the following at the root of the project:
 ```bash
-bash stages/setup/setup_main.sh
+bundle install --jobs 4 --retry 3
+bundle exec rake -T
 ```
+
+**NOTE:** Use `bundle exec rake` to invoke `rake`.
 
 ### Build
 Building the content can be done one stage after another:
@@ -61,20 +64,18 @@ The toolchain is designed to run through different stages, that have specific re
       * `if` Checker
       * Link Checker
       * Pattern Checker
-    * [*future*] custom tests (`${CONTENT_REPO}/extensions.d/`)
+    * custom tests (`${CUSTOM_DIR}/extensions.d/`)
 3. **pre**:
   * combine Javascript files to BLOB file
   * transpile (cross-browser compatibility and loading speed)
 4. **build**:
   * invoke asciidoctor (with multipage converter)
-  * [*future*] run custom build scripts `build.d/*.sh`
   * [*future*] diagram integration
   * Table of Content injector
   * CodeRay source code highlighter
 5. **post**:
   * create Table of Content
   * create search index (Lunr)
-  * [*future*] trigger translation
 6. **deploy**:
   * [wirecard/s3-deploy](https://github.com/wirecard/s3-deploy)
   * [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
@@ -93,20 +94,19 @@ The toolchain is designed to run through different stages, that have specific re
 * `rake toolchain:inch:grade` or `rake toolchain:inch:suggest` runs `inch` on the code base
 
 #### Content (Stages)
-1. _No rake task:_ `bash setup/setup.sh`
+1. _No rake task:_ `bundle install --jobs 4 --retry 3`
 2. `rake docs:test`
 3. `rake docs:pre`
 4. `rake docs:build`
 5. `rake docs:post`
 6. _No rake task:_ Deployed by Github Action
-7. _No rake task:_ Separate Github Action
 
 **Additional tasks**
 * `rake docs:clean`: delete build directory and clean up
 * `rake docs:all`: run the stages `clean test pre build post`
 * `rake docs:list:<stage>`: list loaded extensions for a processing stage
-* `rake docs:list:pre`
-* `rake docs:list:post`
+  * `rake docs:list:pre`
+  * `rake docs:list:post`
 
 
 ### Environment Variables

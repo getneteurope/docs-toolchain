@@ -24,23 +24,23 @@ jobs:
 
     - name: "Install Gems"
       run: |
-        bash setup/setup.sh
+        bundle install --jobs 4 --retry 3
 
     - name: "Running unit tests"
       run: |
-        rake toolchain:test
+        bundle exec rake toolchain:test
 
     - name: "Linting"
       run: |
-        rake toolchain:lint
+        bundle exec rake toolchain:lint
 
     - name: "Generate rdoc"
       run: |
-        rake toolchain:rdoc
+        bundle exec rake toolchain:rdoc
 
     - name: "Quality check"
       run: |
-        rake toolchain:quality
+        bundle exec rake toolchain:quality
 
     - name: Coveralls
       uses: coverallsapp/github-action@master
