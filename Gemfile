@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem "rake", "~> 13.0"
+gem "json", "~> 2.3"
 
 gem 'asciidoctor', '~> 2.0.10'
 gem "coderay", "~> 1.1"
@@ -25,7 +26,6 @@ gem "rdoc", "~> 6.2"
 gem "pry", "~> 0.12.2"
 
 gem "git", "~> 1.5"
-gem "json", "~> 2.3"
 gem "nokogiri", "~> 1.10.7"
 gem "babel-transpiler", "~> 0.7.0s"
 gem "therubyracer"
