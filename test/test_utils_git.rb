@@ -4,6 +4,7 @@ require 'test/unit'
 require 'git'
 require 'date'
 require_relative './util.rb'
+require_relative '../lib/utils/git.rb'
 
 class TestGit < Test::Unit::TestCase
   def test_parse_ref
