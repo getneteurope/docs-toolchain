@@ -539,23 +539,27 @@ class MultipageHtml5Converter < Asciidoctor::Converter::Html5Converter
 
       # Process node according to mplevel
       if node.mplevel == :branch
+
+        # UPDATE: Disable link list
         # Retain any part intro blocks, delete others, and add a list
         # of sections for the part landing page.
-        chapters_list = Asciidoctor::List.new(node, :ulist)
-        node.blocks.delete_if do |block|
-          if block.context == :section
-            chapter = block
-            chapter.convert
-            text = %(<<#{chapter.id},#{chapter.captioned_title}>>)
-            # NOTE, there is a non-breaking space (Unicode U+00A0) below.
-            if desc = block.attr('desc') then text << %( – #{desc}) end
-            chapters_list << Asciidoctor::ListItem.new(chapters_list, text)
-            true
-          end
-        end
+        # chapters_list = Asciidoctor::List.new(node, :ulist)
+        # node.blocks.delete_if do |block|
+        #   if block.context == :section
+        #     chapter = block
+        #     chapter.convert
+        #     text = %(<<#{chapter.id},#{chapter.captioned_title}>>)
+        #     # NOTE, there is a non-breaking space (Unicode U+00A0) below.
+        #     if desc = block.attr('desc') then text << %( – #{desc}) end
+        #     chapters_list << Asciidoctor::ListItem.new(chapters_list, text)
+        #     true
+        #   end
+        # end
+
         # Add chapters list to node, reparent node to new page, add
         # node to page, mark as processed, and add page to @pages.
-        node << chapters_list
+        # UPDATE: Disable link list
+        # node << chapters_list
         reparent(node, page)
         page.blocks << node
       else # :leaf
