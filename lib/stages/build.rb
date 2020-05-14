@@ -87,10 +87,10 @@ module Toolchain
       # move assets to html/
       assets = %w[css js fonts images icons favicon.ico]
       assets.each do |asset|
-        stage_log(:build, "... Copying #{asset}")
         from = File.join(build_dir, asset)
         next unless File.file?(from) || Dir.exist?(from)
 
+        stage_log(:build, "... Copying #{asset} from #{from} to #{to}")
         to = File.join(html_dir, asset)
         FileUtils.mv(from, to, force: true)
       end
