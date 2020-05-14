@@ -24,6 +24,7 @@ module Toolchain
         Dir[js_files_glob].each do |js|
           js_code = File.read(js)
           transpiled = Babel::Transpiler.transform(js_code)['code']
+          stage_log('pre', '[TranspileJS] -> Transpiling ' + js)
           File.open(js, 'w') { |f| f.puts(transpiled) }
         end
       end
