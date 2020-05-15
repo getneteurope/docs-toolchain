@@ -24,11 +24,9 @@ end
 
 # TASKS
 namespace :docs do
-  @setup_done = false
-
   desc 'Run through all stages'
   task :all do
-    %w[clean test pre build post notify].each { |t| Rake::Task["docs:#{t}"].execute }
+    %w[clean test setup pre build post notify].each { |t| Rake::Task["docs:#{t}"].execute }
   end
 
   desc 'Run through all stages without checks and tests'
@@ -49,16 +47,18 @@ namespace :docs do
     call "bin/test.rb"
   end
 
+  desc 'Run setup stage'
+  task :setup do
+    Toolchain::Setup.setup()
+  end
+
   desc 'Run pre-processing stage'
   task :pre do
-    Toolchain::Setup.setup()
-    @setup_done = true
     call "bin/pre.rb"
   end
 
   desc 'Run build stage'
   task :build do
-    Toolchain::Setup.setup() unless @setup_done
     call "bin/build.rb"
   end
 
