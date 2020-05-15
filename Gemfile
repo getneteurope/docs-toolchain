@@ -27,7 +27,7 @@ gem "pry", "~> 0.12.2"
 
 gem "git", "~> 1.5"
 gem "nokogiri", "~> 1.10.7"
-gem "babel-transpiler", "~> 0.7.0s"
+gem "babel-transpiler", ">= 0.7.0", git: "https://github.com/isantoshsingh/ruby-babel-transpiler"
 gem "therubyracer"
 gem "html-proofer", "~> 3.15"
 gem "os", "~> 1.0"
