@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-05-14 15:29:05 +0200'>2020-05-14 15:29:05 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-05-20 14:22:17 +0200'>2020-05-20 14:22:17 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">38</span><small> lines of codes</small></div>
+              <div><span class="metric">40</span><small> lines of codes</small></div>
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">13.6</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">16.3</span><small> complexity/method</small></div>
+              <div><span class="metric">5</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">13.6</span><small> complexity</small></div>
+              <div><span class="metric">16.31</span><small> complexity</small></div>
               <div><span class="metric">20</span><small> duplications</small></div>
             </div>
           </div>
@@ -120,7 +120,9 @@ module Toolchain
         stage_log(&#39;pre&#39;, &#39;[TranspileJS] -&gt; running&#39;)
         root = ::Toolchain.build_path
         js_files_glob = File.join(root, &#39;js&#39;, &#39;*.js&#39;)
-        Dir[js_files_glob].each do |js|
+        # skip files that have notranspile in their filename
+        js_files = Dir[js_files_glob].reject{ |f| /\.notranspile\.js$/.match(f) }
+        js_files.each do |js|
           js_code = File.read(js)
           transpiled = Babel::Transpiler.transform(js_code)[&#39;code&#39;]
           File.open(js, &#39;w&#39;) { |f| f.puts(transpiled) }
@@ -131,7 +133,7 @@ module Toolchain
 end
 
 
-unless %w[FAST SKIP_JS SKIP_TRANSPILE].any? { |var| ENV.key?(var) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="combine_js.html#L136" class="js-smell-location">0</a>                  <a href="transpile_js.html#L35" class="js-smell-location">1</a>                  </div>  </li></ol>
+unless %w[FAST SKIP_JS SKIP_TRANSPILE].any? { |var| ENV.key?(var) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="combine_js.html#L136" class="js-smell-location">0</a>                  <a href="transpile_js.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
   Toolchain::PreProcessManager.instance.register(
     Toolchain::Pre::TranspileJS.new(90))
 end

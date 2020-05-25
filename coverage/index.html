@@ -14,7 +14,7 @@
       <img src="./assets/0.12.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-05-15T10:20:04+00:00">2020-05-15T10:20:04+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-05-25T12:13:45+00:00">2020-05-25T12:13:45+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -43,8 +43,8 @@
   </div>
 
   <div class="t-line-summary">
-    <b>716</b> relevant lines,
-    <span class="green"><b>716</b> lines covered</span> and
+    <b>717</b> relevant lines,
+    <span class="green"><b>717</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed. </span>
     (<span class="green">
   100.0%
@@ -216,11 +216,11 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#b0ca4f3717214158b9704a2195e2c20ce6c7218c" class="src_link" title="lib/pre.d/transpile_js.rb">lib/pre.d/transpile_js.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">38</td>
-            <td class="cell--number">18</td>
-            <td class="cell--number">18</td>
+            <td class="cell--number">40</td>
+            <td class="cell--number">19</td>
+            <td class="cell--number">19</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.67</td>
+            <td class="cell--number">1.79</td>
             
           </tr>
         
@@ -13297,8 +13297,8 @@
     
 
     <div class="t-line-summary">
-      <b>18</b> relevant lines.
-      <span class="green"><b>18</b> lines covered</span> and
+      <b>19</b> relevant lines.
+      <span class="green"><b>19</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
 
@@ -13563,24 +13563,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="24">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="24">
+            
             
 
             
 
-            <code class="ruby">        Dir[js_files_glob].each do |js|</code>
+            <code class="ruby">        # skip files that have notranspile in their filename</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="25">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="4" data-linenumber="25">
+            <span class="hits">4</span>
             
 
             
 
-            <code class="ruby">          js_code = File.read(js)</code>
+            <code class="ruby">        js_files = Dir[js_files_glob].reject{ |f| /\.notranspile\.js$/.match(f) }</code>
           </li>
         </div>
       
@@ -13591,12 +13591,34 @@
 
             
 
+            <code class="ruby">        js_files.each do |js|</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="27">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">          js_code = File.read(js)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="28">
+            <span class="hits">2</span>
+            
+
+            
+
             <code class="ruby">          transpiled = Babel::Transpiler.transform(js_code)[&#39;code&#39;]</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="27">
+          <li class="covered" data-hits="4" data-linenumber="29">
             <span class="hits">4</span>
             
 
@@ -13607,7 +13629,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="28">
+          <li class="never" data-hits="" data-linenumber="30">
             
             
 
@@ -13618,7 +13640,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="29">
+          <li class="never" data-hits="" data-linenumber="31">
             
             
 
@@ -13629,7 +13651,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="30">
+          <li class="never" data-hits="" data-linenumber="32">
             
             
 
@@ -13640,7 +13662,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="31">
+          <li class="never" data-hits="" data-linenumber="33">
             
             
 
@@ -13651,7 +13673,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="32">
+          <li class="never" data-hits="" data-linenumber="34">
             
             
 
@@ -13662,7 +13684,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="33">
+          <li class="never" data-hits="" data-linenumber="35">
             
             
 
@@ -13673,7 +13695,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="34">
+          <li class="never" data-hits="" data-linenumber="36">
             
             
 
@@ -13684,7 +13706,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="35">
+          <li class="covered" data-hits="4" data-linenumber="37">
             <span class="hits">4</span>
             
 
@@ -13695,7 +13717,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="36">
+          <li class="covered" data-hits="1" data-linenumber="38">
             <span class="hits">1</span>
             
 
@@ -13706,7 +13728,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
+          <li class="never" data-hits="" data-linenumber="39">
             
             
 
@@ -13717,7 +13739,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="38">
+          <li class="never" data-hits="" data-linenumber="40">
             
             
 

@@ -232,7 +232,7 @@ module Toolchain
   end
 end
 
-unless %w[FAST SKIP_JS SKIP_COMBINE].any? { |var| ENV.key?(var) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="combine_js.html#L136" class="js-smell-location">0</a>                  <a href="transpile_js.html#L35" class="js-smell-location">1</a>                  </div>  </li></ol>
+unless %w[FAST SKIP_JS SKIP_COMBINE].any? { |var| ENV.key?(var) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="combine_js.html#L136" class="js-smell-location">0</a>                  <a href="transpile_js.html#L37" class="js-smell-location">1</a>                  </div>  </li></ol>
   # must have higher priority than TranspileJS
   Toolchain::PreProcessManager.instance.register(
     Toolchain::Pre::CombineJS.new(100))
