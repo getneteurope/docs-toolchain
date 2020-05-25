@@ -21,7 +21,9 @@ module Toolchain
         stage_log('pre', '[TranspileJS] -> running')
         root = ::Toolchain.build_path
         js_files_glob = File.join(root, 'js', '*.js')
-        Dir[js_files_glob].each do |js|
+        # skip files that have notranspile in their filename
+        js_files = Dir[js_files_glob].reject{ |f| /\.notranspile\.js$/.match(f) }
+        js_files.each do |js|
           js_code = File.read(js)
           transpiled = Babel::Transpiler.transform(js_code)['code']
           File.open(js, 'w') { |f| f.puts(transpiled) }
