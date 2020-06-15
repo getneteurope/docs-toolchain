@@ -16,6 +16,15 @@ module Toolchain
     #
     def self.load_doc(filename, attribs = {'root' => Toolchain.build_path})
       root = attribs['root']
+      parsed_shortcuts = ::Asciidoctor.load_file(
+        File.join(root, 'shortcuts.adoc'),
+        catalog_assets: true,
+        sourcemap: true,
+        safe: :unsafe,
+        parse: true,
+        attributes: attribs
+      )
+      attribs = collect_attributes(parsed_shortcuts, attribs)
       if filename.start_with?('/')
         root = File.dirname(filename)
         attribs['root'] = root
@@ -37,17 +46,7 @@ module Toolchain
         parse: true,
         attributes: attribs
       )
-      parsed_shortcuts = ::Asciidoctor.load_file(
-        File.join(root, 'shortcuts.adoc'),
-        catalog_assets: true,
-        sourcemap: true,
-        safe: :unsafe,
-        parse: true,
-        attributes: attribs
-      )
-      # add attribute from shortcuts to all files to avoid messing up test results
-      attributes = collect_attributes(parsed_shortcuts, attribs)
-      attributes = attributes.merge(collect_attributes(parsed, attribs))
+      attributes = collect_attributes(parsed, attribs)
 
       adoc = ::OpenStruct.new(
         original: original,
