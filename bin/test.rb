@@ -4,6 +4,7 @@
 require 'asciidoctor'
 require_relative '../lib/stages/test.rb'
 require_relative '../lib/utils/adoc.rb'
+require_relative '../lib/config_manager'
 
 ##
 # Execute the test stage with +argv+ as argument vector.
@@ -39,14 +40,17 @@ def main(argv = ARGV)
   included_files = parsed.catalog[:includes]
   # included_files = Toolchain::Adoc.load_doc(index_adoc)
   stage_log(:test, "Running checks on index and included files (total: #{included_files.length + 1})")
-  log('INCLUDES', 'List of includes:')
-  included_files.each do |k, _|
-    puts "... #{k}"
-  end
-  log('ATTRIBUTES', '')
-  attributes.each do |k, v|
-    puts "#{k}\t->\t#{v}"
-  end
+  # log('INCLUDES', 'List of includes:')
+  # included_files.each do |k, _|
+  #   puts "... #{k}"
+  # end
+  # log('ATTRIBUTES', '')
+  # attributes.each do |k, v|
+    # puts "#{k}\t->\t#{v}"
+  # end
+
+  # Save all gathered attributes in ConfigManager singleton
+  ::Toolchain::ConfigManager.instance.all_attributes(attributes)
 
   ### CHECK INDEX FIRST
   index_errors = run_tests(index_adoc)

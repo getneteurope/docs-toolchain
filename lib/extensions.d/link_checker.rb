@@ -18,7 +18,7 @@ module Toolchain
     when Net::OpenTimeout
       return "#{exc.class.name}: #{msg} for #{link}"
     else
-      return "Unknown Exception: #{msg}"
+      return "Unknown Exception: #{msg} for #{link}"
     end
   end
 
@@ -37,6 +37,7 @@ module Toolchain
       errors = []
       links = parsed.references[:links]
       links.each do |link|
+        next unless link =~ %r{^https?:.+}
         msg = test_link(link)
         next if msg.nil?
 

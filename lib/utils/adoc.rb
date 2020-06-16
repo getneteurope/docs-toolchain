@@ -16,15 +16,6 @@ module Toolchain
     #
     def self.load_doc(filename, attribs = {'root' => Toolchain.build_path})
       root = attribs['root']
-      parsed_shortcuts = ::Asciidoctor.load_file(
-        File.join(root, 'shortcuts.adoc'),
-        catalog_assets: true,
-        sourcemap: true,
-        safe: :unsafe,
-        parse: true,
-        attributes: attribs
-      )
-      attribs = collect_attributes(parsed_shortcuts, attribs)
       if filename.start_with?('/')
         root = File.dirname(filename)
         attribs['root'] = root

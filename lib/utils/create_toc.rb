@@ -43,7 +43,7 @@ module Toolchain
         catalog = document.catalog
         FileUtils.mkdir_p(File.dirname(@default_json_filepath))
         FileUtils.mkdir_p(File.dirname(@default_html_filepath))
-        stage_log(:build, 'Create TOC')
+        stage_log(:build, 'Inject TOC into ' + File.basename(html_filepath))
         stack = [OpenStruct.new(id: 'root', level: -1, children: [])]
         ancestors = []
 

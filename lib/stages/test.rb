@@ -119,6 +119,7 @@ def check_docs(included_files, content_dir)
   paths = included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }
   paths.each do |f|
     pool.process do
+      next if f =~%r{^./include/}
       log('INCLUDE', "Testing #{f}")
       errors = run_tests(f)
       MUTEX.synchronize do

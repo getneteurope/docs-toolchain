@@ -10,7 +10,7 @@ module Toolchain
   # Check IDs according to a stricter standard than the default Asciidoctor standard.
   class IdChecker < BaseExtension
     ID_PATTERN_REGEX = /^[A-Za-z0-9_]+$/.freeze
-    ATTR_REGEX = /^\{(.+)\}$/.freeze
+    ATTR_REGEX = /^.*\{(.+)\}.*$/.freeze
 
     ##
     # Run the ID tests on the given document (+adoc+).
@@ -20,7 +20,7 @@ module Toolchain
     def run(adoc)
       original = adoc.original
       parsed = adoc.parsed
-      attributes = adoc.attributes
+      attributes = (::Toolchain::ConfigManager.instance.all_attributes || {}).merge(adoc.attributes)
 
       errors = []
       # TODO: research why read_lines can be empty
@@ -57,8 +57,8 @@ module Toolchain
 
       (adoc_ids | parsed_ids).to_a.each do |id|
         # log('ID', "checking #{id}", :magenta)
-        msg = "Illegal character: '#{id}' does not match ID criteria (#{ID_PATTERN_REGEX.inspect})"
         next if ID_PATTERN_REGEX.match?(id)
+        msg = "Illegal character: '#{id}' does not match ID criteria (#{ID_PATTERN_REGEX.inspect})"
 
         errors << create_error(
           msg: msg,
