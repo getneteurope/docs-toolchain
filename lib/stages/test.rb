@@ -134,7 +134,7 @@ def check_docs(included_files, content_dir)
   paths.each do |f|
     pool.process do
       next if f =~%r{^./include/}
-      log('INCLUDE', "Testing #{f}")
+      #log('INCLUDE', "Testing #{f}")
       errors = run_tests(f)
       MUTEX.synchronize do
         errors_map[f] = errors
