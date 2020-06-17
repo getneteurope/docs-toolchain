@@ -28,7 +28,7 @@ module Toolchain
       unmatched_close = [] # list of closing ifs without an opening counterpart
 
       lines.each_with_index do |line, lineno|
-        if line.start_with?('ifdef::')
+        if line =~ %r{^ifn?def::.+}
           stack_open.push(lineno)
           vars[lineno] = line.split(':').last.split('[').first
           ifs[lineno] = nil
