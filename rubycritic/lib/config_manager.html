@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-01 15:23:10 +0200'>2020-04-01 15:23:10 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-06-17 16:45:13 +0200'>2020-06-17 16:45:13 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">125</span><small> lines of codes</small></div>
-              <div><span class="metric">8</span><small> methods</small></div>
+              <div><span class="metric">132</span><small> lines of codes</small></div>
+              <div><span class="metric">9</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">4.6</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">4.7</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">36.47</span><small> complexity</small></div>
+              <div><span class="metric">42.62</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
+                1
                 smell
               </a>
             </li>
@@ -142,16 +142,15 @@ module Toolchain
   # Configurations can be changed via certain files or direct calls
   # to +ConfigManager+.
   #
-  class ConfigManager
+  class ConfigManager<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Toolchain::ConfigManager assumes too much for instance variable '@all_attribs'</span>          </div>  </li></ol>
     include Singleton
 
     ##
     # Load configuration from +file+.
     #
     # Returns the configuration as hash (YAML parsed)
-    def load(
-      file = File.join(Toolchain.content_path, &#39;config.yaml&#39;)
-    )
+    def load(file = nil)
+      file = file.nil? ? File.join(Toolchain.content_path, &#39;config.yaml&#39;) : file
       unless File.exist?(file)
         file = File.join(Toolchain.toolchain_path, &#39;config&#39;, &#39;default.yaml&#39;)
         log(&#39;CONFIG&#39;, &quot;loading backup config @ #{file}&quot;)
@@ -213,11 +212,19 @@ module Toolchain
       return (get(field) || []).include?(value)
     end
 
+    ##
+    # Get or set all attributes
+    def all_attributes(attribs = nil)
+      attribs.nil? || @all_attribs = attribs
+      return @all_attribs
+    end
+
     private
 
     def initialize
       @loaded = false
       @config = nil
+      @all_attributes = all_attributes
       load
     end
   end

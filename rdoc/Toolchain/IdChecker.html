@@ -157,7 +157,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">adoc</span>)
   <span class="ruby-identifier">original</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">original</span>
   <span class="ruby-identifier">parsed</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">parsed</span>
-  <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>
+  <span class="ruby-identifier">attributes</span> = (<span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">ConfigManager</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">all_attributes</span> <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">adoc</span>.<span class="ruby-identifier">attributes</span>)
 
   <span class="ruby-identifier">errors</span> = []
   <span class="ruby-comment"># TODO: research why read_lines can be empty</span>
@@ -185,7 +185,6 @@
     <span class="ruby-keyword">if</span> <span class="ruby-constant">ATTR_REGEX</span>.<span class="ruby-identifier">match?</span> <span class="ruby-identifier">pid</span>
       <span class="ruby-identifier">r_pid</span> = <span class="ruby-identifier">pid</span>.<span class="ruby-identifier">gsub</span> <span class="ruby-constant">ATTR_REGEX</span>, <span class="ruby-string">&#39;\1&#39;</span>
       <span class="ruby-keyword">if</span> <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">any?</span> <span class="ruby-identifier">r_pid</span>
-        <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">r_pid</span>]
         <span class="ruby-identifier">id</span> = <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">r_pid</span>]
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
@@ -194,8 +193,8 @@
 
   (<span class="ruby-identifier">adoc_ids</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">parsed_ids</span>).<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">id</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># log(&#39;ID&#39;, &quot;checking #{id}&quot;, :magenta)</span>
-    <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;Illegal character: &#39;#{id}&#39; does not match ID criteria (#{ID_PATTERN_REGEX.inspect})&quot;</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ID_PATTERN_REGEX</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">id</span>)
+    <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;Illegal character: &#39;#{id}&#39; does not match ID criteria (#{ID_PATTERN_REGEX.inspect})&quot;</span>
 
     <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">create_error</span>(
       <span class="ruby-value">msg:</span> <span class="ruby-identifier">msg</span>,

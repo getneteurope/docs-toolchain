@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-06 15:09:42 +0200'>2020-04-06 15:09:42 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-06-17 16:45:13 +0200'>2020-06-17 16:45:13 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">133</span><small> lines of codes</small></div>
+              <div><span class="metric">152</span><small> lines of codes</small></div>
               <div><span class="metric">7</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">9.7</span><small> complexity/method</small></div>
-              <div><span class="metric">35</span><small> churn</small></div>
+              <div><span class="metric">13.0</span><small> complexity/method</small></div>
+              <div><span class="metric">44</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">67.9</span><small> complexity</small></div>
+              <div><span class="metric">91.03</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
-                smell
+                2
+                smells
               </a>
             </li>
           </ul>
@@ -110,10 +110,10 @@ require_relative &#39;../utils/paths.rb&#39;
 # require extensions
 Dir[
   File.join(__dir__, &#39;../&#39;, &#39;extensions.d&#39;, &#39;*.rb&#39;)
-].each { |file| require file }
+].sort.each { |file| require file }
 Dir[
   File.join(::Toolchain.custom_dir, &#39;extensions.d&#39;, &#39;*.rb&#39;)
-].each { |file| require file }
+].sort.each { |file| require file }
 
 ##
 # hash to cache all filename: converted_adoc pairs
@@ -159,11 +159,29 @@ end
 #
 # Returns +nil+.
 #
-def print_errors(errors_map)
+def print_errors(errors_map)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>main#print_errors has a flog score of 38</span>          </div>  </li></ol>
+  num_errors = 0
+  errors_map.each do |_file, errors|
+    num_errors += errors.length
+  end
+  gh_style = ENV[&#39;GITHUB_ACTIONS&#39;] == &#39;true&#39; &amp;&amp; num_errors &lt;= 10
+  puts &#39;::warning::More than 10 errors found, please check Build log&#39; if ENV[&#39;GITHUB_ACTIONS&#39;] == &#39;true&#39; &amp;&amp;
+      num_errors &gt; 10 &amp;&amp;
+      errors_map.length &gt; 1 # skip for single file index.adoc
+
   errors_map.each do |file, errors|
-    log(&#39;ERRORS&#39;, &quot;for file #{file}&quot;, :red) unless errors.empty?
+    # TODO: decide whether index only errors are possible and index.adoc should be included after all
+    next if file == &#39;index.adoc&#39;
+
+    gh_style || log(&#39;ERRORS&#39;, &quot;for file #{file}&quot;, :red) unless errors.empty?
     errors.each do |err|
-      puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
+      # TODO: do all this in logger class in log.rb
+      if(gh_style)
+        # github actions format echo &quot;::warning file=app.js,line=1,col=5::Missing semicolon&quot;
+        puts &quot;::warning file=#{file}::#{err[:msg]}&quot;
+      else
+        puts &quot;#{err[:id]}\t#{err[:msg]}&quot;.bold.red
+      end
     end
   end
 end
@@ -211,14 +229,15 @@ end
 # Returns a map of +errors_map+ with schema filename =&gt; [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
-  size = 8
+  size = 32
   log(&#39;THREADING&#39;, &quot;Pool size: #{size}&quot;)
   pool = Thread.pool(size)
 
   paths = included_files.map { |f, _| &quot;#{File.join(content_dir, f)}.adoc&quot; }
   paths.each do |f|
     pool.process do
-      log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
+      next if f =~%r{^./include/}
+      #log(&#39;INCLUDE&#39;, &quot;Testing #{f}&quot;)
       errors = run_tests(f)
       MUTEX.synchronize do
         errors_map[f] = errors

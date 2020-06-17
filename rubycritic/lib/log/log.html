@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-04-07 10:16:53 +0200'>2020-04-07 10:16:53 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-06-17 16:45:13 +0200'>2020-06-17 16:45:13 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">48</span><small> lines of codes</small></div>
-              <div><span class="metric">3</span><small> methods</small></div>
+              <div><span class="metric">73</span><small> lines of codes</small></div>
+              <div><span class="metric">6</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">5.2</span><small> complexity/method</small></div>
-              <div><span class="metric">17</span><small> churn</small></div>
+              <div><span class="metric">3.8</span><small> complexity/method</small></div>
+              <div><span class="metric">19</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">15.57</span><small> complexity</small></div>
+              <div><span class="metric">22.77</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -98,52 +98,77 @@
     </div>
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
-
+require &#39;logger&#39;
 require_relative &#39;../utils/string.rb&#39;
 
-##
-# Create a log entry in the format:
-#     [tag] msg
-# using the given color and font weight.
-#
-# Params:
-# +tag+: The tag to display at the beginning
-# +msg+: The message to log
-# +color+: Define color as symbol (default: +:blue+)
-# +bold+: Whether +msg+ should be bold (default: false)
-# +length+: Width of the +tag+ inside the brackets (default: 14)
-# +stream+: Which output stream to use (default: +STDOUT+)
-#
-# Returns nothing.
-def log(tag, msg, color = :blue, bold = false, stream: $stdout)
-  return if ENV.key?(&#39;UNITTEST&#39;)
+# TODO: remove temporay wrappers for module and implement Logger output depending on CI environment
 
-  tag = colorize(tag, color)
-  tag_line = &quot;[#{Time.now.strftime(&#39;%H:%M:%S&#39;)}]::#{tag} =&gt;&quot;.bold
-  msg = msg.bold if bold
-
-  stream.puts &quot;#{tag_line} #{msg}&quot;
+def log(*args)
+  ::Toolchain::Logger.instance.log(*args)
 end
 
-##
-# Create a log entry for a given stage.
-#
-# The stage is defined by +stage+, and will be formated like:
-#        [stage] msg
-# using the given color.
-#
-# Returns nothing.
-def stage_log(stage, msg, color = :green)
-  stage = stage.to_s.upcase
-  log(stage, msg, color)
+def stage_log(*args)
+  ::Toolchain::Logger.instance.stage_log(*args)
 end
 
+def error(*args)
+  ::Toolchain::Logger.instance.error(*args)
+end
 
-##
-# Log error to STDOUT.
-#
-def error(msg)
-  log(&#39;ERROR&#39;, msg, :red, stream: $stderr)
+module Toolchain
+  ##
+  # Logger class
+  #
+  # To utilize core Logger for all logging purposes
+  # At the moment only a wrapper for existing logging functions
+  class Logger
+    include Singleton
+    ##
+    # Create a log entry in the format:
+    #     [tag] msg
+    # using the given color and font weight.
+    #
+    # Params:
+    # +tag+: The tag to display at the beginning
+    # +msg+: The message to log
+    # +color+: Define color as symbol (default: +:blue+)
+    # +bold+: Whether +msg+ should be bold (default: false)
+    # +length+: Width of the +tag+ inside the brackets (default: 14)
+    # +stream+: Which output stream to use (default: +STDOUT+)
+    #
+    # Returns nothing.
+
+    def log(tag, msg, color = :blue, bold = false, stream: $stdout)
+      return if ENV.key?(&#39;UNITTEST&#39;)
+
+      tag = colorize(tag, color)
+      tag_line = &quot;[#{Time.now.strftime(&#39;%H:%M:%S&#39;)}]::#{tag} =&gt;&quot;.bold
+      msg = msg.bold if bold
+
+      stream.puts &quot;#{tag_line} #{msg}&quot;
+    end
+
+    ##
+    # Create a log entry for a given stage.
+    #
+    # The stage is defined by +stage+, and will be formated like:
+    #        [stage] msg
+    # using the given color.
+    #
+    # Returns nothing.
+    def stage_log(stage, msg, color = :green)
+      stage = stage.to_s.upcase
+      log(stage, msg, color)
+    end
+
+
+    ##
+    # Log error to STDOUT.
+    #
+    def error(msg)
+      log(&#39;ERROR&#39;, msg, :red, stream: $stderr)
+    end
+  end
 end
 </code>
   </div>

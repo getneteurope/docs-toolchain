@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-03-30 09:58:17 +0200'>2020-03-30 09:58:17 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-06-17 16:45:13 +0200'>2020-06-17 16:45:13 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">102</span><small> lines of codes</small></div>
+              <div><span class="metric">104</span><small> lines of codes</small></div>
               <div><span class="metric">3</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">15.2</span><small> complexity/method</small></div>
-              <div><span class="metric">8</span><small> churn</small></div>
+              <div><span class="metric">15.4</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">45.61</span><small> complexity</small></div>
+              <div><span class="metric">46.32</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -115,6 +115,7 @@ module Toolchain
     #
     def self.load_doc(filename, attribs = {&#39;root&#39; =&gt; Toolchain.build_path})
       root = attribs[&#39;root&#39;]
+      ci_logger = ::Toolchain::Logger
       if filename.start_with?(&#39;/&#39;)
         root = File.dirname(filename)
         attribs[&#39;root&#39;] = root
@@ -126,7 +127,8 @@ module Toolchain
         sourcemap: true,
         safe: :unsafe,
         parse: false,
-        attributes: attribs
+        attributes: attribs#,
+        #logger: ::Logger.new(&#39;/dev/null&#39;)
       )
       parsed = ::Asciidoctor.load_file(
         File.join(root, filename),

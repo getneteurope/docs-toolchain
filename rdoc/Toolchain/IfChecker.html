@@ -149,7 +149,7 @@
   <span class="ruby-identifier">unmatched_close</span> = [] <span class="ruby-comment"># list of closing ifs without an opening counterpart</span>
 
   <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span>, <span class="ruby-identifier">lineno</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;ifdef::&#39;</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%r{^ifn?def::.+}</span>
       <span class="ruby-identifier">stack_open</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">lineno</span>)
       <span class="ruby-identifier">vars</span>[<span class="ruby-identifier">lineno</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;:&#39;</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;[&#39;</span>).<span class="ruby-identifier">first</span>
       <span class="ruby-identifier">ifs</span>[<span class="ruby-identifier">lineno</span>] = <span class="ruby-keyword">nil</span>

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-17 11:40:53 +0100'>2020-02-17 11:40:53 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-06-17 16:45:13 +0200'>2020-06-17 16:45:13 +0200</time>
         
       </span>
     </div>
@@ -72,11 +72,11 @@
               <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">47.0</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">45.9</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">47.03</span><small> complexity</small></div>
+              <div><span class="metric">45.94</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -113,7 +113,7 @@ module Toolchain
     #
     # Returns a list of errors (can be empty).
     #
-    def run(adoc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::IfChecker#run has a flog score of 47</span>          </div>  </li></ol>
+    def run(adoc)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Toolchain::IfChecker#run has a flog score of 46</span>          </div>  </li></ol>
       parsed = adoc.parsed
       errors = []
 
@@ -127,7 +127,7 @@ module Toolchain
       unmatched_close = [] # list of closing ifs without an opening counterpart
 
       lines.each_with_index do |line, lineno|
-        if line.start_with?(&#39;ifdef::&#39;)
+        if line =~ %r{^ifn?def::.+}
           stack_open.push(lineno)
           vars[lineno] = line.split(&#39;:&#39;).last.split(&#39;[&#39;).first
           ifs[lineno] = nil

@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-02-20 15:27:10 +0100'>2020-02-20 15:27:10 +0100</time>
+          Updated <time class='js-timeago' datetime='2020-06-17 16:45:13 +0200'>2020-06-17 16:45:13 +0200</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">87</span><small> lines of codes</small></div>
-              <div><span class="metric">4</span><small> methods</small></div>
+              <div><span class="metric">109</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">13.5</span><small> complexity/method</small></div>
-              <div><span class="metric">9</span><small> churn</small></div>
+              <div><span class="metric">14.1</span><small> complexity/method</small></div>
+              <div><span class="metric">13</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">54.06</span><small> complexity</small></div>
+              <div><span class="metric">70.33</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
+                1
                 smell
               </a>
             </li>
@@ -117,7 +117,7 @@ module Toolchain
     when Net::OpenTimeout
       return &quot;#{exc.class.name}: #{msg} for #{link}&quot;
     else
-      return &quot;Unknown Exception: #{msg}&quot;
+      return &quot;Unknown Exception: #{msg} for #{link}&quot;
     end
   end
 
@@ -125,7 +125,8 @@ module Toolchain
   # Link Checker
   #
   # Check links and detect whether a link is dead, has moved, cannot be reached, etc.
-  class LinkChecker &lt; BaseExtension
+  class LinkChecker &lt; BaseExtension<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md" target="_blank"><b>InstanceVariableAssumption</b></a>        </span>      </div>      <span>Toolchain::LinkChecker assumes too much for instance variable '@attributes'</span>          </div>  </li></ol>
+    ATTR_REGEX = /^.*\{(.+)\}.*$/.freeze
     ##
     # Run the Link tests on the given document (+adoc+).
     #
@@ -133,9 +134,13 @@ module Toolchain
     #
     def run(adoc)
       parsed = adoc.parsed
+      @attributes = (::Toolchain::ConfigManager.instance.all_attributes || {}).merge(adoc.attributes)
       errors = []
+      # TODO: links does not contain resolved links with attributes e.g. https://{domain}.com. find out why and fix
       links = parsed.references[:links]
       links.each do |link|
+        next unless link =~ /^https?:.+/
+        link = attr_replace(link)
         msg = test_link(link)
         next if msg.nil?
 
@@ -147,6 +152,21 @@ module Toolchain
     end
 
     private
+
+    ##
+    # Replace attributes in links
+    #
+    # Returns the replaced +link+
+    def attr_replace(link)
+      if ATTR_REGEX.match? link
+        key = link.gsub ATTR_REGEX, &#39;\1&#39;
+        if @attributes.keys.any? key
+          attrib = @attributes[key]
+          link = link.gsub(/\{.+\}/, attrib)
+        end
+      end
+      link
+    end
 
     ##
     # Test a +link+, i.e. try to perform a +GET+ request.
@@ -169,15 +189,17 @@ module Toolchain
 
     ##
     # Send a +GET+ request to +link+ and return the result.
-    def get_response(link)
+    # You can provide Net::HTTP +options+
+    def get_response(link, options={})
       uri = URI(link)
-      http = Net::HTTP.new(uri.host, uri.port)
-      timeout = 0.8
-      http.open_timeout = timeout
-      http.read_timeout = timeout
-      http.write_timeout = timeout
-      http.use_ssl = true if link =~ /^https/
-      http.start
+      default_options = {
+        read_timeout: 1,
+        open_timeout: 1,
+        write_timeout: 1,
+        use_ssl: (link =~ /^https/)
+      }
+      options = default_options.merge(options)
+      http = Net::HTTP.start(uri.host, uri.port, options)
       return http.request(Net::HTTP::Get.new(uri))
     end
   end

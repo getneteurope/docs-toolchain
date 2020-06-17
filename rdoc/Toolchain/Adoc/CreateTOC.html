@@ -183,7 +183,7 @@
 
           
           <div class="method-source-code" id="generate_html_from_toc-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 149</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 150</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_html_from_toc</span>(<span class="ruby-identifier">toc_elements</span>)
   <span class="ruby-identifier">fragment</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>.<span class="ruby-identifier">fragment</span>(<span class="ruby-string">&#39;&lt;ul&gt;&lt;/ul&gt;&#39;</span>)
   <span class="ruby-identifier">toc_elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -246,10 +246,11 @@
   <span class="ruby-identifier">json_filepath</span> = <span class="ruby-ivar">@default_json_filepath</span>,
   <span class="ruby-identifier">html_filepath</span> = <span class="ruby-ivar">@default_html_filepath</span>
 )
+  <span class="ruby-comment"># TODO: this runs too often. e.g. uncomment stage_log line below and see what happens</span>
   <span class="ruby-identifier">catalog</span> = <span class="ruby-identifier">document</span>.<span class="ruby-identifier">catalog</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-ivar">@default_json_filepath</span>))
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-ivar">@default_html_filepath</span>))
-  <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-string">&#39;Create TOC&#39;</span>)
+  <span class="ruby-comment"># stage_log(:build, &#39;Inject TOC into &#39; + File.basename(html_filepath))</span>
   <span class="ruby-identifier">stack</span> = [<span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">id:</span> <span class="ruby-string">&#39;root&#39;</span>, <span class="ruby-value">level:</span> <span class="ruby-value">-1</span>, <span class="ruby-value">children:</span> [])]
   <span class="ruby-identifier">ancestors</span> = []
 
@@ -354,7 +355,7 @@
 
           
           <div class="method-source-code" id="tick_toc_checkboxes-source">
-            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 128</span>
+            <pre><span class="ruby-comment"># File lib/utils/create_toc.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tick_toc_checkboxes</span>(<span class="ruby-identifier">page_id</span>, <span class="ruby-identifier">toc_document</span>)
   <span class="ruby-identifier">selector</span> = <span class="ruby-string">&#39;#toc_li_&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">page_id</span>
   <span class="ruby-identifier">list_element</span> = <span class="ruby-identifier">toc_document</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-identifier">selector</span>)
