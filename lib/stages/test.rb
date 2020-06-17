@@ -66,7 +66,9 @@ def print_errors(errors_map)
     num_errors += errors.length
   end
   gh_style = ENV['GITHUB_ACTIONS'] == 'true' && num_errors <= 10
-  puts '::warning::More than 10 errors found, please check Build log' if ENV['GITHUB_ACTIONS'] == 'true' && num_errors > 10
+  puts '::warning::More than 10 errors found, please check Build log' if ENV['GITHUB_ACTIONS'] == 'true' &&
+      num_errors > 10 &&
+      errors_map.length > 1 # skip for single file index.adoc
 
   errors_map.each do |file, errors|
     # TODO: decide whether index only errors are possible and index.adoc should be included after all
