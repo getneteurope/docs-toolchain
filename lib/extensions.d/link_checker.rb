@@ -27,6 +27,7 @@ module Toolchain
   #
   # Check links and detect whether a link is dead, has moved, cannot be reached, etc.
   class LinkChecker < BaseExtension
+    ATTR_REGEX = /^.*\{(.+)\}.*$/.freeze
     ##
     # Run the Link tests on the given document (+adoc+).
     #
@@ -34,10 +35,13 @@ module Toolchain
     #
     def run(adoc)
       parsed = adoc.parsed
+      @attributes = (::Toolchain::ConfigManager.instance.all_attributes || {}).merge(adoc.attributes)
       errors = []
+      # TODO: links does not contain resolved links with attributes e.g. https://{domain}.com. find out why and fix
       links = parsed.references[:links]
       links.each do |link|
-        next unless link =~ %r{^https?:.+}
+        next unless link =~ /^https?:.+/
+        link = attr_replace(link)
         msg = test_link(link)
         next if msg.nil?
 
@@ -49,6 +53,21 @@ module Toolchain
     end
 
     private
+
+    ##
+    # Replace attributes in links
+    #
+    # Returns the replaced +link+
+    def attr_replace(link)
+      if ATTR_REGEX.match? link
+        key = link.gsub ATTR_REGEX, '\1'
+        if @attributes.keys.any? key
+          attrib = @attributes[key]
+          link = link.gsub(/\{.+\}/, attrib)
+        end
+      end
+      link
+    end
 
     ##
     # Test a +link+, i.e. try to perform a +GET+ request.

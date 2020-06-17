@@ -48,7 +48,6 @@ module Toolchain
         if ATTR_REGEX.match? pid
           r_pid = pid.gsub ATTR_REGEX, '\1'
           if attributes.keys.any? r_pid
-            attributes[r_pid]
             id = attributes[r_pid]
           end
         end

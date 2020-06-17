@@ -40,10 +40,11 @@ module Toolchain
         json_filepath = @default_json_filepath,
         html_filepath = @default_html_filepath
       )
+        # TODO: this runs too often. e.g. uncomment stage_log line below and see what happens
         catalog = document.catalog
         FileUtils.mkdir_p(File.dirname(@default_json_filepath))
         FileUtils.mkdir_p(File.dirname(@default_html_filepath))
-        stage_log(:build, 'Inject TOC into ' + File.basename(html_filepath))
+        # stage_log(:build, 'Inject TOC into ' + File.basename(html_filepath))
         stack = [OpenStruct.new(id: 'root', level: -1, children: [])]
         ancestors = []
 
