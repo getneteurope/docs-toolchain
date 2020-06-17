@@ -126,7 +126,7 @@ end
 # Returns a map of +errors_map+ with schema filename => [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
-  size = 8
+  size = 32
   log('THREADING', "Pool size: #{size}")
   pool = Thread.pool(size)
 
