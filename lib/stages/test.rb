@@ -62,12 +62,15 @@ end
 #
 def print_errors(errors_map)
   errors_map.each do |file, errors|
-    log('ERRORS', "for file #{file}", :red) unless errors.empty?
+    ENV['GITHUB_ACTIONS'] == 'true' || log('ERRORS', "for file #{file}", :red) unless errors.empty?
     errors.each do |err|
-      # gh actions format
-      # echo "::warning file=app.js,line=1,col=5::Missing semicolon"
-      puts "::warning file=#{file}::#{err[:msg]}"
-      puts "#{err[:id]}\t#{err[:msg]}".bold.red
+      # TODO: do all this in logger class in log.rb
+      if(ENV['GITHUB_ACTIONS'] == 'true')
+        # github actions format echo "::warning file=app.js,line=1,col=5::Missing semicolon"
+        puts "::warning file=#{file}::#{err[:msg]}"
+      else
+        puts "#{err[:id]}\t#{err[:msg]}".bold.red
+      end
     end
   end
 end
