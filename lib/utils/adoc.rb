@@ -16,6 +16,7 @@ module Toolchain
     #
     def self.load_doc(filename, attribs = {'root' => Toolchain.build_path})
       root = attribs['root']
+      ci_logger = ::Toolchain::Logger
       if filename.start_with?('/')
         root = File.dirname(filename)
         attribs['root'] = root
@@ -27,7 +28,8 @@ module Toolchain
         sourcemap: true,
         safe: :unsafe,
         parse: false,
-        attributes: attribs
+        attributes: attribs#,
+        #logger: ::Logger.new('/dev/null')
       )
       parsed = ::Asciidoctor.load_file(
         File.join(root, filename),

@@ -18,7 +18,7 @@ module Toolchain
     when Net::OpenTimeout
       return "#{exc.class.name}: #{msg} for #{link}"
     else
-      return "Unknown Exception: #{msg}"
+      return "Unknown Exception: #{msg} for #{link}"
     end
   end
 
@@ -27,6 +27,7 @@ module Toolchain
   #
   # Check links and detect whether a link is dead, has moved, cannot be reached, etc.
   class LinkChecker < BaseExtension
+    ATTR_REGEX = /^.*\{(.+)\}.*$/.freeze
     ##
     # Run the Link tests on the given document (+adoc+).
     #
@@ -34,9 +35,13 @@ module Toolchain
     #
     def run(adoc)
       parsed = adoc.parsed
+      @attributes = (::Toolchain::ConfigManager.instance.all_attributes || {}).merge(adoc.attributes)
       errors = []
+      # TODO: links does not contain resolved links with attributes e.g. https://{domain}.com. find out why and fix
       links = parsed.references[:links]
       links.each do |link|
+        next unless link =~ /^https?:.+/
+        link = attr_replace(link)
         msg = test_link(link)
         next if msg.nil?
 
@@ -48,6 +53,21 @@ module Toolchain
     end
 
     private
+
+    ##
+    # Replace attributes in links
+    #
+    # Returns the replaced +link+
+    def attr_replace(link)
+      if ATTR_REGEX.match? link
+        key = link.gsub ATTR_REGEX, '\1'
+        if @attributes.keys.any? key
+          attrib = @attributes[key]
+          link = link.gsub(/\{.+\}/, attrib)
+        end
+      end
+      link
+    end
 
     ##
     # Test a +link+, i.e. try to perform a +GET+ request.
@@ -70,15 +90,17 @@ module Toolchain
 
     ##
     # Send a +GET+ request to +link+ and return the result.
-    def get_response(link)
+    # You can provide Net::HTTP +options+
+    def get_response(link, options={})
       uri = URI(link)
-      http = Net::HTTP.new(uri.host, uri.port)
-      timeout = 0.8
-      http.open_timeout = timeout
-      http.read_timeout = timeout
-      http.write_timeout = timeout
-      http.use_ssl = true if link =~ /^https/
-      http.start
+      default_options = {
+        read_timeout: 1,
+        open_timeout: 1,
+        write_timeout: 1,
+        use_ssl: (link =~ /^https/)
+      }
+      options = default_options.merge(options)
+      http = Net::HTTP.start(uri.host, uri.port, options)
       return http.request(Net::HTTP::Get.new(uri))
     end
   end

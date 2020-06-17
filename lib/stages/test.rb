@@ -11,10 +11,10 @@ require_relative '../utils/paths.rb'
 # require extensions
 Dir[
   File.join(__dir__, '../', 'extensions.d', '*.rb')
-].each { |file| require file }
+].sort.each { |file| require file }
 Dir[
   File.join(::Toolchain.custom_dir, 'extensions.d', '*.rb')
-].each { |file| require file }
+].sort.each { |file| require file }
 
 ##
 # hash to cache all filename: converted_adoc pairs
@@ -61,10 +61,28 @@ end
 # Returns +nil+.
 #
 def print_errors(errors_map)
+  num_errors = 0
+  errors_map.each do |_file, errors|
+    num_errors += errors.length
+  end
+  gh_style = ENV['GITHUB_ACTIONS'] == 'true' && num_errors <= 10
+  puts '::warning::More than 10 errors found, please check Build log' if ENV['GITHUB_ACTIONS'] == 'true' &&
+      num_errors > 10 &&
+      errors_map.length > 1 # skip for single file index.adoc
+
   errors_map.each do |file, errors|
-    log('ERRORS', "for file #{file}", :red) unless errors.empty?
+    # TODO: decide whether index only errors are possible and index.adoc should be included after all
+    next if file == 'index.adoc'
+
+    gh_style || log('ERRORS', "for file #{file}", :red) unless errors.empty?
     errors.each do |err|
-      puts "#{err[:id]}\t#{err[:msg]}".bold.red
+      # TODO: do all this in logger class in log.rb
+      if(gh_style)
+        # github actions format echo "::warning file=app.js,line=1,col=5::Missing semicolon"
+        puts "::warning file=#{file}::#{err[:msg]}"
+      else
+        puts "#{err[:id]}\t#{err[:msg]}".bold.red
+      end
     end
   end
 end
@@ -112,14 +130,15 @@ end
 # Returns a map of +errors_map+ with schema filename => [errors].
 def check_docs(included_files, content_dir)
   errors_map = {}
-  size = 8
+  size = 32
   log('THREADING', "Pool size: #{size}")
   pool = Thread.pool(size)
 
   paths = included_files.map { |f, _| "#{File.join(content_dir, f)}.adoc" }
   paths.each do |f|
     pool.process do
-      log('INCLUDE', "Testing #{f}")
+      next if f =~%r{^./include/}
+      #log('INCLUDE', "Testing #{f}")
       errors = run_tests(f)
       MUTEX.synchronize do
         errors_map[f] = errors

@@ -50,9 +50,8 @@ module Toolchain
     # Load configuration from +file+.
     #
     # Returns the configuration as hash (YAML parsed)
-    def load(
-      file = File.join(Toolchain.content_path, 'config.yaml')
-    )
+    def load(file = nil)
+      file = file.nil? ? File.join(Toolchain.content_path, 'config.yaml') : file
       unless File.exist?(file)
         file = File.join(Toolchain.toolchain_path, 'config', 'default.yaml')
         log('CONFIG', "loading backup config @ #{file}")
@@ -114,11 +113,19 @@ module Toolchain
       return (get(field) || []).include?(value)
     end
 
+    ##
+    # Get or set all attributes
+    def all_attributes(attribs = nil)
+      attribs.nil? || @all_attribs = attribs
+      return @all_attribs
+    end
+
     private
 
     def initialize
       @loaded = false
       @config = nil
+      @all_attributes = all_attributes
       load
     end
   end
