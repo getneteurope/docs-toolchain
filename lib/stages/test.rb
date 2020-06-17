@@ -61,11 +61,19 @@ end
 # Returns +nil+.
 #
 def print_errors(errors_map)
+  num_errors = 0
   errors_map.each do |file, errors|
-    ENV['GITHUB_ACTIONS'] == 'true' || log('ERRORS', "for file #{file}", :red) unless errors.empty?
+    num_errors += errors.length
+  end
+  gh_style = ENV['GITHUB_ACTIONS'] == 'true' && num_errors <= 10
+  errors_map.each do |file, errors|
+    # TODO: decide whether index only errors are possible and index.adoc should be included after all
+    next if file == 'index.adoc'
+
+    gh_style || log('ERRORS', "for file #{file}", :red) unless errors.empty?
     errors.each do |err|
       # TODO: do all this in logger class in log.rb
-      if(ENV['GITHUB_ACTIONS'] == 'true')
+      if(gh_style)
         # github actions format echo "::warning file=app.js,line=1,col=5::Missing semicolon"
         puts "::warning file=#{file}::#{err[:msg]}"
       else
