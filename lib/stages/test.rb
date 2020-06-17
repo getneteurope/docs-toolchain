@@ -11,10 +11,10 @@ require_relative '../utils/paths.rb'
 # require extensions
 Dir[
   File.join(__dir__, '../', 'extensions.d', '*.rb')
-].each { |file| require file }
+].sort.each { |file| require file }
 Dir[
   File.join(::Toolchain.custom_dir, 'extensions.d', '*.rb')
-].each { |file| require file }
+].sort.each { |file| require file }
 
 ##
 # hash to cache all filename: converted_adoc pairs
@@ -62,10 +62,12 @@ end
 #
 def print_errors(errors_map)
   num_errors = 0
-  errors_map.each do |file, errors|
+  errors_map.each do |_file, errors|
     num_errors += errors.length
   end
   gh_style = ENV['GITHUB_ACTIONS'] == 'true' && num_errors <= 10
+  puts '::warning::More than 10 errors found, please check Build log' if ENV['GITHUB_ACTIONS'] == 'true' && num_errors > 10
+
   errors_map.each do |file, errors|
     # TODO: decide whether index only errors are possible and index.adoc should be included after all
     next if file == 'index.adoc'
