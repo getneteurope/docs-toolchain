@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2020-05-14 15:40:08 +0200'>2020-05-14 15:40:08 +0200</time>
+          Updated <time class='js-timeago' datetime='2020-08-12 12:54:30 +0200'>2020-08-12 12:54:30 +0200</time>
         
       </span>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-3">
               <div><span class="metric">41.7</span><small> complexity/method</small></div>
-              <div><span class="metric">34</span><small> churn</small></div>
+              <div><span class="metric">35</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">41.7</span><small> complexity</small></div>
@@ -184,7 +184,7 @@ module Toolchain
       end
 
       # move assets to html/
-      assets = %w[css js fonts images icons favicon.ico]
+      assets = %w[css js fonts images icons resources favicon.ico]
       assets.each do |asset|
         stage_log(:build, &quot;... Copying #{asset}&quot;)
         from = File.join(build_dir, asset)
