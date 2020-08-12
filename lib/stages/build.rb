@@ -85,7 +85,7 @@ module Toolchain
       end
 
       # move assets to html/
-      assets = %w[css js fonts images icons favicon.ico]
+      assets = %w[css js fonts images icons resources favicon.ico]
       assets.each do |asset|
         stage_log(:build, "... Copying #{asset}")
         from = File.join(build_dir, asset)
