@@ -22,7 +22,7 @@ gem "rubocop-performance", "~> 1.3"
 gem "rubocop-jekyll", "~> 0.11.0"
 gem 'rubycritic', '~> 4.3', '>= 4.3.1'
 gem "inch", "~> 0.8.0"
-gem "rdoc", "~> 6.2"
+gem "rdoc", "~> 6.3"
 gem "pry", "~> 0.12.2"
 
 gem "git", "~> 1.5"
