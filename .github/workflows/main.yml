@@ -57,7 +57,7 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         path-to-lcov: ./coverage/lcov/docs-toolchain.lcov
-        
+
     - name: "Prepare upload"
       if: endsWith(github.ref, '/master')
       run: |
