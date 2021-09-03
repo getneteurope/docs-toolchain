@@ -21,8 +21,6 @@
 <link href="../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="module">
 <nav role="navigation">
   <div id="project-navigation">
@@ -62,18 +60,15 @@
     
     
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-c-generate_info">::generate_info</a>
-    
     <li ><a href="#method-c-parse_ref">::parse_ref</a>
-    
     <li ><a href="#method-c-time_format">::time_format</a>
-    
   </ul>
 </div>
 
@@ -93,36 +88,25 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
 
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-generate_info" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">generate_info</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Generate a hash containing <a href="Git.html"><code>Git</code></a> information:</p>
 <dl class="rdoc-list label-list"><dt>author
 <dd>
@@ -141,10 +125,7 @@
 <p>The path of the git repo is controlled by ENV: $PWD &gt; $TOOLCHAIN_PATH/..</p>
 
 <p>Returns a OpenStruct containing the information described above.</p>
-          
-          
 
-          
           <div class="method-source-code" id="generate_info-source">
             <pre><span class="ruby-comment"># File lib/utils/git.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">generate_info</span>
@@ -176,37 +157,25 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">git_info</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-parse_ref" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">parse_ref</span><span
             class="method-args">(ref = ENV[&#39;GITHUB_REF&#39;], fallback = nil)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Pass a reference <code>ref</code> and a fallback <code>fallback</code> and return the parsed reference.</p>
 
 <p>Reference, in this case, describes a git reference like a branch name or a tag. Depending on the environment this reference can occur in many different places.</p>
 
 <p>Returns a parsed reference or fallback if no reference was found.</p>
-          
-          
 
-          
           <div class="method-source-code" id="parse_ref-source">
             <pre><span class="ruby-comment"># File lib/utils/git.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">parse_ref</span>(<span class="ruby-identifier">ref</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GITHUB_REF&#39;</span>], <span class="ruby-identifier">fallback</span> = <span class="ruby-keyword">nil</span>)
@@ -217,58 +186,41 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">ref</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-time_format" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">time_format</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Returns the time format used by <code>Toolchain::Git</code>.</p>
-          
-          
 
-          
           <div class="method-source-code" id="time_format-source">
             <pre><span class="ruby-comment"># File lib/utils/git.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">time_format</span>
   <span class="ruby-keyword">return</span> <span class="ruby-string">&#39;%H:%M:%S %d.%m.%Y&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.2.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

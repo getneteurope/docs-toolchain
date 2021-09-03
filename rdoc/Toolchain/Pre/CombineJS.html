@@ -21,8 +21,6 @@
 <link href="../../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -59,32 +57,26 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link"><a href="../BaseProcess.html">Toolchain::BaseProcess</a>
-  
 </div>
 
     
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li class="calls-super" ><a href="#method-c-new">::new</a>
-    
     <li ><a href="#method-i-combine_and_replace">#combine_and_replace</a>
-    
     <li ><a href="#method-i-combine_js">#combine_js</a>
-    
     <li ><a href="#method-i-get_script_sources">#get_script_sources</a>
-    
     <li ><a href="#method-i-run">#run</a>
-    
   </ul>
 </div>
 
@@ -102,46 +94,31 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
 
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-new" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">(priority)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
-          
-          
           
             <div class="method-calls-super">
               Calls superclass method
               <a href="../BaseProcess.html#method-c-new"><code>Toolchain::BaseProcess::new</code></a>
             </div>
-          
 
-          
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_js.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span>)
@@ -150,45 +127,32 @@
   <span class="ruby-ivar">@footer_default</span> = <span class="ruby-string">&#39;docinfo-footer.html&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-combine_and_replace" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">combine_and_replace</span><span
             class="method-args">(html, path)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Replaces all JS tags in an Nokogiri HTML object <code>html</code> with one tag that includes one big blob JS.</p>
 
 <p>Overwrites the initial file at <code>path</code>.</p>
 
 <p>Returns nothing.</p>
-          
-          
 
-          
           <div class="method-source-code" id="combine_and_replace-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_js.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_and_replace</span>(<span class="ruby-identifier">html</span>, <span class="ruby-identifier">path</span>)
@@ -209,35 +173,23 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-combine_js" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">combine_js</span><span
             class="method-args">(html, path, separator = &quot;\n\n&quot;)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Combines JS files found in <code>html</code> Nokogiri object, and writes the combined JS to a new file. Takes HTML file <code>path</code> and <code>separator</code>.</p>
 
 <p>Returns blob file path <code>blob_path</code> or <code>nil</code> if no JS tags were found (i.e. nothing was combined).</p>
-          
-          
 
-          
           <div class="method-source-code" id="combine_js-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_js.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">combine_js</span>(<span class="ruby-identifier">html</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">separator</span> = <span class="ruby-string">&quot;\n\n&quot;</span>)
@@ -265,37 +217,25 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">html</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-get_script_sources" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">get_script_sources</span><span
             class="method-args">(html)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Take Nokogiri HTML <code>html</code> and check for javascript files.</p>
 
 <p>Returns <code>js_files</code> array containing <code>src</code> attribute values of script.</p>
 
 <pre>e.g. &lt;script src=&quot;js/1.js&quot;&gt; --&gt; [&#39;js/1.js&#39;]</pre>
-          
-          
 
-          
           <div class="method-source-code" id="get_script_sources-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_js.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_script_sources</span>(<span class="ruby-identifier">html</span>)
@@ -314,35 +254,23 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">js_files</span>.<span class="ruby-identifier">compact</span> <span class="ruby-comment"># remove nil</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-run" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">run</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Combines JS files referenced in docinfo{,-footer}.html into a single .js file and then reinserts the combined file as script tags into the HTML files.</p>
 
 <p>Returns nothing.</p>
-          
-          
 
-          
           <div class="method-source-code" id="run-source">
             <pre><span class="ruby-comment"># File lib/pre.d/combine_js.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
@@ -369,25 +297,20 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.2.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

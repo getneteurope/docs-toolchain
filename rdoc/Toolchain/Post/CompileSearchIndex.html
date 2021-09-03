@@ -21,8 +21,6 @@
 <link href="../../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -59,36 +57,28 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link"><a href="../BaseProcess.html">Toolchain::BaseProcess</a>
-  
 </div>
 
     
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li class="calls-super" ><a href="#method-c-new">::new</a>
-    
     <li ><a href="#method-i-_create_regex">#_create_regex</a>
-    
     <li ><a href="#method-i-_parse_html">#_parse_html</a>
-    
     <li ><a href="#method-i-_parse_section">#_parse_section</a>
-    
     <li ><a href="#method-i-generate_index">#generate_index</a>
-    
     <li ><a href="#method-i-get">#get</a>
-    
     <li ><a href="#method-i-run">#run</a>
-    
   </ul>
 </div>
 
@@ -106,70 +96,44 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
     <section class="constants-list">
       <header>
         <h3>Constants</h3>
       </header>
       <dl>
-      
         <dt id="SELECTOR_HEADINGS">SELECTOR_HEADINGS
-        
         <dd>
-        
-      
         <dt id="SELECTOR_SECTIONS">SELECTOR_SECTIONS
-        
         <dd>
-        
-      
         <dt id="XPATH_PARAGRAPHS">XPATH_PARAGRAPHS
-        
         <dd>
-        
-      
       </dl>
     </section>
-    
 
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-new" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">(priority = 0)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
-          
-          
           
             <div class="method-calls-super">
               Calls superclass method
               <a href="../BaseProcess.html#method-c-new"><code>Toolchain::BaseProcess::new</code></a>
             </div>
-          
 
-          
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">priority</span> = <span class="ruby-value">0</span>)
@@ -182,41 +146,28 @@
   <span class="ruby-ivar">@paragraph_max_length</span> = <span class="ruby-value">140</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-get" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">get</span><span
             class="method-args">(id, field)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Get the value for key <code>field</code> for this section given the section id <code>id</code>. Returns the label, if there is one, <code>nil</code> otherwise.</p>
-          
-          
 
-          
           <div class="method-source-code" id="get-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">field</span>)
@@ -225,37 +176,25 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">entry</span>[<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_s</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-run" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">run</span><span
             class="method-args">(outfile: nil, dbfile: nil)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Takes a single HTML file or a list of HTML files (<code>html</code>). If not provided, the HTML will be inferred from +$CONTENT_PATH+.</p>
 
 <p><code>outfile</code> is used to write to a specific file for unit tests.</p>
 
 <p>Returns JSON search index for lunr</p>
-          
-          
 
-          
           <div class="method-source-code" id="run-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-value">outfile:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">dbfile:</span> <span class="ruby-keyword">nil</span>)
@@ -300,43 +239,30 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">index</span>, <span class="ruby-identifier">lookup</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
+
      <section id="private-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Private Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-_create_regex" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">_create_regex</span><span
             class="method-args">(pattern)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Creates a Regex object from a wildcard string <code>pattern</code>. <a href="https://stackoverflow.com/a/6449534">stackoverflow.com/a/6449534</a></p>
 
 <p>Returns valid Regex.</p>
-          
-          
 
-          
           <div class="method-source-code" id="_create_regex-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_create_regex</span>(<span class="ruby-identifier">pattern</span>)
@@ -344,33 +270,21 @@
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;^#{escaped}$&quot;</span>, <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">IGNORECASE</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-_parse_html" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">_parse_html</span><span
             class="method-args">(html_file)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Parse a single HTML file <code>html_file</code>. This will convert the document to a Nokogiri object and parse each section. Returns the collective <code>docs</code> list of relevant information to build the lunr index.</p>
-          
-          
 
-          
           <div class="method-source-code" id="_parse_html-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_parse_html</span>(<span class="ruby-identifier">html_file</span>)
@@ -383,33 +297,21 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">docs</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-_parse_section" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">_parse_section</span><span
             class="method-args">(sect, filename)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Parse a Nokogiri section <code>sect</code> and return relevant information for lunr. This function needs the <code>filename</code> in order to create valid links later on, when the lunr search is implemented. Included information is <code>ref</code>, the reference or id, <code>title</code>, the header of the section and <code>body</code>, the text of all p tags below the section div. Returns <a href="../Hash.html"><code>Hash</code></a> +{ id, title, body }+</p>
-          
-          
 
-          
           <div class="method-source-code" id="_parse_section-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 149</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">_parse_section</span>(<span class="ruby-identifier">sect</span>, <span class="ruby-identifier">filename</span>)
@@ -444,33 +346,21 @@
   }
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-generate_index" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">generate_index</span><span
             class="method-args">(htmls)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Generates lunr index JSON and lunr DB JSON file from HTMLs. <code>htmls</code> is a list of strings, representing the HTML file names. Returns the index JSON and DB JSON for lunr.</p>
-          
-          
 
-          
           <div class="method-source-code" id="generate_index-source">
             <pre><span class="ruby-comment"># File lib/post.d/compile_search_index.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">generate_index</span>(<span class="ruby-identifier">htmls</span>)
@@ -510,25 +400,20 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">index</span>, <span class="ruby-identifier">lookup</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.2.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

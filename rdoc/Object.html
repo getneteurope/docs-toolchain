@@ -21,8 +21,6 @@
 <link href="./css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -59,44 +57,32 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link">BasicObject
-  
 </div>
 
     
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-i-check_docs">#check_docs</a>
-    
     <li ><a href="#method-i-colorize">#colorize</a>
-    
     <li ><a href="#method-i-error">#error</a>
-    
     <li ><a href="#method-i-get_recursively">#get_recursively</a>
-    
     <li ><a href="#method-i-log">#log</a>
-    
     <li ><a href="#method-i-main">#main</a>
-    
     <li ><a href="#method-i-merge_recursively">#merge_recursively</a>
-    
     <li ><a href="#method-i-print_errors">#print_errors</a>
-    
     <li ><a href="#method-i-print_loaded_extensions">#print_loaded_extensions</a>
-    
     <li ><a href="#method-i-run_tests">#run_tests</a>
-    
     <li ><a href="#method-i-stage_log">#stage_log</a>
-    
   </ul>
 </div>
 
@@ -112,36 +98,21 @@
     
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
     <section class="constants-list">
       <header>
         <h3>Constants</h3>
       </header>
       <dl>
-      
         <dt id="ADOC_MAP">ADOC_MAP
-        
         <dd><p>hash to cache all filename: converted_adoc pairs</p>
-        
-      
         <dt id="CM">CM
-        
         <dd>
-        
-      
         <dt id="DEFAULT_INDEX">DEFAULT_INDEX
-        
         <dd><p>default index file</p>
-        
-      
         <dt id="Entry">Entry
-        
         <dd><p>represents a pair of parsed, resolved adoc and original adoc Params:</p>
 <ul><li>
 <p><code>original</code>: original adoc source code before conversion</p>
@@ -150,48 +121,32 @@
 </li><li>
 <p><code>attributes</code>: attributes of document</p>
 </li></ul>
-        
-      
         <dt id="MUTEX">MUTEX
-        
         <dd><p>Mutex</p>
-        
-      
       </dl>
     </section>
-    
 
-    
 
-    
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-check_docs" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">check_docs</span><span
             class="method-args">(included_files, content_dir)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Check all included files in for a given index.</p>
 
 <p>All include files <code>included_files</code> in <code>content_dir</code> will be checked. This means each file will be tested with <code>run_tests</code>.</p>
 
 <p>Returns a map of <code>errors_map</code> with schema filename =&gt; [errors].</p>
-          
-          
 
-          
           <div class="method-source-code" id="check_docs-source">
             <pre><span class="ruby-comment"># File lib/stages/test.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">check_docs</span>(<span class="ruby-identifier">included_files</span>, <span class="ruby-identifier">content_dir</span>)
@@ -216,35 +171,23 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors_map</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-colorize" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">colorize</span><span
             class="method-args">(text, color)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Colorize <code>text</code> in the color specified by <code>color</code>.</p>
 
 <p>Returns the colorized string</p>
-          
-          
 
-          
           <div class="method-source-code" id="colorize-source">
             <pre><span class="ruby-comment"># File lib/utils/string.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">colorize</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">color</span>)
@@ -270,70 +213,46 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">text</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-error" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">error</span><span
             class="method-args">(*args)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
           
-          
-          
-          
 
-          
           <div class="method-source-code" id="error-source">
             <pre><span class="ruby-comment"># File lib/log/log.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">error</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
   <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">error</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-get_recursively" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">get_recursively</span><span
             class="method-args">(map, keys)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Get a certain value in a hash of hashes.</p>
 
 <p>The key is described by <code>keys</code>, an array of keys representing the path through the hash of hashes, called <code>map</code>.</p>
 
 <p>Returns the corresponding value or nil.</p>
-          
-          
 
-          
           <div class="method-source-code" id="get_recursively-source">
             <pre><span class="ruby-comment"># File lib/config_manager.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_recursively</span>(<span class="ruby-identifier">map</span>, <span class="ruby-identifier">keys</span>)
@@ -345,66 +264,42 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_recursively</span>(<span class="ruby-identifier">map</span>[<span class="ruby-identifier">key</span>], <span class="ruby-identifier">keys</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-log" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">log</span><span
             class="method-args">(*args)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>TODO: remove temporay wrappers for module and implement Logger output depending on CI environment</p>
-          
-          
 
-          
           <div class="method-source-code" id="log-source">
             <pre><span class="ruby-comment"># File lib/log/log.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
   <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">log</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-main" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">main</span><span
             class="method-args">(argv = ARGV)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
           
-          
-          
-          
 
-          
           <div class="method-source-code" id="main-source">
             <pre><span class="ruby-comment"># File bin/build.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">main</span>(<span class="ruby-identifier">argv</span> = <span class="ruby-constant">ARGV</span>)
@@ -420,37 +315,25 @@
   <span class="ruby-identifier">stage_log</span>(<span class="ruby-value">:build</span>, <span class="ruby-string">&#39;Build done&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-merge_recursively" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">merge_recursively</span><span
             class="method-args">(left, right)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Merge two hashes <code>left</code> and <code>right</code> recursively</p>
 
 <p>Merge strategy: right join</p>
 
 <p>Returns merged hash.</p>
-          
-          
 
-          
           <div class="method-source-code" id="merge_recursively-source">
             <pre><span class="ruby-comment"># File lib/config_manager.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_recursively</span>(<span class="ruby-identifier">left</span>, <span class="ruby-identifier">right</span>)
@@ -461,35 +344,23 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-print_errors" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">print_errors</span><span
             class="method-args">(errors_map)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Print all errors in <code>errors_map</code>. <code>errors_map</code> is a hash containing a mapping of filename -&gt; [errors]. Format: “id message”</p>
 
 <p>Returns <code>nil</code>.</p>
-          
-          
 
-          
           <div class="method-source-code" id="print_errors-source">
             <pre><span class="ruby-comment"># File lib/stages/test.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_errors</span>(<span class="ruby-identifier">errors_map</span>)
@@ -519,33 +390,21 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-print_loaded_extensions" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">print_loaded_extensions</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>print help print all loaded extensions</p>
-          
-          
 
-          
           <div class="method-source-code" id="print_loaded_extensions-source">
             <pre><span class="ruby-comment"># File lib/stages/test.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_loaded_extensions</span>
@@ -555,37 +414,25 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-run_tests" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">run_tests</span><span
             class="method-args">(filename)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Run all extensions registered with <code>ExtensionManager</code> on the file <code>filename</code>.</p>
 
 <p>During this process, the file <code>filename</code> will be loaded, converted and cached in <code>ADOC_MAP</code>.</p>
 
 <p>Returns <code>errors</code> for the given file.</p>
-          
-          
 
-          
           <div class="method-source-code" id="run_tests-source">
             <pre><span class="ruby-comment"># File lib/stages/test.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_tests</span>(<span class="ruby-identifier">filename</span>)
@@ -615,58 +462,41 @@
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">errors</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-stage_log" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">stage_log</span><span
             class="method-args">(*args)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
           
-          
-          
-          
 
-          
           <div class="method-source-code" id="stage_log-source">
             <pre><span class="ruby-comment"># File lib/log/log.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
   <span class="ruby-operator">::</span><span class="ruby-constant">Toolchain</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">stage_log</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.2.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

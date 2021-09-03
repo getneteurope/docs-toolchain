@@ -21,8 +21,6 @@
 <link href="../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -59,45 +57,35 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link"><a href="../Object.html">Object</a>
-  
 </div>
 
-    <div id="includes-section" class="nav-section">
+    
+<div id="includes-section" class="nav-section">
   <h3>Included Modules</h3>
 
   <ul class="link-list">
-  
-  
     <li><span class="include">Singleton</span>
-  
-  
   </ul>
 </div>
 
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-c-create_error">::create_error</a>
-    
     <li ><a href="#method-c-new">::new</a>
-    
     <li ><a href="#method-i-clear">#clear</a>
-    
     <li ><a href="#method-i-get">#get</a>
-    
     <li ><a href="#method-i-next_id">#next_id</a>
-    
     <li ><a href="#method-i-register">#register</a>
-    
   </ul>
 </div>
 
@@ -115,36 +103,25 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
 
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-create_error" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">create_error</span><span
             class="method-args">(msg:, type:, location: nil, extras: nil)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Creates an error, consisting of the following fields:</p>
 <dl class="rdoc-list label-list"><dt>id
 <dd>
@@ -175,10 +152,7 @@
 </li></ul>
 
 <p>Returns the error as <a href="Hash.html"><code>Hash</code></a>.</p>
-          
-          
 
-          
           <div class="method-source-code" id="create_error-source">
             <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_error</span>(<span class="ruby-value">msg:</span>, <span class="ruby-value">type:</span>, <span class="ruby-value">location:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">extras:</span> <span class="ruby-keyword">nil</span>)
@@ -191,33 +165,21 @@
   }
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-new" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
           
-          
-          
-          
 
-          
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
@@ -225,41 +187,28 @@
   <span class="ruby-ivar">@id</span> = <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-clear" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">clear</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Clear the internal state, reset to default state. Returns nothing.</p>
-          
-          
 
-          
           <div class="method-source-code" id="clear-source">
             <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
@@ -267,101 +216,65 @@
   <span class="ruby-ivar">@id</span> = <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-get" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">get</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Return the list of registered extensions.</p>
-          
-          
 
-          
           <div class="method-source-code" id="get-source">
             <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@extensions</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-next_id" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">next_id</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Return the next id.</p>
-          
-          
 
-          
           <div class="method-source-code" id="next_id-source">
             <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">next_id</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@id</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-register" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">register</span><span
             class="method-args">(ext)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Register an extension <code>ext</code> with the <code>ExtensionManager</code>.</p>
 
 <p>Returns nothing.</p>
-          
-          
 
-          
           <div class="method-source-code" id="register-source">
             <pre><span class="ruby-comment"># File lib/extension_manager.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">register</span>(<span class="ruby-identifier">ext</span>)
@@ -377,25 +290,20 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.2.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

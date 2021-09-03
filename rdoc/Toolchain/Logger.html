@@ -21,8 +21,6 @@
 <link href="../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -59,39 +57,32 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link"><a href="../Object.html">Object</a>
-  
 </div>
 
-    <div id="includes-section" class="nav-section">
+    
+<div id="includes-section" class="nav-section">
   <h3>Included Modules</h3>
 
   <ul class="link-list">
-  
-  
     <li><span class="include">Singleton</span>
-  
-  
   </ul>
 </div>
 
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-i-error">#error</a>
-    
     <li ><a href="#method-i-log">#log</a>
-    
     <li ><a href="#method-i-stage_log">#stage_log</a>
-    
   </ul>
 </div>
 
@@ -111,69 +102,46 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
 
-    
 
-    
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-error" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">error</span><span
             class="method-args">(msg)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Log error to STDOUT.</p>
-          
-          
 
-          
           <div class="method-source-code" id="error-source">
             <pre><span class="ruby-comment"># File lib/log/log.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">error</span>(<span class="ruby-identifier">msg</span>)
   <span class="ruby-identifier">log</span>(<span class="ruby-string">&#39;ERROR&#39;</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-value">:red</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stderr</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-log" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">log</span><span
             class="method-args">(tag, msg, color = :blue, bold = false, stream: $stdout)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Create a log entry in the format:</p>
 
 <pre>[tag] msg</pre>
@@ -183,10 +151,7 @@
 <p>Params: <code>tag</code>: The tag to display at the beginning <code>msg</code>: The message to log <code>color</code>: Define color as symbol (default: <code>:blue</code>) <code>bold</code>: Whether <code>msg</code> should be bold (default: false) <code>length</code>: Width of the <code>tag</code> inside the brackets (default: 14) <code>stream</code>: Which output stream to use (default: <code>STDOUT</code>)</p>
 
 <p>Returns nothing.</p>
-          
-          
 
-          
           <div class="method-source-code" id="log-source">
             <pre><span class="ruby-comment"># File lib/log/log.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">log</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:blue</span>, <span class="ruby-identifier">bold</span> = <span class="ruby-keyword">false</span>, <span class="ruby-value">stream:</span> <span class="ruby-identifier">$stdout</span>)
@@ -199,28 +164,19 @@
   <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{tag_line} #{msg}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-stage_log" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">stage_log</span><span
             class="method-args">(stage, msg, color = :green)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Create a log entry for a given stage.</p>
 
 <p>The stage is defined by <code>stage</code>, and will be formated like:</p>
@@ -230,10 +186,7 @@
 <p>using the given color.</p>
 
 <p>Returns nothing.</p>
-          
-          
 
-          
           <div class="method-source-code" id="stage_log-source">
             <pre><span class="ruby-comment"># File lib/log/log.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stage_log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span> = <span class="ruby-value">:green</span>)
@@ -241,25 +194,20 @@
   <span class="ruby-identifier">log</span>(<span class="ruby-identifier">stage</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-identifier">color</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.2.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
