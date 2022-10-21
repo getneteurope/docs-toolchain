@@ -26,7 +26,7 @@ gem "rdoc", "~> 6.3"
 gem "pry", "~> 0.12.2"
 
 gem "git", "~> 1.11"
-gem "nokogiri", "~> 1.13.6"
+gem "nokogiri", "~> 1.13.9"
 gem "babel-transpiler", ">= 0.7.0", git: "https://github.com/isantoshsingh/ruby-babel-transpiler"
 gem "therubyracer"
 gem "html-proofer", "~> 3.15"
