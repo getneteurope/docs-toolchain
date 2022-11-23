@@ -25,7 +25,7 @@ gem "inch", "~> 0.8.0"
 gem "rdoc", "~> 6.3"
 gem "pry", "~> 0.12.2"
 
-gem 'ffi', ">= 1.12.2", git: "https://github.com/ffi/ffi"
+gem 'ffi', "~> 1.12.2", git: "https://github.com/ffi/ffi", submodules: true
 
 gem "git", "~> 1.11"
 gem "nokogiri", "~> 1.13.9"
