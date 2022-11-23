@@ -25,6 +25,8 @@ gem "inch", "~> 0.8.0"
 gem "rdoc", "~> 6.3"
 gem "pry", "~> 0.12.2"
 
+gem 'ffi', github: 'ffi/ffi', submodules: true
+
 gem "git", "~> 1.11"
 gem "nokogiri", "~> 1.13.9"
 gem "babel-transpiler", ">= 0.7.0", git: "https://github.com/isantoshsingh/ruby-babel-transpiler"
