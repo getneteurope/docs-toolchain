@@ -17,7 +17,7 @@ class TestLinkChecker < Test::Unit::TestCase
     adoc = init(adoc_content, "#{self.class.name}_#{__method__}")
     assert_equal(4, adoc.parsed.references[:links].length)
     errors = Toolchain::LinkChecker.new.run(adoc)
-    assert_equal(3, errors.length)
+    assert_equal(4, errors.length)
     assert_any_startwith(errors, '[404] Not Found') # 2.
     assert_any_startwith(errors, 'SocketError') # 3.
     assert_any_startwith(errors, 'Net::OpenTimeout') # 4.
